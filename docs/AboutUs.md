@@ -31,14 +31,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Contact logic commands
 
-### Johnny Doe
+### Yi Jie
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/ywijie.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
+[[github](http://github.com/ywijie)] [[portfolio](team/ywijie.md)]
 
 * Role: Developer
-* Responsibilities: Data
+* Responsibilities: UI and  Feature implementation
 
 ### Darien Tan
 
