@@ -17,7 +17,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[homepage](http://www.comp.nus.edu.sg/~damithch)]
 [[github](https://github.com/johndoe)]
-[[portfolio](team/reven0n.md)]
+[[portfolio](team/johndoe.md)]
 
 * Role: Project Advisor
 
@@ -26,7 +26,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 <img src="images/johndoe.png" width="200px">
 
 [[github](http://github.com/johndoe)]
-[[portfolio](team/reven0n.md)]
+[[portfolio](team/johndoe.md)]
 
 * Role: Team Lead
 * Responsibilities: UI
@@ -35,7 +35,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 <img src="images/johndoe.png" width="200px">
 
-[[github](http://github.com/johndoe)] [[portfolio](team/reven0n.md)]
+[[github](http://github.com/johndoe)] [[portfolio](team/johndoe.md)]
 
 * Role: Developer
 * Responsibilities: Data
@@ -50,12 +50,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Contact Logic Commands
 
-### James Doe
+### Zibin
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/asaiyume.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/reven0n.md)]
+[[github](http://github.com/asaiyume)]
+[[portfolio](team/asaiyume.md)]
 
 * Role: Developer
-* Responsibilities: UI
+* Responsibilities: Models & Abstraction
