@@ -19,7 +19,8 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[github](https://github.com/rizrn)]
 [[portfolio](team/rizrn.md)]
 
-* Role: Integration & Testing 
+* Role: Developer
+* Responsibilities: Integration & Testing 
 
 ### Jane Doe
 
