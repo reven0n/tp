@@ -275,17 +275,11 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-- has a need to manage a significant number of contacts
-- prefer desktop apps over other types
-- can type fast
-- prefers typing to mouse interactions
-- is reasonably comfortable using CLI apps
+Event organizers at NUS who manage large contact databases, send bulk emails regularly, prefer keyboard-driven CLI interfaces for efficiency, and need automated mailing recommendations for targeted communication with event participants and stakeholders.
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
+**Value proposition**:
 
-### User stories
-
-### User stories
+Streamlines event communication workflow by integrating contact management with intelligent mailing recommendations and bulk email capabilities in a fast, keyboard-centric CLI interface, enabling event organizers to efficiently manage contacts and execute targeted email campaigns without switching between multiple tools.
 
 ### User stories
 
