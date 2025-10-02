@@ -320,20 +320,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+(For all use cases below, the **System** is the `NUS Mailer Pro` and the **Actor** is the `user`, unless specified otherwise)
 
 **Use case: Add a contact**
 
 **MSS**
 
 1. User enters command to add a contact with required fields.
-2. AddressBook validates and adds the contact.
-3. AddressBook displays confirmation and updated contact list.
+2. NUS Mailer Pro validates and adds the contact.
+3. NUS Mailer Pro displays confirmation and updated contact list.
 
 **Extensions**
 
 - 2a. Required fields are missing or invalid.
-  - 2a1. AddressBook shows an error message.
+  - 2a1. NUS Mailer Pro shows an error message.
   - Use case resumes at step 1.
 
 ---
@@ -343,13 +343,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User selects a contact and assigns a role.
-2. AddressBook updates the contact's role.
-3. AddressBook displays confirmation.
+2. NUS Mailer Pro updates the contact's role.
+3. NUS Mailer Pro displays confirmation.
 
 **Extensions**
 
 - 1a. Role is invalid or not recognized.
-  - 1a1. AddressBook shows an error message.
+  - 1a1. NUS Mailer Pro shows an error message.
 
 ---
 
@@ -358,13 +358,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User enters command to create a new event with name, date, time, and venue.
-2. AddressBook validates and adds the event.
-3. AddressBook displays confirmation and updated event list.
+2. NUS Mailer Pro validates and adds the event.
+3. NUS Mailer Pro displays confirmation and updated event list.
 
 **Extensions**
 
 - 2a. Event details are missing or invalid.
-  - 2a1. AddressBook shows an error message.
+  - 2a1. NUS Mailer Pro shows an error message.
 
 ---
 
@@ -373,13 +373,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User selects an event and specifies contacts to associate.
-2. AddressBook links the contacts to the event.
-3. AddressBook displays confirmation and updated attendee list.
+2. NUS Mailer Pro links the contacts to the event.
+3. NUS Mailer Pro displays confirmation and updated attendee list.
 
 **Extensions**
 
 - 1a. Selected contacts do not exist.
-  - 1a1. AddressBook shows an error message.
+  - 1a1. NUS Mailer Pro shows an error message.
 
 ---
 
@@ -388,12 +388,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to list events.
-2. AddressBook shows a list of events with key details and status.
+2. NUS Mailer Pro shows a list of events with key details and status.
 
 **Extensions**
 
 - 2a. No events exist.
-  - 2a1. AddressBook shows an empty list.
+  - 2a1. NUS Mailer Pro shows an empty list.
 
 ---
 
@@ -402,9 +402,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to list contacts.
-2. AddressBook shows a list of contacts.
+2. NUS Mailer Pro shows a list of contacts.
 3. User requests to delete a specific contact.
-4. AddressBook deletes the contact.
+4. NUS Mailer Pro deletes the contact.
 
    Use case ends.
 
@@ -413,7 +413,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 - 2a. The list is empty.
   - Use case ends.
 - 3a. The given index is invalid.
-  - 3a1. AddressBook shows an error message.
+  - 3a1. NUS Mailer Pro shows an error message.
   - Use case resumes at step 2.
 
 ---
@@ -423,12 +423,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User specifies filter criteria (tags, roles, event).
-2. AddressBook displays the filtered contact list.
+2. NUS Mailer Pro displays the filtered contact list.
 
 **Extensions**
 
 - 1a. No contacts match the criteria.
-  - 1a1. AddressBook shows an empty list.
+  - 1a1. NUS Mailer Pro shows an empty list.
 
 ### Non-Functional Requirements
 
