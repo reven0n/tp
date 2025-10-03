@@ -13,6 +13,8 @@
 
 ## **Acknowledgements**
 
+This project is based on the AddressBook-Level3 project created by the SE-EDU initiative.
+
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
 
 ---
@@ -314,115 +316,166 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `NUS Mailer Pro` and the **Actor** is the `user`, unless specified otherwise)
+For all use cases below, the **System** is NUS Event Mailer Pro (NUS EMP) and the **Actor** is the user, unless specified otherwise.
 
-**Use case: Add a contact**
+**Use case: UC1 - Add a contact**
 
 **MSS**
 
-1. User enters command to add a contact with required fields.
-2. NUS Mailer Pro validates and adds the contact.
-3. NUS Mailer Pro displays confirmation and updated contact list.
+1. User requests to add a contact, providing the required fields.
+2. System adds the contact.
+3. System shows success message.
+
+Use case ends.
 
 **Extensions**
 
-- 2a. Required fields are missing or invalid.
-  - 2a1. NUS Mailer Pro shows an error message.
+- 1a. Required fields are missing or invalid.
+  - 1a1. System shows an error message, indicating which fields are missing or invalid.
   - Use case resumes at step 1.
+- 1b. Contact already exists.
+  - 1b1. System shows an error message, indicating that the contact already exists.
+  - Use case resumes at step 1.
+- 2a. Error encountered when saving contact to storage.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
-**Use case: Associate a role with a contact**
+**Use case: UC2 - Associate a role with a contact**
 
 **MSS**
 
-1. User selects a contact and assigns a role.
-2. NUS Mailer Pro updates the contact's role.
-3. NUS Mailer Pro displays confirmation.
+1. User requests to assign a role to a contact.
+2. System updates the contact's role.
+3. System shows success message.
+
+Use case ends.
 
 **Extensions**
 
 - 1a. Role is invalid or not recognized.
-  - 1a1. NUS Mailer Pro shows an error message.
+  - 1a1. System shows an error message, indicating the invalid roles.
+  - Use case resumes at step 1.
+- 1b. Given contact is invalid.
+  - 1b1. System shows an error message, indicating the invalid contact.
+  - Use case resumes at step 1.
+- 2a. Error encountered when saving contact to storage.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
-**Use case: Create an event**
+**Use case: UC3 - Create an event**
 
 **MSS**
 
-1. User enters command to create a new event with name, date, time, and venue.
-2. NUS Mailer Pro validates and adds the event.
-3. NUS Mailer Pro displays confirmation and updated event list.
+1. User requests to create a new event, providing the name, date, time, and venue.
+2. System adds the event.
+3. System shows success message.
+
+Use case ends.
 
 **Extensions**
 
-- 2a. Event details are missing or invalid.
-  - 2a1. NUS Mailer Pro shows an error message.
+- 1a. Required fields are missing or fields are invalid.
+  - 1a1. System shows an error message, indicating which fields are missing or invalid.
+  - Use case resumes at step 1.
+- 2a. Error encountered when saving event to storage.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
-**Use case: Associate contacts with an event**
+**Use case: UC4 - Associate contacts with an event**
 
 **MSS**
 
-1. User selects an event and specifies contacts to associate.
-2. NUS Mailer Pro links the contacts to the event.
-3. NUS Mailer Pro displays confirmation and updated attendee list.
+1. User requests to associate contacts to an event.
+2. System links the contacts to the event.
+3. System shows success message.
+
+Use case ends.
 
 **Extensions**
 
-- 1a. Selected contacts do not exist.
-  - 1a1. NUS Mailer Pro shows an error message.
+- 1a. Given event is invalid, or does not exist.
+  - 1a1. System shows an error message, indicating the invalid event.
+  - Use case resumes at step 1.
+- 1b. Given contact is invalid, or does not exist.
+  - 1b1. System shows an error message, indicating the invalid contact.
+  - Use case resumes at step 1.
+- 2a. Error encountered when saving the linking of contacts to event to storage.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
-**Use case: View events**
-
-**MSS**
-
-1. User requests to list events.
-2. NUS Mailer Pro shows a list of events with key details and status.
-
-**Extensions**
-
-- 2a. No events exist.
-  - 2a1. NUS Mailer Pro shows an empty list.
-
----
-
-**Use case: Delete a contact**
+**Use case: UC5 - List contacts**
 
 **MSS**
 
 1. User requests to list contacts.
-2. NUS Mailer Pro shows a list of contacts.
-3. User requests to delete a specific contact.
-4. NUS Mailer Pro deletes the contact.
+2. System shows a list of all contacts.
 
-   Use case ends.
+Use case ends.
 
 **Extensions**
 
-- 2a. The list is empty.
-  - Use case ends.
-- 3a. The given index is invalid.
-  - 3a1. NUS Mailer Pro shows an error message.
-  - Use case resumes at step 2.
+- 2a. No contacts exist.
+    - 2a1. System informs the user that there are no contacts.
+    - Use case ends.
 
 ---
 
-**Use case: Get a list of contacts by tags, roles, or event association**
+**Use case: UC6 - List events**
 
 **MSS**
 
-1. User specifies filter criteria (tags, roles, event).
-2. NUS Mailer Pro displays the filtered contact list.
+1. User requests to list events.
+2. System shows a list of all events with key details and status.
+
+Use case ends.
+
+**Extensions**
+
+- 2a. No events exist.
+  - 2a1. System informs the user that there are no events.
+  - Use case ends.
+
+---
+
+**Use case: UC7 - Delete a contact**
+
+**MSS**
+
+1. User requests to delete a specific contact.
+2. System deletes the contact.
+3. System shows success message.
+
+Use case ends.
+
+**Extensions**
+
+- 1a. Given contact is invalid, or does not exist.
+    - 1a1. System shows an error message, indicating the invalid contact.
+    - Use case resumes at step 1.
+
+---
+
+**Use case: UC8 - Filter contacts by tags, roles, or event association**
+
+**MSS**
+
+1. User requests to list contact that follows the filter criteria (tags, roles, event).
+2. System displays the filtered contact list.
+
+Use case ends.
 
 **Extensions**
 
 - 1a. No contacts match the criteria.
-  - 1a1. NUS Mailer Pro shows an empty list.
+  - 1a1. System informs user that no contacts match the criteria.
 
 ### Non-Functional Requirements
 
