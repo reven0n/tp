@@ -184,7 +184,7 @@ Step 2. The user executes `delete 5` command to delete the 5th person in the add
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -231,7 +231,7 @@ Step 5. The user then decides to execute the command `list`. Commands that do no
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -287,7 +287,7 @@ Streamlines event communication workflow by integrating contact management with 
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​         | I want to …​                                                               | So that I can…​                                        |
+| Priority | As a …         | I want to …                                                               | So that I can…                                        |
 | -------- | --------------- | -------------------------------------------------------------------------- | ------------------------------------------------------ |
 | `* * *`  | event organizer | add a contact with standard fields (Name, Phone, Email, Address)           | build my core contact database                         |
 | `* * *`  | event organizer | associate a specific Role (e.g., 'Speaker', 'Attendee', 'VIP', 'Sponsor')  | categorize and filter my contacts effectively          |
@@ -483,14 +483,42 @@ Use case ends.
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+#### Technical
+
+- Should run on any Windows, Linux and MacOS system which has Java 17 installed
+- Should work without an installer
+- Should run on various screen resolutions:
+  - *Work well* for screen resolutions 1920x1080 and higher, and for screen scales 100% and 125%
+  - *Usable* for screen resolutions 1280x720 and higher, and for screen scales 150%
+
+#### Performance
+
+- Should have a response time of 0.5 second or less for any user command or action
+- Should be able to handle up to 10000 contacts and 1000 events without any major performance regression
+- Should not exceed 500MB in memory if handling <1000 contacts
+- Data storage should not exceed 5MB for 10000 contacts
+
+#### Features
+
+- All features should work offline
+- Should be designed such that fast-typing users can do actions faster than using a standard GUI
+- Command syntax should be consistent and intuitive
+- Command response should be helpful and descriptive enough, such that the user has no doubts on whether the operation was successful
+- Command errors should be helpful enough for users to fix their commands without referring the user guide every time
+- Data storage of contacts or events should use a human editable file, e.g. text or JSON files
+- Should explicitly warn and allow user to recover data manually in case of data corruption
+
+#### Development
+
+- Should be developed on top of the AB3 project
+- Should be developed iteratively in a breadth-first manner
+- Should not have a remote server
+- Should not use a DBMS
+- Should use OOP principles
+- Should package the application into a single jar file, with file size not exceeding 100MB
+- Should design the user guide and developer guide to be PDF friendly, with each file size not exceeding 15MB
 
 ### Glossary
-
-- **Mainstream OS**: Windows, Linux, Unix, MacOS
-- **Private contact detail**: A contact detail that is not meant to be shared with others
 
 ---
 
@@ -520,7 +548,7 @@ testers are expected to do more _exploratory_ testing.
    1. Re-launch the app by double-clicking the jar file.<br>
       Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
 
 ### Deleting a person
 
@@ -537,7 +565,7 @@ testers are expected to do more _exploratory_ testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
 
 ### Saving data
 
@@ -545,4 +573,4 @@ testers are expected to do more _exploratory_ testing.
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
