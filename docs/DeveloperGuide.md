@@ -460,6 +460,9 @@ Use case ends.
 - 1a. Given contact is invalid, or does not exist.
     - 1a1. System shows an error message, indicating the invalid contact.
     - Use case resumes at step 1.
+- 2a. Error encountered when deleting contact from storage.
+    - 2a1. System shows an error message.
+    - Use case ends.
 
 ---
 
@@ -467,7 +470,7 @@ Use case ends.
 
 **MSS**
 
-1. User requests to list contact that follows the filter criteria (tags, roles, event).
+1. User requests to list all contacts that follows the filter criteria (tags, roles, event).
 2. System displays the filtered contact list.
 
 Use case ends.
@@ -475,7 +478,8 @@ Use case ends.
 **Extensions**
 
 - 1a. No contacts match the criteria.
-  - 1a1. System informs user that no contacts match the criteria.
+  - 1a1. System informs user that no contacts match the criteria. 
+  - Use case ends.
 
 ### Non-Functional Requirements
 
