@@ -485,40 +485,74 @@ Use case ends.
 
 #### Technical
 
-- Should run on any Windows, Linux and MacOS system which has Java 17 installed
+- Should run on any mainstream OS which has Java 17 installed
 - Should work without an installer
 - Should run on various screen resolutions:
-  - *Work well* for screen resolutions 1920x1080 and higher, and for screen scales 100% and 125%
-  - *Usable* for screen resolutions 1280x720 and higher, and for screen scales 150%
+  - _Work well_ for screen resolutions 1920x1080 and higher, and for screen scales 100% and 125%
+    - i.e. all text and UI elements should be clearly visible and usable, with proper scaling and without any clipping or overflow
+  - _Usable_ for screen resolutions 1280x720 and higher, and for screen scales 150%
+    - i.e. all text and UI elements should be visible and usable, with minimal clipping or overflow
 
 #### Performance
 
-- Should have a response time of 0.5 second or less for any user command or action
-- Should be able to handle up to 10000 contacts and 1000 events without any major performance regression
-- Should not exceed 500MB in memory if handling <1000 contacts
-- Data storage should not exceed 5MB for 10000 contacts
+- Should have a response time of 500ms or less for any user command or action
+- Should be able to handle up to 10000 contacts and 1000 events while following the response time requirement above
+- Should launch within 3 seconds on standard hardware
+- Should not exceed 500MB in memory when handling 10000 contacts
+- Data storage should not exceed 5MB when handling 10000 contacts
 
 #### Features
 
 - All features should work offline
 - Should be designed such that fast-typing users can do actions faster than using a standard GUI
+- UI design should be clean and simple, with consistent spacing and alignment, reasonable use of colors, and readable fonts
 - Command syntax should be consistent and intuitive
-- Command response should be helpful and descriptive enough, such that the user has no doubts on whether the operation was successful
-- Command errors should be helpful enough for users to fix their commands without referring the user guide every time
-- Data storage of contacts or events should use a human editable file, e.g. text or JSON files
+  - Commands should start with either `contact` or `event` to indicate the entity being operated on
+  - General command format: `{contact | event} commandName [parameters] [options]`
+  - User-supplied parameters should follow this format: `--parameterName parameterValue`
+  - User-supplied options should follow this format: `-optionName`
+- Command response should be useful enough such that the user has no doubts on whether the operation was successful
+- Command errors should be helpful enough for users to fix their commands without referring to the user guide each time
+- Data storage of contacts or events should use a human editable file
 - Should explicitly warn and allow user to recover data manually in case of data corruption
 
 #### Development
 
 - Should be developed on top of the AB3 project
 - Should be developed iteratively in a breadth-first manner
+- Should have a clear and consistent coding style, following the [Java coding standards](https://se-education.org/guides/conventions/java/index.html)
+- Should have tests for every public method or class, and have at least 75% code coverage
 - Should not have a remote server
 - Should not use a DBMS
 - Should use OOP principles
+- Should use GitHub Issues to track tasks, bugs, and features
+- Should follow the [Git conventions](https://se-education.org/guides/conventions/git.html) for commit messages and branch names
+- PR names should follow this format: `[#issueNumber] description`, where description is a short summary of the changes made in the PR, following the same Git conventions for commit messages.
+- When merging a PR, the merge commit message should follow this format: `description (#prNumber)`, where description is the same description found in the PR title.
+  - For larger PRs, the merge commit description should be a summary of the changes made in the PR, while still following the Git conventions.
+- Should pass all status checks and have at least one approving review from a different team member before merging a PR.
 - Should package the application into a single jar file, with file size not exceeding 100MB
 - Should design the user guide and developer guide to be PDF friendly, with each file size not exceeding 15MB
 
 ### Glossary
+
+- **Event organizer**: A person organizes events and manages contacts. The intended users of the app.
+- **Contact**: An entity that represents a person that may be participating in an event.
+- **Event**: An entity that represents an event that the user is organizing.
+- **Mainstream OS**: Windows, Linux, MacOS
+- **Standard hardware**: A computer with at least 4GB RAM, Intel i5 processor (or equivalent), and SSD.
+- **GUI**: Graphical User Interface. An interface that is primarily visual and mouse-driven, with minimal keyboard shortcuts.
+- **Human editable file**: A file that can be opened and edited using a standard text editor, such as Notepad.
+- **Data corruption**: Storage data cannot be read or parsed correctly, due to invalid format or invalid values.
+- **Breadth-first manner**: Implementing a basic version of all features first, then iterating to improve each feature.
+- **Code coverage**: The percentage of code that is executed during testing. Measured using the Codecov tool.
+- **DBMS**: Database management system, e.g. MySQL, PostgreSQL, etc.
+- **OOP principles**: Object-Oriented programming principles, e.g. Encapsulation, Abstraction, Inheritance, Polymorphism, etc.
+- **PR**: Pull Request. A feature of GitHub that allows developers to collaborate on code changes.
+- **Status checks**: Automated tests that run on the code in a PR to ensure that it meets the project's quality standards. In this project, the status checks include:
+  - No checkstyle violations
+  - All tests pass
+  - Build is successful on all 3 platforms: Windows, Linux, MacOS
 
 ---
 
