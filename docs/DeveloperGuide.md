@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# NUS Event Mailer Pro Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -13,7 +13,7 @@
 
 ## **Acknowledgements**
 
-This project is based on the AddressBook-Level3 project created by the SE-EDU initiative.
+This project is based on the NUS Event Mailer Pro-Level3 project created by the SE-EDU initiative.
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
 
