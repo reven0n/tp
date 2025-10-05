@@ -1,10 +1,11 @@
 package seedu.address.model.event;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Person;
 
