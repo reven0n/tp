@@ -13,7 +13,11 @@
 
 ## **Acknowledgements**
 
-This project is based on the NUS Event Mailer Pro-Level3 project created by the SE-EDU initiative.
+This project is based on the AddressBook-Level3 project created by the SE-EDU initiative.
+
+AI was used throughout the development of this project:
+- GitHub Copilot was used for auto-completing code snippets.
+- Claude Sonnet 4.5 was used to generate the unit tests.
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
 
@@ -518,6 +522,8 @@ Use case ends.
 
 #### Development
 
+##### Code
+
 - Should be developed on top of the AB3 project
 - Should be developed iteratively in a breadth-first manner
 - Should have a clear and consistent coding style, following the [Java coding standards](https://se-education.org/guides/conventions/java/index.html)
@@ -525,12 +531,23 @@ Use case ends.
 - Should not have a remote server
 - Should not use a DBMS
 - Should use OOP principles
+- Should log every high-level action that the system performs (e.g. save data, respond to command), and every error encountered
+- Should use assertions where there are assumptions made, to catch programming errors during development
+- Should use checked exceptions to handle any user input errors
+- All errors or exceptions that are outside the programmer's control (e.g. file I/O errors) should not cause the program to crash, and should be handled gracefully with appropriate user messages
+- Should use defensive programming when appropriate
+
+##### Collaboration
+
 - Should use GitHub Issues to track tasks, bugs, and features
 - Should follow the [Git conventions](https://se-education.org/guides/conventions/git.html) for commit messages and branch names
 - PR names should follow this format: `[#issueNumber] description`, where description is a short summary of the changes made in the PR, following the same Git conventions for commit messages.
 - When merging a PR, the merge commit message should follow this format: `description (#prNumber)`, where description is the same description found in the PR title.
   - For larger PRs, the merge commit description should be a summary of the changes made in the PR, while still following the Git conventions.
 - Should pass all status checks and have at least one approving review from a different team member before merging a PR.
+
+##### Submission
+
 - Should package the application into a single jar file, with file size not exceeding 100MB
 - Should design the user guide and developer guide to be PDF friendly, with each file size not exceeding 15MB
 
@@ -548,6 +565,7 @@ Use case ends.
 - **Code coverage**: The percentage of code that is executed during testing. Measured using the Codecov tool.
 - **DBMS**: Database management system, e.g. MySQL, PostgreSQL, etc.
 - **OOP principles**: Object-Oriented programming principles, e.g. Encapsulation, Abstraction, Inheritance, Polymorphism, etc.
+- **Defensive programming**: A programming approach that anticipates and handles potential errors or misuse of the code, to prevent crashes or unexpected behavior. See [here](https://nus-cs2103-ay2526s1.github.io/website/se-book-adapted/chapters/errorHandling.html#defensive-programming) for more details.
 - **PR**: Pull Request. A feature of GitHub that allows developers to collaborate on code changes.
 - **Status checks**: Automated tests that run on the code in a PR to ensure that it meets the project's quality standards. In this project, the status checks include:
   - No checkstyle violations
