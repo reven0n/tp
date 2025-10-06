@@ -1,17 +1,13 @@
 package nusemp.model.util;
 
+import nusemp.model.AddressBook;
+import nusemp.model.ReadOnlyAddressBook;
+import nusemp.model.person.*;
+import nusemp.model.tag.Tag;
+
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import nusemp.model.AddressBook;
-import nusemp.model.ReadOnlyAddressBook;
-import nusemp.model.person.Address;
-import nusemp.model.person.Email;
-import nusemp.model.person.Name;
-import nusemp.model.person.Person;
-import nusemp.model.person.Phone;
-import nusemp.model.tag.Tag;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.

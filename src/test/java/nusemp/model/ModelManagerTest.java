@@ -1,22 +1,19 @@
 package nusemp.model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalPersons.ALICE;
-import static nusemp.testutil.TypicalPersons.BENSON;
+import nusemp.commons.core.GuiSettings;
+import nusemp.model.person.NameContainsKeywordsPredicate;
+import nusemp.testutil.AddressBookBuilder;
+import org.junit.jupiter.api.Test;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Test;
-
-import nusemp.commons.core.GuiSettings;
-import nusemp.model.person.NameContainsKeywordsPredicate;
-import nusemp.testutil.AddressBookBuilder;
+import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalPersons.ALICE;
+import static nusemp.testutil.TypicalPersons.BENSON;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ModelManagerTest {
 

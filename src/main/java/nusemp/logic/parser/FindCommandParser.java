@@ -1,12 +1,12 @@
 package nusemp.logic.parser;
 
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.Arrays;
-
 import nusemp.logic.commands.FindCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.person.NameContainsKeywordsPredicate;
+
+import java.util.Arrays;
+
+import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments and creates a new FindCommand object

@@ -1,12 +1,12 @@
 package nusemp.ui;
 
-import static java.util.Objects.requireNonNull;
+import javafx.fxml.FXMLLoader;
+import nusemp.MainApp;
 
 import java.io.IOException;
 import java.net.URL;
 
-import javafx.fxml.FXMLLoader;
-import nusemp.MainApp;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a distinct part of the UI. e.g. Windows, dialogs, panels, status bars, etc.

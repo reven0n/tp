@@ -1,10 +1,10 @@
 package nusemp.logic.commands;
 
-import static java.util.Objects.requireNonNull;
+import nusemp.commons.util.ToStringBuilder;
 
 import java.util.Objects;
 
-import nusemp.commons.util.ToStringBuilder;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents the result of a command execution.

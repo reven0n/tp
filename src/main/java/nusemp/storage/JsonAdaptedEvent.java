@@ -1,20 +1,19 @@
 package nusemp.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.ReadOnlyAddressBook;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventDate;
 import nusemp.model.event.EventName;
 import nusemp.model.person.Person;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Jackson-friendly version of {@link Event}.

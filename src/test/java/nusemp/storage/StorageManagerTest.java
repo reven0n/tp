@@ -1,19 +1,18 @@
 package nusemp.storage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
-
-import java.nio.file.Path;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
 import nusemp.commons.core.GuiSettings;
 import nusemp.model.AddressBook;
 import nusemp.model.ReadOnlyAddressBook;
 import nusemp.model.UserPrefs;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import java.nio.file.Path;
+
+import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class StorageManagerTest {
 

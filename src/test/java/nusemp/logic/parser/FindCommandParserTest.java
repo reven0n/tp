@@ -1,15 +1,14 @@
 package nusemp.logic.parser;
 
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import nusemp.logic.commands.FindCommand;
+import nusemp.model.person.NameContainsKeywordsPredicate;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import org.junit.jupiter.api.Test;
-
-import nusemp.logic.commands.FindCommand;
-import nusemp.model.person.NameContainsKeywordsPredicate;
+import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 public class FindCommandParserTest {
 

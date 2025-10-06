@@ -1,12 +1,12 @@
 package nusemp.storage;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Optional;
-
 import nusemp.commons.exceptions.DataLoadingException;
 import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.UserPrefs;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * Represents a storage for {@link UserPrefs}.

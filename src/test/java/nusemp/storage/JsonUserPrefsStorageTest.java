@@ -1,20 +1,19 @@
 package nusemp.storage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static nusemp.testutil.Assert.assertThrows;
+import nusemp.commons.core.GuiSettings;
+import nusemp.commons.exceptions.DataLoadingException;
+import nusemp.model.UserPrefs;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
-
-import nusemp.commons.core.GuiSettings;
-import nusemp.commons.exceptions.DataLoadingException;
-import nusemp.model.UserPrefs;
+import static nusemp.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class JsonUserPrefsStorageTest {
 

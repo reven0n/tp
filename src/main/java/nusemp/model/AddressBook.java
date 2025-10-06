@@ -1,15 +1,15 @@
 package nusemp.model;
 
-import static java.util.Objects.requireNonNull;
-
-import java.util.List;
-
 import javafx.collections.ObservableList;
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.event.Event;
 import nusemp.model.event.UniqueEventList;
 import nusemp.model.person.Person;
 import nusemp.model.person.UniquePersonList;
+
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Wraps all data at the address-book level

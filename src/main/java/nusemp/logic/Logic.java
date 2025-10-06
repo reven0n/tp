@@ -1,7 +1,5 @@
 package nusemp.logic;
 
-import java.nio.file.Path;
-
 import javafx.collections.ObservableList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.logic.commands.CommandResult;
@@ -10,6 +8,8 @@ import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;
 import nusemp.model.ReadOnlyAddressBook;
 import nusemp.model.person.Person;
+
+import java.nio.file.Path;
 
 /**
  * API of the Logic component

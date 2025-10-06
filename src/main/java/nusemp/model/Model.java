@@ -1,12 +1,12 @@
 package nusemp.model;
 
-import java.nio.file.Path;
-import java.util.function.Predicate;
-
 import javafx.collections.ObservableList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.model.event.Event;
 import nusemp.model.person.Person;
+
+import java.nio.file.Path;
+import java.util.function.Predicate;
 
 /**
  * The API of the Model component.

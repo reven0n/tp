@@ -1,22 +1,5 @@
 package nusemp.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static nusemp.logic.commands.CommandTestUtil.DESC_AMY;
-import static nusemp.logic.commands.CommandTestUtil.DESC_BOB;
-import static nusemp.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static nusemp.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static nusemp.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
-import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.jupiter.api.Test;
-
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
@@ -27,6 +10,13 @@ import nusemp.model.UserPrefs;
 import nusemp.model.person.Person;
 import nusemp.testutil.EditPersonDescriptorBuilder;
 import nusemp.testutil.PersonBuilder;
+import org.junit.jupiter.api.Test;
+
+import static nusemp.logic.commands.CommandTestUtil.*;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.

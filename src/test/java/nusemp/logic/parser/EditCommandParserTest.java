@@ -1,39 +1,5 @@
 package nusemp.logic.parser;
 
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static nusemp.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static nusemp.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static nusemp.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static nusemp.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static nusemp.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static nusemp.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static nusemp.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static nusemp.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static nusemp.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static nusemp.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static nusemp.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static nusemp.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static nusemp.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static nusemp.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static nusemp.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
-import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
-import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-
-import org.junit.jupiter.api.Test;
-
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.EditCommand;
@@ -44,6 +10,14 @@ import nusemp.model.person.Name;
 import nusemp.model.person.Phone;
 import nusemp.model.tag.Tag;
 import nusemp.testutil.EditPersonDescriptorBuilder;
+import org.junit.jupiter.api.Test;
+
+import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.commands.CommandTestUtil.*;
+import static nusemp.logic.parser.CliSyntax.*;
+import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static nusemp.testutil.TypicalIndexes.*;
 
 public class EditCommandParserTest {
 

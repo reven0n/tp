@@ -1,18 +1,5 @@
 package nusemp.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
-import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
-import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
-import static nusemp.testutil.Assert.assertThrows;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import nusemp.commons.core.index.Index;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AddressBook;
@@ -20,6 +7,15 @@ import nusemp.model.Model;
 import nusemp.model.person.NameContainsKeywordsPredicate;
 import nusemp.model.person.Person;
 import nusemp.testutil.EditPersonDescriptorBuilder;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static nusemp.logic.parser.CliSyntax.*;
+import static nusemp.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Contains helper methods for testing commands.

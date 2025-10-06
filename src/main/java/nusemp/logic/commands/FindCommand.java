@@ -1,11 +1,11 @@
 package nusemp.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
 import nusemp.model.Model;
 import nusemp.model.person.NameContainsKeywordsPredicate;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.

@@ -1,8 +1,8 @@
 package nusemp.model.tag;
 
-import static nusemp.testutil.Assert.assertThrows;
-
 import org.junit.jupiter.api.Test;
+
+import static nusemp.testutil.Assert.assertThrows;
 
 public class TagTest {
 

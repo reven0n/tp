@@ -1,17 +1,13 @@
 package nusemp.testutil;
 
-import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
-import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
-import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
-
-import java.util.Set;
-
 import nusemp.logic.commands.AddCommand;
 import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
 import nusemp.model.person.Person;
 import nusemp.model.tag.Tag;
+
+import java.util.Set;
+
+import static nusemp.logic.parser.CliSyntax.*;
 
 /**
  * A utility class for Person.

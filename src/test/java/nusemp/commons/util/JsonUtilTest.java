@@ -1,14 +1,13 @@
 package nusemp.commons.util;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import nusemp.testutil.SerializableTestClass;
+import nusemp.testutil.TestUtil;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Path;
 
-import org.junit.jupiter.api.Test;
-
-import nusemp.testutil.SerializableTestClass;
-import nusemp.testutil.TestUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests JSON Read and Write

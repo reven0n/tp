@@ -1,33 +1,25 @@
 package nusemp.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.junit.jupiter.api.Test;
-
-import nusemp.logic.commands.AddCommand;
-import nusemp.logic.commands.ClearCommand;
-import nusemp.logic.commands.DeleteCommand;
-import nusemp.logic.commands.EditCommand;
+import nusemp.logic.commands.*;
 import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
-import nusemp.logic.commands.ExitCommand;
-import nusemp.logic.commands.FindCommand;
-import nusemp.logic.commands.HelpCommand;
-import nusemp.logic.commands.ListCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.person.NameContainsKeywordsPredicate;
 import nusemp.model.person.Person;
 import nusemp.testutil.EditPersonDescriptorBuilder;
 import nusemp.testutil.PersonBuilder;
 import nusemp.testutil.PersonUtil;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AddressBookParserTest {
 

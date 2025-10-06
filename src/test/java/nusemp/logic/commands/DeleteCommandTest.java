@@ -1,23 +1,18 @@
 package nusemp.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
-import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
-
-import org.junit.jupiter.api.Test;
-
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.person.Person;
+import org.junit.jupiter.api.Test;
+
+import static nusemp.logic.commands.CommandTestUtil.*;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for

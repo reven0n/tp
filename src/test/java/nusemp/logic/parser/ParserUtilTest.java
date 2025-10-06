@@ -1,24 +1,23 @@
 package nusemp.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static nusemp.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.jupiter.api.Test;
-
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;
 import nusemp.model.person.Phone;
 import nusemp.model.tag.Tag;
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
+import static nusemp.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";

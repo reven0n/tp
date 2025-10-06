@@ -1,15 +1,15 @@
 package nusemp.model.event;
 
-import static java.util.Objects.requireNonNull;
-import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
-
-import java.util.Iterator;
-import java.util.List;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import nusemp.model.event.exceptions.DuplicateEventException;
 import nusemp.model.event.exceptions.EventNotFoundException;
+
+import java.util.Iterator;
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * A list of events that enforces uniqueness between its elements and does not allow nulls.

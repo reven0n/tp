@@ -1,23 +1,19 @@
 package nusemp.logic.parser;
 
-import static java.util.Objects.requireNonNull;
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
-import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
-import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+import nusemp.commons.core.index.Index;
+import nusemp.logic.commands.EditCommand;
+import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
+import nusemp.logic.parser.exceptions.ParseException;
+import nusemp.model.tag.Tag;
 
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
 
-import nusemp.commons.core.index.Index;
-import nusemp.logic.commands.EditCommand;
-import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
-import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.tag.Tag;
+import static java.util.Objects.requireNonNull;
+import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.parser.CliSyntax.*;
 
 /**
  * Parses input arguments and creates a new EditCommand object

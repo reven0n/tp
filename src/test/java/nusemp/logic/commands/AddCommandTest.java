@@ -1,20 +1,5 @@
 package nusemp.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalPersons.ALICE;
-
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.function.Predicate;
-
-import nusemp.model.event.Event;
-import org.junit.jupiter.api.Test;
-
 import javafx.collections.ObservableList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.logic.Messages;
@@ -23,8 +8,20 @@ import nusemp.model.AddressBook;
 import nusemp.model.Model;
 import nusemp.model.ReadOnlyAddressBook;
 import nusemp.model.ReadOnlyUserPrefs;
+import nusemp.model.event.Event;
 import nusemp.model.person.Person;
 import nusemp.testutil.PersonBuilder;
+import org.junit.jupiter.api.Test;
+
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.function.Predicate;
+
+import static java.util.Objects.requireNonNull;
+import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalPersons.ALICE;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AddCommandTest {
 

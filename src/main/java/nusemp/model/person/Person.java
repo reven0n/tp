@@ -1,14 +1,14 @@
 package nusemp.model.person;
 
-import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+import nusemp.commons.util.ToStringBuilder;
+import nusemp.model.tag.Tag;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import nusemp.commons.util.ToStringBuilder;
-import nusemp.model.tag.Tag;
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a Person in the address book.

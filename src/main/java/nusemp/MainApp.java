@@ -1,10 +1,5 @@
 package nusemp;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.util.Optional;
-import java.util.logging.Logger;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import nusemp.commons.core.Config;
@@ -15,21 +10,16 @@ import nusemp.commons.util.ConfigUtil;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.Logic;
 import nusemp.logic.LogicManager;
-import nusemp.model.AddressBook;
-import nusemp.model.Model;
-import nusemp.model.ModelManager;
-import nusemp.model.ReadOnlyAddressBook;
-import nusemp.model.ReadOnlyUserPrefs;
-import nusemp.model.UserPrefs;
+import nusemp.model.*;
 import nusemp.model.util.SampleDataUtil;
-import nusemp.storage.AddressBookStorage;
-import nusemp.storage.JsonAddressBookStorage;
-import nusemp.storage.JsonUserPrefsStorage;
-import nusemp.storage.Storage;
-import nusemp.storage.StorageManager;
-import nusemp.storage.UserPrefsStorage;
+import nusemp.storage.*;
 import nusemp.ui.Ui;
 import nusemp.ui.UiManager;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 /**
  * Runs the application.

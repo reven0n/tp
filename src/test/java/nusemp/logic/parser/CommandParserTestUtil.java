@@ -1,9 +1,9 @@
 package nusemp.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import nusemp.logic.commands.Command;
 import nusemp.logic.parser.exceptions.ParseException;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Contains helper methods for testing command parsers.

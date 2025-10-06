@@ -1,21 +1,20 @@
 package nusemp.storage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static nusemp.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
-import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalPersons.BENSON;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.junit.jupiter.api.Test;
-
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;
 import nusemp.model.person.Phone;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static nusemp.storage.JsonAdaptedPerson.MISSING_FIELD_MESSAGE_FORMAT;
+import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalPersons.BENSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";

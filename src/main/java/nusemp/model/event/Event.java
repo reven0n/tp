@@ -1,13 +1,13 @@
 package nusemp.model.event;
 
-import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+import nusemp.commons.util.ToStringBuilder;
+import nusemp.model.person.Person;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import nusemp.commons.util.ToStringBuilder;
-import nusemp.model.person.Person;
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents an Event in the address book.
