@@ -3,8 +3,8 @@ package nusemp.model.event;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-
 import static java.util.Objects.requireNonNull;
+
 import static nusemp.commons.util.AppUtil.checkArgument;
 
 /**

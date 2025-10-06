@@ -1,15 +1,22 @@
 package nusemp.logic.parser;
 
-import nusemp.logic.commands.AddCommand;
-import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.person.*;
-import nusemp.model.tag.Tag;
-
 import java.util.Set;
 import java.util.stream.Stream;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.parser.CliSyntax.*;
+import nusemp.logic.commands.AddCommand;
+import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
+import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
+import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+import nusemp.logic.parser.exceptions.ParseException;
+import nusemp.model.person.Address;
+import nusemp.model.person.Email;
+import nusemp.model.person.Name;
+import nusemp.model.person.Person;
+import nusemp.model.person.Phone;
+import nusemp.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new AddCommand object

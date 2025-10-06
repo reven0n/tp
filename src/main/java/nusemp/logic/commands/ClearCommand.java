@@ -1,9 +1,9 @@
 package nusemp.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import nusemp.model.AddressBook;
 import nusemp.model.Model;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Clears the address book.

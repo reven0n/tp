@@ -1,5 +1,7 @@
 package nusemp.ui;
 
+import java.util.logging.Logger;
+
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -9,8 +11,6 @@ import nusemp.MainApp;
 import nusemp.commons.core.LogsCenter;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.Logic;
-
-import java.util.logging.Logger;
 
 /**
  * The manager of the UI component.

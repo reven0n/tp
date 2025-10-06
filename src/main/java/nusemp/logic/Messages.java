@@ -1,11 +1,11 @@
 package nusemp.logic;
 
-import nusemp.logic.parser.Prefix;
-import nusemp.model.person.Person;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import nusemp.logic.parser.Prefix;
+import nusemp.model.person.Person;
 
 /**
  * Container for user visible messages.

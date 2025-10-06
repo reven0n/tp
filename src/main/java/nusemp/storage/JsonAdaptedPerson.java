@@ -1,16 +1,21 @@
 package nusemp.storage;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import nusemp.commons.exceptions.IllegalValueException;
-import nusemp.model.person.*;
-import nusemp.model.tag.Tag;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import nusemp.commons.exceptions.IllegalValueException;
+import nusemp.model.person.Address;
+import nusemp.model.person.Email;
+import nusemp.model.person.Name;
+import nusemp.model.person.Person;
+import nusemp.model.person.Phone;
+import nusemp.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Person}.

@@ -1,5 +1,10 @@
 package nusemp.logic;
 
+import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+import java.nio.file.Path;
+import java.util.logging.Logger;
+
 import javafx.collections.ObservableList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
@@ -12,11 +17,6 @@ import nusemp.model.Model;
 import nusemp.model.ReadOnlyAddressBook;
 import nusemp.model.person.Person;
 import nusemp.storage.Storage;
-
-import java.io.IOException;
-import java.nio.file.AccessDeniedException;
-import java.nio.file.Path;
-import java.util.logging.Logger;
 
 /**
  * The main LogicManager of the app.

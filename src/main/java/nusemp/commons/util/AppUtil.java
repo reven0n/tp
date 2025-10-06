@@ -1,9 +1,9 @@
 package nusemp.commons.util;
 
+import static java.util.Objects.requireNonNull;
+
 import javafx.scene.image.Image;
 import nusemp.MainApp;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * A container for App specific utility functions

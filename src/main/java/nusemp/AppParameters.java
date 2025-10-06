@@ -1,15 +1,15 @@
 package nusemp;
 
-import javafx.application.Application;
-import nusemp.commons.core.LogsCenter;
-import nusemp.commons.util.FileUtil;
-import nusemp.commons.util.ToStringBuilder;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
+
+import javafx.application.Application;
+import nusemp.commons.core.LogsCenter;
+import nusemp.commons.util.FileUtil;
+import nusemp.commons.util.ToStringBuilder;
 
 /**
  * Represents the parsed command-line parameters given to the application.

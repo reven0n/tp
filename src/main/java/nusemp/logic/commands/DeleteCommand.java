@@ -1,15 +1,14 @@
 package nusemp.logic.commands;
 
+import java.util.List;
+import static java.util.Objects.requireNonNull;
+
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.person.Person;
-
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Deletes a person identified using it's displayed index from the address book.

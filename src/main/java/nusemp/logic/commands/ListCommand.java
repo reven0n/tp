@@ -1,8 +1,8 @@
 package nusemp.logic.commands;
 
-import nusemp.model.Model;
-
 import static java.util.Objects.requireNonNull;
+
+import nusemp.model.Model;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**

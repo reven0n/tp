@@ -1,12 +1,12 @@
 package nusemp.storage;
 
-import nusemp.commons.exceptions.DataLoadingException;
-import nusemp.model.AddressBook;
-import nusemp.model.ReadOnlyAddressBook;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
+
+import nusemp.commons.exceptions.DataLoadingException;
+import nusemp.model.AddressBook;
+import nusemp.model.ReadOnlyAddressBook;
 
 /**
  * Represents a storage for {@link AddressBook}.

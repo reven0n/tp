@@ -1,8 +1,8 @@
 package nusemp.model;
 
-import nusemp.commons.core.GuiSettings;
-
 import java.nio.file.Path;
+
+import nusemp.commons.core.GuiSettings;
 
 /**
  * Unmodifiable view of user prefs.

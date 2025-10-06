@@ -1,5 +1,7 @@
 package nusemp.ui;
 
+import java.util.logging.Logger;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -14,8 +16,6 @@ import nusemp.logic.Logic;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
-
-import java.util.logging.Logger;
 
 /**
  * The Main Window. Provides the basic application layout containing

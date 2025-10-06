@@ -1,5 +1,10 @@
 package nusemp.logic.parser;
 
+import java.util.Collection;
+import java.util.HashSet;
+import static java.util.Objects.requireNonNull;
+import java.util.Set;
+
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
@@ -8,12 +13,6 @@ import nusemp.model.person.Email;
 import nusemp.model.person.Name;
 import nusemp.model.person.Phone;
 import nusemp.model.tag.Tag;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

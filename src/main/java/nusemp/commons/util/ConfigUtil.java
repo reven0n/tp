@@ -1,11 +1,11 @@
 package nusemp.commons.util;
 
-import nusemp.commons.core.Config;
-import nusemp.commons.exceptions.DataLoadingException;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
+
+import nusemp.commons.core.Config;
+import nusemp.commons.exceptions.DataLoadingException;
 
 /**
  * A class for accessing the Config File.

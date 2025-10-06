@@ -3,8 +3,8 @@ package nusemp.commons.util;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
-
 import static java.util.Objects.requireNonNull;
+
 import static nusemp.commons.util.AppUtil.checkArgument;
 
 /**

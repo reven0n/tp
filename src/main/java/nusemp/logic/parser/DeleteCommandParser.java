@@ -1,10 +1,9 @@
 package nusemp.logic.parser;
 
 import nusemp.commons.core.index.Index;
+import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import nusemp.logic.commands.DeleteCommand;
 import nusemp.logic.parser.exceptions.ParseException;
-
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 /**
  * Parses input arguments and creates a new DeleteCommand object

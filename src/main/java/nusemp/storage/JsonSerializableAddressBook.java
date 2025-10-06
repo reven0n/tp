@@ -1,17 +1,18 @@
 package nusemp.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.AddressBook;
 import nusemp.model.ReadOnlyAddressBook;
 import nusemp.model.event.Event;
 import nusemp.model.person.Person;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * An Immutable AddressBook that is serializable to JSON format.

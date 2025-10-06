@@ -1,15 +1,22 @@
 package nusemp.logic.parser;
 
-import nusemp.commons.core.LogsCenter;
-import nusemp.logic.commands.*;
-import nusemp.logic.parser.exceptions.ParseException;
-
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import nusemp.commons.core.LogsCenter;
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import nusemp.logic.commands.AddCommand;
+import nusemp.logic.commands.ClearCommand;
+import nusemp.logic.commands.Command;
+import nusemp.logic.commands.DeleteCommand;
+import nusemp.logic.commands.EditCommand;
+import nusemp.logic.commands.ExitCommand;
+import nusemp.logic.commands.FindCommand;
+import nusemp.logic.commands.HelpCommand;
+import nusemp.logic.commands.ListCommand;
+import nusemp.logic.parser.exceptions.ParseException;
 
 /**
  * Parses user input.

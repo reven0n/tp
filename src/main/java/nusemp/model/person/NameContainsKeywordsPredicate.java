@@ -1,10 +1,10 @@
 package nusemp.model.person;
 
-import nusemp.commons.util.StringUtil;
-import nusemp.commons.util.ToStringBuilder;
-
 import java.util.List;
 import java.util.function.Predicate;
+
+import nusemp.commons.util.StringUtil;
+import nusemp.commons.util.ToStringBuilder;
 
 /**
  * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
