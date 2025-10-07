@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.function.Predicate;
 
-import javafx.collections.ObservableList;
+import org.junit.jupiter.api.Test;
+
 import nusemp.commons.core.GuiSettings;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
@@ -23,7 +24,7 @@ import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.event.Event;
 import nusemp.model.person.Person;
 import nusemp.testutil.PersonBuilder;
-import org.junit.jupiter.api.Test;
+
 
 public class AddCommandTest {
 
@@ -149,7 +150,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Person> getFilteredPersonList() {
+        public javafx.collections.ObservableList<nusemp.model.person.Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -184,7 +185,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Event> getFilteredEventList() {
+        public javafx.collections.ObservableList<nusemp.model.event.Event> getFilteredEventList() {
             throw new AssertionError("This method should not be called.");
         }
 

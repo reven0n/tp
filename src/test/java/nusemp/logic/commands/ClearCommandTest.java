@@ -3,11 +3,12 @@ package nusemp.logic.commands;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.model.AddressBook;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
-import org.junit.jupiter.api.Test;
 
 public class ClearCommandTest {
 

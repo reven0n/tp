@@ -8,8 +8,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import nusemp.testutil.PersonBuilder;
 import org.junit.jupiter.api.Test;
+
+import nusemp.testutil.PersonBuilder;
 
 public class NameContainsKeywordsPredicateTest {
 

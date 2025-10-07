@@ -7,10 +7,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import java.net.URL;
 import java.nio.file.Path;
 
-import javafx.fxml.FXML;
-import nusemp.MainApp;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import nusemp.MainApp;
 
 public class UiPartTest {
 
@@ -87,7 +87,7 @@ public class UiPartTest {
      */
     private static class TestUiPart<T> extends UiPart<T> {
 
-        @FXML
+        @javafx.fxml.FXML
         private TestFxmlObject validFileRoot; // Check that @FXML annotations work
 
         TestUiPart(URL fxmlFileUrl, T root) {

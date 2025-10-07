@@ -9,12 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;
 import nusemp.model.person.Phone;
-import org.junit.jupiter.api.Test;
 
 public class JsonAdaptedPersonTest {
     private static final String INVALID_NAME = "R@chel";

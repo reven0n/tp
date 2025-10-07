@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
 import nusemp.logic.commands.AddCommand;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.ListCommand;
@@ -28,9 +32,6 @@ import nusemp.storage.JsonAddressBookStorage;
 import nusemp.storage.JsonUserPrefsStorage;
 import nusemp.storage.StorageManager;
 import nusemp.testutil.PersonBuilder;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 public class LogicManagerTest {
     private static final IOException DUMMY_IO_EXCEPTION = new IOException("dummy IO exception");

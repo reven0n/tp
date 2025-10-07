@@ -11,13 +11,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;
 import nusemp.model.person.Phone;
 import nusemp.model.tag.Tag;
-import org.junit.jupiter.api.Test;
 
 public class ParserUtilTest {
     private static final String INVALID_NAME = "R@chel";

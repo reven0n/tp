@@ -6,11 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.commons.util.JsonUtil;
 import nusemp.model.AddressBook;
 import nusemp.testutil.TypicalPersons;
-import org.junit.jupiter.api.Test;
 
 public class JsonSerializableAddressBookTest {
 

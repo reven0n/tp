@@ -6,9 +6,10 @@ import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.logic.commands.FindCommand;
 import nusemp.model.person.NameContainsKeywordsPredicate;
-import org.junit.jupiter.api.Test;
 
 public class FindCommandParserTest {
 

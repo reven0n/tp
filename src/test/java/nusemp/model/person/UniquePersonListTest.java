@@ -13,10 +13,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.model.person.exceptions.DuplicatePersonException;
 import nusemp.model.person.exceptions.PersonNotFoundException;
 import nusemp.testutil.PersonBuilder;
-import org.junit.jupiter.api.Test;
 
 public class UniquePersonListTest {
 

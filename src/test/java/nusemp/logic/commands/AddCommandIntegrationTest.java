@@ -4,14 +4,15 @@ import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import nusemp.logic.Messages;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.person.Person;
 import nusemp.testutil.PersonBuilder;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.

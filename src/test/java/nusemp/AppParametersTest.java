@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javafx.application.Application;
 import org.junit.jupiter.api.Test;
 
 public class AppParametersTest {
@@ -67,7 +66,7 @@ public class AppParametersTest {
         assertFalse(appParameters.equals(otherAppParameters));
     }
 
-    private static class ParametersStub extends Application.Parameters {
+    private static class ParametersStub extends javafx.application.Application.Parameters {
         private Map<String, String> namedParameters = new HashMap<>();
 
         @Override

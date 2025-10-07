@@ -9,11 +9,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.exceptions.DataLoadingException;
 import nusemp.model.UserPrefs;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
 
 public class JsonUserPrefsStorageTest {
 

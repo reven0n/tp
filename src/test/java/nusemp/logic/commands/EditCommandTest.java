@@ -15,6 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
@@ -25,7 +27,6 @@ import nusemp.model.UserPrefs;
 import nusemp.model.person.Person;
 import nusemp.testutil.EditPersonDescriptorBuilder;
 import nusemp.testutil.PersonBuilder;
-import org.junit.jupiter.api.Test;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.

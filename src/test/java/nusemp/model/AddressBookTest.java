@@ -14,13 +14,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import nusemp.model.event.Event;
+import org.junit.jupiter.api.Test;
+
 import nusemp.model.person.Person;
 import nusemp.model.person.exceptions.DuplicatePersonException;
 import nusemp.testutil.PersonBuilder;
-import org.junit.jupiter.api.Test;
 
 public class AddressBookTest {
 
@@ -94,20 +92,22 @@ public class AddressBookTest {
      * A stub ReadOnlyAddressBook whose persons list can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
-        private final ObservableList<Person> persons = FXCollections.observableArrayList();
-        private final ObservableList<Event> events = FXCollections.observableArrayList();
+        private final javafx.collections.ObservableList<nusemp.model.person.Person> persons = javafx.collections
+                .FXCollections.observableArrayList();
+        private final javafx.collections.ObservableList<nusemp.model.event.Event> events = javafx.collections
+                .FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons) {
             this.persons.setAll(persons);
         }
 
         @Override
-        public ObservableList<Person> getPersonList() {
+        public javafx.collections.ObservableList<nusemp.model.person.Person> getPersonList() {
             return persons;
         }
 
         @Override
-        public ObservableList<Event> getEventList() {
+        public javafx.collections.ObservableList<nusemp.model.event.Event> getEventList() {
             return events;
         }
     }

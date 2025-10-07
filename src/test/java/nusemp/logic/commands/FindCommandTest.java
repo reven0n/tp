@@ -13,11 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.person.NameContainsKeywordsPredicate;
-import org.junit.jupiter.api.Test;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.

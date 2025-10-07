@@ -1,6 +1,15 @@
 package nusemp.testutil;
 
-import static nusemp.logic.commands.CommandTestUtil.*;
+import static nusemp.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static nusemp.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static nusemp.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
+import static nusemp.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static nusemp.logic.commands.CommandTestUtil.VALID_NAME_AMY;
+import static nusemp.logic.commands.CommandTestUtil.VALID_NAME_BOB;
+import static nusemp.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
+import static nusemp.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static nusemp.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static nusemp.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import java.util.ArrayList;
 import java.util.Arrays;

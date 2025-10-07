@@ -3,9 +3,10 @@ package nusemp.logic.commands;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
-import org.junit.jupiter.api.Test;
 
 public class ExitCommandTest {
     private Model model = new ModelManager();

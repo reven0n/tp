@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.logic.commands.AddCommand;
 import nusemp.logic.commands.ClearCommand;
 import nusemp.logic.commands.DeleteCommand;
@@ -26,7 +28,6 @@ import nusemp.model.person.Person;
 import nusemp.testutil.EditPersonDescriptorBuilder;
 import nusemp.testutil.PersonBuilder;
 import nusemp.testutil.PersonUtil;
-import org.junit.jupiter.api.Test;
 
 public class AddressBookParserTest {
 

@@ -10,10 +10,11 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import nusemp.commons.core.Config;
-import nusemp.commons.exceptions.DataLoadingException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
+
+import nusemp.commons.core.Config;
+import nusemp.commons.exceptions.DataLoadingException;
 
 public class ConfigUtilTest {
 

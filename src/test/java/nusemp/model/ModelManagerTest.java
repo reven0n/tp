@@ -12,10 +12,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
+import org.junit.jupiter.api.Test;
+
 import nusemp.commons.core.GuiSettings;
 import nusemp.model.person.NameContainsKeywordsPredicate;
 import nusemp.testutil.AddressBookBuilder;
-import org.junit.jupiter.api.Test;
 
 public class ModelManagerTest {
 

@@ -5,8 +5,9 @@ import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
-import nusemp.logic.commands.DeleteCommand;
 import org.junit.jupiter.api.Test;
+
+import nusemp.logic.commands.DeleteCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
