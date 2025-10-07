@@ -1,10 +1,11 @@
 package nusemp.model.event;
 
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.person.Person;
 

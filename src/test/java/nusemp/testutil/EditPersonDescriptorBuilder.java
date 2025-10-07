@@ -1,12 +1,16 @@
 package nusemp.testutil;
 
-import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
-import nusemp.model.person.*;
-import nusemp.model.tag.Tag;
-
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
+import nusemp.model.person.Address;
+import nusemp.model.person.Email;
+import nusemp.model.person.Name;
+import nusemp.model.person.Person;
+import nusemp.model.person.Phone;
+import nusemp.model.tag.Tag;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.

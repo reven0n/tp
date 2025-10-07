@@ -1,7 +1,8 @@
 package nusemp.logic.commands;
 
-import java.util.List;
 import static java.util.Objects.requireNonNull;
+
+import java.util.List;
 
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.ToStringBuilder;

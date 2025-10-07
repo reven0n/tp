@@ -1,9 +1,9 @@
 package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import nusemp.model.Model;
-import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
  * Lists all persons in the address book to the user.

@@ -1,11 +1,15 @@
 package nusemp.testutil;
 
-import nusemp.model.person.*;
-import nusemp.model.tag.Tag;
-import nusemp.model.util.SampleDataUtil;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import nusemp.model.person.Address;
+import nusemp.model.person.Email;
+import nusemp.model.person.Name;
+import nusemp.model.person.Person;
+import nusemp.model.person.Phone;
+import nusemp.model.tag.Tag;
+import nusemp.model.util.SampleDataUtil;
 
 /**
  * A utility class to help with building Person objects.

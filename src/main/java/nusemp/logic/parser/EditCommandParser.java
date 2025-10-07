@@ -1,20 +1,21 @@
 package nusemp.logic.parser;
 
-import java.util.Collection;
-import java.util.Collections;
 import static java.util.Objects.requireNonNull;
-import java.util.Optional;
-import java.util.Set;
-
-import nusemp.commons.core.index.Index;
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import nusemp.logic.commands.EditCommand;
-import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
+
+import nusemp.commons.core.index.Index;
+import nusemp.logic.commands.EditCommand;
+import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.tag.Tag;
 

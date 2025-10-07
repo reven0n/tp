@@ -1,19 +1,26 @@
 package nusemp.logic.parser;
 
-import nusemp.logic.Messages;
-import nusemp.logic.commands.AddCommand;
-import nusemp.model.person.*;
-import nusemp.model.tag.Tag;
-import nusemp.testutil.PersonBuilder;
-import org.junit.jupiter.api.Test;
-
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.commands.CommandTestUtil.*;
-import static nusemp.logic.parser.CliSyntax.*;
+import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
+import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static nusemp.testutil.TypicalPersons.AMY;
 import static nusemp.testutil.TypicalPersons.BOB;
+
+import nusemp.logic.Messages;
+import nusemp.logic.commands.AddCommand;
+import nusemp.model.person.Address;
+import nusemp.model.person.Email;
+import nusemp.model.person.Name;
+import nusemp.model.person.Person;
+import nusemp.model.person.Phone;
+import nusemp.model.tag.Tag;
+import nusemp.testutil.PersonBuilder;
+import org.junit.jupiter.api.Test;
 
 public class AddCommandParserTest {
     private AddCommandParser parser = new AddCommandParser();

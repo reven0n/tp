@@ -1,12 +1,13 @@
 package nusemp.logic.parser;
 
+import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nusemp.commons.core.LogsCenter;
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import nusemp.logic.commands.AddCommand;
 import nusemp.logic.commands.ClearCommand;
 import nusemp.logic.commands.Command;

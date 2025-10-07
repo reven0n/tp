@@ -1,16 +1,16 @@
 package nusemp.storage;
 
+import static nusemp.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.commons.util.JsonUtil;
 import nusemp.model.AddressBook;
 import nusemp.testutil.TypicalPersons;
 import org.junit.jupiter.api.Test;
-
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import static nusemp.testutil.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonSerializableAddressBookTest {
 

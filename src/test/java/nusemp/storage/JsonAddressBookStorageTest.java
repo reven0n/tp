@@ -1,19 +1,22 @@
 package nusemp.storage;
 
-import nusemp.commons.exceptions.DataLoadingException;
-import nusemp.model.AddressBook;
-import nusemp.model.ReadOnlyAddressBook;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalPersons.ALICE;
+import static nusemp.testutil.TypicalPersons.HOON;
+import static nusemp.testutil.TypicalPersons.IDA;
+import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalPersons.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import nusemp.commons.exceptions.DataLoadingException;
+import nusemp.model.AddressBook;
+import nusemp.model.ReadOnlyAddressBook;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class JsonAddressBookStorageTest {
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonAddressBookStorageTest");

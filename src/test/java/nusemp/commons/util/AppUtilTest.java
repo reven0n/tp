@@ -1,9 +1,9 @@
 package nusemp.commons.util;
 
-import org.junit.jupiter.api.Test;
-
 import static nusemp.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.Test;
 
 public class AppUtilTest {
 

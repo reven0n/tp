@@ -1,15 +1,15 @@
 package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-
-import nusemp.commons.util.ToStringBuilder;
-import nusemp.logic.Messages;
-import nusemp.logic.commands.exceptions.CommandException;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+
+import nusemp.commons.util.ToStringBuilder;
+import nusemp.logic.Messages;
+import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.person.Person;
 

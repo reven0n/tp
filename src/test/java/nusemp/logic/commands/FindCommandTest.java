@@ -1,18 +1,23 @@
 package nusemp.logic.commands;
 
+import static nusemp.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static nusemp.testutil.TypicalPersons.CARL;
+import static nusemp.testutil.TypicalPersons.ELLE;
+import static nusemp.testutil.TypicalPersons.FIONA;
+import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Arrays;
+import java.util.Collections;
+
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.person.NameContainsKeywordsPredicate;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
-
-import static nusemp.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
-import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.testutil.TypicalPersons.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.

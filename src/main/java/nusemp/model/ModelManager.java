@@ -1,7 +1,9 @@
 package nusemp.model;
 
-import java.nio.file.Path;
 import static java.util.Objects.requireNonNull;
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -9,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
-import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 import nusemp.model.event.Event;
 import nusemp.model.person.Person;
 

@@ -1,13 +1,13 @@
 package nusemp.testutil;
 
-import nusemp.commons.core.index.Index;
-import nusemp.model.Model;
-import nusemp.model.person.Person;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import nusemp.commons.core.index.Index;
+import nusemp.model.Model;
+import nusemp.model.person.Person;
 
 /**
  * A utility class for test cases.

@@ -1,5 +1,17 @@
 package nusemp.logic.parser;
 
+import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.commands.CommandTestUtil.*;
+import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
+import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
+import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.EditCommand;
@@ -11,13 +23,6 @@ import nusemp.model.person.Phone;
 import nusemp.model.tag.Tag;
 import nusemp.testutil.EditPersonDescriptorBuilder;
 import org.junit.jupiter.api.Test;
-
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.commands.CommandTestUtil.*;
-import static nusemp.logic.parser.CliSyntax.*;
-import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static nusemp.testutil.TypicalIndexes.*;
 
 public class EditCommandParserTest {
 

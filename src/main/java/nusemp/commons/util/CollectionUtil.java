@@ -1,9 +1,10 @@
 package nusemp.commons.util;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
-import static java.util.Objects.requireNonNull;
 import java.util.stream.Stream;
 
 /**

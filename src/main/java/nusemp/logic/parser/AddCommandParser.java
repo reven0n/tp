@@ -1,15 +1,16 @@
 package nusemp.logic.parser;
 
-import java.util.Set;
-import java.util.stream.Stream;
-
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import nusemp.logic.commands.AddCommand;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.Set;
+import java.util.stream.Stream;
+
+import nusemp.logic.commands.AddCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;

@@ -1,5 +1,19 @@
 package nusemp.logic;
 
+import static nusemp.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static nusemp.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static nusemp.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
+import static nusemp.logic.commands.CommandTestUtil.NAME_DESC_AMY;
+import static nusemp.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalPersons.AMY;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+import java.nio.file.Path;
+
 import nusemp.logic.commands.AddCommand;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.ListCommand;
@@ -17,17 +31,6 @@ import nusemp.testutil.PersonBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
-
-import java.io.IOException;
-import java.nio.file.AccessDeniedException;
-import java.nio.file.Path;
-
-import static nusemp.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static nusemp.logic.commands.CommandTestUtil.*;
-import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalPersons.AMY;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LogicManagerTest {
     private static final IOException DUMMY_IO_EXCEPTION = new IOException("dummy IO exception");

@@ -1,11 +1,11 @@
 package nusemp.model.event;
 
+import static java.util.Objects.requireNonNull;
+import static nusemp.commons.util.AppUtil.checkArgument;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import static java.util.Objects.requireNonNull;
-
-import static nusemp.commons.util.AppUtil.checkArgument;
 
 /**
  * Represents an Event's date and time in the address book.

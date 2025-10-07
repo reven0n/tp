@@ -1,12 +1,12 @@
 package nusemp.logic.parser;
 
-import nusemp.logic.commands.DeleteCommand;
-import org.junit.jupiter.api.Test;
-
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import nusemp.logic.commands.DeleteCommand;
+import org.junit.jupiter.api.Test;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations

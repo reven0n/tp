@@ -1,13 +1,13 @@
 package nusemp.testutil;
 
-import nusemp.model.AddressBook;
-import nusemp.model.person.Person;
+import static nusemp.logic.commands.CommandTestUtil.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static nusemp.logic.commands.CommandTestUtil.*;
+import nusemp.model.AddressBook;
+import nusemp.model.person.Person;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.

@@ -1,16 +1,16 @@
 package nusemp.ui;
 
-import javafx.fxml.FXML;
-import nusemp.MainApp;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.io.TempDir;
+import static nusemp.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.net.URL;
 import java.nio.file.Path;
 
-import static nusemp.testutil.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import javafx.fxml.FXML;
+import nusemp.MainApp;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class UiPartTest {
 

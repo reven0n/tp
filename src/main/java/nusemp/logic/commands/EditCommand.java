@@ -1,10 +1,17 @@
 package nusemp.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
+import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
+import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import static java.util.Objects.requireNonNull;
 import java.util.Optional;
 import java.util.Set;
 
@@ -13,13 +20,7 @@ import nusemp.commons.util.CollectionUtil;
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
-import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
-import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
-import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 import nusemp.model.Model;
-import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;

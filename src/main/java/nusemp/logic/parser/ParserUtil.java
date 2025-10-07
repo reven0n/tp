@@ -1,8 +1,9 @@
 package nusemp.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Collection;
 import java.util.HashSet;
-import static java.util.Objects.requireNonNull;
 import java.util.Set;
 
 import nusemp.commons.core.index.Index;

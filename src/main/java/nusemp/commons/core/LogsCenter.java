@@ -1,8 +1,9 @@
 package nusemp.commons.core;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.util.Arrays;
-import static java.util.Objects.requireNonNull;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;

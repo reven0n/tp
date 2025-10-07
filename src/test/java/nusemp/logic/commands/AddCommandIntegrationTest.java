@@ -1,5 +1,9 @@
 package nusemp.logic.commands;
 
+import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
+import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
+
 import nusemp.logic.Messages;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
@@ -8,10 +12,6 @@ import nusemp.model.person.Person;
 import nusemp.testutil.PersonBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
-import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code AddCommand}.
