@@ -46,7 +46,7 @@ import nusemp.model.tag.Tag;
 import nusemp.testutil.PersonBuilder;
 
 public class ContactAddCommandParserTest {
-    private AddCommandParser parser = new AddCommandParser();
+    private ContactAddCommandParser parser = new ContactAddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {

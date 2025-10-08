@@ -18,7 +18,7 @@ import nusemp.logic.commands.ContactDeleteCommand;
  */
 public class ContactDeleteCommandParserTest {
 
-    private DeleteCommandParser parser = new DeleteCommandParser();
+    private ContactDeleteCommandParser parser = new ContactDeleteCommandParser();
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {

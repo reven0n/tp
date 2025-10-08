@@ -13,7 +13,7 @@ import nusemp.model.person.NameContainsKeywordsPredicate;
 
 public class ContactFindCommandParserTest {
 
-    private FindCommandParser parser = new FindCommandParser();
+    private ContactFindCommandParser parser = new ContactFindCommandParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {

@@ -78,19 +78,19 @@ public class AddressBookParser {
         switch (commandWord) {
 
         case ContactAddCommand.COMMAND_WORD:
-            return new AddCommandParser().parse(arguments);
+            return new ContactAddCommandParser().parse(arguments);
 
         case ContactEditCommand.COMMAND_WORD:
-            return new EditCommandParser().parse(arguments);
+            return new ContactEditCommandParser().parse(arguments);
 
         case ContactDeleteCommand.COMMAND_WORD:
-            return new DeleteCommandParser().parse(arguments);
+            return new ContactDeleteCommandParser().parse(arguments);
 
         case ContactClearCommand.COMMAND_WORD:
             return new ContactClearCommand();
 
         case ContactFindCommand.COMMAND_WORD:
-            return new FindCommandParser().parse(arguments);
+            return new ContactFindCommandParser().parse(arguments);
 
         case ContactListCommand.COMMAND_WORD:
             return new ContactListCommand();

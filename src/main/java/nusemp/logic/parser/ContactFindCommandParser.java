@@ -11,7 +11,7 @@ import nusemp.model.person.NameContainsKeywordsPredicate;
 /**
  * Parses input arguments and creates a new ContactFindCommand object
  */
-public class FindCommandParser implements Parser<ContactFindCommand> {
+public class ContactFindCommandParser implements Parser<ContactFindCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the ContactFindCommand

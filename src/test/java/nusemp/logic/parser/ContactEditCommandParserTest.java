@@ -52,7 +52,7 @@ public class ContactEditCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactEditCommand.MESSAGE_USAGE);
 
-    private EditCommandParser parser = new EditCommandParser();
+    private ContactEditCommandParser parser = new ContactEditCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
@@ -166,7 +166,7 @@ public class ContactEditCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_failure() {
         // More extensive testing of duplicate parameter detections is done in
-        // ContactAddCommandParserTest#parse_repeatedNonTagValue_failure()
+        // ContactContactAddCommandParserTest#parse_repeatedNonTagValue_failure()
 
         // valid followed by invalid
         Index targetIndex = INDEX_FIRST_PERSON;

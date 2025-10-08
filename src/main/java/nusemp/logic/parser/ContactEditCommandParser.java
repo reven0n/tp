@@ -22,7 +22,7 @@ import nusemp.model.tag.Tag;
 /**
  * Parses input arguments and creates a new ContactEditCommand object
  */
-public class EditCommandParser implements Parser<ContactEditCommand> {
+public class ContactEditCommandParser implements Parser<ContactEditCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the ContactEditCommand
