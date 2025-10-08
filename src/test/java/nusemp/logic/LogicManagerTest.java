@@ -18,9 +18,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import nusemp.logic.commands.AddCommand;
-import nusemp.logic.commands.CommandResult;
-import nusemp.logic.commands.ListCommand;
+import nusemp.logic.commands.contact.AddCommand;
+import nusemp.logic.commands.contact.CommandResult;
+import nusemp.logic.commands.contact.ListCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;

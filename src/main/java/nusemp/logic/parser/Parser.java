@@ -1,6 +1,6 @@
 package nusemp.logic.parser;
 
-import nusemp.logic.commands.Command;
+import nusemp.logic.commands.contact.Command;
 import nusemp.logic.parser.exceptions.ParseException;
 
 /**

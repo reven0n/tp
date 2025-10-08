@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
+import nusemp.logic.commands.contact.DeleteCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;

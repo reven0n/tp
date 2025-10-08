@@ -5,6 +5,7 @@ import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.jupiter.api.Test;
 
+import nusemp.logic.commands.contact.ClearCommand;
 import nusemp.model.AddressBook;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;

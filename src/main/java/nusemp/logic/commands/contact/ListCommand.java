@@ -1,4 +1,4 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.contact;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;

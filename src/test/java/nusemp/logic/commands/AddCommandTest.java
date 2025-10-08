@@ -18,6 +18,8 @@ import javafx.collections.ObservableList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
+import nusemp.logic.commands.contact.AddCommand;
+import nusemp.logic.commands.contact.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AddressBook;
 import nusemp.model.Model;

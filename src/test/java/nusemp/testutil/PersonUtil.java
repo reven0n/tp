@@ -8,8 +8,8 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 
-import nusemp.logic.commands.AddCommand;
-import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
+import nusemp.logic.commands.contact.AddCommand;
+import nusemp.logic.commands.contact.EditCommand.EditPersonDescriptor;
 import nusemp.model.person.Person;
 import nusemp.model.tag.Tag;
 

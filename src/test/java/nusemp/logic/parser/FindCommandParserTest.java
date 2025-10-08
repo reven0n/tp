@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.FindCommand;
+import nusemp.logic.commands.contact.FindCommand;
 import nusemp.model.person.NameContainsKeywordsPredicate;
 
 public class FindCommandParserTest {

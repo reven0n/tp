@@ -36,8 +36,8 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
-import nusemp.logic.commands.EditCommand;
-import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
+import nusemp.logic.commands.contact.EditCommand;
+import nusemp.logic.commands.contact.EditCommand.EditPersonDescriptor;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;

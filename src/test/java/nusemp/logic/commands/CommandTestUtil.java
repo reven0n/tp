@@ -14,6 +14,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import nusemp.commons.core.index.Index;
+import nusemp.logic.commands.contact.Command;
+import nusemp.logic.commands.contact.CommandResult;
+import nusemp.logic.commands.contact.EditCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AddressBook;
 import nusemp.model.Model;

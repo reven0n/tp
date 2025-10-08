@@ -36,7 +36,7 @@ import static nusemp.testutil.TypicalPersons.BOB;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
-import nusemp.logic.commands.AddCommand;
+import nusemp.logic.commands.contact.AddCommand;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;

@@ -3,7 +3,7 @@ package nusemp.logic.parser;
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import nusemp.commons.core.index.Index;
-import nusemp.logic.commands.DeleteCommand;
+import nusemp.logic.commands.contact.DeleteCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 
 /**

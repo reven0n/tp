@@ -7,7 +7,7 @@ import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.DeleteCommand;
+import nusemp.logic.commands.contact.DeleteCommand;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations

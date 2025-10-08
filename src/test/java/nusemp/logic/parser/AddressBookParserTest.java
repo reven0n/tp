@@ -13,15 +13,15 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.AddCommand;
-import nusemp.logic.commands.ClearCommand;
-import nusemp.logic.commands.DeleteCommand;
-import nusemp.logic.commands.EditCommand;
-import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
-import nusemp.logic.commands.ExitCommand;
-import nusemp.logic.commands.FindCommand;
-import nusemp.logic.commands.HelpCommand;
-import nusemp.logic.commands.ListCommand;
+import nusemp.logic.commands.contact.AddCommand;
+import nusemp.logic.commands.contact.ClearCommand;
+import nusemp.logic.commands.contact.DeleteCommand;
+import nusemp.logic.commands.contact.EditCommand;
+import nusemp.logic.commands.contact.EditCommand.EditPersonDescriptor;
+import nusemp.logic.commands.contact.ExitCommand;
+import nusemp.logic.commands.contact.FindCommand;
+import nusemp.logic.commands.contact.HelpCommand;
+import nusemp.logic.commands.contact.ListCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.person.NameContainsKeywordsPredicate;
 import nusemp.model.person.Person;

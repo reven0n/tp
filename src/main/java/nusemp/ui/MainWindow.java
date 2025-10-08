@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
 import nusemp.logic.Logic;
-import nusemp.logic.commands.CommandResult;
+import nusemp.logic.commands.contact.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
 

@@ -14,8 +14,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import nusemp.commons.core.index.Index;
-import nusemp.logic.commands.EditCommand;
-import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
+import nusemp.logic.commands.contact.EditCommand;
+import nusemp.logic.commands.contact.EditCommand.EditPersonDescriptor;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.tag.Tag;
 

@@ -10,7 +10,7 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import nusemp.logic.commands.AddCommand;
+import nusemp.logic.commands.contact.AddCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;

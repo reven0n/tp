@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import nusemp.logic.commands.contact.CommandResult;
+
 public class CommandResultTest {
     @Test
     public void equals() {
