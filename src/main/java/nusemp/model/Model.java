@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import nusemp.commons.core.GuiSettings;
+import nusemp.commons.core.index.Index;
 import nusemp.model.event.Event;
 import nusemp.model.person.Person;
 
@@ -135,17 +136,17 @@ public interface Model {
 
     /**
      * Returns the person at the specified index in the filtered person list.
-     * @param index The 0-based index in the filtered person list.
+     * @param index The 1-based index in the filtered person list.
      * @return The person at the specified index.
      * @throws IndexOutOfBoundsException if the index is out of range.
      */
-    Person getPersonByIndex(int index);
+    Person getPersonByIndex(Index index);
 
     /**
      * Returns the event at the specified index in the filtered event list.
-     * @param index The 0-based index in the filtered event list.
+     * @param index The 1-based index in the filtered event list.
      * @return The event at the specified index.
      * @throws IndexOutOfBoundsException if the index is out of range.
      */
-    Event getEventByIndex(int index);
+    Event getEventByIndex(Index index);
 }

@@ -16,6 +16,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import nusemp.model.event.Event;
 import nusemp.model.person.Person;
 import nusemp.model.person.exceptions.DuplicatePersonException;
 import nusemp.testutil.PersonBuilder;
@@ -94,7 +95,7 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final javafx.collections.ObservableList<nusemp.model.person.Person> persons = javafx.collections
                 .FXCollections.observableArrayList();
-        private final javafx.collections.ObservableList<nusemp.model.event.Event> events = javafx.collections
+        private final javafx.collections.ObservableList<Event> events = javafx.collections
                 .FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons) {
@@ -107,7 +108,7 @@ public class AddressBookTest {
         }
 
         @Override
-        public javafx.collections.ObservableList<nusemp.model.event.Event> getEventList() {
+        public javafx.collections.ObservableList<Event> getEventList() {
             return events;
         }
     }

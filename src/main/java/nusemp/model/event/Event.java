@@ -4,6 +4,7 @@ import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
@@ -99,8 +100,8 @@ public class Event {
     }
 
     /**
-     * Returns true if both events have the same name.
-     * Events are considered equal if they have the same name (case-sensitive).
+     * Returns true if both events have the same identity and data fields.
+     * This defines a stronger notion of equality between two events.
      */
     @Override
     public boolean equals(Object other) {
@@ -114,12 +115,15 @@ public class Event {
         }
 
         Event otherEvent = (Event) other;
-        return name.equals(otherEvent.name);
+        return name.equals(otherEvent.name)
+                && date.equals(otherEvent.date)
+                && participants.equals(otherEvent.participants);
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        // use this method for custom fields hashing instead of implementing your own
+        return Objects.hash(name, date, participants);
     }
 
     @Override

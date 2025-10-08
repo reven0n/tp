@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
+import nusemp.commons.core.index.Index;
 import nusemp.model.event.Event;
 import nusemp.model.person.Person;
 
@@ -183,13 +184,13 @@ public class ModelManager implements Model {
     //=========== Lookup Helper Methods ========================================================
 
     @Override
-    public Person getPersonByIndex(int index) {
-        return filteredPersons.get(index);
+    public Person getPersonByIndex(Index index) {
+        return filteredPersons.get(index.getZeroBased());
     }
 
     @Override
-    public Event getEventByIndex(int index) {
-        return filteredEvents.get(index);
+    public Event getEventByIndex(Index index) {
+        return filteredEvents.get(index.getZeroBased());
     }
 
     @Override

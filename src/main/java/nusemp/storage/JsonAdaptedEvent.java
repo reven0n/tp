@@ -22,6 +22,8 @@ import nusemp.model.person.Person;
 class JsonAdaptedEvent {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Event's %s field is missing!";
+    public static final String INVALID_PARTICIPANT_EMAIL_MESSAGE = "Participant with email %s not found in address"
+            + " book";
 
     private final String name;
     private final String date;
@@ -81,7 +83,7 @@ class JsonAdaptedEvent {
         for (String email : participantEmails) {
             Person participant = findPersonByEmail(addressBook, email);
             if (participant == null) {
-                throw new IllegalValueException("Participant with email " + email + " not found in address book");
+                throw new IllegalValueException(String.format(INVALID_PARTICIPANT_EMAIL_MESSAGE, email));
             }
             modelParticipants.add(participant);
         }

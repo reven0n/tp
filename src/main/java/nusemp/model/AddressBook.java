@@ -3,6 +3,7 @@ package nusemp.model;
 import static java.util.Objects.requireNonNull;
 
 import java.util.List;
+import java.util.Objects;
 
 import javafx.collections.ObservableList;
 import nusemp.commons.util.ToStringBuilder;
@@ -182,6 +183,6 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public int hashCode() {
-        return persons.hashCode() + events.hashCode();
+        return Objects.hash(persons, events);
     }
 }

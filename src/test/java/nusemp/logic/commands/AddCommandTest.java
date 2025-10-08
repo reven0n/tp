@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.GuiSettings;
+import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AddressBook;
@@ -185,7 +186,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public javafx.collections.ObservableList<nusemp.model.event.Event> getFilteredEventList() {
+        public javafx.collections.ObservableList<Event> getFilteredEventList() {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -195,12 +196,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public Person getPersonByIndex(int index) {
+        public Person getPersonByIndex(Index index) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public Event getEventByIndex(int index) {
+        public Event getEventByIndex(Index index) {
             throw new AssertionError("This method should not be called.");
         }
     }
