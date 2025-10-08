@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# AB-3 Developer Guide
+# NUS Event Mailer Pro Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -12,6 +12,12 @@
 ---
 
 ## **Acknowledgements**
+
+This project is based on the AddressBook-Level3 project created by the SE-EDU initiative.
+
+AI was used throughout the development of this project:
+- GitHub Copilot was used for auto-completing code snippets.
+- Claude Sonnet 4.5 was used to generate the unit tests.
 
 _{ list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well }_
 
@@ -182,7 +188,7 @@ Step 2. The user executes `delete 5` command to delete the 5th person in the add
 
 <puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
 
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add n/David …` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
 
 <puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
 
@@ -229,7 +235,7 @@ Step 5. The user then decides to execute the command `list`. Commands that do no
 
 <puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …` command. This is the behavior that most modern desktop applications follow.
 
 <puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
 
@@ -285,7 +291,7 @@ Streamlines event communication workflow by integrating contact management with 
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …​         | I want to …​                                                               | So that I can…​                                        |
+| Priority | As a …         | I want to …                                                               | So that I can…                                        |
 | -------- | --------------- | -------------------------------------------------------------------------- | ------------------------------------------------------ |
 | `* * *`  | event organizer | add a contact with standard fields (Name, Phone, Email, Address)           | build my core contact database                         |
 | `* * *`  | event organizer | associate a specific Role (e.g., 'Speaker', 'Attendee', 'VIP', 'Sponsor')  | categorize and filter my contacts effectively          |
@@ -314,126 +320,257 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `NUS Mailer Pro` and the **Actor** is the `user`, unless specified otherwise)
+For all use cases below, the **System** is NUS Event Mailer Pro (NUS EMP) and the **Actor** is the user, unless specified otherwise.
 
-**Use case: Add a contact**
+**Use case: UC1 - Add a contact**
 
 **MSS**
 
-1. User enters command to add a contact with required fields.
-2. NUS Mailer Pro validates and adds the contact.
-3. NUS Mailer Pro displays confirmation and updated contact list.
+1. User requests to add a contact, providing the required fields.
+2. System adds the contact.
+3. System shows success message.
+
+Use case ends.
 
 **Extensions**
 
-- 2a. Required fields are missing or invalid.
-  - 2a1. NUS Mailer Pro shows an error message.
+- 1a. Required fields are missing or invalid.
+  - 1a1. System shows an error message, indicating which fields are missing or invalid.
   - Use case resumes at step 1.
+- 1b. Contact already exists.
+  - 1b1. System shows an error message, indicating that the contact already exists.
+  - Use case resumes at step 1.
+- 2a. Error encountered when saving contact to storage.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
-**Use case: Associate a role with a contact**
+**Use case: UC2 - Associate a role with a contact**
 
 **MSS**
 
-1. User selects a contact and assigns a role.
-2. NUS Mailer Pro updates the contact's role.
-3. NUS Mailer Pro displays confirmation.
+1. User requests to assign a role to a contact.
+2. System updates the contact's role.
+3. System shows success message.
+
+Use case ends.
 
 **Extensions**
 
 - 1a. Role is invalid or not recognized.
-  - 1a1. NUS Mailer Pro shows an error message.
+  - 1a1. System shows an error message, indicating the invalid roles.
+  - Use case resumes at step 1.
+- 1b. Given contact is invalid.
+  - 1b1. System shows an error message, indicating the invalid contact.
+  - Use case resumes at step 1.
+- 2a. Error encountered when saving contact to storage.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
-**Use case: Create an event**
+**Use case: UC3 - Create an event**
 
 **MSS**
 
-1. User enters command to create a new event with name, date, time, and venue.
-2. NUS Mailer Pro validates and adds the event.
-3. NUS Mailer Pro displays confirmation and updated event list.
+1. User requests to create a new event, providing the name, date, time, and venue.
+2. System adds the event.
+3. System shows success message.
+
+Use case ends.
 
 **Extensions**
 
-- 2a. Event details are missing or invalid.
-  - 2a1. NUS Mailer Pro shows an error message.
+- 1a. Required fields are missing or fields are invalid.
+  - 1a1. System shows an error message, indicating which fields are missing or invalid.
+  - Use case resumes at step 1.
+- 2a. Error encountered when saving event to storage.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
-**Use case: Associate contacts with an event**
+**Use case: UC4 - Associate contacts with an event**
 
 **MSS**
 
-1. User selects an event and specifies contacts to associate.
-2. NUS Mailer Pro links the contacts to the event.
-3. NUS Mailer Pro displays confirmation and updated attendee list.
+1. User requests to associate contacts to an event.
+2. System links the contacts to the event.
+3. System shows success message.
+
+Use case ends.
 
 **Extensions**
 
-- 1a. Selected contacts do not exist.
-  - 1a1. NUS Mailer Pro shows an error message.
+- 1a. Given event is invalid, or does not exist.
+  - 1a1. System shows an error message, indicating the invalid event.
+  - Use case resumes at step 1.
+- 1b. Given contact is invalid, or does not exist.
+  - 1b1. System shows an error message, indicating the invalid contact.
+  - Use case resumes at step 1.
+- 2a. Error encountered when saving the linking of contacts to event to storage.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
-**Use case: View events**
-
-**MSS**
-
-1. User requests to list events.
-2. NUS Mailer Pro shows a list of events with key details and status.
-
-**Extensions**
-
-- 2a. No events exist.
-  - 2a1. NUS Mailer Pro shows an empty list.
-
----
-
-**Use case: Delete a contact**
+**Use case: UC5 - List contacts**
 
 **MSS**
 
 1. User requests to list contacts.
-2. NUS Mailer Pro shows a list of contacts.
-3. User requests to delete a specific contact.
-4. NUS Mailer Pro deletes the contact.
+2. System shows a list of all contacts.
 
-   Use case ends.
+Use case ends.
 
 **Extensions**
 
-- 2a. The list is empty.
-  - Use case ends.
-- 3a. The given index is invalid.
-  - 3a1. NUS Mailer Pro shows an error message.
-  - Use case resumes at step 2.
+- 2a. No contacts exist.
+    - 2a1. System informs the user that there are no contacts.
+    - Use case ends.
 
 ---
 
-**Use case: Get a list of contacts by tags, roles, or event association**
+**Use case: UC6 - List events**
 
 **MSS**
 
-1. User specifies filter criteria (tags, roles, event).
-2. NUS Mailer Pro displays the filtered contact list.
+1. User requests to list events.
+2. System shows a list of all events with key details and status.
+
+Use case ends.
+
+**Extensions**
+
+- 2a. No events exist.
+  - 2a1. System informs the user that there are no events.
+  - Use case ends.
+
+---
+
+**Use case: UC7 - Delete a contact**
+
+**MSS**
+
+1. User requests to delete a specific contact.
+2. System deletes the contact.
+3. System shows success message.
+
+Use case ends.
+
+**Extensions**
+
+- 1a. Given contact is invalid, or does not exist.
+    - 1a1. System shows an error message, indicating the invalid contact.
+    - Use case resumes at step 1.
+- 2a. Error encountered when deleting contact from storage.
+    - 2a1. System shows an error message.
+    - Use case ends.
+
+---
+
+**Use case: UC8 - Filter contacts by tags, roles, or event association**
+
+**MSS**
+
+1. User requests to list all contacts that follows the filter criteria (tags, roles, event).
+2. System displays the filtered contact list.
+
+Use case ends.
 
 **Extensions**
 
 - 1a. No contacts match the criteria.
-  - 1a1. NUS Mailer Pro shows an empty list.
+  - 1a1. System informs user that no contacts match the criteria. 
+  - Use case ends.
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+#### Technical
+
+- Should run on any mainstream OS which has Java 17 installed
+- Should work without an installer
+- Should run on various screen resolutions:
+  - _Work well_ for screen resolutions 1920x1080 and higher, and for screen scales 100% and 125%
+    - i.e. all text and UI elements should be clearly visible and usable, with proper scaling and without any clipping or overflow
+  - _Usable_ for screen resolutions 1280x720 and higher, and for screen scales 150%
+    - i.e. all text and UI elements should be visible and usable, with minimal clipping or overflow
+
+#### Performance
+
+- Should have a response time of 500ms or less for any user command or action
+- Should be able to handle up to 10000 contacts and 1000 events while following the response time requirement above
+- Should launch within 3 seconds on standard hardware
+- Should not exceed 500MB in memory when handling 10000 contacts
+- Data storage should not exceed 5MB when handling 10000 contacts
+
+#### Features
+
+- All features should work offline
+- Should be designed such that fast-typing users can do actions faster than using a standard GUI
+- UI design should be clean and simple, with consistent spacing and alignment, reasonable use of colors, and readable fonts
+- Command syntax should be consistent and intuitive
+  - Commands should start with either `contact` or `event` to indicate the entity being operated on
+  - General command format: `{contact | event} commandName [parameters] [options]`
+  - User-supplied parameters should follow this format: `--parameterName parameterValue`
+  - User-supplied options should follow this format: `-optionName`
+- Command response should be useful enough such that the user has no doubts on whether the operation was successful
+- Command errors should be helpful enough for users to fix their commands without referring to the user guide each time
+- Data storage of contacts or events should use a human editable file
+- Should explicitly warn and allow user to recover data manually in case of data corruption
+
+#### Development
+
+##### Code
+
+- Should be developed on top of the AB3 project
+- Should be developed iteratively in a breadth-first manner
+- Should have a clear and consistent coding style, following the [Java coding standards](https://se-education.org/guides/conventions/java/index.html)
+- Should have tests for every public method or class, and have at least 75% code coverage
+- Should not have a remote server
+- Should not use a DBMS
+- Should use OOP principles
+- Should log every high-level action that the system performs (e.g. save data, respond to command), and every error encountered
+- Should use assertions where there are assumptions made, to catch programming errors during development
+- Should use checked exceptions to handle any user input errors
+- All errors or exceptions that are outside the programmer's control (e.g. file I/O errors) should not cause the program to crash, and should be handled gracefully with appropriate user messages
+- Should use defensive programming when appropriate
+
+##### Collaboration
+
+- Should use GitHub Issues to track tasks, bugs, and features
+- Should follow the [Git conventions](https://se-education.org/guides/conventions/git.html) for commit messages and branch names
+- PR names should follow this format: `[#issueNumber] description`, where description is a short summary of the changes made in the PR, following the same Git conventions for commit messages.
+- When merging a PR, the merge commit message should follow this format: `description (#prNumber)`, where description is the same description found in the PR title.
+  - For larger PRs, the merge commit description should be a summary of the changes made in the PR, while still following the Git conventions.
+- Should pass all status checks and have at least one approving review from a different team member before merging a PR.
+
+##### Submission
+
+- Should package the application into a single jar file, with file size not exceeding 100MB
+- Should design the user guide and developer guide to be PDF friendly, with each file size not exceeding 15MB
 
 ### Glossary
 
-- **Mainstream OS**: Windows, Linux, Unix, MacOS
-- **Private contact detail**: A contact detail that is not meant to be shared with others
+- **Event organizer**: A person organizes events and manages contacts. The intended users of the app.
+- **Contact**: An entity that represents a person that may be participating in an event.
+- **Event**: An entity that represents an event that the user is organizing.
+- **Mainstream OS**: Windows, Linux, MacOS
+- **Standard hardware**: A computer with at least 4GB RAM, Intel i5 processor (or equivalent), and SSD.
+- **GUI**: Graphical User Interface. An interface that is primarily visual and mouse-driven, with minimal keyboard shortcuts.
+- **Human editable file**: A file that can be opened and edited using a standard text editor, such as Notepad.
+- **Data corruption**: Storage data cannot be read or parsed correctly, due to invalid format or invalid values.
+- **Breadth-first manner**: Implementing a basic version of all features first, then iterating to improve each feature.
+- **Code coverage**: The percentage of code that is executed during testing. Measured using the Codecov tool.
+- **DBMS**: Database management system, e.g. MySQL, PostgreSQL, etc.
+- **OOP principles**: Object-Oriented programming principles, e.g. Encapsulation, Abstraction, Inheritance, Polymorphism, etc.
+- **Defensive programming**: A programming approach that anticipates and handles potential errors or misuse of the code, to prevent crashes or unexpected behavior. See [here](https://nus-cs2103-ay2526s1.github.io/website/se-book-adapted/chapters/errorHandling.html#defensive-programming) for more details.
+- **PR**: Pull Request. A feature of GitHub that allows developers to collaborate on code changes.
+- **Status checks**: Automated tests that run on the code in a PR to ensure that it meets the project's quality standards. In this project, the status checks include:
+  - No checkstyle violations
+  - All tests pass
+  - Build is successful on all 3 platforms: Windows, Linux, MacOS
 
 ---
 
@@ -463,7 +600,7 @@ testers are expected to do more _exploratory_ testing.
    1. Re-launch the app by double-clicking the jar file.<br>
       Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
 
 ### Deleting a person
 
@@ -480,7 +617,7 @@ testers are expected to do more _exploratory_ testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
 
 ### Saving data
 
@@ -488,4 +625,4 @@ testers are expected to do more _exploratory_ testing.
 
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
-1. _{ more test cases …​ }_
+1. _{ more test cases … }_
