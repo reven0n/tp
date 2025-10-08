@@ -1,4 +1,4 @@
-package nusemp.logic.commands.contact;
+package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
@@ -14,7 +14,7 @@ import nusemp.model.person.Person;
 /**
  * Deletes a person identified using it's displayed index from the address book.
  */
-public class DeleteCommand extends Command {
+public class ContactDeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 
@@ -27,7 +27,7 @@ public class DeleteCommand extends Command {
 
     private final Index targetIndex;
 
-    public DeleteCommand(Index targetIndex) {
+    public ContactDeleteCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
@@ -52,12 +52,12 @@ public class DeleteCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof DeleteCommand)) {
+        if (!(other instanceof ContactDeleteCommand)) {
             return false;
         }
 
-        DeleteCommand otherDeleteCommand = (DeleteCommand) other;
-        return targetIndex.equals(otherDeleteCommand.targetIndex);
+        ContactDeleteCommand otherContactDeleteCommand = (ContactDeleteCommand) other;
+        return targetIndex.equals(otherContactDeleteCommand.targetIndex);
     }
 
     @Override

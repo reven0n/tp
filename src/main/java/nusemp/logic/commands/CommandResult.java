@@ -1,4 +1,4 @@
-package nusemp.logic.commands.contact;
+package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 

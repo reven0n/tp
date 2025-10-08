@@ -1,11 +1,11 @@
-package nusemp.logic.commands.contact;
+package nusemp.logic.commands;
 
 import nusemp.model.Model;
 
 /**
  * Format full help instructions for every command for display.
  */
-public class HelpCommand extends Command {
+public class ContactHelpCommand extends Command {
 
     public static final String COMMAND_WORD = "help";
 

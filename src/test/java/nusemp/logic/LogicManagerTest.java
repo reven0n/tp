@@ -18,9 +18,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-import nusemp.logic.commands.contact.AddCommand;
-import nusemp.logic.commands.contact.CommandResult;
-import nusemp.logic.commands.contact.ListCommand;
+import nusemp.logic.commands.CommandResult;
+import nusemp.logic.commands.ContactAddCommand;
+import nusemp.logic.commands.ContactListCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;
@@ -66,8 +66,8 @@ public class LogicManagerTest {
 
     @Test
     public void execute_validCommand_success() throws Exception {
-        String listCommand = ListCommand.COMMAND_WORD;
-        assertCommandSuccess(listCommand, ListCommand.MESSAGE_SUCCESS, model);
+        String listCommand = ContactListCommand.COMMAND_WORD;
+        assertCommandSuccess(listCommand, ContactListCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
@@ -165,7 +165,7 @@ public class LogicManagerTest {
         logic = new LogicManager(model, storage);
 
         // Triggers the saveAddressBook method by executing an add command
-        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
+        String addCommand = ContactAddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
                 + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();

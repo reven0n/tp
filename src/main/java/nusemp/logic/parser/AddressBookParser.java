@@ -8,16 +8,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import nusemp.commons.core.LogsCenter;
+import nusemp.logic.commands.Command;
 import nusemp.logic.commands.CommandType;
-import nusemp.logic.commands.contact.AddCommand;
-import nusemp.logic.commands.contact.ClearCommand;
-import nusemp.logic.commands.contact.Command;
-import nusemp.logic.commands.contact.DeleteCommand;
-import nusemp.logic.commands.contact.EditCommand;
-import nusemp.logic.commands.contact.ExitCommand;
-import nusemp.logic.commands.contact.FindCommand;
-import nusemp.logic.commands.contact.HelpCommand;
-import nusemp.logic.commands.contact.ListCommand;
+import nusemp.logic.commands.ContactAddCommand;
+import nusemp.logic.commands.ContactClearCommand;
+import nusemp.logic.commands.ContactDeleteCommand;
+import nusemp.logic.commands.ContactEditCommand;
+import nusemp.logic.commands.ContactFindCommand;
+import nusemp.logic.commands.ContactHelpCommand;
+import nusemp.logic.commands.ContactListCommand;
+import nusemp.logic.commands.ExitCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 
 /**
@@ -42,7 +42,7 @@ public class AddressBookParser {
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactHelpCommand.MESSAGE_USAGE));
         }
 
         final String commandType = matcher.group("commandType");
@@ -62,6 +62,9 @@ public class AddressBookParser {
         case EVENT:
             return parseEventCommand(userInput, commandWord, arguments);
 
+        case EXIT:
+            return new ExitCommand();
+
         case UNKNOWN:
             // Fallthrough
         default:
@@ -74,29 +77,26 @@ public class AddressBookParser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
+        case ContactAddCommand.COMMAND_WORD:
             return new AddCommandParser().parse(arguments);
 
-        case EditCommand.COMMAND_WORD:
+        case ContactEditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case ContactDeleteCommand.COMMAND_WORD:
             return new DeleteCommandParser().parse(arguments);
 
-        case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+        case ContactClearCommand.COMMAND_WORD:
+            return new ContactClearCommand();
 
-        case FindCommand.COMMAND_WORD:
+        case ContactFindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
-        case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+        case ContactListCommand.COMMAND_WORD:
+            return new ContactListCommand();
 
-        case ExitCommand.COMMAND_WORD:
-            return new ExitCommand();
-
-        case HelpCommand.COMMAND_WORD:
-            return new HelpCommand();
+        case ContactHelpCommand.COMMAND_WORD:
+            return new ContactHelpCommand();
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

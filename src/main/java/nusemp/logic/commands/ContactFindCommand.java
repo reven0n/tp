@@ -1,4 +1,4 @@
-package nusemp.logic.commands.contact;
+package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
@@ -11,7 +11,7 @@ import nusemp.model.person.NameContainsKeywordsPredicate;
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
-public class FindCommand extends Command {
+public class ContactFindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
@@ -22,7 +22,7 @@ public class FindCommand extends Command {
 
     private final NameContainsKeywordsPredicate predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public ContactFindCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -41,12 +41,12 @@ public class FindCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommand)) {
+        if (!(other instanceof ContactFindCommand)) {
             return false;
         }
 
-        FindCommand otherFindCommand = (FindCommand) other;
-        return predicate.equals(otherFindCommand.predicate);
+        ContactFindCommand otherContactFindCommand = (ContactFindCommand) other;
+        return predicate.equals(otherContactFindCommand.predicate);
     }
 
     @Override

@@ -1,4 +1,4 @@
-package nusemp.logic.commands.contact;
+package nusemp.logic.commands;
 
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;

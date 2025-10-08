@@ -1,4 +1,4 @@
-package nusemp.logic.commands.contact;
+package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -31,7 +31,7 @@ import nusemp.model.tag.Tag;
 /**
  * Edits the details of an existing person in the address book.
  */
-public class EditCommand extends Command {
+public class ContactEditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
@@ -59,7 +59,7 @@ public class EditCommand extends Command {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public ContactEditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
@@ -111,13 +111,13 @@ public class EditCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof ContactEditCommand)) {
             return false;
         }
 
-        EditCommand otherEditCommand = (EditCommand) other;
-        return index.equals(otherEditCommand.index)
-                && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
+        ContactEditCommand otherContactEditCommand = (ContactEditCommand) other;
+        return index.equals(otherContactEditCommand.index)
+                && editPersonDescriptor.equals(otherContactEditCommand.editPersonDescriptor);
     }
 
     @Override

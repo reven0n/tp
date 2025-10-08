@@ -1,12 +1,10 @@
 package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.logic.commands.contact.ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT;
+import static nusemp.logic.commands.ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.contact.CommandResult;
-import nusemp.logic.commands.contact.ExitCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 

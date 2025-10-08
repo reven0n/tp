@@ -1,4 +1,4 @@
-package nusemp.logic.commands.contact;
+package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -16,7 +16,7 @@ import nusemp.model.person.Person;
 /**
  * Adds a person to the address book.
  */
-public class AddCommand extends Command {
+public class ContactAddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
@@ -41,9 +41,9 @@ public class AddCommand extends Command {
     private final Person toAdd;
 
     /**
-     * Creates an AddCommand to add the specified {@code Person}
+     * Creates an ContactAddCommand to add the specified {@code Person}
      */
-    public AddCommand(Person person) {
+    public ContactAddCommand(Person person) {
         requireNonNull(person);
         toAdd = person;
     }
@@ -67,12 +67,12 @@ public class AddCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddCommand)) {
+        if (!(other instanceof ContactAddCommand)) {
             return false;
         }
 
-        AddCommand otherAddCommand = (AddCommand) other;
-        return toAdd.equals(otherAddCommand.toAdd);
+        ContactAddCommand otherContactAddCommand = (ContactAddCommand) other;
+        return toAdd.equals(otherContactAddCommand.toAdd);
     }
 
     @Override

@@ -1,11 +1,11 @@
 package nusemp.logic.commands;
 
 /**
- * Represents the type of command: CONTACT or EVENT.
- * A 3rd type, UNKNOWN, is used for unrecognized command types.
+ * Represents the type of command: CONTACT, EVENT, or EXIT.
+ * A 4th type, UNKNOWN, is used for unrecognized command types.
  */
 public enum CommandType {
-    CONTACT, EVENT, UNKNOWN;
+    CONTACT, EVENT, EXIT, UNKNOWN;
 
     @Override
     public String toString() {
@@ -24,6 +24,8 @@ public enum CommandType {
             return CONTACT;
         case "event":
             return EVENT;
+        case "exit":
+            return EXIT;
         default:
             return UNKNOWN;
         }
