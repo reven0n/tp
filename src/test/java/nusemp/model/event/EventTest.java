@@ -66,6 +66,7 @@ class EventTest {
         assertEquals(event1.withParticipant(bob), event2);
     }
 
+    @Test
     public void withoutParticipants_removePerson_returnsSetWithoutPerson() {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
@@ -78,5 +79,66 @@ class EventTest {
         Event event1 = new Event(name, date, participants1);
         Event event2 = new Event(name, date, participants2);
         assertEquals(event1.withoutParticipant(bob), event2);
+    }
+
+    @Test
+    public void isSameEvent_sameNameDifferentDate_returnsTrue() {
+        EventName name = new EventName("Meeting");
+        EventDate date1 = new EventDate("01-10-2025 14:00");
+        EventDate date2 = new EventDate("02-10-2025 14:00");
+
+        Event event1 = new Event(name, date1);
+        Event event2 = new Event(name, date2);
+        assertEquals(true, event1.isSameEvent(event2));
+    }
+
+    @Test
+    public void isSameEvent_differentNameSameDate_returnsFalse() {
+        EventName name1 = new EventName("Meeting");
+        EventName name2 = new EventName("Conference");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        Event event1 = new Event(name1, date);
+        Event event2 = new Event(name2, date);
+        assertEquals(false, event1.isSameEvent(event2));
+    }
+
+    @Test
+    public void isSameEvent_differentNameDifferentDate_returnsFalse() {
+        EventName name1 = new EventName("Meeting");
+        EventName name2 = new EventName("Conference");
+        EventDate date1 = new EventDate("01-10-2025 14:00");
+        EventDate date2 = new EventDate("02-10-2025 14:00");
+
+        Event event1 = new Event(name1, date1);
+        Event event2 = new Event(name2, date2);
+        assertEquals(false, event1.isSameEvent(event2));
+    }
+
+    @Test
+    public void isSameEvent_sameNameSameDate_returnsTrue() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        Event event1 = new Event(name, date);
+        Event event2 = new Event(name, date);
+        assertEquals(true, event1.isSameEvent(event2));
+    }
+
+    @Test
+    public void equals_sameValues_returnsTrue() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        Set<Person> participants = new HashSet<Person>();
+        Person alice = new PersonBuilder().withName("Alice").build();
+        Person bob = new PersonBuilder().withName("Bob").build();
+
+        participants.add(alice);
+        participants.add(bob);
+
+        Event event1 = new Event(name, date, participants);
+        Event event2 = new Event(name, date, participants);
+        assertEquals(true, event1.equals(event2));
     }
 }
