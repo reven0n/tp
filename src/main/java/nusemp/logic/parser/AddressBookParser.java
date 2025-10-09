@@ -133,10 +133,9 @@ public class AddressBookParser {
      * @throws ParseException if the user input does not conform the expected format
      */
     private Command parseEventCommand(String userInput) throws ParseException {
-        final Matcher matcher = CONTACT_COMMAND_FORMAT.matcher(userInput.trim());
+        final Matcher matcher = EVENT_COMMAND_FORMAT.matcher(userInput.trim());
 
         if (!matcher.matches()) {
-            // TODO: improve error message to specify the correct format for contact commands
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
@@ -148,7 +147,7 @@ public class AddressBookParser {
         switch (commandWord) {
         case EventAddCommand.COMMAND_WORD:
             return new EventAddCommandParser().parse(arguments);
-        // Future event commands can be added here
+
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

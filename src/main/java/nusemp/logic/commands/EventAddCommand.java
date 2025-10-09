@@ -1,14 +1,14 @@
 package nusemp.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
+import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
+
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.event.Event;
-
-import static java.util.Objects.requireNonNull;
-import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
-import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 
 /**
  * Adds an event to the event book.
