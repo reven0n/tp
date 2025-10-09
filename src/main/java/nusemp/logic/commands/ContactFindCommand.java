@@ -11,18 +11,19 @@ import nusemp.model.person.NameContainsKeywordsPredicate;
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case insensitive.
  */
-public class FindCommand extends Command {
+public class ContactFindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
+    public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
+            + ": Finds all persons whose names contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+            + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " alice bob charlie";
 
     private final NameContainsKeywordsPredicate predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public ContactFindCommand(NameContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -41,12 +42,12 @@ public class FindCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof FindCommand)) {
+        if (!(other instanceof ContactFindCommand)) {
             return false;
         }
 
-        FindCommand otherFindCommand = (FindCommand) other;
-        return predicate.equals(otherFindCommand.predicate);
+        ContactFindCommand otherContactFindCommand = (ContactFindCommand) other;
+        return predicate.equals(otherContactFindCommand.predicate);
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import nusemp.logic.commands.EditCommand.EditPersonDescriptor;
+import nusemp.logic.commands.ContactEditCommand.EditPersonDescriptor;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;
