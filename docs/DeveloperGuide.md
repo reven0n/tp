@@ -482,7 +482,7 @@ Use case ends.
 **Extensions**
 
 - 1a. No contacts match the criteria.
-  - 1a1. System informs user that no contacts match the criteria. 
+  - 1a1. System informs user that no contacts match the criteria.
   - Use case ends.
 
 ### Non-Functional Requirements

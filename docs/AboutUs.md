@@ -19,7 +19,7 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/rizrn.md)]
 
 * Role: Developer
-* Responsibilities: Integration & Testing 
+* Responsibilities: Integration & Testing
 
 ### Cai Zhouxuan
 

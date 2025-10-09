@@ -60,6 +60,9 @@ public class MainWindow extends UiPart<Stage> {
         this.primaryStage = primaryStage;
         this.logic = logic;
 
+
+
+
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
 
