@@ -14,11 +14,11 @@ class EventDateTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new EventDate((String) null));
-        assertThrows(NullPointerException.class, () -> new EventDate((java.time.LocalDateTime) null));
+        assertThrows(NullPointerException.class, () -> new EventDate((LocalDateTime) null));
     }
 
     @Test
-    public void constructor() {
+    public void constructor_validInput_eventDateCreated() {
         LocalDateTime dateTime = LocalDateTime.of(2025, 10, 1, 14, 0);
         EventDate eventDate1 = new EventDate(dateTime);
         assertEquals(dateTime, eventDate1.value);
