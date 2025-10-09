@@ -8,8 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-
-
 class EventNameTest {
     @Test
     void isValidName_validName_returnsTrue() {
