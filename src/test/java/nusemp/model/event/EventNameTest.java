@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class EventNameTest {
     @Test
-    void isValidName_validName_success() {
+    void isValidName_validName_returnsTrue() {
         String validName = "Birthday Party";
         String validName2 = "1 ";
 
@@ -19,7 +19,7 @@ class EventNameTest {
     }
 
     @Test
-    void isValidName_invalidName_failure() {
+    void isValidName_invalidName_returnsFalse() {
         String invalidName = "   ";
         assertFalse(EventName.isValidEventName(invalidName));
         assertFalse(EventName.isValidEventName(null));
