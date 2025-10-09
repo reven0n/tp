@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class EventDateTest {
     @Test
     public void constructor_null_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new EventDate((String)null));
+        assertThrows(NullPointerException.class, () -> new EventDate((String) null));
         assertThrows(NullPointerException.class, () -> new EventDate((java.time.LocalDateTime) null));
     }
 
