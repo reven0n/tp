@@ -57,7 +57,7 @@ public class EventAddCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ContactAddCommand)) {
+        if (!(other instanceof EventAddCommand)) {
             return false;
         }
 
