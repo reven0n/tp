@@ -1,6 +1,5 @@
 package nusemp.logic;
 
-import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static nusemp.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
@@ -22,7 +21,6 @@ import org.junit.jupiter.api.io.TempDir;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.ContactAddCommand;
-import nusemp.logic.commands.HelpCommand;
 import nusemp.logic.commands.ContactListCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
