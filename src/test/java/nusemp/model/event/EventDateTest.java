@@ -24,7 +24,7 @@ class EventDateTest {
         assertEquals(dateTime, eventDate1.value);
 
         EventDate eventDate2 = new EventDate("01-01-2025 00:00");
-        EventDate eventDate3 = new EventDate("01-01-2025 00:00      ");
+        EventDate eventDate3 = new EventDate("01-01-2025 00:00      "); // untrimmed input
         assertEquals(LocalDateTime.of(2025, 1, 1, 0, 0), eventDate2.value);
         assertEquals(LocalDateTime.of(2025, 1, 1, 0, 0), eventDate3.value);
     }
