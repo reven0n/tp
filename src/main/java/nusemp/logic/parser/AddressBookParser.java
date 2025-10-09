@@ -16,6 +16,7 @@ import nusemp.logic.commands.ContactDeleteCommand;
 import nusemp.logic.commands.ContactEditCommand;
 import nusemp.logic.commands.ContactFindCommand;
 import nusemp.logic.commands.ContactListCommand;
+import nusemp.logic.commands.EventAddCommand;
 import nusemp.logic.commands.ExitCommand;
 import nusemp.logic.commands.HelpCommand;
 import nusemp.logic.parser.exceptions.ParseException;
@@ -31,6 +32,8 @@ public class AddressBookParser {
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandType>\\S+).*");
     private static final Pattern CONTACT_COMMAND_FORMAT =
             Pattern.compile("contact (?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Pattern EVENT_COMMAND_FORMAT =
+            Pattern.compile("event (?<commandWord>\\S+)(?<arguments>.*)");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
@@ -122,9 +125,32 @@ public class AddressBookParser {
         }
     }
 
+    /**
+     * Parses user input that starts with "event" into command for execution.
+     *
+     * @param userInput full user input string
+     * @return the event command based on the user input
+     * @throws ParseException if the user input does not conform the expected format
+     */
     private Command parseEventCommand(String userInput) throws ParseException {
-        // TODO: implement event commands
-        logger.finer("This user input caused a ParseException: " + userInput);
-        throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        final Matcher matcher = EVENT_COMMAND_FORMAT.matcher(userInput.trim());
+
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+
+        logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
+
+        switch (commandWord) {
+        case EventAddCommand.COMMAND_WORD:
+            return new EventAddCommandParser().parse(arguments);
+
+        default:
+            logger.finer("This user input caused a ParseException: " + userInput);
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+        }
     }
 }

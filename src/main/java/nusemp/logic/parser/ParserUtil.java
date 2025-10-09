@@ -9,6 +9,8 @@ import java.util.Set;
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
+import nusemp.model.event.EventDate;
+import nusemp.model.event.EventName;
 import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;
@@ -120,5 +122,36 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String date} into an {@code EventDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     * @param date the date string to be parsed
+     * @return the parsed EventDate object
+     * @throws ParseException if the given {@code date} is invalid.
+     */
+    public static EventDate parseEventDate(String date) throws ParseException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!EventDate.isValidEventDate(trimmedDate)) {
+            throw new ParseException(EventDate.MESSAGE_CONSTRAINTS);
+        }
+        return new EventDate(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code EventName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static EventName parseEventName(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!EventName.isValidEventName(trimmedName)) {
+            throw new ParseException(EventName.MESSAGE_CONSTRAINTS);
+        }
+        return new EventName(trimmedName);
     }
 }
