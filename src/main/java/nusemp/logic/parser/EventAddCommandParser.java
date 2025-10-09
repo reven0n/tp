@@ -30,10 +30,7 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventAddCommand.MESSAGE_USAGE));
         }
 
-        EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
-        EventDate date = ParserUtil.parseEventDate(argMultimap.getValue(PREFIX_DATE).get());
-
-        Event event = new Event(name, date);
+        Event event = createEvent(argMultimap);
 
         return new EventAddCommand(event);
     }
@@ -44,5 +41,19 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
      */
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+    /**
+     * Creates an Event object from the given ArgumentMultimap.
+     *
+     * @param argMultimap the ArgumentMultimap containing the parsed arguments
+     * @return the created Event object
+     * @throws ParseException if there is an error during parsing
+     */
+    private Event createEvent(ArgumentMultimap argMultimap) throws ParseException {
+        EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
+        EventDate date = ParserUtil.parseEventDate(argMultimap.getValue(PREFIX_DATE).get());
+
+        return new Event(name, date);
     }
 }
