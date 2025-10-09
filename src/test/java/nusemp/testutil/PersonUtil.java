@@ -8,6 +8,7 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 
+import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.ContactAddCommand;
 import nusemp.logic.commands.ContactEditCommand.EditPersonDescriptor;
 import nusemp.model.person.Person;
@@ -22,7 +23,7 @@ public class PersonUtil {
      * Returns an add command string for adding the {@code person}.
      */
     public static String getAddCommand(Person person) {
-        return ContactAddCommand.COMMAND_WORD + " " + getPersonDetails(person);
+        return CommandType.CONTACT + " " + ContactAddCommand.COMMAND_WORD + " " + getPersonDetails(person);
     }
 
     /**

@@ -15,9 +15,9 @@ import nusemp.logic.commands.ContactClearCommand;
 import nusemp.logic.commands.ContactDeleteCommand;
 import nusemp.logic.commands.ContactEditCommand;
 import nusemp.logic.commands.ContactFindCommand;
-import nusemp.logic.commands.ContactHelpCommand;
 import nusemp.logic.commands.ContactListCommand;
 import nusemp.logic.commands.ExitCommand;
+import nusemp.logic.commands.HelpCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 
 /**
@@ -28,8 +28,9 @@ public class AddressBookParser {
     /**
      * Used for initial separation of command word and args.
      */
-    private static final Pattern BASIC_COMMAND_FORMAT =
-            Pattern.compile("(?<commandType>\\S+)\\s+(?<commandWord>\\S+)(?<arguments>.*)");
+    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandType>\\S+).*");
+    private static final Pattern CONTACT_COMMAND_FORMAT =
+            Pattern.compile("contact (?<commandWord>\\S+)(?<arguments>.*)");
     private static final Logger logger = LogsCenter.getLogger(AddressBookParser.class);
 
     /**
@@ -41,26 +42,28 @@ public class AddressBookParser {
      */
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
+
         if (!matcher.matches()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactHelpCommand.MESSAGE_USAGE));
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
         final String commandType = matcher.group("commandType");
-        final String commandWord = matcher.group("commandWord");
-        final String arguments = matcher.group("arguments");
 
         // Note to developers: Change the log level in config.json to enable lower level (i.e., FINE, FINER and lower)
         // log messages such as the one below.
         // Lower level log messages are used sparingly to minimize noise in the code.
-        logger.fine("Command type: " + commandType + "Command word: " + commandWord + "; Arguments: " + arguments);
+        logger.fine("Command type: " + commandType);
 
         switch (CommandType.fromString(commandType)) {
 
         case CONTACT:
-            return parseContactCommand(userInput, commandWord, arguments);
+            return parseContactCommand(userInput);
 
         case EVENT:
-            return parseEventCommand(userInput, commandWord, arguments);
+            return parseEventCommand(userInput);
+
+        case HELP:
+            return new HelpCommand();
 
         case EXIT:
             return new ExitCommand();
@@ -73,7 +76,25 @@ public class AddressBookParser {
         }
     }
 
-    private Command parseContactCommand(String userInput, String commandWord, String arguments) throws ParseException {
+    /**
+     * Parses user input that starts with "contact" into command for execution.
+     *
+     * @param userInput full user input string
+     * @return the contact command based on the user input
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    private Command parseContactCommand(String userInput) throws ParseException {
+        final Matcher matcher = CONTACT_COMMAND_FORMAT.matcher(userInput.trim());
+
+        if (!matcher.matches()) {
+            // TODO: improve error message to specify the correct format for contact commands
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
+        }
+
+        final String commandWord = matcher.group("commandWord");
+        final String arguments = matcher.group("arguments");
+
+        logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
 
         switch (commandWord) {
 
@@ -95,16 +116,13 @@ public class AddressBookParser {
         case ContactListCommand.COMMAND_WORD:
             return new ContactListCommand();
 
-        case ContactHelpCommand.COMMAND_WORD:
-            return new ContactHelpCommand();
-
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 
-    private Command parseEventCommand(String userInput, String commandWord, String arguments) throws ParseException {
+    private Command parseEventCommand(String userInput) throws ParseException {
         // TODO: implement event commands
         logger.finer("This user input caused a ParseException: " + userInput);
         throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

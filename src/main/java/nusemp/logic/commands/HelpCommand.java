@@ -5,7 +5,7 @@ import nusemp.model.Model;
 /**
  * Format full help instructions for every command for display.
  */
-public class ContactHelpCommand extends Command {
+public class HelpCommand extends Command {
 
     public static final String COMMAND_WORD = "help";
 
