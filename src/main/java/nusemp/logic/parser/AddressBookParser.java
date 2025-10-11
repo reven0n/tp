@@ -150,7 +150,7 @@ public class AddressBookParser {
             return new EventAddCommandParser().parse(arguments);
 
         case EventListCommand.COMMAND_WORD:
-            return new EventListCommand();
+            return new EventListCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
