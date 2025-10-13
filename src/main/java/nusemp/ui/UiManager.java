@@ -1,9 +1,9 @@
 package nusemp.ui;
 
-import java.util.logging.Logger;
 import java.awt.Taskbar;
 import java.awt.Toolkit;
 import java.awt.Taskbar.Feature;
+import java.util.logging.Logger;
 
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
