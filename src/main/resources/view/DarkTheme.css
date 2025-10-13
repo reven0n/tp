@@ -357,16 +357,16 @@
 
 /* Sidebar buttons */
 .sidebar-button {
-    -fx-background-radius: 40; /* Fully rounded */
-    -fx-background-color: #36393F;
-    -fx-text-fill: #FFFFFF;
-    -fx-font-size: 18px;
-    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-background-color: #383838;
+    -fx-text-fill: #B9BBBE;
+    -fx-font-size: 16px;
+    -fx-font-weight: normal;
     -fx-pref-width: 56;
     -fx-pref-height: 56;
     -fx-alignment: center;
     -fx-padding: 0;
-    -fx-effect: dropshadow(gaussian, #000000AA, 6, 0.3, 0, 2);
+    -fx-effect: null; /* Remove shadow */
     -fx-cursor: hand;
     -fx-border-width: 0;
     -fx-border-color: transparent;
@@ -374,12 +374,11 @@
 }
 
 .sidebar-button:hover {
-    -fx-background-color: #7289DA; /* Discord blue accent */
+    -fx-background-color: radial-gradient(center 50% 50%, radius 50%, #5A6268 0%, #42464D 50%, transparent 100%);
     -fx-text-fill: #FFFFFF;
-    -fx-effect: dropshadow(gaussian, #7289DA, 12, 0.4, 0, 2);
-    -fx-scale-x: 1.08;
-    -fx-scale-y: 1.08;
-    -fx-transition: all 0.15s;
+    -fx-effect: null; /* No shadow on hover */
+    -fx-scale-x: 1.0; /* Remove scaling */
+    -fx-scale-y: 1.0; /* Remove scaling */
 }
 
 /* Optional: Remove button focus ring */
@@ -389,5 +388,55 @@
 
 /* Optional: Remove button border on click */
 .sidebar-button:pressed {
-    -fx-background-color: #4752C4;
+    -fx-background-color: #40444B;
+}
+
+/* Terminal Overlay Styles */
+.terminal-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+    -fx-alignment: center;
+}
+
+.terminal-window {
+    -fx-background-color: #2D2D30;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #404040;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 20, 0.3, 0, 5);
+    -fx-padding: 0;
+    -fx-spacing: 0;
+}
+
+.terminal-result-display {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12 12 0 0;
+}
+
+.terminal-result-display .text-area {
+    -fx-background-color: transparent;
+    -fx-background-radius: 12 12 0 0;
+    -fx-border-width: 0;
+    -fx-focus-color: transparent;
+    -fx-text-fill: #E0E0E0;
+    -fx-font-family: "Consolas", "Monaco", "Lucida Console", monospace;
+    -fx-font-size: 12pt;
+}
+
+.terminal-command-box {
+    -fx-background-color: #1E1E1E;
+    -fx-background-radius: 0 0 12 12;
+    -fx-border-color: #404040;
+    -fx-border-width: 1 0 0 0;
+}
+
+.terminal-command-box .text-field {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0 0 12 12;
+    -fx-border-width: 0;
+    -fx-focus-color: transparent;
+    -fx-text-fill: #E0E0E0;
+    -fx-font-family: "Consolas", "Monaco", "Lucida Console", monospace;
+    -fx-font-size: 12pt;
+    -fx-prompt-text-fill: #808080;
 }

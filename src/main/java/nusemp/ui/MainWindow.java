@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -35,6 +37,11 @@ public class MainWindow extends UiPart<Stage> {
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
+    // Terminal overlay components
+    private ResultDisplay terminalResultDisplay;
+    private CommandBox terminalCommandBox;
+    private boolean isTerminalVisible = false;
+
     @FXML
     private StackPane commandBoxPlaceholder;
 
@@ -50,6 +57,15 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane terminalOverlay;
+
+    @FXML
+    private StackPane terminalResultDisplayPlaceholder;
+
+    @FXML
+    private StackPane terminalCommandBoxPlaceholder;
+
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
@@ -59,9 +75,7 @@ public class MainWindow extends UiPart<Stage> {
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
-
-
-
+        primaryStage.setTitle("NUS Event Mailer Pro");
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -77,6 +91,19 @@ public class MainWindow extends UiPart<Stage> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+
+        // Add Ctrl+T shortcut for terminal
+        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.isControlDown() && event.getCode() == KeyCode.T) {
+                handleTerminal();
+                event.consume();
+            }
+            // ESC to close terminal
+            if (event.getCode() == KeyCode.ESCAPE && isTerminalVisible) {
+                hideTerminal();
+                event.consume();
+            }
+        });
     }
 
     /**
@@ -117,13 +144,20 @@ public class MainWindow extends UiPart<Stage> {
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
-        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+        //resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
-        commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+        //commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        // Initialize terminal components
+        terminalResultDisplay = new ResultDisplay();
+        terminalResultDisplayPlaceholder.getChildren().add(terminalResultDisplay.getRoot());
+
+        terminalCommandBox = new CommandBox(this::executeTerminalCommand);
+        terminalCommandBoxPlaceholder.getChildren().add(terminalCommandBox.getRoot());
     }
 
     /**
@@ -148,6 +182,40 @@ public class MainWindow extends UiPart<Stage> {
         } else {
             helpWindow.focus();
         }
+    }
+
+    /**
+     * Handles the terminal button click and Ctrl+T shortcut.
+     * Shows/hides the terminal overlay similar to macOS Spotlight.
+     */
+    @FXML
+    public void handleTerminal() {
+        if (isTerminalVisible) {
+            hideTerminal();
+        } else {
+            showTerminal();
+        }
+    }
+
+    /**
+     * Shows the terminal overlay.
+     */
+    private void showTerminal() {
+        terminalOverlay.setVisible(true);
+        terminalOverlay.setManaged(true);
+        isTerminalVisible = true;
+
+        // Focus on the terminal command box
+        terminalCommandBox.getRoot().requestFocus();
+    }
+
+    /**
+     * Hides the terminal overlay.
+     */
+    private void hideTerminal() {
+        terminalOverlay.setVisible(false);
+        terminalOverlay.setManaged(false);
+        isTerminalVisible = false;
     }
 
     void show() {
@@ -193,6 +261,31 @@ public class MainWindow extends UiPart<Stage> {
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * Executes the terminal command and returns the result.
+     */
+    private CommandResult executeTerminalCommand(String commandText) throws CommandException, ParseException {
+        try {
+            CommandResult commandResult = logic.execute(commandText);
+            logger.info("Terminal Result: " + commandResult.getFeedbackToUser());
+            terminalResultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+            if (commandResult.isShowHelp()) {
+                handleHelp();
+            }
+
+            if (commandResult.isExit()) {
+                handleExit();
+            }
+
+            return commandResult;
+        } catch (CommandException | ParseException e) {
+            logger.info("An error occurred while executing terminal command: " + commandText);
+            terminalResultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
     }
