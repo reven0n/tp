@@ -46,8 +46,8 @@ class EventTest {
         EventDate date = new EventDate("01-10-2025 14:00");
 
         List<Person> participants = new ArrayList<>();
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Person alice = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob@example.com").build();
 
         participants.add(alice);
         participants.add(bob);
@@ -77,7 +77,7 @@ class EventTest {
         EventDate date = new EventDate("01-10-2025 14:00");
 
         List<Person> participants1 = createParticipantList("Bob");
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob0@example.com").build();
         List<Person> participants2 = new ArrayList<>();
 
         Event event1 = new Event(name, date, participants1);
@@ -234,8 +234,8 @@ class EventTest {
 
     private List<Person> createParticipantList(String... names) {
         List<Person> participants = new ArrayList<>();
-        for (String name : names) {
-            participants.add(new PersonBuilder().withName(name).build());
+        for (int i = 0; i < names.length; i++) {
+            participants.add(new PersonBuilder().withName(names[i]).withEmail(names[i].toLowerCase() + i + "@example.com").build());
         }
         return participants;
     }
