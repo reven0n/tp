@@ -23,57 +23,63 @@
                 <URL value="@DarkTheme.css" />
                 <URL value="@Extensions.css" />
             </stylesheets>
-            <VBox>
-                <HBox VBox.vgrow="ALWAYS">
-                    <children>
-                        <!--<MenuBar fx:id="menuBar">
-                            <Menu mnemonicParsing="false" text="File">
-                                <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Help">
-                                <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-                            </Menu>
-                        </MenuBar>-->
-                        <VBox fx:id="sidebar" prefWidth="80"  alignment="CENTER" spacing="20">
-                            <children>
-                                <Button text="File" onAction="#handleExit" styleClass="sidebar-button"/>
-                                <Button text="Help" onAction="#handleHelp" styleClass="sidebar-button"/>
-                                <!-- Add more buttons as needed -->
-                            </children>
-                        </VBox>
-                        <MenuBar fx:id="menuBar" visible="false" managed="false">
-                            <Menu mnemonicParsing="false" text="File">
-                                <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-                            </Menu>
-                            <Menu mnemonicParsing="false" text="Help">
-                                <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-                            </Menu>
-                        </MenuBar>
-                        <VBox fx:id="personList" styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                            <padding>
-                                <Insets bottom="10" left="10" right="10" top="10" />
-                            </padding>
-                            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
-                            <VBox prefHeight="200.0">
+            <StackPane>
+                <VBox>
+                    <HBox VBox.vgrow="ALWAYS">
+                        <children>
+                            <!--<MenuBar fx:id="menuBar">
+                                <Menu mnemonicParsing="false" text="File">
+                                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Help">
+                                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+                                </Menu>
+                            </MenuBar>-->
+                            <VBox fx:id="sidebar" prefWidth="80"  alignment="CENTER" spacing="15">
                                 <children>
+                                    <Button text="⌘" onAction="#handleTerminal" styleClass="sidebar-button"/>
+                                    <Button text="?" onAction="#handleHelp" styleClass="sidebar-button"/>
+                                    <Button text="×" onAction="#handleExit" styleClass="sidebar-button"/>
 
-                                    <StackPane fx:id="resultDisplayPlaceholder" minHeight="100"  styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                                        <padding>
-                                            <Insets bottom="5" left="10" right="10" top="5" />
-                                        </padding>
-                                    </StackPane>
-                                    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-                                        <padding>
-                                            <Insets bottom="5" left="10" right="10" top="5" />
-                                        </padding>
-                                    </StackPane>
+                                    <!-- Add more buttons as needed -->
                                 </children>
                             </VBox>
-                        </VBox>
-                    </children>
-                </HBox>
-                <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER" />
-            </VBox>
+                            <MenuBar fx:id="menuBar" visible="false" managed="false">
+                                <Menu mnemonicParsing="false" text="File">
+                                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+                                </Menu>
+                                <Menu mnemonicParsing="false" text="Help">
+                                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+                                </Menu>
+                            </MenuBar>
+                            <VBox fx:id="personList" styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
+                                <padding>
+                                    <Insets bottom="10" left="10" right="10" top="10" />
+                                </padding>
+                                <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
+
+                            </VBox>
+                        </children>
+                    </HBox>
+                    <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER" />
+                </VBox>
+
+                <!-- Terminal Overlay -->
+                <StackPane fx:id="terminalOverlay" visible="false" managed="false" styleClass="terminal-overlay">
+                    <VBox alignment="CENTER" maxWidth="600" maxHeight="400" styleClass="terminal-window">
+                        <StackPane fx:id="terminalResultDisplayPlaceholder" minHeight="250" styleClass="terminal-result-display" VBox.vgrow="ALWAYS">
+                            <padding>
+                                <Insets bottom="10" left="15" right="15" top="15" />
+                            </padding>
+                        </StackPane>
+                        <StackPane fx:id="terminalCommandBoxPlaceholder" styleClass="terminal-command-box" VBox.vgrow="NEVER">
+                            <padding>
+                                <Insets bottom="15" left="15" right="15" top="10" />
+                            </padding>
+                        </StackPane>
+                    </VBox>
+                </StackPane>
+            </StackPane>
         </Scene>
     </scene>
 </fx:root>
