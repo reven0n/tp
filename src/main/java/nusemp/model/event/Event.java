@@ -4,10 +4,13 @@ import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
+import nusemp.model.event.exceptions.DuplicateParticipantException;
 import nusemp.model.person.Person;
 
 /**
@@ -28,6 +31,7 @@ public class Event {
      */
     public Event(EventName name, EventDate date, List<Person> participants) {
         requireAllNonNull(name, date, participants);
+        checkForDuplicateParticipants(participants);
         this.name = name;
         this.date = date;
         this.participants.addAll(participants);
@@ -65,11 +69,38 @@ public class Event {
     }
 
     /**
+     * Returns true if the event has a participant with the given email.
+     */
+    public boolean hasParticipantWithEmail(String email) {
+        requireAllNonNull(email);
+        return participants.stream()
+                .anyMatch(person -> person.getEmail().value.equals(email));
+    }
+
+    /**
+     * Checks if the given list of participants contains duplicate emails.
+     * @throws DuplicateParticipantException if duplicates are found.
+     */
+    private static void checkForDuplicateParticipants(List<Person> participants) {
+        Set<String> emails = new HashSet<>();
+        for (Person person : participants) {
+            String email = person.getEmail().value;
+            if (!emails.add(email)) {
+                throw new DuplicateParticipantException();
+            }
+        }
+    }
+
+    /**
      * Returns a new Event with the given participant added.
      * This maintains immutability by returning a new Event instance.
+     * @throws DuplicateParticipantException if the participant already exists in the event.
      */
     public Event withParticipant(Person person) {
         requireAllNonNull(person);
+        if (hasParticipantWithEmail(person.getEmail().value)) {
+            throw new DuplicateParticipantException();
+        }
         List<Person> updatedParticipants = new ArrayList<>(participants);
         updatedParticipants.add(person);
         return new Event(name, date, updatedParticipants);
