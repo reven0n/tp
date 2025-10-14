@@ -236,7 +236,7 @@ class EventTest {
         List<Person> participants = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
             participants.add(new PersonBuilder().withName(names[i])
-            .withEmail(names[i].toLowerCase() + i + "@example.com").build());
+                .withEmail(names[i].toLowerCase() + i + "@example.com").build());
         }
         return participants;
     }
