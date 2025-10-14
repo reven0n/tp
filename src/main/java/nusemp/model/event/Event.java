@@ -2,10 +2,10 @@ package nusemp.model.event;
 
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.person.Person;
@@ -21,12 +21,12 @@ public class Event {
     private final EventDate date;
 
     // Data fields
-    private final Set<Person> participants = new HashSet<>();
+    private final List<Person> participants = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Event(EventName name, EventDate date, Set<Person> participants) {
+    public Event(EventName name, EventDate date, List<Person> participants) {
         requireAllNonNull(name, date, participants);
         this.name = name;
         this.date = date;
@@ -37,7 +37,7 @@ public class Event {
      * Convenience constructor without participants.
      */
     public Event(EventName name, EventDate date) {
-        this(name, date, new HashSet<>());
+        this(name, date, new ArrayList<>());
     }
 
     public EventName getName() {
@@ -49,11 +49,11 @@ public class Event {
     }
 
     /**
-     * Returns an immutable participant set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable participant list, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Person> getParticipants() {
-        return Collections.unmodifiableSet(participants);
+    public List<Person> getParticipants() {
+        return Collections.unmodifiableList(participants);
     }
 
     /**
@@ -70,7 +70,7 @@ public class Event {
      */
     public Event withParticipant(Person person) {
         requireAllNonNull(person);
-        Set<Person> updatedParticipants = new HashSet<>(participants);
+        List<Person> updatedParticipants = new ArrayList<>(participants);
         updatedParticipants.add(person);
         return new Event(name, date, updatedParticipants);
     }
@@ -81,7 +81,7 @@ public class Event {
      */
     public Event withoutParticipant(Person person) {
         requireAllNonNull(person);
-        Set<Person> updatedParticipants = new HashSet<>(participants);
+        List<Person> updatedParticipants = new ArrayList<>(participants);
         updatedParticipants.remove(person);
         return new Event(name, date, updatedParticipants);
     }
