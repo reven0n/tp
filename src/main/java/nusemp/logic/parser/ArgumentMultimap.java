@@ -86,4 +86,12 @@ public class ArgumentMultimap {
         return !argMultimap.isEmpty()
                 && argMultimap.keySet().stream().anyMatch(prefix -> !prefix.getPrefix().isEmpty());
     }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    public boolean arePrefixesPresent(Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> getValue(prefix).isPresent());
+    }
 }

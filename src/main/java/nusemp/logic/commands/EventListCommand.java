@@ -13,10 +13,8 @@ public class EventListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    // public static final String MESSAGE_SUCCESS = "Listed all events"; // archive
-
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Lists all events in the event book.\n"
+            + ": Lists all events.\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD;
 
 

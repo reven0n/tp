@@ -4,8 +4,6 @@ import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 
-import java.util.stream.Stream;
-
 import nusemp.commons.core.index.Index;
 import nusemp.logic.commands.EventLinkCommand;
 import nusemp.logic.parser.exceptions.ParseException;
@@ -26,7 +24,7 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_EVENT, PREFIX_CONTACT);
 
         // check if both prefixes are present
-        if (!arePrefixesPresent(argMultimap, PREFIX_EVENT, PREFIX_CONTACT)
+        if (!argMultimap.arePrefixesPresent(PREFIX_EVENT, PREFIX_CONTACT)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EventLinkCommand.MESSAGE_USAGE));
@@ -48,13 +46,5 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
         }
 
         return new EventLinkCommand(eventIndex, contactIndex);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

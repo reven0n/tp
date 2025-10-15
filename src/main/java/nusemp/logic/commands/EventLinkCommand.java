@@ -21,7 +21,7 @@ public class EventLinkCommand extends Command {
     public static final String COMMAND_WORD = "link";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Links a contact to an event in the event book. "
+            + ": Links a contact to an event. "
             + "Parameters: "
             + PREFIX_EVENT + " EVENT_INDEX "
             + PREFIX_CONTACT + " CONTACT_INDEX\n"
