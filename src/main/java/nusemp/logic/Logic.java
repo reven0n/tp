@@ -9,8 +9,8 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;
 import nusemp.model.ReadOnlyAddressBook;
-import nusemp.model.person.Person;
 import nusemp.model.event.Event;
+import nusemp.model.person.Person;
 
 /**
  * API of the Logic component

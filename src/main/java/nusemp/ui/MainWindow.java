@@ -241,26 +241,7 @@ public class MainWindow extends UiPart<Stage> {
             helpWindow.focus();
         }
     }
-/*
-    *//**
-     * Opens the help window or focuses on it if it's already opened.
-     *//*
-    @FXML
-    public void handleEventViewToggle() {
-        eventListPanel = new EventListPanel(logic.getFilteredEventList());
 
-        personListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
-    }
-
-    *//**
-     * Opens the help window or focuses on it if it's already opened.
-     *//*
-    @FXML
-    public void handlePersonViewToggle() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
-    }*/
 
     /**
      * Handles the terminal button click and Ctrl+T shortcut.
