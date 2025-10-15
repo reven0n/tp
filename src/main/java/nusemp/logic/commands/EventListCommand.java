@@ -3,7 +3,6 @@ package nusemp.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
-import nusemp.logic.Messages;
 import nusemp.model.Model;
 
 /**
