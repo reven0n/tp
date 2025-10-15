@@ -3,7 +3,6 @@ package nusemp.logic.parser;
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import nusemp.logic.commands.ContactListCommand;
-import nusemp.logic.commands.EventListCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 
 public class ContactListCommandParser implements Parser<ContactListCommand> {
