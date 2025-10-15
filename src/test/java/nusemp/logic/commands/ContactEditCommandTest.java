@@ -166,7 +166,7 @@ public class ContactEditCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ContactClearCommand()));
+        assertFalse(standardCommand.equals(new ContactListCommand()));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new ContactEditCommand(INDEX_SECOND_PERSON, DESC_AMY)));

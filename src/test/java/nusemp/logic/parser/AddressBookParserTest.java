@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.ContactAddCommand;
-import nusemp.logic.commands.ContactClearCommand;
 import nusemp.logic.commands.ContactDeleteCommand;
 import nusemp.logic.commands.ContactEditCommand;
 import nusemp.logic.commands.ContactEditCommand.EditPersonDescriptor;
@@ -38,14 +37,6 @@ public class AddressBookParserTest {
         Person person = new PersonBuilder().build();
         ContactAddCommand command = (ContactAddCommand) parser.parseCommand(PersonUtil.getAddCommand(person));
         assertEquals(new ContactAddCommand(person), command);
-    }
-
-    @Test
-    public void parseCommand_clear() throws Exception {
-        assertTrue(parser.parseCommand(CommandType.CONTACT + " " + ContactClearCommand.COMMAND_WORD)
-                instanceof ContactClearCommand);
-        assertTrue(parser.parseCommand(CommandType.CONTACT + " " + ContactClearCommand.COMMAND_WORD + " 3")
-                instanceof ContactClearCommand);
     }
 
     @Test

@@ -11,7 +11,6 @@ import nusemp.commons.core.LogsCenter;
 import nusemp.logic.commands.Command;
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.ContactAddCommand;
-import nusemp.logic.commands.ContactClearCommand;
 import nusemp.logic.commands.ContactDeleteCommand;
 import nusemp.logic.commands.ContactEditCommand;
 import nusemp.logic.commands.ContactFindCommand;
@@ -109,9 +108,6 @@ public class AddressBookParser {
 
         case ContactDeleteCommand.COMMAND_WORD:
             return new ContactDeleteCommandParser().parse(arguments);
-
-        case ContactClearCommand.COMMAND_WORD:
-            return new ContactClearCommand();
 
         case ContactFindCommand.COMMAND_WORD:
             return new ContactFindCommandParser().parse(arguments);
