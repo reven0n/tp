@@ -1,7 +1,8 @@
 package nusemp.model.person;
 
-import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;
+
+import java.util.Objects;
 
 /**
  * Represents a Person's phone number in the address book.
@@ -18,11 +19,12 @@ public class Phone {
     /**
      * Constructs a {@code Phone}.
      *
-     * @param phone A valid phone number.
+     * @param phone A valid phone number. Can be null, which indicates no phone number.
      */
     public Phone(String phone) {
-        requireNonNull(phone);
-        checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
+        if (phone != null) {
+            checkArgument(isValidPhone(phone), MESSAGE_CONSTRAINTS);
+        }
         value = phone;
     }
 
@@ -31,6 +33,13 @@ public class Phone {
      */
     public static boolean isValidPhone(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if there is no phone number.
+     */
+    public boolean isEmpty() {
+        return value == null;
     }
 
     @Override
@@ -50,12 +59,12 @@ public class Phone {
         }
 
         Phone otherPhone = (Phone) other;
-        return value.equals(otherPhone.value);
+        return Objects.equals(value, otherPhone.value);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Objects.hash(value);
     }
 
 }

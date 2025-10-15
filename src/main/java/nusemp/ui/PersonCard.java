@@ -50,8 +50,18 @@ public class PersonCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
         email.setText(person.getEmail().value);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
+        if (person.getPhone().isEmpty()) {
+            phone.setManaged(false);
+            phone.setVisible(false);
+        } else {
+            phone.setText(person.getPhone().value);
+        }
+        if (person.getAddress().isEmpty()) {
+            address.setManaged(false);
+            address.setVisible(false);
+        } else {
+            address.setText(person.getAddress().value);
+        }
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

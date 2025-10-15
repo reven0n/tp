@@ -41,13 +41,13 @@ public class ContactEditCommand extends Command {
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + " NAME] "
-            + "[" + PREFIX_PHONE + " PHONE] "
             + "[" + PREFIX_EMAIL + " EMAIL] "
+            + "[" + PREFIX_PHONE + " PHONE] "
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
             + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + " 91234567 "
-            + PREFIX_EMAIL + " johndoe@example.com";
+            + PREFIX_EMAIL + " johndoe@example.com"
+            + PREFIX_PHONE + " 91234567 ";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Successfully edited contact:\n%1$s";
     public static final String MESSAGE_NOT_EDITED =

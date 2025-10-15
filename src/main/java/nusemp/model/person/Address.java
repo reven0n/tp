@@ -1,7 +1,8 @@
 package nusemp.model.person;
 
-import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;
+
+import java.util.Objects;
 
 /**
  * Represents a Person's address in the address book.
@@ -22,11 +23,12 @@ public class Address {
     /**
      * Constructs an {@code Address}.
      *
-     * @param address A valid address.
+     * @param address A valid address. Can be null, which indicates no address.
      */
     public Address(String address) {
-        requireNonNull(address);
-        checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
+        if (address != null) {
+            checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
+        }
         value = address;
     }
 
@@ -35,6 +37,13 @@ public class Address {
      */
     public static boolean isValidAddress(String test) {
         return test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if there is no address.
+     */
+    public boolean isEmpty() {
+        return value == null;
     }
 
     @Override
@@ -54,12 +63,12 @@ public class Address {
         }
 
         Address otherAddress = (Address) other;
-        return value.equals(otherAddress.value);
+        return Objects.equals(value, otherAddress.value);
     }
 
     @Override
     public int hashCode() {
-        return value.hashCode();
+        return Objects.hash(value);
     }
 
 }

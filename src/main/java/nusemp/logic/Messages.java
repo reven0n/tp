@@ -40,14 +40,22 @@ public class Messages {
     public static String format(Person person) {
         final StringBuilder builder = new StringBuilder();
         builder.append(person.getName())
-                .append("; Phone: ")
-                .append(person.getPhone())
                 .append("; Email: ")
-                .append(person.getEmail())
-                .append("; Address: ")
-                .append(person.getAddress())
-                .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+                .append(person.getEmail());
+
+        if (!person.getPhone().isEmpty()) {
+            builder.append("; Phone: ").append(person.getPhone());
+        }
+
+        if (!person.getAddress().isEmpty()) {
+            builder.append("; Address: ").append(person.getAddress());
+        }
+
+        if (!person.getTags().isEmpty()) {
+            builder.append("; Tags: ");
+            person.getTags().forEach(builder::append);
+        }
+
         return builder.toString();
     }
 
