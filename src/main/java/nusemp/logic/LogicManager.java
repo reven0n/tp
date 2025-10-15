@@ -15,6 +15,7 @@ import nusemp.logic.parser.AddressBookParser;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;
 import nusemp.model.ReadOnlyAddressBook;
+import nusemp.model.event.Event;
 import nusemp.model.person.Person;
 import nusemp.storage.Storage;
 
@@ -69,6 +70,11 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<Event> getFilteredEventList() {
+        return model.getFilteredEventList();
     }
 
     @Override
