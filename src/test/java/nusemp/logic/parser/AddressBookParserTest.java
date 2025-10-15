@@ -20,6 +20,7 @@ import nusemp.logic.commands.ContactEditCommand;
 import nusemp.logic.commands.ContactEditCommand.EditPersonDescriptor;
 import nusemp.logic.commands.ContactFindCommand;
 import nusemp.logic.commands.ContactListCommand;
+import nusemp.logic.commands.EventListCommand;
 import nusemp.logic.commands.ExitCommand;
 import nusemp.logic.commands.HelpCommand;
 import nusemp.logic.parser.exceptions.ParseException;
@@ -89,8 +90,8 @@ public class AddressBookParserTest {
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(CommandType.CONTACT + " " + ContactListCommand.COMMAND_WORD)
                 instanceof ContactListCommand);
-        assertTrue(parser.parseCommand(CommandType.CONTACT + " " + ContactListCommand.COMMAND_WORD + " 3")
-                instanceof ContactListCommand);
+        assertTrue(parser.parseCommand(CommandType.EVENT + " " + ContactListCommand.COMMAND_WORD)
+                instanceof EventListCommand);
     }
 
     @Test
