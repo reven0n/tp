@@ -17,6 +17,7 @@ import nusemp.logic.commands.ContactEditCommand;
 import nusemp.logic.commands.ContactFindCommand;
 import nusemp.logic.commands.ContactListCommand;
 import nusemp.logic.commands.EventAddCommand;
+import nusemp.logic.commands.EventLinkCommand;
 import nusemp.logic.commands.EventListCommand;
 import nusemp.logic.commands.ExitCommand;
 import nusemp.logic.commands.HelpCommand;
@@ -151,6 +152,9 @@ public class AddressBookParser {
 
         case EventListCommand.COMMAND_WORD:
             return new EventListCommandParser().parse(arguments);
+
+        case EventLinkCommand.COMMAND_WORD:
+            return new EventLinkCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

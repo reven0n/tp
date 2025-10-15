@@ -18,7 +18,7 @@ import nusemp.model.person.Person;
  * Links a contact to an event in the event book.
  */
 public class EventLinkCommand extends Command {
-    public static final String COMMAND_WORD = "event link";
+    public static final String COMMAND_WORD = "link";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
             + ": Links a contact to an event in the event book. "
