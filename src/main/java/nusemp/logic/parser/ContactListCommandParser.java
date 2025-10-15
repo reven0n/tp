@@ -5,6 +5,9 @@ import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import nusemp.logic.commands.ContactListCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments and creates a new ContactListCommand object
+ */
 public class ContactListCommandParser implements Parser<ContactListCommand> {
 
     @Override
