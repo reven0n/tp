@@ -52,13 +52,27 @@
                                     <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
                                 </Menu>
                             </MenuBar>
-                            <VBox fx:id="personList" styleClass="pane-with-border" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                                <padding>
-                                    <Insets bottom="10" left="10" right="10" top="10" />
-                                </padding>
-                                <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
 
-                            </VBox>
+                            <StackPane HBox.hgrow="ALWAYS">
+                                <VBox fx:id="personList" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
+                                    <padding>
+                                        <Insets bottom="10" left="10" right="10" top="10" />
+                                    </padding>
+                                    <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
+                                </VBox>
+
+                                <HBox fx:id="toggleSlider" styleClass="toggle-slider"
+                                      StackPane.alignment="TOP_CENTER" maxWidth="160" maxHeight="40" spacing="0">
+                                    <StackPane.margin>
+                                        <Insets top="15" />
+                                    </StackPane.margin>
+
+                                    <Button fx:id="personsToggle" text="👤" styleClass="toggle-button, toggle-active"
+                                            maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handlePersonViewToggle"/>
+                                    <Button fx:id="eventsToggle" text="🗓️" styleClass="toggle-button, toggle-inactive"
+                                            maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleEventViewToggle"/>
+                                </HBox>
+                            </StackPane>
                         </children>
                     </HBox>
                     <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER" />
