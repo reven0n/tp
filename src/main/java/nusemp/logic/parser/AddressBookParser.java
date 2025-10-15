@@ -119,7 +119,7 @@ public class AddressBookParser {
             return new ContactFindCommandParser().parse(arguments);
 
         case ContactListCommand.COMMAND_WORD:
-            return new ContactListCommand();
+            return new ContactListCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

@@ -77,18 +77,7 @@ public class ArgumentMultimap {
     }
 
     /**
-     * Checks if any unexpected arguments (prefixes) are present in the argument map.
-     * For the `event list` command, we expect no arguments or prefixes.
-     *
-     * @return true if there are unexpected arguments (prefixes), false otherwise
-     */
-    public boolean hasUnexpectedArguments() {
-        return !argMultimap.isEmpty()
-                && argMultimap.keySet().stream().anyMatch(prefix -> !prefix.getPrefix().isEmpty());
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the
      * {@code ArgumentMultimap}.
      */
     public boolean arePrefixesPresent(Prefix... prefixes) {
