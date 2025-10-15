@@ -51,7 +51,5 @@ public class EventCard extends UiPart<Region> {
         event.getParticipants().stream()
                 .sorted(Comparator.comparing(person -> person.getName().fullName))
                 .forEach(person -> people.getChildren().add(new Label(person.getName().fullName)));
-
-
     }
 }

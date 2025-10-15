@@ -64,10 +64,5 @@
 .toggle-inactive:hover {
     -fx-text-fill: white;
     -fx-background-color: radial-gradient(center 50% 50%, radius 40%, #6d6d6d 0%, #616161 30%, transparent 100%);
-
     -fx-border-color: none;
-
 }
-
-
-

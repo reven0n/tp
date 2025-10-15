@@ -73,8 +73,6 @@
                                             maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleEventViewToggle"/>
                                 </HBox>
                             </StackPane>
-
-
                         </children>
                     </HBox>
                     <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER" />
