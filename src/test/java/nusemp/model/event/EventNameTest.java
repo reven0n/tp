@@ -22,7 +22,11 @@ class EventNameTest {
     void isValidName_invalidName_returnsFalse() {
         String invalidName = "   ";
         assertFalse(EventName.isValidEventName(invalidName));
-        assertFalse(EventName.isValidEventName(null));
+    }
+
+    @Test
+    void isValidName_nullName_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> EventName.isValidEventName(null));
     }
 
     @Test
