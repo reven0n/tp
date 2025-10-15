@@ -21,7 +21,7 @@ public class ContactAddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
-            + ": Adds a person to the address book. "
+            + ": Adds a contact. "
             + "Parameters: "
             + PREFIX_NAME + " NAME "
             + PREFIX_PHONE + " PHONE "
@@ -36,8 +36,9 @@ public class ContactAddCommand extends Command {
             + PREFIX_TAG + " friends "
             + PREFIX_TAG + " owesMoney";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    public static final String MESSAGE_SUCCESS = "Successfully added contact:\n%1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON =
+            "Error adding contact: contact with email \"%1$s\" already exists";
 
     private final Person toAdd;
 
@@ -54,7 +55,7 @@ public class ContactAddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasPerson(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_PERSON, toAdd.getEmail()));
         }
 
         model.addPerson(toAdd);
