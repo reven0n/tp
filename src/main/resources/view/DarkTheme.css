@@ -386,10 +386,6 @@
     -fx-border-color: transparent;
 }
 
-/* Optional: Remove button border on click */
-.sidebar-button:pressed {
-    -fx-background-color: #40444B;
-}
 
 /* Terminal Overlay Styles */
 .terminal-overlay {

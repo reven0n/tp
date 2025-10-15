@@ -8,7 +8,6 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
-import java.util.stream.Stream;
 
 import nusemp.logic.commands.ContactAddCommand;
 import nusemp.logic.parser.exceptions.ParseException;
@@ -33,21 +32,13 @@ public class ContactAddCommandParser implements Parser<ContactAddCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL) || !argMultimap.getPreamble().isEmpty()) {
+        if (!argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_EMAIL) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactAddCommand.MESSAGE_USAGE));
         }
 
         Person person = createPerson(argMultimap);
 
         return new ContactAddCommand(person);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
     private Person createPerson(ArgumentMultimap argMultimap) throws ParseException {
