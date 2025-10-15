@@ -46,14 +46,14 @@ public class ContactEditCommand extends Command {
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
             + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1 "
-            + PREFIX_EMAIL + " johndoe@example.com"
-            + PREFIX_PHONE + " 91234567 ";
+            + PREFIX_EMAIL + " johndoe@example.com "
+            + PREFIX_PHONE + " 91234567";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Successfully edited contact:\n%1$s";
     public static final String MESSAGE_NOT_EDITED =
             "Error editing contact: at least one field to edit must be provided";
     public static final String MESSAGE_DUPLICATE_PERSON =
-            "Error editing contact: contact with email \"%1$s\" already exists\"";
+            "Error editing contact: contact with email \"%1$s\" already exists";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
