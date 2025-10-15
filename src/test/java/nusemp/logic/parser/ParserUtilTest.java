@@ -102,6 +102,12 @@ public class ParserUtilTest {
     }
 
     @Test
+    public void parsePhone_blankValue_returnsEmptyPhone() throws Exception {
+        Phone expectedPhone = new Phone(null);
+        assertEquals(expectedPhone, ParserUtil.parsePhone(WHITESPACE));
+    }
+
+    @Test
     public void parseAddress_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((String) null));
     }
@@ -117,6 +123,12 @@ public class ParserUtilTest {
         String addressWithWhitespace = WHITESPACE + VALID_ADDRESS + WHITESPACE;
         Address expectedAddress = new Address(VALID_ADDRESS);
         assertEquals(expectedAddress, ParserUtil.parseAddress(addressWithWhitespace));
+    }
+
+    @Test
+    public void parseAddress_blankValue_returnsEmptyAddress() throws Exception {
+        Address expectedAddress = new Address(null);
+        assertEquals(expectedAddress, ParserUtil.parseAddress(WHITESPACE));
     }
 
     @Test
