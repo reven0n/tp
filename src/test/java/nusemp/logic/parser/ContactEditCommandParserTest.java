@@ -10,7 +10,6 @@ import static nusemp.logic.commands.CommandTestUtil.CONTACT_PHONE_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_PHONE_DESC_BOB;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_TAG_DESC_FRIEND;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_TAG_DESC_HUSBAND;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_ADDRESS_DESC;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_EMAIL_DESC;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_NAME_DESC;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_PHONE_DESC;
@@ -82,27 +81,26 @@ public class ContactEditCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "1" + INVALID_CONTACT_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "1" + INVALID_CONTACT_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
-        assertParseFailure(parser, "1" + INVALID_CONTACT_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, "1" + INVALID_CONTACT_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "1" + INVALID_CONTACT_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
+        assertParseFailure(parser, " 1" + INVALID_CONTACT_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
+        assertParseFailure(parser, " 1" + INVALID_CONTACT_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
+        assertParseFailure(parser, " 1" + INVALID_CONTACT_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
+        assertParseFailure(parser, " 1" + INVALID_CONTACT_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
-        assertParseFailure(parser, "1" + INVALID_CONTACT_PHONE_DESC + CONTACT_EMAIL_DESC_AMY,
+        assertParseFailure(parser, " 1" + INVALID_CONTACT_PHONE_DESC + CONTACT_EMAIL_DESC_AMY,
                 Phone.MESSAGE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND + TAG_EMPTY,
+        assertParseFailure(parser, " 1" + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND + TAG_EMPTY,
                 Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + CONTACT_TAG_DESC_FRIEND + TAG_EMPTY + CONTACT_TAG_DESC_HUSBAND,
+        assertParseFailure(parser, " 1" + CONTACT_TAG_DESC_FRIEND + TAG_EMPTY + CONTACT_TAG_DESC_HUSBAND,
                 Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND,
+        assertParseFailure(parser, " 1" + TAG_EMPTY + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND,
                 Tag.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_CONTACT_NAME_DESC + INVALID_CONTACT_EMAIL_DESC
+        assertParseFailure(parser, " 1" + INVALID_CONTACT_NAME_DESC + INVALID_CONTACT_EMAIL_DESC
                         + VALID_CONTACT_ADDRESS_AMY + VALID_CONTACT_PHONE_AMY,
                 Name.MESSAGE_CONSTRAINTS);
     }
@@ -195,11 +193,11 @@ public class ContactEditCommandParserTest {
 
         // multiple invalid values
         userInput = targetIndex.getOneBased() + INVALID_CONTACT_PHONE_DESC
-                + INVALID_CONTACT_ADDRESS_DESC + INVALID_CONTACT_EMAIL_DESC
-                + INVALID_CONTACT_PHONE_DESC + INVALID_CONTACT_ADDRESS_DESC + INVALID_CONTACT_EMAIL_DESC;
+                + INVALID_CONTACT_EMAIL_DESC
+                + INVALID_CONTACT_PHONE_DESC + INVALID_CONTACT_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL));
     }
 
     @Test

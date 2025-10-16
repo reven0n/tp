@@ -23,10 +23,10 @@ class EventListCommandTest {
 
     @Test
     public void execute_validModel_success() {
-        assertCommandSuccess(new EventListCommand(), model, "4 events listed!", model);
+        assertCommandSuccess(new EventListCommand(), model, "Successfully listed all 4 event(s)", model);
 
         Model anotherModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         assertCommandSuccess(new EventListCommand(), anotherModel,
-                "0 events listed!", anotherModel);
+                "Successfully listed all 0 event(s)", anotherModel);
     }
 }

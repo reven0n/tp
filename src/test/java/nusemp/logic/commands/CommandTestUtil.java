@@ -63,10 +63,9 @@ public class CommandTestUtil {
     public static final String EVENT_DATE_DESC_CONFERENCE = " " + PREFIX_DATE + VALID_EVENT_DATE_CONFERENCE;
 
     // invalid Contact descriptions
-    public static final String INVALID_CONTACT_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
+    public static final String INVALID_CONTACT_NAME_DESC = " " + PREFIX_NAME; // cannot be empty
     public static final String INVALID_CONTACT_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_CONTACT_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_CONTACT_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed
     public static final String INVALID_CONTACT_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     // invalid Event descriptions

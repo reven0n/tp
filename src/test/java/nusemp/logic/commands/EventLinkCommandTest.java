@@ -42,7 +42,8 @@ class EventLinkCommandTest {
         Index validEventIndex = Index.fromOneBased(3); // Event already has all particpants linked
         Index validContactIndex = Index.fromOneBased(1);
         EventLinkCommand eventLinkCommand = new EventLinkCommand(validEventIndex, validContactIndex);
-        assertCommandFailure(eventLinkCommand, model, EventLinkCommand.MESSAGE_DUPLICATE_PARTICIPANT);
+        assertCommandFailure(eventLinkCommand, model, String.format(EventLinkCommand.MESSAGE_DUPLICATE_PARTICIPANT,
+                model.getPersonByIndex(validContactIndex).getEmail()));
     }
 
     @Test

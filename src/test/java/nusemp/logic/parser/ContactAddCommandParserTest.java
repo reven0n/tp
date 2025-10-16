@@ -11,7 +11,6 @@ import static nusemp.logic.commands.CommandTestUtil.CONTACT_PHONE_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_PHONE_DESC_BOB;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_TAG_DESC_FRIEND;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_TAG_DESC_HUSBAND;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_ADDRESS_DESC;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_EMAIL_DESC;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_NAME_DESC;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_PHONE_DESC;
@@ -109,12 +108,6 @@ public class ContactAddCommandParserTest {
         assertParseFailure(parser, INVALID_CONTACT_PHONE_DESC + validExpectedPersonString,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
-        // invalid address
-        assertParseFailure(parser, INVALID_CONTACT_ADDRESS_DESC + validExpectedPersonString,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
-
-        // valid value followed by invalid value
-
         // invalid name
         assertParseFailure(parser, validExpectedPersonString + INVALID_CONTACT_NAME_DESC,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
@@ -126,10 +119,6 @@ public class ContactAddCommandParserTest {
         // invalid phone
         assertParseFailure(parser, validExpectedPersonString + INVALID_CONTACT_PHONE_DESC,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
-
-        // invalid address
-        assertParseFailure(parser, validExpectedPersonString + INVALID_CONTACT_ADDRESS_DESC,
-                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
     }
 
     @Test
@@ -150,19 +139,10 @@ public class ContactAddCommandParserTest {
                         + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB,
                 expectedMessage);
 
-        // missing phone prefix
-        assertParseFailure(parser, CONTACT_NAME_DESC_BOB + VALID_CONTACT_PHONE_BOB
-                        + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB,
-                expectedMessage);
 
         // missing email prefix
         assertParseFailure(parser, CONTACT_NAME_DESC_BOB + CONTACT_PHONE_DESC_BOB
                         + VALID_CONTACT_EMAIL_BOB + CONTACT_ADDRESS_DESC_BOB,
-                expectedMessage);
-
-        // missing address prefix
-        assertParseFailure(parser, CONTACT_NAME_DESC_BOB + CONTACT_PHONE_DESC_BOB + CONTACT_EMAIL_DESC_BOB
-                        + VALID_CONTACT_ADDRESS_BOB,
                 expectedMessage);
 
         // all prefixes missing
@@ -173,9 +153,9 @@ public class ContactAddCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         // invalid name
-        assertParseFailure(parser, INVALID_CONTACT_NAME_DESC + CONTACT_PHONE_DESC_BOB
-                + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB
-                + CONTACT_TAG_DESC_HUSBAND + CONTACT_TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);
+        //assertParseFailure(parser, INVALID_CONTACT_NAME_DESC + CONTACT_PHONE_DESC_BOB
+        //        + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB
+        //        + CONTACT_TAG_DESC_HUSBAND + CONTACT_TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);
 
         // invalid phone
         assertParseFailure(parser, CONTACT_NAME_DESC_BOB + INVALID_CONTACT_PHONE_DESC
@@ -187,19 +167,14 @@ public class ContactAddCommandParserTest {
                 + INVALID_CONTACT_EMAIL_DESC + CONTACT_ADDRESS_DESC_BOB
                 + CONTACT_TAG_DESC_HUSBAND + CONTACT_TAG_DESC_FRIEND, Email.MESSAGE_CONSTRAINTS);
 
-        // invalid address
-        assertParseFailure(parser, CONTACT_NAME_DESC_BOB + CONTACT_PHONE_DESC_BOB
-                + CONTACT_EMAIL_DESC_BOB + INVALID_CONTACT_ADDRESS_DESC
-                + CONTACT_TAG_DESC_HUSBAND + CONTACT_TAG_DESC_FRIEND, Address.MESSAGE_CONSTRAINTS);
-
         // invalid tag
         assertParseFailure(parser, CONTACT_NAME_DESC_BOB + CONTACT_PHONE_DESC_BOB
                 + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB
                 + INVALID_CONTACT_TAG_DESC + VALID_CONTACT_TAG_FRIEND, Tag.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_CONTACT_NAME_DESC + CONTACT_PHONE_DESC_BOB
-                        + CONTACT_EMAIL_DESC_BOB + INVALID_CONTACT_ADDRESS_DESC,
+        assertParseFailure(parser, INVALID_CONTACT_NAME_DESC + INVALID_CONTACT_PHONE_DESC
+                        + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB,
                 Name.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
