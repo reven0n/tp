@@ -6,7 +6,7 @@
 
 # NUS Event Mailer Pro User Guide
 
-NUS Event Mailer Pro (NUS EMP) is a **desktop app for managing contacts, optimized for use via a  Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, NUS EMP can get your contact management tasks done faster than traditional GUI apps.
+NUS Event Mailer Pro (NUS EMP) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, NUS EMP can get your contact management tasks done faster than traditional GUI apps.
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -47,11 +47,9 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app for managing contacts, optimiz
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Features
+## Command Format Notations
 
 <box type="info" seamless>
-
-**Notes about the command format:**<br>
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `contact add --name NAME`, `NAME` is a parameter which can be used as `contact add --name John Doe`.
@@ -60,7 +58,7 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app for managing contacts, optimiz
   e.g `--name NAME [--tag TAG]` can be used as `--name John Doe --tag friend` or as `--name John Doe`.
 
 * Items with `…` after them can be used multiple times including zero times.<br>
-  e.g. `[--tag TAG]…` can be used as ` ` (i.e. 0 times), `--tag friend`, `--tag friend --tag family` etc.
+  e.g. `[--tag TAG]…` can be used as ` ` (i.e. 0 times), `--tag friend`, `--tag friend --tag family` etc.
 
 * Parameters can be in any order.<br>
   e.g. if the command specifies `--name NAME --email EMAIL`, `--email EMAIL --name NAME` is also acceptable.
@@ -71,7 +69,9 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app for managing contacts, optimiz
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </box>
 
----
+--------------------------------------------------------------------------------------------------------------------
+
+## Features
 
 ### Viewing help: `help`
 
@@ -114,7 +114,7 @@ Edits an existing contact in the contact list.
 
 <box type="tip" seamless>
 
-**Tips about editing contacts:**
+**Tips on editing contacts:**
 
 * You can find the index of the contact in the displayed contact list. The index should be a positive integer.
 * You can specify an empty string to clear any optional field. e.g. `contact edit 1 --phone` clears the phone number of the first contact. Note that a contact's name and email cannot be cleared.
