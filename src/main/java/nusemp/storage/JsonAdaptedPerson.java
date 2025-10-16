@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import nusemp.commons.exceptions.IllegalValueException;
@@ -26,8 +26,13 @@ class JsonAdaptedPerson {
 
     private final String name;
     private final String email;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String phone;
+
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String address;
+
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -54,9 +59,7 @@ class JsonAdaptedPerson {
         email = source.getEmail().value;
         phone = source.getPhone().value;
         address = source.getAddress().value;
-        tags.addAll(source.getTags().stream()
-                .map(JsonAdaptedTag::new)
-                .collect(Collectors.toList()));
+        tags.addAll(source.getTags().stream().map(JsonAdaptedTag::new).toList());
     }
 
     /**
@@ -86,7 +89,7 @@ class JsonAdaptedPerson {
         }
         final Email modelEmail = new Email(email);
 
-        Phone modelPhone = new Phone(null);
+        Phone modelPhone = Phone.empty();
         if (phone != null) {
             if (!Phone.isValidPhone(phone)) {
                 throw new IllegalValueException(Phone.MESSAGE_CONSTRAINTS);
@@ -94,7 +97,7 @@ class JsonAdaptedPerson {
             modelPhone = new Phone(phone);
         }
 
-        Address modelAddress = new Address(null);
+        Address modelAddress = Address.empty();
         if (address != null) {
             if (!Address.isValidAddress(address)) {
                 throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);

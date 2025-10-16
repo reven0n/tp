@@ -63,7 +63,7 @@ public class ParserUtil {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
         if (trimmedPhone.isEmpty()) {
-            return new Phone(null);
+            return Phone.empty();
         }
         if (!Phone.isValidPhone(trimmedPhone)) {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
@@ -82,7 +82,7 @@ public class ParserUtil {
         requireNonNull(address);
         String trimmedAddress = address.trim();
         if (trimmedAddress.isEmpty()) {
-            return new Address(null);
+            return Address.empty();
         }
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);

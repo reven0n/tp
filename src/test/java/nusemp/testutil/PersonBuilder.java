@@ -85,7 +85,8 @@ public class PersonBuilder {
      * Removes the {@code Phone} from the {@code Person} that we are building.
      */
     public PersonBuilder withoutPhone() {
-        return withPhone(null);
+        this.phone = Phone.empty();
+        return this;
     }
 
     /**
@@ -100,7 +101,8 @@ public class PersonBuilder {
      * Removes the {@code Address} from the {@code Person} that we are building.
      */
     public PersonBuilder withoutAddress() {
-        return withAddress(null);
+        this.address = Address.empty();
+        return this;
     }
 
     public Person build() {

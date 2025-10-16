@@ -103,7 +103,7 @@ public class ParserUtilTest {
 
     @Test
     public void parsePhone_blankValue_returnsEmptyPhone() throws Exception {
-        Phone expectedPhone = new Phone(null);
+        Phone expectedPhone = Phone.empty();
         assertEquals(expectedPhone, ParserUtil.parsePhone(WHITESPACE));
     }
 
@@ -127,7 +127,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseAddress_blankValue_returnsEmptyAddress() throws Exception {
-        Address expectedAddress = new Address(null);
+        Address expectedAddress = Address.empty();
         assertEquals(expectedAddress, ParserUtil.parseAddress(WHITESPACE));
     }
 
