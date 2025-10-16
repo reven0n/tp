@@ -6,10 +6,13 @@ import static nusemp.testutil.TypicalPersons.CARL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
+import nusemp.model.AddressBook;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventDate;
 import nusemp.model.event.EventName;
+import nusemp.model.person.Person;
 
 /**
  * A utility class containing a list of {@code Event} objects to be used in tests.
@@ -32,4 +35,22 @@ public class TypicalEvents {
     public static final Event PARTY_HALF_FILLED = new Event(
             new EventName("PARTY"), new EventDate("31-12-2024 20:00"),
             new ArrayList<>(Arrays.asList(ALICE, BOB, CARL)));
+
+    public static AddressBook getTypicalAddressBookWithEvents() {
+        AddressBook ab = new AddressBook();
+        for (Event event : getTypicalEvents()) {
+            ab.addEvent(event);
+        }
+
+        for (Person person : TypicalPersons.getTypicalPersons()) {
+            ab.addPerson(person);
+        }
+
+        return ab;
+    }
+
+    public static List<Event> getTypicalEvents() {
+        return new ArrayList<>(Arrays.asList(MEETING_EMPTY, CONFERENCE_EMPTY,
+                WORKSHOP_FILLED, PARTY_HALF_FILLED));
+    }
 }
