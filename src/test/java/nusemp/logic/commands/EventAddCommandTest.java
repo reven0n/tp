@@ -80,8 +80,8 @@ class EventAddCommandTest {
         // different event -> returns false
         assertNotEquals(addMeetingCommand, addConferenceCommand);
 
-        // different participants -> returns true SHOULD NEVER HAPPEN
-        assertEquals(addConferenceCommand, addConferenceFullCommand);
+        // different participants -> returns false
+        assertNotEquals(addConferenceCommand, addConferenceFullCommand);
     }
     /**
      * A default model stub that have all the methods failing.

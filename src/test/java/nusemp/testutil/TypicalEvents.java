@@ -15,5 +15,5 @@ public class TypicalEvents {
     public static final Event CONFERENCE_EMPTY = new Event(
             new EventName("CONFERENCE"), new EventDate("29-02-2024 09:00"));
     public static final Event CONFERENCE_FILLED = new Event(
-            new EventName("CONFERENCE"), new EventDate("29-02-2024 09:00"));
+            new EventName("CONFERENCE"), new EventDate("29-02-2024 09:00"), TypicalPersons.getTypicalPersons());
 }
