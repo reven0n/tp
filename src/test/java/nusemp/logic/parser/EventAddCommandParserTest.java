@@ -23,7 +23,6 @@ class EventAddCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(
             MESSAGE_INVALID_COMMAND_FORMAT, EventAddCommand.MESSAGE_USAGE);
 
-
     private EventAddCommandParser parser = new EventAddCommandParser();
 
     @Test

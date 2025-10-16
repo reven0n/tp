@@ -66,7 +66,7 @@ public class CommandTestUtil {
     public static final String INVALID_CONTACT_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_CONTACT_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_CONTACT_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_CONTACT_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_CONTACT_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed
     public static final String INVALID_CONTACT_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     // invalid Event descriptions
@@ -84,10 +84,12 @@ public class CommandTestUtil {
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_AMY)
-                .withPhone(VALID_CONTACT_PHONE_AMY).withEmail(VALID_CONTACT_EMAIL_AMY).withAddress(VALID_CONTACT_ADDRESS_AMY)
+                .withPhone(VALID_CONTACT_PHONE_AMY).withEmail(VALID_CONTACT_EMAIL_AMY)
+                .withAddress(VALID_CONTACT_ADDRESS_AMY)
                 .withTags(VALID_CONTACT_TAG_FRIEND).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_BOB)
-                .withPhone(VALID_CONTACT_PHONE_BOB).withEmail(VALID_CONTACT_EMAIL_BOB).withAddress(VALID_CONTACT_ADDRESS_BOB)
+                .withPhone(VALID_CONTACT_PHONE_BOB).withEmail(VALID_CONTACT_EMAIL_BOB)
+                .withAddress(VALID_CONTACT_ADDRESS_BOB)
                 .withTags(VALID_CONTACT_TAG_HUSBAND, VALID_CONTACT_TAG_FRIEND).build();
     }
 

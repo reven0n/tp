@@ -5,6 +5,8 @@ import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalEvents.CONFERENCE_EMPTY;
 import static nusemp.testutil.TypicalEvents.CONFERENCE_FILLED;
 import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
+import static nusemp.testutil.TypicalEvents.WORKSHOP_EMPTY;
+import static nusemp.testutil.TypicalEvents.WORKSHOP_FILLED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
@@ -48,6 +50,26 @@ class EventAddCommandTest {
                 commandResult2.getFeedbackToUser());
         assertEquals(2, modelStub.eventAdded.size());
         assertEquals(CONFERENCE_FILLED, modelStub.eventAdded.get(1));
+    }
+
+    @Test
+    public void execute_sameEventDate_addSuccessful() throws Exception {
+        ModelStubWithAcceptingEventAdded modelStub = new ModelStubWithAcceptingEventAdded();
+        modelStub.addEvent(MEETING_EMPTY);
+        CommandResult commandResult1 = new EventAddCommand(WORKSHOP_EMPTY).execute(modelStub);
+
+        assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(WORKSHOP_EMPTY)),
+                commandResult1.getFeedbackToUser());
+        assertEquals(2, modelStub.eventAdded.size());
+        assertEquals(WORKSHOP_EMPTY, modelStub.eventAdded.get(1));
+
+        //handling of multiple events and event with participants
+        modelStub.eventAdded.remove(1);
+        CommandResult commandResult2 = new EventAddCommand(WORKSHOP_FILLED).execute(modelStub);
+        assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(WORKSHOP_FILLED)),
+                commandResult2.getFeedbackToUser());
+        assertEquals(2, modelStub.eventAdded.size());
+        assertEquals(WORKSHOP_FILLED, modelStub.eventAdded.get(1));
     }
 
     @Test

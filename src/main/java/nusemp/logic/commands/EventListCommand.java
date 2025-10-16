@@ -25,4 +25,9 @@ public class EventListCommand extends Command {
         return new CommandResult(String.format(Messages.MESSAGE_EVENTS_LISTED_OVERVIEW,
                 model.getFilteredEventList().size()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof EventListCommand; // instanceof handles nulls
+    }
 }
