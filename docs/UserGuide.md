@@ -20,7 +20,7 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app for managing contacts, optimiz
 
 1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for NUS EMP.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar nus-emp.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -189,6 +189,7 @@ NUS EMP data are saved automatically as a JSON file `[JAR file location]/data/ad
 **Caution:**
 If your changes to the data file makes its format invalid, NUS EMP will discard all data and start with an empty data file at the next run.  Hence, it is recommended to take a backup of the file before editing it.<br>
 Furthermore, certain edits can cause the NUS EMP to behave in unexpected ways (e.g., if a value entered is outside the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+
 </box>
 
 _Details coming soon ..._
@@ -211,12 +212,23 @@ _Details coming soon ..._
 
 ## Command summary
 
-Action     | Format, Examples
------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-**Add**    | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear**  | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit**   | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find**   | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List**   | `list`
-**Help**   | `help`
+### General commands
+| Action   | Format |
+|----------|--------|
+| **Help** | `help` |
+| **Exit** | `exit` |
+
+### Contact commands
+
+| Action     | Format, Examples  |
+|------------|-------------------|
+| **Add**    | `contact add --name NAME --email EMAIL [--phone PHONE_NUMBER] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name James --email james@e.com --phone 91234567 --address Work --tag friend --tag colleague` |
+| **Delete** | `contact delete INDEX`<br> e.g. `contact delete 3` |
+| **Edit**   | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE_NUMBER] [--address ADDRESS] [--tag TAG]…`<br> e.g. `contact edit 2 --name James Lee --email jameslee@example.com` |
+| **Find**   | `contact find KEYWORD [MORE_KEYWORDS]`<br> e.g. `contact find James Jake` |
+| **List**   | `contact list` |
+
+### Event commands
+
+<!-- TODO: Add event command summary -->
+_Details coming soon ..._
