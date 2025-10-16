@@ -4,8 +4,6 @@ import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 
-import java.util.stream.Stream;
-
 import nusemp.logic.commands.EventAddCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.Event;
@@ -25,7 +23,7 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
     public EventAddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_DATE);
-        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_DATE)
+        if (!argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_DATE)
                 || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventAddCommand.MESSAGE_USAGE));
         }
@@ -36,14 +34,6 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
     }
 
     /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-    /**
      * Creates an Event object from the given ArgumentMultimap.
      *
      * @param argMultimap the ArgumentMultimap containing the parsed arguments
@@ -51,6 +41,7 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
      * @throws ParseException if there is an error during parsing
      */
     private Event createEvent(ArgumentMultimap argMultimap) throws ParseException {
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DATE);
         EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
         EventDate date = ParserUtil.parseEventDate(argMultimap.getValue(PREFIX_DATE).get());
 
