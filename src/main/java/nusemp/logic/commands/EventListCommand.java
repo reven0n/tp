@@ -25,4 +25,9 @@ public class EventListCommand extends Command {
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, model.getFilteredEventList().size()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof EventListCommand; // instanceof handles nulls
+    }
 }

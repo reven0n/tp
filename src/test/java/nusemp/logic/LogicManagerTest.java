@@ -2,10 +2,10 @@ package nusemp.logic;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static nusemp.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static nusemp.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static nusemp.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static nusemp.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
+import static nusemp.logic.commands.CommandTestUtil.CONTACT_ADDRESS_DESC_AMY;
+import static nusemp.logic.commands.CommandTestUtil.CONTACT_EMAIL_DESC_AMY;
+import static nusemp.logic.commands.CommandTestUtil.CONTACT_NAME_DESC_AMY;
+import static nusemp.logic.commands.CommandTestUtil.CONTACT_PHONE_DESC_AMY;
 import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalPersons.AMY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -173,7 +173,7 @@ public class LogicManagerTest {
 
         // Triggers the saveAddressBook method by executing an add command
         String addCommand = CommandType.CONTACT + " " + ContactAddCommand.COMMAND_WORD
-                + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+                + CONTACT_NAME_DESC_AMY + CONTACT_PHONE_DESC_AMY + CONTACT_EMAIL_DESC_AMY + CONTACT_ADDRESS_DESC_AMY;
         Person expectedPerson = new PersonBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addPerson(expectedPerson);

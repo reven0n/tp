@@ -69,6 +69,21 @@ class EventTest {
         Event event1 = new Event(name, date, participants1);
         Event event2 = new Event(name, date, participants2);
         assertEquals(event1.withParticipant(bob), event2);
+        assertNotEquals(event1, event1.withParticipant(bob)); // should be different instances
+    }
+
+    @Test
+    public void withParticipants_addPerson_keepsOrder() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
+            List<Person> participants1 = createParticipantList("Alice", "Charlie");
+            Event event = new Event(name, date, participants1);
+            Person bob = new PersonBuilder().withName("Bob").withEmail("bob2@example.com").build();
+            List<Person> expectedParticipants = createParticipantList("Alice", "Charlie", "Bob");
+            assertEquals(event.withParticipant(bob).getParticipants().toString(), expectedParticipants.toString());
+        }
     }
 
     @Test
@@ -83,6 +98,32 @@ class EventTest {
         Event event1 = new Event(name, date, participants1);
         Event event2 = new Event(name, date, participants2);
         assertEquals(event1.withoutParticipant(bob), event2);
+        assertNotEquals(event1, event1.withoutParticipant(bob)); // should be different instances
+    }
+
+    @Test
+    public void withoutParticipants_removePersonFromEmptyList_returnsEmptySet() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+        Event event1 = new Event(name, date);
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob0@example.com").build();
+        assertEquals(event1.withoutParticipant(bob), event1);
+    }
+
+    @Test
+    public void withoutParticipants_removePerson_keepsOrder() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
+            List<Person> participants1 = createParticipantList("Alice", "Bob", "Charlie");
+            Event event = new Event(name, date, participants1);
+            Person bob = new PersonBuilder().withName("Bob").withEmail("bob1@example.com").build();
+            List<Person> expectedParticipants = createParticipantList("Alice");
+            expectedParticipants.add(new PersonBuilder().withName("Charlie")
+                    .withEmail("charlie2@example.com").build());
+            assertEquals(event.withoutParticipant(bob).getParticipants().toString(), expectedParticipants.toString());
+        }
     }
 
     @Test
