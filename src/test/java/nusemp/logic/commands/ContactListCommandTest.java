@@ -28,12 +28,14 @@ public class ContactListCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ContactListCommand(), model, ContactListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ContactListCommand(), model, String.format(ContactListCommand.MESSAGE_SUCCESS,
+                expectedModel.getFilteredPersonList().size()), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        assertCommandSuccess(new ContactListCommand(), model, ContactListCommand.MESSAGE_SUCCESS, expectedModel);
+        assertCommandSuccess(new ContactListCommand(), model, String.format(ContactListCommand.MESSAGE_SUCCESS,
+                        expectedModel.getFilteredPersonList().size()), expectedModel);
     }
 }
