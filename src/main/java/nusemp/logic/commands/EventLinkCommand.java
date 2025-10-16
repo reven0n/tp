@@ -29,8 +29,9 @@ public class EventLinkCommand extends Command {
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " 2";
 
-    public static final String MESSAGE_SUCCESS = "New event link has been added.";
-    public static final String MESSAGE_DUPLICATE_PARTICIPANT = "This contact is already linked to the event.";
+    public static final String MESSAGE_SUCCESS = "Successfully linked contact to event";
+    public static final String MESSAGE_DUPLICATE_PARTICIPANT =
+            "Error linking event: contact with email %1$s is already linked to the event";
 
     private final Index eventIndex;
     private final Index contactIndex;
@@ -73,7 +74,7 @@ public class EventLinkCommand extends Command {
             return new CommandResult(String.format(MESSAGE_SUCCESS,
                     personToLink.getName(), updatedEvent.getName()));
         } catch (DuplicateParticipantException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PARTICIPANT);
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, personToLink.getEmail()));
         }
     }
 

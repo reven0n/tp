@@ -29,7 +29,7 @@ public class EventName {
      * Returns true if a given string is a valid event name.
      */
     public static boolean isValidEventName(String test) {
-        return test != null && !test.trim().isEmpty();
+        return !test.isBlank();
     }
 
     @Override

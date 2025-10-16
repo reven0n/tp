@@ -17,7 +17,7 @@ public class EventAddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Adds an event to the event book. "
+            + ": Adds an event. "
             + "Parameters: "
             + PREFIX_NAME + " NAME "
             + PREFIX_DATE + " DATE\n"
@@ -25,8 +25,8 @@ public class EventAddCommand extends Command {
             + PREFIX_NAME + " Team Meeting "
             + PREFIX_DATE + " 25-12-2023 14:30";
 
-    public static final String MESSAGE_SUCCESS = "New event added: %1$s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "This event already exists in the event book";
+    public static final String MESSAGE_SUCCESS = "Successfully added event:\n%1$s";
+    public static final String MESSAGE_DUPLICATE_EVENT = "Error adding event: event already exists";
 
     private final Event toAdd;
 

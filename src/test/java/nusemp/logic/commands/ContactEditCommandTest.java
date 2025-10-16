@@ -109,7 +109,8 @@ public class ContactEditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
         ContactEditCommand contactEditCommand = new ContactEditCommand(INDEX_SECOND_PERSON, descriptor);
 
-        assertCommandFailure(contactEditCommand, model, ContactEditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(contactEditCommand, model,
+                String.format(ContactEditCommand.MESSAGE_DUPLICATE_PERSON, firstPerson.getEmail()));
     }
 
     @Test
@@ -121,7 +122,8 @@ public class ContactEditCommandTest {
         ContactEditCommand contactEditCommand = new ContactEditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
 
-        assertCommandFailure(contactEditCommand, model, ContactEditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(contactEditCommand, model,
+                String.format(ContactEditCommand.MESSAGE_DUPLICATE_PERSON, personInList.getEmail()));
     }
 
     @Test
@@ -166,7 +168,7 @@ public class ContactEditCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ContactClearCommand()));
+        assertFalse(standardCommand.equals(new ContactListCommand()));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new ContactEditCommand(INDEX_SECOND_PERSON, DESC_AMY)));
