@@ -38,12 +38,11 @@ public class TypicalEvents {
 
     public static AddressBook getTypicalAddressBookWithEvents() {
         AddressBook ab = new AddressBook();
-        for (Event event : getTypicalEvents()) {
-            ab.addEvent(event);
-        }
-
         for (Person person : TypicalPersons.getTypicalPersons()) {
             ab.addPerson(person);
+        }
+        for (Event event : getTypicalEvents()) {
+            ab.addEvent(event);
         }
 
         return ab;
