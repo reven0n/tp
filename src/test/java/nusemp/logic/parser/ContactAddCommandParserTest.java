@@ -37,7 +37,6 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
 import nusemp.logic.commands.ContactAddCommand;
-import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;
 import nusemp.model.person.Person;

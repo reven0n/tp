@@ -18,7 +18,7 @@ public class Phone {
     /**
      * Constructs a {@code Phone}.
      *
-     * @param phone A valid phone number.
+     * @param phone A valid phone number. Can be an empty string, which indicates no phone number.
      */
     public Phone(String phone) {
         requireNonNull(phone);
@@ -27,10 +27,25 @@ public class Phone {
     }
 
     /**
+     * Returns an empty phone number.
+     */
+    public static Phone empty() {
+        return new Phone("");
+    }
+
+    /**
      * Returns true if a given string is a valid phone number.
+     * Empty string is also considered valid, indicating no phone number.
      */
     public static boolean isValidPhone(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.isEmpty() || test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if there is no phone number.
+     */
+    public boolean isEmpty() {
+        return value.isEmpty();
     }
 
     @Override

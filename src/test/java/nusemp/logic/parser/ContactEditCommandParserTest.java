@@ -38,7 +38,6 @@ import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.ContactEditCommand;
 import nusemp.logic.commands.ContactEditCommand.EditPersonDescriptor;
-import nusemp.model.person.Address;
 import nusemp.model.person.Email;
 import nusemp.model.person.Name;
 import nusemp.model.person.Phone;
