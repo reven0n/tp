@@ -1,15 +1,17 @@
 package nusemp.model.event;
 
+import static nusemp.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import nusemp.model.event.exceptions.DuplicateParticipantException;
 import nusemp.model.person.Person;
 import nusemp.testutil.PersonBuilder;
 
@@ -43,9 +45,9 @@ class EventTest {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        Set<Person> participants = new HashSet<Person>();
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        List<Person> participants = new ArrayList<>();
+        Person alice = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob@example.com").build();
 
         participants.add(alice);
         participants.add(bob);
@@ -59,14 +61,29 @@ class EventTest {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        Set<Person> participants1 = new HashSet<Person>();
+        List<Person> participants1 = new ArrayList<>();
         Person bob = new PersonBuilder().withName("Bob").build();
-        Set<Person> participants2 = new HashSet<Person>();
+        List<Person> participants2 = new ArrayList<>();
         participants2.add(bob);
 
         Event event1 = new Event(name, date, participants1);
         Event event2 = new Event(name, date, participants2);
         assertEquals(event1.withParticipant(bob), event2);
+        assertNotEquals(event1, event1.withParticipant(bob)); // should be different instances
+    }
+
+    @Test
+    public void withParticipants_addPerson_keepsOrder() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
+            List<Person> participants1 = createParticipantList("Alice", "Charlie");
+            Event event = new Event(name, date, participants1);
+            Person bob = new PersonBuilder().withName("Bob").withEmail("bob2@example.com").build();
+            List<Person> expectedParticipants = createParticipantList("Alice", "Charlie", "Bob");
+            assertEquals(event.withParticipant(bob).getParticipants().toString(), expectedParticipants.toString());
+        }
     }
 
     @Test
@@ -74,13 +91,39 @@ class EventTest {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        Set<Person> participants1 = createParticipantSet("Bob");
-        Person bob = new PersonBuilder().withName("Bob").build();
-        Set<Person> participants2 = new HashSet<Person>();
+        List<Person> participants1 = createParticipantList("Bob");
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob0@example.com").build();
+        List<Person> participants2 = new ArrayList<>();
 
         Event event1 = new Event(name, date, participants1);
         Event event2 = new Event(name, date, participants2);
         assertEquals(event1.withoutParticipant(bob), event2);
+        assertNotEquals(event1, event1.withoutParticipant(bob)); // should be different instances
+    }
+
+    @Test
+    public void withoutParticipants_removePersonFromEmptyList_returnsEmptySet() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+        Event event1 = new Event(name, date);
+        Person bob = new PersonBuilder().withName("Bob").withEmail("bob0@example.com").build();
+        assertEquals(event1.withoutParticipant(bob), event1);
+    }
+
+    @Test
+    public void withoutParticipants_removePerson_keepsOrder() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
+            List<Person> participants1 = createParticipantList("Alice", "Bob", "Charlie");
+            Event event = new Event(name, date, participants1);
+            Person bob = new PersonBuilder().withName("Bob").withEmail("bob1@example.com").build();
+            List<Person> expectedParticipants = createParticipantList("Alice");
+            expectedParticipants.add(new PersonBuilder().withName("Charlie")
+                    .withEmail("charlie2@example.com").build());
+            assertEquals(event.withoutParticipant(bob).getParticipants().toString(), expectedParticipants.toString());
+        }
     }
 
     @Test
@@ -131,11 +174,11 @@ class EventTest {
     public void equals_sameValues_returnsTrue() {
         EventName name1 = new EventName("Meeting");
         EventDate date1 = new EventDate("01-10-2025 14:00");
-        Set<Person> participants1 = createParticipantSet("Alice", "Bob");
+        List<Person> participants1 = createParticipantList("Alice", "Bob");
 
         EventName name2 = new EventName("Meeting");
         EventDate date2 = new EventDate("01-10-2025 14:00");
-        Set<Person> participants2 = createParticipantSet("Alice", "Bob");
+        List<Person> participants2 = createParticipantList("Alice", "Bob");
 
         Event event1 = new Event(name1, date1, participants1);
         Event event2 = new Event(name2, date2, participants2);
@@ -162,11 +205,11 @@ class EventTest {
     public void equals_differentParticipants_returnsFalse() {
         EventName name1 = new EventName("Meeting");
         EventDate date1 = new EventDate("01-10-2025 14:00");
-        Set<Person> participants1 = createParticipantSet("Alice", "Bob");
+        List<Person> participants1 = createParticipantList("Alice", "Bob");
 
         EventName name2 = new EventName("Meeting");
         EventDate date2 = new EventDate("01-10-2025 14:00");
-        Set<Person> participants2 = createParticipantSet("Alice", "Charlie");
+        List<Person> participants2 = createParticipantList("Alice", "Charlie");
 
         Event event1 = new Event(name1, date1, participants1);
         Event event2 = new Event(name2, date2, participants2);
@@ -179,7 +222,7 @@ class EventTest {
         EventName name2 = new EventName("Conference");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        Set<Person> participants = createParticipantSet("Alice", "Bob");
+        List<Person> participants = createParticipantList("Alice", "Bob");
 
         Event event1 = new Event(name1, date, participants);
         Event event2 = new Event(name2, date, participants);
@@ -192,17 +235,49 @@ class EventTest {
         EventDate date1 = new EventDate("01-10-2025 14:00");
         EventDate date2 = new EventDate("02-10-2025 14:00");
 
-        Set<Person> participants = createParticipantSet("Alice", "Bob");
+        List<Person> participants = createParticipantList("Alice", "Bob");
 
         Event event1 = new Event(name, date1, participants);
         Event event2 = new Event(name, date2, participants);
         assertNotEquals(event1, event2);
     }
 
-    private Set<Person> createParticipantSet(String... names) {
-        Set<Person> participants = new HashSet<>();
-        for (String name : names) {
-            participants.add(new PersonBuilder().withName(name).build());
+    @Test
+    public void constructor_duplicateEmails_throwsDuplicateParticipantException() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        // Create two persons with the same email but different names
+        Person alice1 = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Person alice2 = new PersonBuilder().withName("Alice Smith").withEmail("alice@example.com").build();
+
+        List<Person> participantsWithDuplicateEmail = new ArrayList<>();
+        participantsWithDuplicateEmail.add(alice1);
+        participantsWithDuplicateEmail.add(alice2);
+
+        assertThrows(DuplicateParticipantException.class, () -> new Event(name, date, participantsWithDuplicateEmail));
+    }
+
+    @Test
+    public void withParticipant_duplicateEmail_throwsDuplicateParticipantException() {
+        EventName name = new EventName("Meeting");
+        EventDate date = new EventDate("01-10-2025 14:00");
+
+        Person alice1 = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Person alice2 = new PersonBuilder().withName("Alice Smith").withEmail("alice@example.com").build();
+
+        List<Person> participants = new ArrayList<>();
+        participants.add(alice1);
+        Event event = new Event(name, date, participants);
+
+        assertThrows(DuplicateParticipantException.class, () -> event.withParticipant(alice2));
+    }
+
+    private List<Person> createParticipantList(String... names) {
+        List<Person> participants = new ArrayList<>();
+        for (int i = 0; i < names.length; i++) {
+            participants.add(new PersonBuilder().withName(names[i])
+                .withEmail(names[i].toLowerCase() + i + "@example.com").build());
         }
         return participants;
     }

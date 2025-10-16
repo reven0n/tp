@@ -2,9 +2,9 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.DESC_BOB;
-import static nusemp.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static nusemp.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static nusemp.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_NAME_BOB;
+import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_PHONE_BOB;
+import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_TAG_HUSBAND;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showPersonAtIndex;
@@ -56,11 +56,11 @@ public class ContactEditCommandTest {
         Person lastPerson = model.getFilteredPersonList().get(indexLastPerson.getZeroBased());
 
         PersonBuilder personInList = new PersonBuilder(lastPerson);
-        Person editedPerson = personInList.withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-                .withTags(VALID_TAG_HUSBAND).build();
+        Person editedPerson = personInList.withName(VALID_CONTACT_NAME_BOB).withPhone(VALID_CONTACT_PHONE_BOB)
+                .withTags(VALID_CONTACT_TAG_HUSBAND).build();
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_BOB)
+                .withPhone(VALID_CONTACT_PHONE_BOB).withTags(VALID_CONTACT_TAG_HUSBAND).build();
         ContactEditCommand contactEditCommand = new ContactEditCommand(indexLastPerson, descriptor);
 
         String expectedMessage = String.format(ContactEditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
@@ -90,9 +90,9 @@ public class ContactEditCommandTest {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         Person personInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
+        Person editedPerson = new PersonBuilder(personInFilteredList).withName(VALID_CONTACT_NAME_BOB).build();
         ContactEditCommand contactEditCommand = new ContactEditCommand(INDEX_FIRST_PERSON,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_BOB).build());
 
         String expectedMessage = String.format(ContactEditCommand.MESSAGE_EDIT_PERSON_SUCCESS,
                 Messages.format(editedPerson));
@@ -109,7 +109,8 @@ public class ContactEditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(firstPerson).build();
         ContactEditCommand contactEditCommand = new ContactEditCommand(INDEX_SECOND_PERSON, descriptor);
 
-        assertCommandFailure(contactEditCommand, model, ContactEditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(contactEditCommand, model,
+                String.format(ContactEditCommand.MESSAGE_DUPLICATE_PERSON, firstPerson.getEmail()));
     }
 
     @Test
@@ -121,13 +122,14 @@ public class ContactEditCommandTest {
         ContactEditCommand contactEditCommand = new ContactEditCommand(INDEX_FIRST_PERSON,
                 new EditPersonDescriptorBuilder(personInList).build());
 
-        assertCommandFailure(contactEditCommand, model, ContactEditCommand.MESSAGE_DUPLICATE_PERSON);
+        assertCommandFailure(contactEditCommand, model,
+                String.format(ContactEditCommand.MESSAGE_DUPLICATE_PERSON, personInList.getEmail()));
     }
 
     @Test
     public void execute_invalidPersonIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_BOB).build();
         ContactEditCommand contactEditCommand = new ContactEditCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(contactEditCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -145,7 +147,7 @@ public class ContactEditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
         ContactEditCommand contactEditCommand = new ContactEditCommand(outOfBoundIndex,
-                new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build());
+                new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_BOB).build());
 
         assertCommandFailure(contactEditCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
@@ -166,7 +168,7 @@ public class ContactEditCommandTest {
         assertFalse(standardCommand.equals(null));
 
         // different types -> returns false
-        assertFalse(standardCommand.equals(new ContactClearCommand()));
+        assertFalse(standardCommand.equals(new ContactListCommand()));
 
         // different index -> returns false
         assertFalse(standardCommand.equals(new ContactEditCommand(INDEX_SECOND_PERSON, DESC_AMY)));

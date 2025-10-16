@@ -22,7 +22,7 @@ public class Address {
     /**
      * Constructs an {@code Address}.
      *
-     * @param address A valid address.
+     * @param address A valid address. Can be an empty string, which indicates no address.
      */
     public Address(String address) {
         requireNonNull(address);
@@ -31,10 +31,25 @@ public class Address {
     }
 
     /**
+     * Returns an empty address.
+     */
+    public static Address empty() {
+        return new Address("");
+    }
+
+    /**
      * Returns true if a given string is a valid email.
+     * Empty string is also considered valid, indicating no address.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.isEmpty() || test.matches(VALIDATION_REGEX);
+    }
+
+    /**
+     * Returns true if there is no address.
+     */
+    public boolean isEmpty() {
+        return value.isEmpty();
     }
 
     @Override

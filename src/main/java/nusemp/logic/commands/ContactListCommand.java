@@ -12,13 +12,17 @@ public class ContactListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS = "Successfully listed all %1$s contact(s)";
+
+    public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
+            + ": Lists all contacts.\n"
+            + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD;
 
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getFilteredPersonList().size()));
     }
 }

@@ -11,12 +11,13 @@ import nusemp.commons.core.LogsCenter;
 import nusemp.logic.commands.Command;
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.ContactAddCommand;
-import nusemp.logic.commands.ContactClearCommand;
 import nusemp.logic.commands.ContactDeleteCommand;
 import nusemp.logic.commands.ContactEditCommand;
 import nusemp.logic.commands.ContactFindCommand;
 import nusemp.logic.commands.ContactListCommand;
 import nusemp.logic.commands.EventAddCommand;
+import nusemp.logic.commands.EventLinkCommand;
+import nusemp.logic.commands.EventListCommand;
 import nusemp.logic.commands.ExitCommand;
 import nusemp.logic.commands.HelpCommand;
 import nusemp.logic.parser.exceptions.ParseException;
@@ -110,14 +111,11 @@ public class AddressBookParser {
         case ContactDeleteCommand.COMMAND_WORD:
             return new ContactDeleteCommandParser().parse(arguments);
 
-        case ContactClearCommand.COMMAND_WORD:
-            return new ContactClearCommand();
-
         case ContactFindCommand.COMMAND_WORD:
             return new ContactFindCommandParser().parse(arguments);
 
         case ContactListCommand.COMMAND_WORD:
-            return new ContactListCommand();
+            return new ContactListCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
@@ -147,6 +145,12 @@ public class AddressBookParser {
         switch (commandWord) {
         case EventAddCommand.COMMAND_WORD:
             return new EventAddCommandParser().parse(arguments);
+
+        case EventListCommand.COMMAND_WORD:
+            return new EventListCommandParser().parse(arguments);
+
+        case EventLinkCommand.COMMAND_WORD:
+            return new EventLinkCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

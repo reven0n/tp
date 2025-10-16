@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
@@ -33,6 +34,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
 
@@ -64,6 +66,12 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane terminalCommandBoxPlaceholder;
+
+    @FXML
+    private Button personsToggle;
+
+    @FXML
+    private Button eventsToggle;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -140,6 +148,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     void fillInnerParts() {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -155,6 +164,58 @@ public class MainWindow extends UiPart<Stage> {
 
         terminalCommandBox = new CommandBox(this::executeTerminalCommand);
         terminalCommandBoxPlaceholder.getChildren().add(terminalCommandBox.getRoot());
+
+        setPersonsActive();
+    }
+
+    /**
+     * Handles the person view toggle and updates button states.
+     */
+    @FXML
+    public void handlePersonViewToggle() {
+        // Update UI logic
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        // Update button styles
+        setPersonsActive();
+    }
+
+    /**
+     * Handles the event view toggle and updates button states.
+     */
+    @FXML
+    public void handleEventViewToggle() {
+        // Update UI logic
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        personListPanelPlaceholder.getChildren().clear();
+        personListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
+        // Update button styles
+        setEventsActive();
+    }
+
+    /**
+     * Sets the persons button as active and events as inactive.
+     */
+    private void setPersonsActive() {
+        personsToggle.getStyleClass().removeAll("toggle-inactive");
+        personsToggle.getStyleClass().add("toggle-active");
+
+        eventsToggle.getStyleClass().removeAll("toggle-active");
+        eventsToggle.getStyleClass().add("toggle-inactive");
+    }
+
+    /**
+     * Sets the events button as active and persons as inactive.
+     */
+    private void setEventsActive() {
+        eventsToggle.getStyleClass().removeAll("toggle-inactive");
+        eventsToggle.getStyleClass().add("toggle-active");
+
+        personsToggle.getStyleClass().removeAll("toggle-active");
+        personsToggle.getStyleClass().add("toggle-inactive");
     }
 
     /**
@@ -180,6 +241,7 @@ public class MainWindow extends UiPart<Stage> {
             helpWindow.focus();
         }
     }
+
 
     /**
      * Handles the terminal button click and Ctrl+T shortcut.
@@ -235,6 +297,10 @@ public class MainWindow extends UiPart<Stage> {
         return personListPanel;
     }
 
+    public EventListPanel getEventListPanel() {
+        return eventListPanel;
+    }
+
     /**
      * Executes the command and returns the result.
      *
@@ -287,3 +353,5 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 }
+
+

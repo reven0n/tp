@@ -32,8 +32,8 @@ public class PersonBuilder {
      */
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
-        phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
+        phone = new Phone(DEFAULT_PHONE);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
     }
@@ -43,8 +43,8 @@ public class PersonBuilder {
      */
     public PersonBuilder(Person personToCopy) {
         name = personToCopy.getName();
-        phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
+        phone = personToCopy.getPhone();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
     }
@@ -58,18 +58,18 @@ public class PersonBuilder {
     }
 
     /**
-     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
+     * Sets the {@code Email} of the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
+    public PersonBuilder withEmail(String email) {
+        this.email = new Email(email);
         return this;
     }
 
     /**
-     * Sets the {@code Address} of the {@code Person} that we are building.
+     * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withAddress(String address) {
-        this.address = new Address(address);
+    public PersonBuilder withTags(String ... tags) {
+        this.tags = SampleDataUtil.getTagSet(tags);
         return this;
     }
 
@@ -82,15 +82,31 @@ public class PersonBuilder {
     }
 
     /**
-     * Sets the {@code Email} of the {@code Person} that we are building.
+     * Removes the {@code Phone} from the {@code Person} that we are building.
      */
-    public PersonBuilder withEmail(String email) {
-        this.email = new Email(email);
+    public PersonBuilder withoutPhone() {
+        this.phone = Phone.empty();
+        return this;
+    }
+
+    /**
+     * Sets the {@code Address} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withAddress(String address) {
+        this.address = new Address(address);
+        return this;
+    }
+
+    /**
+     * Removes the {@code Address} from the {@code Person} that we are building.
+     */
+    public PersonBuilder withoutAddress() {
+        this.address = Address.empty();
         return this;
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, tags);
+        return new Person(name, email, phone, address, tags);
     }
 
 }
