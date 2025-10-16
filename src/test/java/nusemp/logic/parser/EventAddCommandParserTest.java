@@ -7,6 +7,8 @@ import static nusemp.logic.commands.CommandTestUtil.EVENT_NAME_DESC_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_NAME_DESC_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_DATE_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_NAME_MEETING;
+import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
+import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static nusemp.testutil.TypicalEvents.CONFERENCE_EMPTY;
@@ -14,6 +16,7 @@ import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
 
 import org.junit.jupiter.api.Test;
 
+import nusemp.logic.Messages;
 import nusemp.logic.commands.EventAddCommand;
 
 class EventAddCommandParserTest {
@@ -40,11 +43,11 @@ class EventAddCommandParserTest {
     public void parse_duplicateFields_failure() {
         // duplicate name
         assertParseFailure(parser, EVENT_NAME_DESC_MEETING + EVENT_NAME_DESC_MEETING
-                + EVENT_DATE_DESC_MEETING, MESSAGE_INVALID_FORMAT);
+                + EVENT_DATE_DESC_MEETING, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
 
         // duplicate date
         assertParseFailure(parser, EVENT_NAME_DESC_MEETING + EVENT_DATE_DESC_MEETING
-                + EVENT_DATE_DESC_MEETING, MESSAGE_INVALID_FORMAT);
+                + EVENT_DATE_DESC_MEETING, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_DATE));
     }
 
     @Test
