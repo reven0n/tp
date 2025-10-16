@@ -152,11 +152,6 @@ public class ContactAddCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        // invalid name
-        //assertParseFailure(parser, INVALID_CONTACT_NAME_DESC + CONTACT_PHONE_DESC_BOB
-        //        + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB
-        //        + CONTACT_TAG_DESC_HUSBAND + CONTACT_TAG_DESC_FRIEND, Name.MESSAGE_CONSTRAINTS);
-
         // invalid phone
         assertParseFailure(parser, CONTACT_NAME_DESC_BOB + INVALID_CONTACT_PHONE_DESC
                 + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB

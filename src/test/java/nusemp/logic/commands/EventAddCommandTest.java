@@ -41,15 +41,15 @@ class EventAddCommandTest {
 
         assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(MEETING_EMPTY)),
                 commandResult1.getFeedbackToUser());
-        assertEquals(1, modelStub.eventAdded.size());
-        assertEquals(MEETING_EMPTY, modelStub.eventAdded.get(0));
+        assertEquals(1, modelStub.eventsAdded.size());
+        assertEquals(MEETING_EMPTY, modelStub.eventsAdded.get(0));
 
         //handling of multiple events and event with participants
         CommandResult commandResult2 = new EventAddCommand(CONFERENCE_FILLED).execute(modelStub);
         assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(CONFERENCE_FILLED)),
                 commandResult2.getFeedbackToUser());
-        assertEquals(2, modelStub.eventAdded.size());
-        assertEquals(CONFERENCE_FILLED, modelStub.eventAdded.get(1));
+        assertEquals(2, modelStub.eventsAdded.size());
+        assertEquals(CONFERENCE_FILLED, modelStub.eventsAdded.get(1));
     }
 
     @Test
@@ -60,16 +60,16 @@ class EventAddCommandTest {
 
         assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(WORKSHOP_EMPTY)),
                 commandResult1.getFeedbackToUser());
-        assertEquals(2, modelStub.eventAdded.size());
-        assertEquals(WORKSHOP_EMPTY, modelStub.eventAdded.get(1));
+        assertEquals(2, modelStub.eventsAdded.size());
+        assertEquals(WORKSHOP_EMPTY, modelStub.eventsAdded.get(1));
 
         //handling of multiple events and event with participants
-        modelStub.eventAdded.remove(1);
+        modelStub.eventsAdded.remove(1);
         CommandResult commandResult2 = new EventAddCommand(WORKSHOP_FILLED).execute(modelStub);
         assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(WORKSHOP_FILLED)),
                 commandResult2.getFeedbackToUser());
-        assertEquals(2, modelStub.eventAdded.size());
-        assertEquals(WORKSHOP_FILLED, modelStub.eventAdded.get(1));
+        assertEquals(2, modelStub.eventsAdded.size());
+        assertEquals(WORKSHOP_FILLED, modelStub.eventsAdded.get(1));
     }
 
     @Test
@@ -105,6 +105,7 @@ class EventAddCommandTest {
         // different participants -> returns false
         assertNotEquals(addConferenceCommand, addConferenceFullCommand);
     }
+
     /**
      * A default model stub that have all the methods failing.
      */
@@ -241,18 +242,18 @@ class EventAddCommandTest {
     }
 
     private class ModelStubWithAcceptingEventAdded extends ModelStub {
-        final ArrayList<Event> eventAdded = new ArrayList<>();
+        final ArrayList<Event> eventsAdded = new ArrayList<>();
 
         @Override
         public boolean hasEvent(Event event) {
             requireNonNull(event);
-            return eventAdded.stream().anyMatch(event::isSameEvent);
+            return eventsAdded.stream().anyMatch(event::isSameEvent);
         }
 
         @Override
         public void addEvent(Event event) {
             requireNonNull(event);
-            eventAdded.add(event);
+            eventsAdded.add(event);
         }
 
         @Override
