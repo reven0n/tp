@@ -44,7 +44,7 @@ class EventAddCommandTest {
         assertEquals(1, modelStub.eventsAdded.size());
         assertEquals(MEETING_EMPTY, modelStub.eventsAdded.get(0));
 
-        //handling of multiple events and event with participants
+        // handling of multiple events and event with participants
         CommandResult commandResult2 = new EventAddCommand(CONFERENCE_FILLED).execute(modelStub);
         assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(CONFERENCE_FILLED)),
                 commandResult2.getFeedbackToUser());
