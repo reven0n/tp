@@ -5,16 +5,16 @@ import static nusemp.logic.commands.CommandTestUtil.CONTACT_ADDRESS_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_ADDRESS_DESC_BOB;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_EMAIL_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_EMAIL_DESC_BOB;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_ADDRESS_DESC;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_EMAIL_DESC;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_NAME_DESC;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_PHONE_DESC;
-import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_TAG_DESC;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_NAME_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_PHONE_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_PHONE_DESC_BOB;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_TAG_DESC_FRIEND;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_TAG_DESC_HUSBAND;
+import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_ADDRESS_DESC;
+import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_EMAIL_DESC;
+import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_NAME_DESC;
+import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_PHONE_DESC;
+import static nusemp.logic.commands.CommandTestUtil.INVALID_CONTACT_TAG_DESC;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_ADDRESS_AMY;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_EMAIL_AMY;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_NAME_AMY;
@@ -90,16 +90,21 @@ public class ContactEditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_CONTACT_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
-        assertParseFailure(parser, "1" + INVALID_CONTACT_PHONE_DESC + CONTACT_EMAIL_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + INVALID_CONTACT_PHONE_DESC + CONTACT_EMAIL_DESC_AMY,
+                Phone.MESSAGE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "1" + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + CONTACT_TAG_DESC_FRIEND + TAG_EMPTY + CONTACT_TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, "1" + TAG_EMPTY + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND + TAG_EMPTY,
+                Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + CONTACT_TAG_DESC_FRIEND + TAG_EMPTY + CONTACT_TAG_DESC_HUSBAND,
+                Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, "1" + TAG_EMPTY + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND,
+                Tag.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_CONTACT_NAME_DESC + INVALID_CONTACT_EMAIL_DESC + VALID_CONTACT_ADDRESS_AMY + VALID_CONTACT_PHONE_AMY,
+        assertParseFailure(parser, "1" + INVALID_CONTACT_NAME_DESC + INVALID_CONTACT_EMAIL_DESC
+                        + VALID_CONTACT_ADDRESS_AMY + VALID_CONTACT_PHONE_AMY,
                 Name.MESSAGE_CONSTRAINTS);
     }
 
@@ -110,7 +115,8 @@ public class ContactEditCommandParserTest {
                 + CONTACT_EMAIL_DESC_AMY + CONTACT_ADDRESS_DESC_AMY + CONTACT_NAME_DESC_AMY + CONTACT_TAG_DESC_FRIEND;
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_AMY)
-                .withPhone(VALID_CONTACT_PHONE_BOB).withEmail(VALID_CONTACT_EMAIL_AMY).withAddress(VALID_CONTACT_ADDRESS_AMY)
+                .withPhone(VALID_CONTACT_PHONE_BOB).withEmail(VALID_CONTACT_EMAIL_AMY)
+                .withAddress(VALID_CONTACT_ADDRESS_AMY)
                 .withTags(VALID_CONTACT_TAG_HUSBAND, VALID_CONTACT_TAG_FRIEND).build();
         ContactEditCommand expectedCommand = new ContactEditCommand(targetIndex, descriptor);
 
@@ -180,15 +186,17 @@ public class ContactEditCommandParserTest {
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // mulltiple valid fields repeated
-        userInput = targetIndex.getOneBased() + CONTACT_PHONE_DESC_AMY + CONTACT_ADDRESS_DESC_AMY + CONTACT_EMAIL_DESC_AMY
-                + CONTACT_TAG_DESC_FRIEND + CONTACT_PHONE_DESC_AMY + CONTACT_ADDRESS_DESC_AMY + CONTACT_EMAIL_DESC_AMY + CONTACT_TAG_DESC_FRIEND
+        userInput = targetIndex.getOneBased() + CONTACT_PHONE_DESC_AMY + CONTACT_ADDRESS_DESC_AMY
+                + CONTACT_EMAIL_DESC_AMY + CONTACT_TAG_DESC_FRIEND
+                + CONTACT_PHONE_DESC_AMY + CONTACT_ADDRESS_DESC_AMY + CONTACT_EMAIL_DESC_AMY + CONTACT_TAG_DESC_FRIEND
                 + CONTACT_PHONE_DESC_BOB + CONTACT_ADDRESS_DESC_BOB + CONTACT_EMAIL_DESC_BOB + CONTACT_TAG_DESC_HUSBAND;
 
         assertParseFailure(parser, userInput,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
 
         // multiple invalid values
-        userInput = targetIndex.getOneBased() + INVALID_CONTACT_PHONE_DESC + INVALID_CONTACT_ADDRESS_DESC + INVALID_CONTACT_EMAIL_DESC
+        userInput = targetIndex.getOneBased() + INVALID_CONTACT_PHONE_DESC
+                + INVALID_CONTACT_ADDRESS_DESC + INVALID_CONTACT_EMAIL_DESC
                 + INVALID_CONTACT_PHONE_DESC + INVALID_CONTACT_ADDRESS_DESC + INVALID_CONTACT_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,

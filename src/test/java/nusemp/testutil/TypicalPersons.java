@@ -49,10 +49,14 @@ public class TypicalPersons {
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Person AMY = new PersonBuilder().withName(VALID_CONTACT_NAME_AMY).withPhone(VALID_CONTACT_PHONE_AMY)
-            .withEmail(VALID_CONTACT_EMAIL_AMY).withAddress(VALID_CONTACT_ADDRESS_AMY).withTags(VALID_CONTACT_TAG_FRIEND).build();
-    public static final Person BOB = new PersonBuilder().withName(VALID_CONTACT_NAME_BOB).withPhone(VALID_CONTACT_PHONE_BOB)
-            .withEmail(VALID_CONTACT_EMAIL_BOB).withAddress(VALID_CONTACT_ADDRESS_BOB).withTags(VALID_CONTACT_TAG_HUSBAND, VALID_CONTACT_TAG_FRIEND)
+    public static final Person AMY = new PersonBuilder().withName(VALID_CONTACT_NAME_AMY)
+            .withPhone(VALID_CONTACT_PHONE_AMY)
+            .withEmail(VALID_CONTACT_EMAIL_AMY).withAddress(VALID_CONTACT_ADDRESS_AMY)
+            .withTags(VALID_CONTACT_TAG_FRIEND).build();
+    public static final Person BOB = new PersonBuilder().withName(VALID_CONTACT_NAME_BOB)
+            .withPhone(VALID_CONTACT_PHONE_BOB)
+            .withEmail(VALID_CONTACT_EMAIL_BOB).withAddress(VALID_CONTACT_ADDRESS_BOB)
+            .withTags(VALID_CONTACT_TAG_HUSBAND, VALID_CONTACT_TAG_FRIEND)
             .build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
