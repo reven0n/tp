@@ -3,6 +3,7 @@ package nusemp.logic.commands;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
@@ -17,6 +18,7 @@ import nusemp.logic.Messages;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
+import nusemp.model.event.Event;
 import nusemp.model.person.Person;
 
 /**
@@ -39,6 +41,25 @@ public class ContactDeleteCommandTest {
         expectedModel.deletePerson(personToDelete);
 
         assertCommandSuccess(contactDeleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_removeContactAlsoRemovesFromEvents() {
+        Model modelWithEvent = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        Person personToDelete = modelWithEvent.getPersonByIndex(INDEX_FIRST_PERSON);
+        Event meetingWithPerson = MEETING_EMPTY.withParticipant(personToDelete);
+        modelWithEvent.addEvent(meetingWithPerson);
+
+        ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_PERSON);
+
+        ModelManager expectedModel = new ModelManager(modelWithEvent.getAddressBook(), new UserPrefs());
+        expectedModel.getEventByIndex(Index.fromOneBased(1)).withoutParticipant(personToDelete);
+        expectedModel.deletePerson(personToDelete);
+
+        String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(personToDelete));
+
+        assertCommandSuccess(contactDeleteCommand, modelWithEvent, expectedMessage, expectedModel);
     }
 
     @Test
