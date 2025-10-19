@@ -171,7 +171,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AppData " + MainApp.VERSION);
+        logger.info("Starting NUS EMP " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
