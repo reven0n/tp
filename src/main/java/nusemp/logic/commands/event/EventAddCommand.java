@@ -1,4 +1,4 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
@@ -6,6 +6,9 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
+import nusemp.logic.commands.Command;
+import nusemp.logic.commands.CommandResult;
+import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.event.Event;

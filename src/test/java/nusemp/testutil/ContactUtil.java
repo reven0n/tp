@@ -9,8 +9,8 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 import java.util.Set;
 
 import nusemp.logic.commands.CommandType;
-import nusemp.logic.commands.ContactAddCommand;
-import nusemp.logic.commands.ContactEditCommand;
+import nusemp.logic.commands.contact.ContactAddCommand;
+import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.model.contact.Contact;
 import nusemp.model.tag.Tag;
 

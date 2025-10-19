@@ -13,7 +13,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.ContactEditCommand.EditContactDescriptor;
+import nusemp.logic.commands.contact.ContactEditCommand;
+import nusemp.logic.commands.contact.ContactEditCommand.EditContactDescriptor;
 import nusemp.testutil.EditContactDescriptorBuilder;
 
 public class EditContactDescriptorTest {

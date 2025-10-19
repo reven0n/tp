@@ -7,7 +7,8 @@ import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.EventListCommand;
+import nusemp.logic.commands.event.EventListCommand;
+import nusemp.logic.parser.event.EventListCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 
 class EventListCommandParserTest {

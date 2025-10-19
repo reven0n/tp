@@ -7,7 +7,8 @@ import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.ContactDeleteCommand;
+import nusemp.logic.commands.contact.ContactDeleteCommand;
+import nusemp.logic.parser.contact.ContactDeleteCommandParser;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations

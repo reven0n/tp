@@ -1,8 +1,11 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import nusemp.logic.commands.ContactListCommand;
+import nusemp.logic.commands.contact.ContactListCommand;
+import nusemp.logic.parser.ArgumentMultimap;
+import nusemp.logic.parser.ArgumentTokenizer;
+import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.exceptions.ParseException;
 
 /**

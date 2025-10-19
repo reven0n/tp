@@ -1,10 +1,11 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import java.util.Arrays;
 
-import nusemp.logic.commands.ContactFindCommand;
+import nusemp.logic.commands.contact.ContactFindCommand;
+import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
 

@@ -35,7 +35,8 @@ import static nusemp.testutil.TypicalContacts.BOB;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
-import nusemp.logic.commands.ContactAddCommand;
+import nusemp.logic.commands.contact.ContactAddCommand;
+import nusemp.logic.parser.contact.ContactAddCommandParser;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.Email;
 import nusemp.model.contact.Name;

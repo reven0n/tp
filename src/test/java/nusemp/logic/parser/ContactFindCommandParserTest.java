@@ -8,7 +8,8 @@ import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.ContactFindCommand;
+import nusemp.logic.commands.contact.ContactFindCommand;
+import nusemp.logic.parser.contact.ContactFindCommandParser;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
 
 public class ContactFindCommandParserTest {

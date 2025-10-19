@@ -1,8 +1,11 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
+import nusemp.logic.commands.Command;
+import nusemp.logic.commands.CommandResult;
+import nusemp.logic.commands.CommandType;
 import nusemp.model.Model;
 
 /**

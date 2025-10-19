@@ -1,9 +1,12 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.contact;
 
 import static java.util.Objects.requireNonNull;
 
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
+import nusemp.logic.commands.Command;
+import nusemp.logic.commands.CommandResult;
+import nusemp.logic.commands.CommandType;
 import nusemp.model.Model;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
 

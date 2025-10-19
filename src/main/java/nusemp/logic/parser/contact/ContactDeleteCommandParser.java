@@ -1,9 +1,11 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import nusemp.commons.core.index.Index;
-import nusemp.logic.commands.ContactDeleteCommand;
+import nusemp.logic.commands.contact.ContactDeleteCommand;
+import nusemp.logic.parser.Parser;
+import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
 
 /**

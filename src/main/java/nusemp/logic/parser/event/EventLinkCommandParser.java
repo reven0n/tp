@@ -1,11 +1,15 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 
 import nusemp.commons.core.index.Index;
-import nusemp.logic.commands.EventLinkCommand;
+import nusemp.logic.commands.event.EventLinkCommand;
+import nusemp.logic.parser.ArgumentMultimap;
+import nusemp.logic.parser.ArgumentTokenizer;
+import nusemp.logic.parser.Parser;
+import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
 
 /**

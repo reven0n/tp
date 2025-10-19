@@ -1,4 +1,4 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -9,7 +9,11 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Set;
 
-import nusemp.logic.commands.ContactAddCommand;
+import nusemp.logic.commands.contact.ContactAddCommand;
+import nusemp.logic.parser.ArgumentMultimap;
+import nusemp.logic.parser.ArgumentTokenizer;
+import nusemp.logic.parser.Parser;
+import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.Address;
 import nusemp.model.contact.Contact;

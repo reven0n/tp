@@ -20,8 +20,8 @@ import org.junit.jupiter.api.io.TempDir;
 
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
-import nusemp.logic.commands.ContactAddCommand;
-import nusemp.logic.commands.ContactListCommand;
+import nusemp.logic.commands.contact.ContactAddCommand;
+import nusemp.logic.commands.contact.ContactListCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;

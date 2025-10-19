@@ -21,6 +21,7 @@ import javafx.collections.ObservableList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
+import nusemp.logic.commands.event.EventAddCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AppData;
 import nusemp.model.Model;
