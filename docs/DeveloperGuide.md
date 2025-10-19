@@ -291,32 +291,32 @@ Streamlines event communication workflow by integrating contact management with 
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …         | I want to …                                                               | So that I can…                                         |
-| -------- | --------------- | -------------------------------------------------------------------------- |--------------------------------------------------------|
-| `* * *`  | event organizer | add a contact with standard fields (Name, Phone, Email, Address)           | build my core contact database                         |
-| `* * *`  | event organizer | associate a specific Role (e.g., 'Speaker', 'Attendee', 'VIP', 'Sponsor')  | categorize and filter my contacts effectively          |
-| `* * *`  | event organizer | delete a contact from the address book                                     | remove outdated or irrelevant entries                  |
-| `* * *`  | event organizer | create a new event with name, date, time, and venue                        | start organizing my contacts around it                 |
+| Priority | As a …         | I want to …                                                               | So that I can…                                        |
+| -------- | --------------- | -------------------------------------------------------------------------- | ------------------------------------------------------ |
+| `* * *`  | event organizer | add a contact with standard fields (Name, Phone, Email, Address)           | build my core contact database                        |
+| `* * *`  | event organizer | associate a specific Role (e.g., 'Speaker', 'Attendee', 'VIP', 'Sponsor')  | categorize and filter my contacts effectively         |
+| `* * *`  | event organizer | delete a contact from the address book                                     | remove outdated or irrelevant entries                 |
+| `* * *`  | event organizer | create a new event with name, date, time, and venue                        | start organizing my contacts around it                |
 | `* * *`  | event organizer | view a list of all my events, showing key details and their status         | get an overview of upcoming, past, or cancelled events |
-| `* * *`  | event organizer | associate contacts from my address book with a specific event              | build an attendee list for the event                   |
-| `* * *`  | event organizer | get a list of contacts defined by tags, roles, or event association        | target communications and manage groups efficiently    |
-| `* *`    | event organizer | set RSVP status for a contact for a specific event                         | track attendance commitments                           |
-| `* *`    | event organizer | edit any field of an existing contact, including role and RSVP status      | keep contact information up-to-date                    |
-| `* *`    | event organizer | view all details of a contact, including role, tags, and associated events | see a clean, readable summary                          |
-| `* *`    | event organizer | find contacts by searching any field (Name, Role, Tag, Email)              | quickly locate specific individuals                    |
-| `* *`    | event organizer | add multiple tags to a contact                                             | perform complex filtering                              |
-| `* *`    | event organizer | filter contact list by tags and roles                                      | create highly specific lists                           |
-| `* *`    | event organizer | list all contacts, with option to sort by Name or Role                     | get a general overview                                 |
-| `* *`    | event organizer | remove a contact from an event without deleting from address book          | manage event participation flexibly                    |
-| `* *`    | event organizer | archive a past event                                                       | keep main view uncluttered but retain data             |
-| `* *`    | event organizer | set event status to 'Cancelled'                                            | exclude it from mailings                               |
-| `* *`    | event organizer | import contacts from a CSV file                                            | quickly populate my address book                       |
-| `* *`    | event organizer | export contacts or filtered subset to CSV                                  | backup or use in another application                   |
-| `* *`    | user            | create a complete backup of application data                               | safeguard my information                               |
-| `* *`    | user            | restore application data from a backup file                                | recover from data loss                                 |
-| `* *`    | user            | specify storage location for data and backups                              | organize my files as needed                            |
-| `*`      | user            | sort contacts by name                                                      | locate a person easily                                 |
-| `*`      | user            | manage additional entity types related to contacts (tasks, loans, grades)  | extend functionality as needed                         |
+| `* * *`  | event organizer | associate contacts from my address book with a specific event              | build an attendee list for the event                  |
+| `* * *`  | event organizer | get a list of contacts defined by tags, roles, or event association        | target communications and manage groups efficiently   |
+| `* *`    | event organizer | set RSVP status for a contact for a specific event                         | track attendance commitments                          |
+| `* *`    | event organizer | edit any field of an existing contact, including role and RSVP status      | keep contact information up-to-date                   |
+| `* *`    | event organizer | view all details of a contact, including role, tags, and associated events | see a clean, readable summary                         |
+| `* *`    | event organizer | find contacts by searching any field (Name, Role, Tag, Email)              | quickly locate specific individuals                   |
+| `* *`    | event organizer | add multiple tags to a contact                                             | perform complex filtering                             |
+| `* *`    | event organizer | filter contact list by tags and roles                                      | create highly specific lists                          |
+| `* *`    | event organizer | list all contacts, with option to sort by Name or Role                     | get a general overview                                |
+| `* *`    | event organizer | remove a contact from an event without deleting from address book          | manage event participation flexibly                   |
+| `* *`    | event organizer | archive a past event                                                       | keep main view uncluttered but retain data            |
+| `* *`    | event organizer | set event status to 'Cancelled'                                            | exclude it from mailings                              |
+| `* *`    | event organizer | import contacts from a CSV file                                            | quickly populate my address book                      |
+| `* *`    | event organizer | export contacts or filtered subset to CSV                                  | backup or use in another application                  |
+| `* *`    | user            | create a complete backup of application data                               | safeguard my information                              |
+| `* *`    | user            | restore application data from a backup file                                | recover from data loss                                |
+| `* *`    | user            | specify storage location for data and backups                              | organize my files as needed                           |
+| `*`      | user            | sort contacts by name                                                      | locate a person easily                                |
+| `*`      | user            | manage additional entity types related to contacts (tasks, loans, grades)  | extend functionality as needed                        |
 
 ### Use cases
 
@@ -553,7 +553,7 @@ Use case ends.
 
 ### Glossary
 
-- **Event organizer**: A person who organizes events and manages contacts. The intended users of the app.
+- **Event organizer**: A person organizes events and manages contacts. The intended users of the app.
 - **Contact**: An entity that represents a person that may be participating in an event.
 - **Event**: An entity that represents an event that the user is organizing.
 - **Mainstream OS**: Windows, Linux, MacOS
