@@ -42,8 +42,8 @@ public class RootParserTest {
 
     @Test
     public void parseCommand_delete() throws Exception {
-        ContactDeleteCommand command = (ContactDeleteCommand) parser.parseCommand(
-                CommandType.CONTACT + " " + ContactDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_CONTACT.getOneBased());
+        ContactDeleteCommand command = (ContactDeleteCommand) parser.parseCommand(CommandType.CONTACT + " "
+                + ContactDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_CONTACT.getOneBased());
         assertEquals(new ContactDeleteCommand(INDEX_FIRST_CONTACT), command);
     }
 

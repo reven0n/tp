@@ -15,8 +15,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.model.contact.exceptions.DuplicateContactException;
 import nusemp.model.contact.exceptions.ContactNotFoundException;
+import nusemp.model.contact.exceptions.DuplicateContactException;
 import nusemp.testutil.ContactBuilder;
 
 public class UniqueContactListTest {
