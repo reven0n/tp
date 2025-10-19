@@ -44,7 +44,7 @@ public class ContactDeleteCommandTest {
     }
 
     @Test
-    public void execute_removeContactAlsoRemovesFromEvents() {
+    public void execute_contactLinkedToEvent_removesFromEvent() {
         Model modelWithEvent = new ModelManager(getTypicalAddressBook(), new UserPrefs());
         Person personToDelete = modelWithEvent.getPersonByIndex(INDEX_FIRST_PERSON);
         Event meetingWithPerson = MEETING_EMPTY.withParticipant(personToDelete);
