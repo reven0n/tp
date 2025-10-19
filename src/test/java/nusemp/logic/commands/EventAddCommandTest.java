@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
+
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;

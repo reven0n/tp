@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;

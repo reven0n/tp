@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import nusemp.model.contact.exceptions.ContactNotFoundException;
 import nusemp.model.contact.exceptions.DuplicateContactException;
 

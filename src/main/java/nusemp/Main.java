@@ -3,6 +3,7 @@ package nusemp;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
+
 import nusemp.commons.core.LogsCenter;
 
 /**

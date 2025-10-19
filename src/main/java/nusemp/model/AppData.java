@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javafx.collections.ObservableList;
+
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.UniqueContactList;

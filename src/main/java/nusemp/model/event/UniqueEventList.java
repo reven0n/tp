@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import nusemp.model.event.exceptions.DuplicateEventException;
 import nusemp.model.event.exceptions.EventNotFoundException;
 

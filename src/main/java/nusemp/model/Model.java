@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;

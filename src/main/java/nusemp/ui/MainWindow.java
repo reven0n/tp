@@ -12,6 +12,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
 import nusemp.logic.Logic;

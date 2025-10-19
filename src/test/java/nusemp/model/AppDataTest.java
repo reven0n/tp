@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.exceptions.DuplicateContactException;
 import nusemp.model.event.Event;
