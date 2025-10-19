@@ -10,11 +10,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
-import nusemp.model.person.Person;
 
 /**
- * Represents an Event in the address book.
+ * Represents an Event.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Event {
@@ -24,12 +24,12 @@ public class Event {
     private final EventDate date;
 
     // Data fields
-    private final List<Person> participants = new ArrayList<>();
+    private final List<Contact> participants = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Event(EventName name, EventDate date, List<Person> participants) {
+    public Event(EventName name, EventDate date, List<Contact> participants) {
         requireAllNonNull(name, date, participants);
         checkForDuplicateParticipants(participants);
         this.name = name;
@@ -56,16 +56,16 @@ public class Event {
      * Returns an immutable participant list, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public List<Person> getParticipants() {
+    public List<Contact> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
 
     /**
      * Returns true if the event has the given participant.
      */
-    public boolean hasParticipant(Person person) {
-        requireAllNonNull(person);
-        return participants.contains(person);
+    public boolean hasParticipant(Contact contact) {
+        requireAllNonNull(contact);
+        return participants.contains(contact);
     }
 
     /**
@@ -74,17 +74,17 @@ public class Event {
     public boolean hasParticipantWithEmail(String email) {
         requireAllNonNull(email);
         return participants.stream()
-                .anyMatch(person -> person.getEmail().value.equals(email));
+                .anyMatch(contact -> contact.getEmail().value.equals(email));
     }
 
     /**
      * Checks if the given list of participants contains duplicate emails.
      * @throws DuplicateParticipantException if duplicates are found.
      */
-    private static void checkForDuplicateParticipants(List<Person> participants) {
+    private static void checkForDuplicateParticipants(List<Contact> participants) {
         Set<String> emails = new HashSet<>();
-        for (Person person : participants) {
-            String email = person.getEmail().value;
+        for (Contact contact : participants) {
+            String email = contact.getEmail().value;
             if (!emails.add(email)) {
                 throw new DuplicateParticipantException();
             }
@@ -96,13 +96,13 @@ public class Event {
      * This maintains immutability by returning a new Event instance.
      * @throws DuplicateParticipantException if the participant already exists in the event.
      */
-    public Event withParticipant(Person person) {
-        requireAllNonNull(person);
-        if (hasParticipantWithEmail(person.getEmail().value)) {
+    public Event withParticipant(Contact contact) {
+        requireAllNonNull(contact);
+        if (hasParticipantWithEmail(contact.getEmail().value)) {
             throw new DuplicateParticipantException();
         }
-        List<Person> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.add(person);
+        List<Contact> updatedParticipants = new ArrayList<>(participants);
+        updatedParticipants.add(contact);
         return new Event(name, date, updatedParticipants);
     }
 
@@ -110,10 +110,10 @@ public class Event {
      * Returns a new Event with the given participant removed.
      * This maintains immutability by returning a new Event instance.
      */
-    public Event withoutParticipant(Person person) {
-        requireAllNonNull(person);
-        List<Person> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.remove(person);
+    public Event withoutParticipant(Contact contact) {
+        requireAllNonNull(contact);
+        List<Contact> updatedParticipants = new ArrayList<>(participants);
+        updatedParticipants.remove(contact);
         return new Event(name, date, updatedParticipants);
     }
 

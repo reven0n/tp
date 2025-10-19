@@ -2,7 +2,7 @@ package nusemp.logic.parser;
 
 import static nusemp.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -14,10 +14,10 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.person.Address;
-import nusemp.model.person.Email;
-import nusemp.model.person.Name;
-import nusemp.model.person.Phone;
+import nusemp.model.contact.Address;
+import nusemp.model.contact.Email;
+import nusemp.model.contact.Name;
+import nusemp.model.contact.Phone;
 import nusemp.model.tag.Tag;
 
 public class ParserUtilTest {
@@ -49,10 +49,10 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_CONTACT, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_CONTACT, ParserUtil.parseIndex("  1  "));
     }
 
     @Test

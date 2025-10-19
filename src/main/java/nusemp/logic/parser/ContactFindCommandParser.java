@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import nusemp.logic.commands.ContactFindCommand;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.person.NameContainsKeywordsPredicate;
+import nusemp.model.contact.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new ContactFindCommand object

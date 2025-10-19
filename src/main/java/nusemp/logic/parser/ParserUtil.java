@@ -9,12 +9,12 @@ import java.util.Set;
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
+import nusemp.model.contact.Address;
+import nusemp.model.contact.Email;
+import nusemp.model.contact.Name;
+import nusemp.model.contact.Phone;
 import nusemp.model.event.EventDate;
 import nusemp.model.event.EventName;
-import nusemp.model.person.Address;
-import nusemp.model.person.Email;
-import nusemp.model.person.Name;
-import nusemp.model.person.Phone;
 import nusemp.model.tag.Tag;
 
 /**

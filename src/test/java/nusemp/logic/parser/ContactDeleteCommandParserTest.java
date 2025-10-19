@@ -3,7 +3,7 @@ package nusemp.logic.parser;
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ public class ContactDeleteCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsDeleteCommand() {
-        assertParseSuccess(parser, "1", new ContactDeleteCommand(INDEX_FIRST_PERSON));
+        assertParseSuccess(parser, "1", new ContactDeleteCommand(INDEX_FIRST_CONTACT));
     }
 
     @Test

@@ -11,10 +11,10 @@ import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
-import nusemp.model.person.Person;
+import nusemp.model.contact.Contact;
 
 /**
- * Adds a person to the address book.
+ * Adds a contact.
  */
 public class ContactAddCommand extends Command {
 
@@ -37,28 +37,28 @@ public class ContactAddCommand extends Command {
             + PREFIX_TAG + " owesMoney";
 
     public static final String MESSAGE_SUCCESS = "Successfully added contact:\n%1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON =
+    public static final String MESSAGE_DUPLICATE_CONTACT =
             "Error adding contact: contact with email \"%1$s\" already exists";
 
-    private final Person toAdd;
+    private final Contact toAdd;
 
     /**
-     * Creates an ContactAddCommand to add the specified {@code Person}
+     * Creates an ContactAddCommand to add the specified {@code Contact}
      */
-    public ContactAddCommand(Person person) {
-        requireNonNull(person);
-        toAdd = person;
+    public ContactAddCommand(Contact contact) {
+        requireNonNull(contact);
+        toAdd = contact;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        if (model.hasPerson(toAdd)) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_PERSON, toAdd.getEmail()));
+        if (model.hasContact(toAdd)) {
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_CONTACT, toAdd.getEmail()));
         }
 
-        model.addPerson(toAdd);
+        model.addContact(toAdd);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
     }
 

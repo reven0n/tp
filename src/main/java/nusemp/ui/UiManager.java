@@ -28,7 +28,7 @@ public class UiManager implements Ui {
     private static final String ICON_DOCK = "/images/NUS_Event_Mailer_Pro.png";
 
 
-    private Logic logic;
+    private final Logic logic;
     private MainWindow mainWindow;
 
     /**

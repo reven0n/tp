@@ -6,7 +6,7 @@ import static nusemp.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import nusemp.model.Model;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all events to the user.
  */
 public class EventListCommand extends Command {
 

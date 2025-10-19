@@ -1,9 +1,9 @@
 package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
+import static nusemp.logic.commands.CommandTestUtil.showContactAtIndex;
+import static nusemp.testutil.TypicalContacts.getTypicalAppData;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,20 +22,20 @@ public class ContactListCommandTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        model = new ModelManager(getTypicalAppData(), new UserPrefs());
+        expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
     }
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
         assertCommandSuccess(new ContactListCommand(), model, String.format(ContactListCommand.MESSAGE_SUCCESS,
-                expectedModel.getFilteredPersonList().size()), expectedModel);
+                expectedModel.getFilteredContactList().size()), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showContactAtIndex(model, INDEX_FIRST_CONTACT);
         assertCommandSuccess(new ContactListCommand(), model, String.format(ContactListCommand.MESSAGE_SUCCESS,
-                        expectedModel.getFilteredPersonList().size()), expectedModel);
+                        expectedModel.getFilteredContactList().size()), expectedModel);
     }
 }

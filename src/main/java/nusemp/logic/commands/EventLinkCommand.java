@@ -10,9 +10,9 @@ import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
-import nusemp.model.person.Person;
 
 /**
  * Links a contact to an event in the event book.
@@ -37,7 +37,7 @@ public class EventLinkCommand extends Command {
     private final Index contactIndex;
 
     /**
-     * Creates an EventLinkCommand to link the specified {@code Person}
+     * Creates an EventLinkCommand to link the specified {@code Contact}
      * to the specified {@code Event}
      *
      * @param eventIndex Index of the event in the filtered event list to link the contact to
@@ -54,27 +54,27 @@ public class EventLinkCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         List<Event> lastShownEventList = model.getFilteredEventList();
-        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        List<Contact> lastShownContactList = model.getFilteredContactList();
 
         // check if the event index and contact index are within bounds
         if (eventIndex.getZeroBased() >= lastShownEventList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
-        if (contactIndex.getZeroBased() >= lastShownPersonList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        if (contactIndex.getZeroBased() >= lastShownContactList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
         }
 
         Event eventToUpdate = lastShownEventList.get(eventIndex.getZeroBased());
-        Person personToLink = lastShownPersonList.get(contactIndex.getZeroBased());
+        Contact contactToLink = lastShownContactList.get(contactIndex.getZeroBased());
 
         // link the contact to the event
         try {
-            Event updatedEvent = eventToUpdate.withParticipant(personToLink);
+            Event updatedEvent = eventToUpdate.withParticipant(contactToLink);
             model.setEvent(eventToUpdate, updatedEvent);
             return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    personToLink.getName(), updatedEvent.getName()));
+                    contactToLink.getName(), updatedEvent.getName()));
         } catch (DuplicateParticipantException e) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, personToLink.getEmail()));
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, contactToLink.getEmail()));
         }
     }
 

@@ -13,7 +13,7 @@
 <?import javafx.stage.Stage?>
 
 <?import javafx.scene.control.Button?>
-<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="Address App" type="Stage" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="NUS Event Mailer Pro" type="Stage" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <icons>
         <Image url="@/images/address_book_32.png" />
     </icons>
@@ -54,11 +54,11 @@
                             </MenuBar>
 
                             <StackPane HBox.hgrow="ALWAYS">
-                                <VBox fx:id="personList" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
+                                <VBox fx:id="contactList" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
                                     <padding>
                                         <Insets bottom="10" left="10" right="10" top="10" />
                                     </padding>
-                                    <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
+                                    <StackPane fx:id="contactListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
                                 </VBox>
 
                                 <HBox fx:id="toggleSlider" styleClass="toggle-slider"
@@ -67,8 +67,8 @@
                                         <Insets top="15" />
                                     </StackPane.margin>
 
-                                    <Button fx:id="personsToggle" text="👤" styleClass="toggle-button, toggle-active"
-                                            maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handlePersonViewToggle"/>
+                                    <Button fx:id="contactsToggle" text="👤" styleClass="toggle-button, toggle-active"
+                                            maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleContactViewToggle"/>
                                     <Button fx:id="eventsToggle" text="🗓️" styleClass="toggle-button, toggle-inactive"
                                             maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleEventViewToggle"/>
                                 </HBox>

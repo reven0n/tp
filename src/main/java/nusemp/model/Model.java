@@ -6,15 +6,15 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.person.Person;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Contact> PREDICATE_SHOW_ALL_CONTACTS = unused -> true;
 
     /** {@code Predicate} that always evaluate to true */
     Predicate<Event> PREDICATE_SHOW_ALL_EVENTS = unused -> true;
@@ -40,88 +40,81 @@ public interface Model {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' app data file path.
      */
-    Path getAddressBookFilePath();
+    Path getAppDataFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' app data file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setAppDataFilePath(Path appDataFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces app data with the data in {@code appData}.
      */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
+    void setAppData(ReadOnlyAppData appData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the AppData */
+    ReadOnlyAppData getAppData();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a contact with the same identity as {@code contact} exists in the contact list.
      */
-    boolean hasPerson(Person person);
+    boolean hasContact(Contact contact);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Deletes the given contact.
+     * The contact must exist in the contact list.
      */
-    void deletePerson(Person target);
+    void deleteContact(Contact target);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given contact.
+     * {@code contact} must not already exist in the contact list.
      */
-    void addPerson(Person person);
+    void addContact(Contact contact);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * Replaces the given contact {@code target} with {@code editedContact}.
+     * {@code target} must exist in the contact list.
+     * The contact identity of {@code editedContact} must not be the same as another existing contact.
      */
-    void setPerson(Person target, Person editedPerson);
+    void setContact(Contact target, Contact editedContact);
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered contact list */
+    ObservableList<Contact> getFilteredContactList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered contact list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredContactList(Predicate<Contact> predicate);
 
     //=========== Event Operations =============================================================
 
     /**
-     * Returns true if an event with the same identity as {@code event} exists in the address book.
+     * Returns true if an event with the same identity as {@code event} exists in the event list.
      */
     boolean hasEvent(Event event);
 
     /**
      * Deletes the given event.
-     * The event must exist in the address book.
+     * The event must exist in the event list.
      */
     void deleteEvent(Event target);
 
     /**
      * Adds the given event.
-     * {@code event} must not already exist in the address book.
+     * {@code event} must not already exist in the event list.
      */
     void addEvent(Event event);
 
     /**
      * Replaces the given event {@code target} with {@code editedEvent}.
-     * {@code target} must exist in the address book.
-     * The event identity of {@code editedEvent} must not be the same as another existing event in the address book.
+     * {@code target} must exist in the event list.
+     * The event identity of {@code editedEvent} must not be the same as another existing event.
      */
     void setEvent(Event target, Event editedEvent);
-
-    /**
-     * Adds a participant to the given event.
-     * {@code event} must exist in the address book.
-     * {@code person} must not already be a participant in the event.
-     */
-    void addParticipantToEvent(Event event, Person person);
 
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<Event> getFilteredEventList();
@@ -135,12 +128,12 @@ public interface Model {
     //=========== Lookup Helper Methods ========================================================
 
     /**
-     * Returns the person at the specified index in the filtered person list.
-     * @param index The 1-based index in the filtered person list.
-     * @return The person at the specified index.
+     * Returns the contact at the specified index in the filtered contact list.
+     * @param index The 1-based index in the filtered contact list.
+     * @return The contact at the specified index.
      * @throws IndexOutOfBoundsException if the index is out of range.
      */
-    Person getPersonByIndex(Index index);
+    Contact getContactByIndex(Index index);
 
     /**
      * Returns the event at the specified index in the filtered event list.

@@ -31,7 +31,7 @@ public class EventAddCommand extends Command {
     private final Event toAdd;
 
     /**
-     * Creates an EventAddCommand to add the specified {@code Person}
+     * Creates an EventAddCommand to add the specified {@code Contact}
      */
     public EventAddCommand(Event event) {
         requireNonNull(event);

@@ -8,11 +8,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import nusemp.commons.exceptions.IllegalValueException;
-import nusemp.model.ReadOnlyAddressBook;
+import nusemp.model.ReadOnlyAppData;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventDate;
 import nusemp.model.event.EventName;
-import nusemp.model.person.Person;
 
 /**
  * Jackson-friendly version of {@link Event}.
@@ -48,17 +48,17 @@ class JsonAdaptedEvent {
         name = source.getName().value;
         date = source.getDate().toString();
         participantEmails.addAll(source.getParticipants().stream()
-                .map(person -> person.getEmail().value)
+                .map(contact -> contact.getEmail().value)
                 .collect(Collectors.toList()));
     }
 
     /**
      * Converts this Jackson-friendly adapted event object into the model's {@code Event} object.
      *
-     * @param addressBook The address book to resolve participant emails from.
+     * @param appData The app data to resolve participant emails from.
      * @throws IllegalValueException if there were any data constraints violated in the adapted event.
      */
-    public Event toModelType(ReadOnlyAddressBook addressBook) throws IllegalValueException {
+    public Event toModelType(ReadOnlyAppData appData) throws IllegalValueException {
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     EventName.class.getSimpleName()));
@@ -77,9 +77,9 @@ class JsonAdaptedEvent {
         }
         final EventDate modelDate = new EventDate(date);
 
-        final List<Person> modelParticipants = new ArrayList<>();
+        final List<Contact> modelParticipants = new ArrayList<>();
         for (String email : participantEmails) {
-            Person participant = findPersonByEmail(addressBook, email);
+            Contact participant = findContactByEmail(appData, email);
             if (participant == null) {
                 throw new IllegalValueException(String.format(INVALID_PARTICIPANT_EMAIL_MESSAGE, email));
             }
@@ -90,15 +90,15 @@ class JsonAdaptedEvent {
     }
 
     /**
-     * Finds a person in the address book by email.
+     * Finds a contact in the app data by email.
      *
-     * @param addressBook The address book to search.
+     * @param appData The app data to search.
      * @param email The email to search for.
-     * @return The person with the given email, or null if not found.
+     * @return The contact with the given email, or null if not found.
      */
-    private Person findPersonByEmail(ReadOnlyAddressBook addressBook, String email) {
-        return addressBook.getPersonList().stream()
-                .filter(person -> person.getEmail().value.equals(email))
+    private Contact findContactByEmail(ReadOnlyAppData appData, String email) {
+        return appData.getContactList().stream()
+                .filter(contact -> contact.getEmail().value.equals(email))
                 .findFirst()
                 .orElse(null);
     }

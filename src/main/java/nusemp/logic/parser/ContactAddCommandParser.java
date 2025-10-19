@@ -11,11 +11,11 @@ import java.util.Set;
 
 import nusemp.logic.commands.ContactAddCommand;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.person.Address;
-import nusemp.model.person.Email;
-import nusemp.model.person.Name;
-import nusemp.model.person.Person;
-import nusemp.model.person.Phone;
+import nusemp.model.contact.Address;
+import nusemp.model.contact.Contact;
+import nusemp.model.contact.Email;
+import nusemp.model.contact.Name;
+import nusemp.model.contact.Phone;
 import nusemp.model.tag.Tag;
 
 /**
@@ -36,12 +36,12 @@ public class ContactAddCommandParser implements Parser<ContactAddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactAddCommand.MESSAGE_USAGE));
         }
 
-        Person person = createPerson(argMultimap);
+        Contact contact = createContact(argMultimap);
 
-        return new ContactAddCommand(person);
+        return new ContactAddCommand(contact);
     }
 
-    private Person createPerson(ArgumentMultimap argMultimap) throws ParseException {
+    private Contact createContact(ArgumentMultimap argMultimap) throws ParseException {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -49,7 +49,7 @@ public class ContactAddCommandParser implements Parser<ContactAddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        return new Person(name, email, phone, address, tagList);
+        return new Contact(name, email, phone, address, tagList);
     }
 
 }

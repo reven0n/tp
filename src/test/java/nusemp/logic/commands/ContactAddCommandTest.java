@@ -2,7 +2,7 @@ package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalPersons.ALICE;
+import static nusemp.testutil.TypicalContacts.ALICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -19,47 +19,47 @@ import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
-import nusemp.model.AddressBook;
+import nusemp.model.AppData;
 import nusemp.model.Model;
-import nusemp.model.ReadOnlyAddressBook;
+import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.person.Person;
-import nusemp.testutil.PersonBuilder;
+import nusemp.testutil.ContactBuilder;
 
 public class ContactAddCommandTest {
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullContact_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new ContactAddCommand(null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_contactAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingContactAdded modelStub = new ModelStubAcceptingContactAdded();
+        Contact validContact = new ContactBuilder().build();
 
-        CommandResult commandResult = new ContactAddCommand(validPerson).execute(modelStub);
+        CommandResult commandResult = new ContactAddCommand(validContact).execute(modelStub);
 
-        assertEquals(String.format(ContactAddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertEquals(String.format(ContactAddCommand.MESSAGE_SUCCESS, Messages.format(validContact)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validContact), modelStub.contactsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person validPerson = new PersonBuilder().build();
-        ContactAddCommand contactAddCommand = new ContactAddCommand(validPerson);
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+    public void execute_duplicateContact_throwsCommandException() {
+        Contact validContact = new ContactBuilder().build();
+        ContactAddCommand contactAddCommand = new ContactAddCommand(validContact);
+        ModelStub modelStub = new ModelStubWithContact(validContact);
 
-        assertThrows(CommandException.class, String.format(ContactAddCommand.MESSAGE_DUPLICATE_PERSON,
-                        validPerson.getEmail()), () -> contactAddCommand.execute(modelStub));
+        assertThrows(CommandException.class, String.format(ContactAddCommand.MESSAGE_DUPLICATE_CONTACT,
+                        validContact.getEmail()), () -> contactAddCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Contact alice = new ContactBuilder().withName("Alice").build();
+        Contact bob = new ContactBuilder().withName("Bob").build();
         ContactAddCommand addAliceCommand = new ContactAddCommand(alice);
         ContactAddCommand addBobCommand = new ContactAddCommand(bob);
 
@@ -76,7 +76,7 @@ public class ContactAddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different contact -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
@@ -112,52 +112,52 @@ public class ContactAddCommandTest {
         }
 
         @Override
-        public Path getAddressBookFilePath() {
+        public Path getAppDataFilePath() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setAddressBookFilePath(Path addressBookFilePath) {
+        public void setAppDataFilePath(Path appDataFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void addPerson(Person person) {
+        public void addContact(Contact contact) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setAddressBook(ReadOnlyAddressBook newData) {
+        public void setAppData(ReadOnlyAppData appData) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
+        public ReadOnlyAppData getAppData() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasPerson(Person person) {
+        public boolean hasContact(Contact contact) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deletePerson(Person target) {
+        public void deleteContact(Contact target) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setPerson(Person target, Person editedPerson) {
+        public void setContact(Contact target, Contact editedContact) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Person> getFilteredPersonList() {
+        public ObservableList<Contact> getFilteredContactList() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
+        public void updateFilteredContactList(Predicate<Contact> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -182,11 +182,6 @@ public class ContactAddCommandTest {
         }
 
         @Override
-        public void addParticipantToEvent(Event event, Person person) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public ObservableList<Event> getFilteredEventList() {
             throw new AssertionError("This method should not be called.");
         }
@@ -197,7 +192,7 @@ public class ContactAddCommandTest {
         }
 
         @Override
-        public Person getPersonByIndex(Index index) {
+        public Contact getContactByIndex(Index index) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -208,44 +203,44 @@ public class ContactAddCommandTest {
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that contains a single contact.
      */
-    private class ModelStubWithPerson extends ModelStub {
-        private final Person person;
+    private class ModelStubWithContact extends ModelStub {
+        private final Contact contact;
 
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
-            this.person = person;
+        ModelStubWithContact(Contact contact) {
+            requireNonNull(contact);
+            this.contact = contact;
         }
 
         @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return this.person.isSamePerson(person);
+        public boolean hasContact(Contact contact) {
+            requireNonNull(contact);
+            return this.contact.isSameContact(contact);
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the contact being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+    private class ModelStubAcceptingContactAdded extends ModelStub {
+        final ArrayList<Contact> contactsAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
+        public boolean hasContact(Contact contact) {
+            requireNonNull(contact);
+            return contactsAdded.stream().anyMatch(contact::isSameContact);
         }
 
         @Override
-        public void addPerson(Person person) {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addContact(Contact contact) {
+            requireNonNull(contact);
+            contactsAdded.add(contact);
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyAppData getAppData() {
+            return new AppData();
         }
     }
 

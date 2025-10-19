@@ -33,7 +33,7 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private PersonListPanel personListPanel;
+    private ContactListPanel contactListPanel;
     private EventListPanel eventListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
@@ -50,7 +50,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane contactListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -68,7 +68,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane terminalCommandBoxPlaceholder;
 
     @FXML
-    private Button personsToggle;
+    private Button contactsToggle;
 
     @FXML
     private Button eventsToggle;
@@ -147,13 +147,13 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        contactListPanel = new ContactListPanel(logic.getFilteredContactList());
 
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAppDataFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
@@ -165,21 +165,21 @@ public class MainWindow extends UiPart<Stage> {
         terminalCommandBox = new CommandBox(this::executeTerminalCommand);
         terminalCommandBoxPlaceholder.getChildren().add(terminalCommandBox.getRoot());
 
-        setPersonsActive();
+        setContactsActive();
     }
 
     /**
-     * Handles the person view toggle and updates button states.
+     * Handles the contact view toggle and updates button states.
      */
     @FXML
-    public void handlePersonViewToggle() {
+    public void handleContactViewToggle() {
         // Update UI logic
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().clear();
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        contactListPanel = new ContactListPanel(logic.getFilteredContactList());
+        contactListPanelPlaceholder.getChildren().clear();
+        contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
         // Update button styles
-        setPersonsActive();
+        setContactsActive();
     }
 
     /**
@@ -189,33 +189,33 @@ public class MainWindow extends UiPart<Stage> {
     public void handleEventViewToggle() {
         // Update UI logic
         eventListPanel = new EventListPanel(logic.getFilteredEventList());
-        personListPanelPlaceholder.getChildren().clear();
-        personListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+        contactListPanelPlaceholder.getChildren().clear();
+        contactListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
         // Update button styles
         setEventsActive();
     }
 
     /**
-     * Sets the persons button as active and events as inactive.
+     * Sets the contacts button as active and events as inactive.
      */
-    private void setPersonsActive() {
-        personsToggle.getStyleClass().removeAll("toggle-inactive");
-        personsToggle.getStyleClass().add("toggle-active");
+    private void setContactsActive() {
+        contactsToggle.getStyleClass().removeAll("toggle-inactive");
+        contactsToggle.getStyleClass().add("toggle-active");
 
         eventsToggle.getStyleClass().removeAll("toggle-active");
         eventsToggle.getStyleClass().add("toggle-inactive");
     }
 
     /**
-     * Sets the events button as active and persons as inactive.
+     * Sets the events button as active and contacts as inactive.
      */
     private void setEventsActive() {
         eventsToggle.getStyleClass().removeAll("toggle-inactive");
         eventsToggle.getStyleClass().add("toggle-active");
 
-        personsToggle.getStyleClass().removeAll("toggle-active");
-        personsToggle.getStyleClass().add("toggle-inactive");
+        contactsToggle.getStyleClass().removeAll("toggle-active");
+        contactsToggle.getStyleClass().add("toggle-inactive");
     }
 
     /**
@@ -293,8 +293,8 @@ public class MainWindow extends UiPart<Stage> {
         primaryStage.hide();
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return personListPanel;
+    public ContactListPanel getContactListPanel() {
+        return contactListPanel;
     }
 
     public EventListPanel getEventListPanel() {

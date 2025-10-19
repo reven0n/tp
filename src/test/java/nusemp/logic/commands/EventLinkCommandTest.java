@@ -2,7 +2,7 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.testutil.TypicalEvents.getTypicalAddressBookWithEvents;
+import static nusemp.testutil.TypicalEvents.getTypicalAppDataWithEvents;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import nusemp.model.event.Event;
 
 
 class EventLinkCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBookWithEvents(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAppDataWithEvents(), new UserPrefs());
 
     @Test
     public void constructor_nullParameters_throwsNullPointerException() {
@@ -32,9 +32,9 @@ class EventLinkCommandTest {
         assertCommandFailure(eventLinkCommand1, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
 
         Index validEventIndex = Index.fromOneBased(1);
-        Index outOfBoundContactIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundContactIndex = Index.fromOneBased(model.getFilteredContactList().size() + 1);
         EventLinkCommand eventLinkCommand2 = new EventLinkCommand(validEventIndex, outOfBoundContactIndex);
-        assertCommandFailure(eventLinkCommand2, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(eventLinkCommand2, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -43,7 +43,7 @@ class EventLinkCommandTest {
         Index validContactIndex = Index.fromOneBased(1);
         EventLinkCommand eventLinkCommand = new EventLinkCommand(validEventIndex, validContactIndex);
         assertCommandFailure(eventLinkCommand, model, String.format(EventLinkCommand.MESSAGE_DUPLICATE_PARTICIPANT,
-                model.getPersonByIndex(validContactIndex).getEmail()));
+                model.getContactByIndex(validContactIndex).getEmail()));
     }
 
     @Test
@@ -51,15 +51,15 @@ class EventLinkCommandTest {
         Index validEventIndex = Index.fromOneBased(1);
         Index validContactIndex = Index.fromOneBased(1);
         Event editedEvent = model.getEventByIndex(validEventIndex).withParticipant(
-                model.getPersonByIndex(validContactIndex)
+                model.getContactByIndex(validContactIndex)
         );
         EventLinkCommand eventLinkCommand = new EventLinkCommand(validEventIndex, validContactIndex);
         String expectedMessage = String.format(EventLinkCommand.MESSAGE_SUCCESS,
-                model.getPersonByIndex(validContactIndex).getName(),
+                model.getContactByIndex(validContactIndex).getName(),
                 model.getEventByIndex(validEventIndex).getName()
         );
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
         expectedModel.setEvent(model.getEventByIndex(validEventIndex), editedEvent);
 
         assertCommandSuccess(eventLinkCommand, model, EventLinkCommand.MESSAGE_SUCCESS, expectedModel);

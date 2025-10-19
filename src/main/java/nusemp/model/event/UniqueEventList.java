@@ -20,7 +20,7 @@ import nusemp.model.event.exceptions.EventNotFoundException;
  *
  * Supports a minimal set of list operations.
  *
- * Note: This implementation is adapted from UniquePersonList.
+ * Note: This implementation is adapted from UniqueContactList.
  *
  * @see Event#isSameEvent(Event)
  */

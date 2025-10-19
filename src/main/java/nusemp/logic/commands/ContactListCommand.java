@@ -1,12 +1,12 @@
 package nusemp.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static nusemp.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import nusemp.model.Model;
 
 /**
- * Lists all persons in the address book to the user.
+ * Lists all contacts to the user.
  */
 public class ContactListCommand extends Command {
 
@@ -22,7 +22,7 @@ public class ContactListCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getFilteredPersonList().size()));
+        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getFilteredContactList().size()));
     }
 }

@@ -9,10 +9,10 @@ import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
-import nusemp.model.person.Person;
+import nusemp.model.contact.Contact;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a contact identified using it's displayed index from the contact list.
  */
 public class ContactDeleteCommand extends Command {
 
@@ -23,7 +23,7 @@ public class ContactDeleteCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Successfully deleted contact:\n%1$s";
+    public static final String MESSAGE_DELETE_CONTACT_SUCCESS = "Successfully deleted contact:\n%1$s";
 
     private final Index targetIndex;
 
@@ -34,15 +34,15 @@ public class ContactDeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Contact> lastShownList = model.getFilteredContactList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
         }
 
-        Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(personToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
+        Contact contactToDelete = lastShownList.get(targetIndex.getZeroBased());
+        model.deleteContact(contactToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_CONTACT_SUCCESS, Messages.format(contactToDelete)));
     }
 
     @Override
