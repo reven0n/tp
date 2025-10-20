@@ -31,9 +31,9 @@ import nusemp.logic.parser.event.EventListCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 
 /**
- * Parses user input.
+ * Parses all user input.
  */
-public class RootParser {
+public class AppParser {
 
     /**
      * Used for initial separation of command word and args.
@@ -43,7 +43,7 @@ public class RootParser {
             Pattern.compile("contact (?<commandWord>\\S+)(?<arguments>.*)");
     private static final Pattern EVENT_COMMAND_FORMAT =
             Pattern.compile("event (?<commandWord>\\S+)(?<arguments>.*)");
-    private static final Logger logger = LogsCenter.getLogger(RootParser.class);
+    private static final Logger logger = LogsCenter.getLogger(AppParser.class);
 
     /**
      * Parses user input into command for execution.

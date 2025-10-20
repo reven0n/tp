@@ -29,9 +29,9 @@ import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.ContactUtil;
 import nusemp.testutil.EditContactDescriptorBuilder;
 
-public class RootParserTest {
+public class AppParserTest {
 
-    private final RootParser parser = new RootParser();
+    private final AppParser parser = new AppParser();
 
     @Test
     public void parseCommand_add() throws Exception {
