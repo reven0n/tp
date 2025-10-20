@@ -42,7 +42,7 @@ public class EventCard extends UiPart<Region> {
         name.setText(event.getName().toString());
         date.setText(event.getDate().toString());
         event.getParticipants().stream()
-                .sorted(Comparator.comparing(contact -> contact.getName().fullName))
-                .forEach(contact -> people.getChildren().add(new Label(contact.getName().fullName)));
+                .sorted(Comparator.comparing(contact -> contact.getName().value))
+                .forEach(contact -> people.getChildren().add(new Label(contact.getName().value)));
     }
 }

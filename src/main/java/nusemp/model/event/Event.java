@@ -12,6 +12,8 @@ import java.util.Set;
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
+import nusemp.model.fields.Date;
+import nusemp.model.fields.Name;
 
 /**
  * Represents an Event.
@@ -20,8 +22,8 @@ import nusemp.model.event.exceptions.DuplicateParticipantException;
 public class Event {
 
     // Identity fields
-    private final EventName name;
-    private final EventDate date;
+    private final Name name;
+    private final Date date;
 
     // Data fields
     private final List<Contact> participants = new ArrayList<>();
@@ -29,7 +31,7 @@ public class Event {
     /**
      * Every field must be present and not null.
      */
-    public Event(EventName name, EventDate date, List<Contact> participants) {
+    public Event(Name name, Date date, List<Contact> participants) {
         requireAllNonNull(name, date, participants);
         checkForDuplicateParticipants(participants);
         this.name = name;
@@ -40,15 +42,15 @@ public class Event {
     /**
      * Convenience constructor without participants.
      */
-    public Event(EventName name, EventDate date) {
+    public Event(Name name, Date date) {
         this(name, date, new ArrayList<>());
     }
 
-    public EventName getName() {
+    public Name getName() {
         return name;
     }
 
-    public EventDate getDate() {
+    public Date getDate() {
         return date;
     }
 

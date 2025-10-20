@@ -41,7 +41,7 @@ public class ContactCard extends UiPart<Region> {
         super(FXML);
         this.contact = contact;
         id.setText(displayedIndex + ". ");
-        name.setText(contact.getName().fullName);
+        name.setText(contact.getName().value);
         email.setText(contact.getEmail().value);
         if (contact.getPhone().isEmpty()) {
             phone.setManaged(false);

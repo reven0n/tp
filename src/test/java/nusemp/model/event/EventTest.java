@@ -13,37 +13,39 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
+import nusemp.model.fields.Date;
+import nusemp.model.fields.Name;
 import nusemp.testutil.ContactBuilder;
 
 class EventTest {
     @Test
     public void getName_validName_returnsSameName() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
         Event event = new Event(name, date);
         assertEquals(name, event.getName());
     }
 
     @Test
     public void getDate_validDate_returnsSameDate() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
         Event event = new Event(name, date);
         assertEquals(date, event.getDate());
     }
 
     @Test
     public void getParticipants_noParticipants_returnsEmptySet() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
         Event event = new Event(name, date);
         assertEquals(0, event.getParticipants().size());
     }
 
     @Test
     public void getParticipants_validParticipants_returnsSameParticipants() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
 
         List<Contact> participants = new ArrayList<>();
         Contact alice = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
@@ -58,8 +60,8 @@ class EventTest {
 
     @Test
     public void withParticipants_addContact_returnsSetWithContact() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
 
         List<Contact> participants1 = new ArrayList<>();
         Contact bob = new ContactBuilder().withName("Bob").build();
@@ -74,8 +76,8 @@ class EventTest {
 
     @Test
     public void withParticipants_addContact_keepsOrder() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
 
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
             List<Contact> participants1 = createParticipantList("Alice", "Charlie");
@@ -88,8 +90,8 @@ class EventTest {
 
     @Test
     public void withoutParticipants_removeContact_returnsSetWithoutContact() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
 
         List<Contact> participants1 = createParticipantList("Bob");
         Contact bob = new ContactBuilder().withName("Bob").withEmail("bob0@example.com").build();
@@ -103,8 +105,8 @@ class EventTest {
 
     @Test
     public void withoutParticipants_removeContactFromEmptyList_returnsEmptySet() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
         Event event1 = new Event(name, date);
         Contact bob = new ContactBuilder().withName("Bob").withEmail("bob0@example.com").build();
         assertEquals(event1.withoutParticipant(bob), event1);
@@ -112,8 +114,8 @@ class EventTest {
 
     @Test
     public void withoutParticipants_removeContact_keepsOrder() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
 
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
             List<Contact> participants1 = createParticipantList("Alice", "Bob", "Charlie");
@@ -128,9 +130,9 @@ class EventTest {
 
     @Test
     public void isSameEvent_sameNameDifferentDate_returnsTrue() {
-        EventName name = new EventName("Meeting");
-        EventDate date1 = new EventDate("01-10-2025 14:00");
-        EventDate date2 = new EventDate("02-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date1 = new Date("01-10-2025 14:00");
+        Date date2 = new Date("02-10-2025 14:00");
 
         Event event1 = new Event(name, date1);
         Event event2 = new Event(name, date2);
@@ -139,9 +141,9 @@ class EventTest {
 
     @Test
     public void isSameEvent_differentNameSameDate_returnsFalse() {
-        EventName name1 = new EventName("Meeting");
-        EventName name2 = new EventName("Conference");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name1 = new Name("Meeting");
+        Name name2 = new Name("Conference");
+        Date date = new Date("01-10-2025 14:00");
 
         Event event1 = new Event(name1, date);
         Event event2 = new Event(name2, date);
@@ -150,10 +152,10 @@ class EventTest {
 
     @Test
     public void isSameEvent_differentNameDifferentDate_returnsFalse() {
-        EventName name1 = new EventName("Meeting");
-        EventName name2 = new EventName("Conference");
-        EventDate date1 = new EventDate("01-10-2025 14:00");
-        EventDate date2 = new EventDate("02-10-2025 14:00");
+        Name name1 = new Name("Meeting");
+        Name name2 = new Name("Conference");
+        Date date1 = new Date("01-10-2025 14:00");
+        Date date2 = new Date("02-10-2025 14:00");
 
         Event event1 = new Event(name1, date1);
         Event event2 = new Event(name2, date2);
@@ -162,8 +164,8 @@ class EventTest {
 
     @Test
     public void isSameEvent_sameNameSameDate_returnsTrue() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
 
         Event event1 = new Event(name, date);
         Event event2 = new Event(name, date);
@@ -172,12 +174,12 @@ class EventTest {
 
     @Test
     public void equals_sameValues_returnsTrue() {
-        EventName name1 = new EventName("Meeting");
-        EventDate date1 = new EventDate("01-10-2025 14:00");
+        Name name1 = new Name("Meeting");
+        Date date1 = new Date("01-10-2025 14:00");
         List<Contact> participants1 = createParticipantList("Alice", "Bob");
 
-        EventName name2 = new EventName("Meeting");
-        EventDate date2 = new EventDate("01-10-2025 14:00");
+        Name name2 = new Name("Meeting");
+        Date date2 = new Date("01-10-2025 14:00");
         List<Contact> participants2 = createParticipantList("Alice", "Bob");
 
         Event event1 = new Event(name1, date1, participants1);
@@ -187,28 +189,28 @@ class EventTest {
 
     @Test
     public void equals_sameObject_returnsTrue() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
         Event event = new Event(name, date);
         assertEquals(event, event);
     }
 
     @Test
     public void equals_null_returnsFalse() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
         Event event = new Event(name, date);
         assertNotEquals(null, event);
     }
 
     @Test
     public void equals_differentParticipants_returnsFalse() {
-        EventName name1 = new EventName("Meeting");
-        EventDate date1 = new EventDate("01-10-2025 14:00");
+        Name name1 = new Name("Meeting");
+        Date date1 = new Date("01-10-2025 14:00");
         List<Contact> participants1 = createParticipantList("Alice", "Bob");
 
-        EventName name2 = new EventName("Meeting");
-        EventDate date2 = new EventDate("01-10-2025 14:00");
+        Name name2 = new Name("Meeting");
+        Date date2 = new Date("01-10-2025 14:00");
         List<Contact> participants2 = createParticipantList("Alice", "Charlie");
 
         Event event1 = new Event(name1, date1, participants1);
@@ -218,9 +220,9 @@ class EventTest {
 
     @Test
     public void equals_differentName_returnsFalse() {
-        EventName name1 = new EventName("Meeting");
-        EventName name2 = new EventName("Conference");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name1 = new Name("Meeting");
+        Name name2 = new Name("Conference");
+        Date date = new Date("01-10-2025 14:00");
 
         List<Contact> participants = createParticipantList("Alice", "Bob");
 
@@ -231,9 +233,9 @@ class EventTest {
 
     @Test
     public void equals_differentDate_returnsFalse() {
-        EventName name = new EventName("Meeting");
-        EventDate date1 = new EventDate("01-10-2025 14:00");
-        EventDate date2 = new EventDate("02-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date1 = new Date("01-10-2025 14:00");
+        Date date2 = new Date("02-10-2025 14:00");
 
         List<Contact> participants = createParticipantList("Alice", "Bob");
 
@@ -244,8 +246,8 @@ class EventTest {
 
     @Test
     public void constructor_duplicateEmails_throwsDuplicateParticipantException() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
 
         // Create two contacts with the same email but different names
         Contact alice1 = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
@@ -260,8 +262,8 @@ class EventTest {
 
     @Test
     public void withParticipant_duplicateEmail_throwsDuplicateParticipantException() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
 
         Contact alice1 = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
         Contact alice2 = new ContactBuilder().withName("Alice Smith").withEmail("alice@example.com").build();

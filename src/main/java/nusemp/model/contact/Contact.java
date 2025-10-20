@@ -8,7 +8,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
-import nusemp.model.tag.Tag;
+import nusemp.model.fields.Address;
+import nusemp.model.fields.Email;
+import nusemp.model.fields.Name;
+import nusemp.model.fields.Phone;
+import nusemp.model.fields.Tag;
 
 /**
  * Represents a Contact.

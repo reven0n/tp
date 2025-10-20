@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.logic.parser.Prefix;
 import nusemp.model.event.Event;
-import nusemp.model.event.EventDate;
-import nusemp.model.event.EventName;
-import nusemp.model.tag.Tag;
+import nusemp.model.fields.Date;
+import nusemp.model.fields.Name;
+import nusemp.model.fields.Tag;
 
 class MessagesTest {
 
@@ -42,8 +42,8 @@ class MessagesTest {
 
     @Test
     void format_event_returnsFormattedEvent() {
-        EventName name = new EventName("Meeting");
-        EventDate date = new EventDate("01-10-2025 14:00");
+        Name name = new Name("Meeting");
+        Date date = new Date("01-10-2025 14:00");
         Event event = new Event(name, date);
         String result = Messages.format(event);
         String expected = String.format("%s; Date: %s", event.getName(), event.getDate());

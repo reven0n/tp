@@ -11,8 +11,8 @@ import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.EventDate;
-import nusemp.model.event.EventName;
+import nusemp.model.fields.Date;
+import nusemp.model.fields.Name;
 
 /**
  * Jackson-friendly version of {@link Event}.
@@ -61,21 +61,21 @@ class JsonAdaptedEvent {
     public Event toModelType(ReadOnlyAppData appData) throws IllegalValueException {
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    EventName.class.getSimpleName()));
+                    Name.class.getSimpleName()));
         }
-        if (!EventName.isValidEventName(name)) {
-            throw new IllegalValueException(EventName.MESSAGE_CONSTRAINTS);
+        if (!Name.isValidName(name)) {
+            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
         }
-        final EventName modelName = new EventName(name);
+        final Name modelName = new Name(name);
 
         if (date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    EventDate.class.getSimpleName()));
+                    Date.class.getSimpleName()));
         }
-        if (!EventDate.isValidEventDate(date)) {
-            throw new IllegalValueException(EventDate.MESSAGE_CONSTRAINTS);
+        if (!Date.isValidDate(date)) {
+            throw new IllegalValueException(Date.MESSAGE_CONSTRAINTS);
         }
-        final EventDate modelDate = new EventDate(date);
+        final Date modelDate = new Date(date);
 
         final List<Contact> modelParticipants = new ArrayList<>();
         for (String email : participantEmails) {

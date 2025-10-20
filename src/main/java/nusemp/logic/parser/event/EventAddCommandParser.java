@@ -11,8 +11,8 @@ import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.Event;
-import nusemp.model.event.EventDate;
-import nusemp.model.event.EventName;
+import nusemp.model.fields.Date;
+import nusemp.model.fields.Name;
 
 /**
  * Parses input arguments and creates a new EventAddCommand object
@@ -46,8 +46,8 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
      */
     private Event createEvent(ArgumentMultimap argMultimap) throws ParseException {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DATE);
-        EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
-        EventDate date = ParserUtil.parseEventDate(argMultimap.getValue(PREFIX_DATE).get());
+        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        Date date = ParserUtil.parseEventDate(argMultimap.getValue(PREFIX_DATE).get());
 
         return new Event(name, date);
     }
