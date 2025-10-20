@@ -18,7 +18,7 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app that helps you manage hundreds
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+1. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F15b-2/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for NUS EMP.
 
@@ -239,9 +239,35 @@ Examples:
 
 ### Managing events: `event`
 
-<!-- TODO: Add event command formats and usages -->
+#### Adding an event: `event add`
 
-Details coming soon ...
+Adds an event to the event list.
+
+**Format**: `event add --name NAME --date DATE`
+
+* `DATE` should be in the format `DD-MM-YYYY HH:MM` (24-hour format)
+
+**Examples**:
+* `event add --name Meeting --date 25-12-2025 14:30`
+* `event add --name Team Lunch --date 01-01-2026 12:00`
+
+#### Listing all events: `event list`
+
+Shows a list of all events in the event list.
+
+**Format**: `event list`
+
+#### Linking contacts to events: `event link`
+
+Links a contact to an event, allowing you to associate participants with specific events.
+
+**Format**: `event link --event EVENT_INDEX --contact CONTACT_INDEX`
+
+* `EVENT_INDEX` refers to the index number shown in the displayed event list
+* `CONTACT_INDEX` refers to the index number shown in the displayed contact list
+
+**Examples**:
+* `event list` followed by `contact list` then `event link --event 1 --contact 2` links the 2nd contact to the 1st event
 
 ---
 
@@ -261,7 +287,7 @@ NUS EMP data are saved in the hard disk automatically after every command. There
 
 #### Editing the data file
 
-NUS EMP data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+NUS EMP data are saved automatically as a JSON file `[JAR file location]/data/appdata.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
@@ -278,7 +304,7 @@ _Details coming soon ..._
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous NUS EMP home folder.
 
 ---
 
@@ -310,6 +336,8 @@ _Details coming soon ..._
 
 ### Event commands
 
-<!-- TODO: Add event command summary -->
-
-_Details coming soon ..._
+| Action     | Format, Examples  |
+|------------|-------------------|
+| **Add**    | `event add --name NAME --date DATE`<br>e.g. `event add --name Team Meeting --date 25-12-2025 14:30` |
+| **List**   | `event list` |
+| **Link**   | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2` |
