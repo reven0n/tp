@@ -1,10 +1,10 @@
 package nusemp.storage;
 
 import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalContacts.ALICE;
 import static nusemp.testutil.TypicalContacts.HOON;
 import static nusemp.testutil.TypicalContacts.IDA;
-import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 

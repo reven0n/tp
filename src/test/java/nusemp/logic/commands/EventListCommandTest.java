@@ -1,8 +1,8 @@
 package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -24,11 +24,13 @@ class EventListCommandTest {
 
     @Test
     public void execute_validModel_success() {
+        int expectedEventCount = model.getFilteredEventList().size();
         assertCommandSuccess(new EventListCommand(), model,
-                String.format(EventListCommand.MESSAGE_SUCCESS, 4), model);
+                String.format(EventListCommand.MESSAGE_SUCCESS, expectedEventCount), model);
 
         Model anotherModel = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
+        int expectedAnotherEventCount = anotherModel.getFilteredEventList().size();
         assertCommandSuccess(new EventListCommand(), anotherModel,
-                String.format(EventListCommand.MESSAGE_SUCCESS, 0), anotherModel);
+                String.format(EventListCommand.MESSAGE_SUCCESS, expectedAnotherEventCount), anotherModel);
     }
 }

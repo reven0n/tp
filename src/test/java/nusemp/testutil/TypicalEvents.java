@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import nusemp.model.AppData;
-import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;

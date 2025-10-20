@@ -2,13 +2,13 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.Messages.MESSAGE_CONTACTS_LISTED_OVERVIEW;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalContacts.ALICE;
 import static nusemp.testutil.TypicalContacts.BENSON;
 import static nusemp.testutil.TypicalContacts.CARL;
 import static nusemp.testutil.TypicalContacts.DANIEL;
 import static nusemp.testutil.TypicalContacts.ELLE;
 import static nusemp.testutil.TypicalContacts.FIONA;
-import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;

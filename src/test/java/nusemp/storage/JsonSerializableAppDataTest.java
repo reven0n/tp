@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.commons.util.JsonUtil;
 import nusemp.model.AppData;
-import nusemp.testutil.TypicalContacts;
 
 public class JsonSerializableAppDataTest {
 
