@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import nusemp.model.AppData;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
+import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
