@@ -2,7 +2,10 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.Messages.MESSAGE_CONTACTS_LISTED_OVERVIEW;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static nusemp.testutil.TypicalContacts.ALICE;
+import static nusemp.testutil.TypicalContacts.BENSON;
 import static nusemp.testutil.TypicalContacts.CARL;
+import static nusemp.testutil.TypicalContacts.DANIEL;
 import static nusemp.testutil.TypicalContacts.ELLE;
 import static nusemp.testutil.TypicalContacts.FIONA;
 import static nusemp.testutil.TypicalContacts.getTypicalAppData;
@@ -19,7 +22,10 @@ import nusemp.logic.commands.contact.ContactFindCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
+import nusemp.model.contact.ContactMatchesAnyPredicatePredicate;
+import nusemp.model.contact.EmailContainsKeywordsPredicate;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
+import nusemp.model.contact.TagContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code ContactFindCommand}.
@@ -73,6 +79,44 @@ public class ContactFindCommandTest {
         expectedModel.updateFilteredContactList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredContactList());
+    }
+
+    @Test
+    public void execute_emailKeyword_contactsFound() {
+        String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 1);
+        EmailContainsKeywordsPredicate predicate =
+                new EmailContainsKeywordsPredicate(Collections.singletonList("alice"));
+        ContactFindCommand command = new ContactFindCommand(predicate);
+        expectedModel.updateFilteredContactList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE), model.getFilteredContactList());
+    }
+
+    @Test
+    public void execute_tagKeyword_contactsFound() {
+        String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 3);
+        TagContainsKeywordsPredicate predicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("friends"));
+        ContactFindCommand command = new ContactFindCommand(predicate);
+        expectedModel.updateFilteredContactList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE, BENSON, DANIEL), model.getFilteredContactList());
+    }
+
+    @Test
+    public void execute_multiplePredicatesAnd_contactsFound() {
+        String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 1);
+        // BENSON has name "Benson Meier", email "johnd@example.com", tags ["owesMoney", "friends"]
+        NameContainsKeywordsPredicate namePredicate =
+                new NameContainsKeywordsPredicate(Collections.singletonList("Benson"));
+        TagContainsKeywordsPredicate tagPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("owesMoney"));
+        ContactMatchesAnyPredicatePredicate combinedPredicate =
+                new ContactMatchesAnyPredicatePredicate(Arrays.asList(namePredicate, tagPredicate));
+        ContactFindCommand command = new ContactFindCommand(combinedPredicate);
+        expectedModel.updateFilteredContactList(combinedPredicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(BENSON), model.getFilteredContactList());
     }
 
     @Test
