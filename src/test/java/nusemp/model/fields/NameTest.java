@@ -1,4 +1,4 @@
-package nusemp.model.contact;
+package nusemp.model.fields;
 
 import static nusemp.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -34,6 +34,8 @@ public class NameTest {
         assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
         assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        assertTrue(Name.isValidName("Jane Watson-Parker O'Connor")); // names with special characters
+        assertTrue(Name.isValidName("!@#$%^&*()_+[]{}|;:',.<>?/`~")); // random characters
     }
 
     @Test

@@ -10,12 +10,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import nusemp.commons.exceptions.IllegalValueException;
-import nusemp.model.contact.Address;
 import nusemp.model.contact.Contact;
-import nusemp.model.contact.Email;
-import nusemp.model.contact.Name;
-import nusemp.model.contact.Phone;
-import nusemp.model.tag.Tag;
+import nusemp.model.fields.Address;
+import nusemp.model.fields.Email;
+import nusemp.model.fields.Name;
+import nusemp.model.fields.Phone;
+import nusemp.model.fields.Tag;
 
 /**
  * Jackson-friendly version of {@link Contact}.
@@ -55,7 +55,7 @@ class JsonAdaptedContact {
      * Converts a given {@code Contact} into this class for Jackson use.
      */
     public JsonAdaptedContact(Contact source) {
-        name = source.getName().fullName;
+        name = source.getName().value;
         email = source.getEmail().value;
         phone = source.getPhone().value;
         address = source.getAddress().value;

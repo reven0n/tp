@@ -55,7 +55,7 @@ class EventAddCommandTest {
     }
 
     @Test
-    public void execute_sameEventDate_addSuccessful() throws Exception {
+    public void execute_sameDate_addSuccessful() throws Exception {
         ModelStubWithAcceptingEventAdded modelStub = new ModelStubWithAcceptingEventAdded();
         modelStub.addEvent(MEETING_EMPTY);
         CommandResult commandResult1 = new EventAddCommand(WORKSHOP_EMPTY).execute(modelStub);

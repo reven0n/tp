@@ -1,10 +1,10 @@
-package nusemp.model.contact;
+package nusemp.model.fields;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Contact's phone number.
+ * Represents a phone number.
  * Guarantees: immutable; is valid as declared in {@link #isValidPhone(String)}
  */
 public class Phone {

@@ -1,10 +1,10 @@
-package nusemp.model.tag;
+package nusemp.model.fields;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Tag.
+ * Represents a tag.
  * Guarantees: immutable; name is valid as declared in {@link #isValidTagName(String)}
  */
 public class Tag {
