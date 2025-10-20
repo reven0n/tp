@@ -2,7 +2,7 @@ package nusemp.model;
 
 import javafx.collections.ObservableList;
 
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 import nusemp.model.event.Event;
 
 /**

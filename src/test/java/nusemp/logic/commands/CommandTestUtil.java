@@ -19,7 +19,7 @@ import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AppData;
 import nusemp.model.Model;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
 import nusemp.testutil.EditContactDescriptorBuilder;
 

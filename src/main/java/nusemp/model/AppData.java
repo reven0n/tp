@@ -8,7 +8,7 @@ import java.util.Objects;
 import javafx.collections.ObservableList;
 
 import nusemp.commons.util.ToStringBuilder;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 import nusemp.model.contact.UniqueContactList;
 import nusemp.model.event.Event;
 import nusemp.model.event.UniqueEventList;

@@ -25,7 +25,7 @@ import nusemp.model.AppData;
 import nusemp.model.Model;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 import nusemp.model.event.Event;
 import nusemp.testutil.ContactBuilder;
 

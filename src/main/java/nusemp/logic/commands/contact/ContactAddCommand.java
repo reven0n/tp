@@ -14,7 +14,7 @@ import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 
 /**
  * Adds a contact.

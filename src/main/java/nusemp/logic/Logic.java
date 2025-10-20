@@ -10,7 +10,7 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;
 import nusemp.model.ReadOnlyAppData;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 import nusemp.model.event.Event;
 
 /**

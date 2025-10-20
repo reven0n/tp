@@ -1,4 +1,4 @@
-package nusemp.model.event;
+package nusemp.model.fields;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;
@@ -11,7 +11,7 @@ import java.time.format.DateTimeParseException;
  * Represents an Event's date and time.
  * Guarantees: immutable; is valid as declared in {@link #isValidEventDate(String)}
  */
-public class EventDate {
+public class Date {
 
     public static final String MESSAGE_CONSTRAINTS =
             "Event date and time should follow this format: DD-MM-YYYY HH:mm (24-hour format)";
@@ -25,7 +25,7 @@ public class EventDate {
      *
      * @param date A valid date string in DD-MM-YYYY HH:mm format.
      */
-    public EventDate(String date) {
+    public Date(String date) {
         requireNonNull(date);
         String trimmedDate = date.trim();
         checkArgument(isValidEventDate(trimmedDate), MESSAGE_CONSTRAINTS);
@@ -37,7 +37,7 @@ public class EventDate {
      *
      * @param dateTime A LocalDateTime object.
      */
-    public EventDate(LocalDateTime dateTime) {
+    public Date(LocalDateTime dateTime) {
         requireNonNull(dateTime);
         value = dateTime;
     }
@@ -76,12 +76,12 @@ public class EventDate {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EventDate)) {
+        if (!(other instanceof Date)) {
             return false;
         }
 
-        EventDate otherEventDate = (EventDate) other;
-        return value.equals(otherEventDate.value);
+        Date otherDate = (Date) other;
+        return value.equals(otherDate.value);
     }
 
     @Override

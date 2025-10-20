@@ -1,4 +1,4 @@
-package nusemp.model.contact;
+package nusemp.model.fields;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;

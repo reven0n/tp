@@ -1,4 +1,4 @@
-package nusemp.model.tag;
+package nusemp.model.fields;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;

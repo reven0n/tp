@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 import nusemp.model.event.Event;
 
 /**

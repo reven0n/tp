@@ -11,8 +11,8 @@ import java.util.Set;
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.contact.ContactAddCommand;
 import nusemp.logic.commands.contact.ContactEditCommand;
-import nusemp.model.contact.Contact;
-import nusemp.model.tag.Tag;
+import nusemp.model.fields.Contact;
+import nusemp.model.fields.Tag;
 
 /**
  * A utility class for Contact.

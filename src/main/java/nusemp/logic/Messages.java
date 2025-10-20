@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import nusemp.logic.parser.Prefix;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 import nusemp.model.event.Event;
 
 /**

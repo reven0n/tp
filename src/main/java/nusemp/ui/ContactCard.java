@@ -8,7 +8,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 
 /**
  * An UI component that displays information of a {@code Contact}.

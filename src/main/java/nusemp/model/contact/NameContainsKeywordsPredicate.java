@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import nusemp.commons.util.StringUtil;
 import nusemp.commons.util.ToStringBuilder;
+import nusemp.model.fields.Contact;
 
 /**
  * Tests that a {@code Contact}'s {@code Name} matches any of the keywords given.

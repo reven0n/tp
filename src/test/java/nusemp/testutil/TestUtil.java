@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 
 import nusemp.commons.core.index.Index;
 import nusemp.model.Model;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 
 /**
  * A utility class for test cases.

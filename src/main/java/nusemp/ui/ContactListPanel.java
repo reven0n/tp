@@ -9,7 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
 import nusemp.commons.core.LogsCenter;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 
 /**
  * Panel containing the list of contacts.

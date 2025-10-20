@@ -37,11 +37,11 @@ import org.junit.jupiter.api.Test;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.contact.ContactAddCommand;
 import nusemp.logic.parser.contact.ContactAddCommandParser;
-import nusemp.model.contact.Contact;
-import nusemp.model.contact.Email;
-import nusemp.model.contact.Name;
-import nusemp.model.contact.Phone;
-import nusemp.model.tag.Tag;
+import nusemp.model.fields.Contact;
+import nusemp.model.fields.Email;
+import nusemp.model.fields.Name;
+import nusemp.model.fields.Phone;
+import nusemp.model.fields.Tag;
 import nusemp.testutil.ContactBuilder;
 
 public class ContactAddCommandParserTest {

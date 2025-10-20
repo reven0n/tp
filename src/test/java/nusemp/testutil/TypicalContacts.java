@@ -16,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import nusemp.model.AppData;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 
 /**
  * A utility class containing a list of {@code Contact} objects to be used in tests.

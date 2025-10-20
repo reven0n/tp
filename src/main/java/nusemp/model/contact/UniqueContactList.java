@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 
 import nusemp.model.contact.exceptions.ContactNotFoundException;
 import nusemp.model.contact.exceptions.DuplicateContactException;
+import nusemp.model.fields.Contact;
 
 /**
  * A list of contacts that enforces uniqueness between its elements and does not allow nulls.

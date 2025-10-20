@@ -26,7 +26,7 @@ import nusemp.model.AppData;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
-import nusemp.model.contact.Contact;
+import nusemp.model.fields.Contact;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.EditContactDescriptorBuilder;
 
