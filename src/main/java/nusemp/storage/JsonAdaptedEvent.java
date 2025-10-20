@@ -2,6 +2,7 @@ package nusemp.storage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -14,6 +15,7 @@ import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
+import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 
 /**
@@ -22,7 +24,7 @@ import nusemp.model.fields.Name;
 class JsonAdaptedEvent {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Event's %s field is missing!";
-    public static final String INVALID_PARTICIPANT_EMAIL_MESSAGE =
+    public static final String MISSING_PARTICIPANT_EMAIL_MESSAGE =
             "Participant with email %s not found in contact list";
 
     private final String name;
@@ -95,10 +97,11 @@ class JsonAdaptedEvent {
 
         final List<Contact> modelParticipants = new ArrayList<>();
         for (String email : participantEmails) {
-            Contact participant = findContactByEmail(appData, email);
-            if (participant == null) {
-                throw new IllegalValueException(String.format(INVALID_PARTICIPANT_EMAIL_MESSAGE, email));
+            if (!Email.isValidEmail(email)) {
+                throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
             }
+            Contact participant = findContactByEmail(appData, email).orElseThrow(() ->
+                    new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
             modelParticipants.add(participant);
         }
 
@@ -110,12 +113,11 @@ class JsonAdaptedEvent {
      *
      * @param appData The app data to search.
      * @param email The email to search for.
-     * @return The contact with the given email, or null if not found.
+     * @return The contact with the given email.
      */
-    private Contact findContactByEmail(ReadOnlyAppData appData, String email) {
+    private Optional<Contact> findContactByEmail(ReadOnlyAppData appData, String email) {
         return appData.getContactList().stream()
                 .filter(contact -> contact.getEmail().value.equals(email))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 }
