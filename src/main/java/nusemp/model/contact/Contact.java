@@ -2,12 +2,16 @@ package nusemp.model.contact;
 
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
+import nusemp.model.event.Event;
+import nusemp.model.event.exceptions.DuplicateEventException;
 import nusemp.model.tag.Tag;
 
 /**
@@ -24,6 +28,7 @@ public class Contact {
     private final Phone phone;
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
+    private final List<Event> events = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
@@ -35,6 +40,19 @@ public class Contact {
         this.phone = phone;
         this.address = address;
         this.tags.addAll(tags);
+    }
+
+    /**
+     * Every field must be present and not null.
+     */
+    public Contact(Name name, Email email, Phone phone, Address address, Set<Tag> tags, List<Event> events) {
+        requireAllNonNull(name, email, phone, address, tags, events);
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.tags.addAll(tags);
+        this.events.addAll(events);
     }
 
     public Name getName() {
@@ -61,6 +79,66 @@ public class Contact {
         return Collections.unmodifiableSet(tags);
     }
 
+    /**
+     * Returns an immutable event list, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public List<Event> getEvents() {
+        return Collections.unmodifiableList(events);
+    }
+
+    /**
+     * Returns true if the contact has the given event.
+     */
+    public boolean hasEvent(Event event) {
+        requireAllNonNull(event);
+        return events.contains(event);
+    }
+
+    /**
+     * Returns true if the contact has an event with the given name.
+     */
+    public boolean hasEventWithName(String eventName) {
+        requireAllNonNull(eventName);
+        return events.stream()
+                .anyMatch(event -> event.getName().value.equals(eventName));
+    }
+
+    private static void checkForDuplicateEvents(List<Event> events)
+            throws DuplicateEventException {
+        Set<String> eventNames = new HashSet<>();
+        for (Event event : events) {
+            String eventName = event.getName().value;
+            if (!eventNames.add(eventName)) {
+                throw new DuplicateEventException();
+            }
+        }
+    }
+
+    /**
+     * Returns a new Contact with the given event added.
+     * This maintains immutability by returning a new Contact instance.
+     */
+    public Contact addEvent(Event event) throws DuplicateEventException {
+        requireAllNonNull(event);
+        if (hasEventWithName(event.getName().value)) {
+            throw new DuplicateEventException();
+        }
+        List<Event> updatedEvents = new ArrayList<>(events);
+        updatedEvents.add(event);
+        return new Contact(name, email, phone, address, tags, updatedEvents);
+    }
+
+    /**
+     * Returns a new Contact with the given event removed.
+     * This maintains immutability by returning a new Contact instance.
+     */
+    public Contact removeEvent(Event event) {
+        requireAllNonNull(event);
+        List<Event> updatedEvents = new ArrayList<>(events);
+        updatedEvents.remove(event);
+        return new Contact(name, email, phone, address, tags, updatedEvents);
+    }
     /**
      * Returns true if both contacts have the same email.
      * This defines a weaker notion of equality between two contacts.
@@ -94,13 +172,14 @@ public class Contact {
                 && email.equals(otherContact.email)
                 && phone.equals(otherContact.phone)
                 && address.equals(otherContact.address)
-                && tags.equals(otherContact.tags);
+                && tags.equals(otherContact.tags)
+                && events.equals(otherContact.events);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, email, phone, address, tags);
+        return Objects.hash(name, email, phone, address, tags, events);
     }
 
     @Override
@@ -111,6 +190,7 @@ public class Contact {
                 .add("phone", phone)
                 .add("address", address)
                 .add("tags", tags)
+                .add("events", events)
                 .toString();
     }
 
