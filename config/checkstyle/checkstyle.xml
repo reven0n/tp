@@ -52,14 +52,14 @@
     The order rule "STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE" consists of:
       1. STATIC: static imports
       2. STANDARD_JAVA_PACKAGE: standard java/javax imports
-      3. SPECIAL_IMPORTS: defined as org imports
-      4. THIRD_PARTY_PACKAGE: defined as com imports
+      3. SPECIAL_IMPORTS: defined as org/com imports
+      4. THIRD_PARTY_PACKAGE: defined as javafx imports
     -->
     <module name="CustomImportOrder">
         <property name="customImportOrderRules"
             value="STATIC###STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###THIRD_PARTY_PACKAGE"/>
-        <property name="specialImportsRegExp" value="^org\."/>
-        <property name="thirdPartyPackageRegExp" value="^com\."/>
+        <property name="specialImportsRegExp" value="^(com|org)\."/>
+        <property name="thirdPartyPackageRegExp" value="^javafx\."/>
         <property name="sortImportsInGroupAlphabetically" value="true"/>
     </module>
 

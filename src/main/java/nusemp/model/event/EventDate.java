@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Represents an Event's date and time in the address book.
+ * Represents an Event's date and time.
  * Guarantees: immutable; is valid as declared in {@link #isValidEventDate(String)}
  */
 public class EventDate {

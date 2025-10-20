@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
-import nusemp.logic.commands.EventLinkCommand;
+import nusemp.logic.commands.event.EventLinkCommand;
+import nusemp.logic.parser.event.EventLinkCommandParser;
 
 class EventLinkCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(

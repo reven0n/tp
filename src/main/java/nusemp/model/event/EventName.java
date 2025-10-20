@@ -4,7 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents an Event's name in the address book.
+ * Represents an Event's name.
  * Guarantees: immutable; is valid as declared in {@link #isValidEventName(String)}
  */
 public class EventName {

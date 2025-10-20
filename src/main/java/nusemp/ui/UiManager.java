@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
 import nusemp.MainApp;
 import nusemp.commons.core.LogsCenter;
 import nusemp.commons.util.StringUtil;
@@ -28,7 +29,7 @@ public class UiManager implements Ui {
     private static final String ICON_DOCK = "/images/NUS_Event_Mailer_Pro.png";
 
 
-    private Logic logic;
+    private final Logic logic;
     private MainWindow mainWindow;
 
     /**

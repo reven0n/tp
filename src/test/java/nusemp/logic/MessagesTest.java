@@ -1,8 +1,8 @@
 package nusemp.logic;
 
 import static nusemp.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
-import static nusemp.testutil.TypicalPersons.ALICE;
-import static nusemp.testutil.TypicalPersons.GEORGE;
+import static nusemp.testutil.TypicalContacts.ALICE;
+import static nusemp.testutil.TypicalContacts.GEORGE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class MessagesTest {
     }
 
     @Test
-    void format_personWithAllFields_returnsFormattedPerson() {
+    void format_contactWithAllFields_returnsFormattedContact() {
         String result = Messages.format(ALICE);
         String expected = String.format("%s; Email: %s; Phone: %s; Address: %s; Tags: %s",
                 ALICE.getName(), ALICE.getEmail(), ALICE.getPhone(), ALICE.getAddress(),
@@ -34,7 +34,7 @@ class MessagesTest {
     }
 
     @Test
-    void format_personWithNoOptionalFields_returnsFormattedPerson() {
+    void format_contactWithNoOptionalFields_returnsFormattedContact() {
         String result = Messages.format(GEORGE);
         String expected = String.format("%s; Email: %s", GEORGE.getName(), GEORGE.getEmail());
         assertEquals(expected, result);

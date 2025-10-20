@@ -17,7 +17,8 @@ import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
-import nusemp.logic.commands.EventAddCommand;
+import nusemp.logic.commands.event.EventAddCommand;
+import nusemp.logic.parser.event.EventAddCommandParser;
 
 class EventAddCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(

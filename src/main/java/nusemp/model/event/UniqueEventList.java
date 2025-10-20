@@ -8,6 +8,7 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import nusemp.model.event.exceptions.DuplicateEventException;
 import nusemp.model.event.exceptions.EventNotFoundException;
 
@@ -20,7 +21,7 @@ import nusemp.model.event.exceptions.EventNotFoundException;
  *
  * Supports a minimal set of list operations.
  *
- * Note: This implementation is adapted from UniquePersonList.
+ * Note: This implementation is adapted from UniqueContactList.
  *
  * @see Event#isSameEvent(Event)
  */

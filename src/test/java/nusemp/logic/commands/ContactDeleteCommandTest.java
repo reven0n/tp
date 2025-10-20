@@ -2,11 +2,11 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static nusemp.logic.commands.CommandTestUtil.showContactAtIndex;
+import static nusemp.testutil.TypicalContacts.getTypicalAppData;
 import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static nusemp.testutil.TypicalPersons.getTypicalAddressBook;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
+import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,11 +15,12 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
+import nusemp.logic.commands.contact.ContactDeleteCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.person.Person;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -27,36 +28,36 @@ import nusemp.model.person.Person;
  */
 public class ContactDeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAppData(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_PERSON);
+        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_CONTACT);
 
-        String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
+        String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        ModelManager expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
 
         assertCommandSuccess(contactDeleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_contactLinkedToEvent_removesFromEvent() {
-        Model modelWithEvent = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        Person personToDelete = modelWithEvent.getPersonByIndex(INDEX_FIRST_PERSON);
+        Model modelWithEvent = new ModelManager(getTypicalAppData(), new UserPrefs());
+        Contact personToDelete = modelWithEvent.getContactByIndex(INDEX_FIRST_CONTACT);
         Event meetingWithPerson = MEETING_EMPTY.withParticipant(personToDelete);
         modelWithEvent.addEvent(meetingWithPerson);
 
-        ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_PERSON);
+        ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_CONTACT);
 
-        ModelManager expectedModel = new ModelManager(modelWithEvent.getAddressBook(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(modelWithEvent.getAppData(), new UserPrefs());
         expectedModel.getEventByIndex(Index.fromOneBased(1)).withoutParticipant(personToDelete);
-        expectedModel.deletePerson(personToDelete);
+        expectedModel.deleteContact(personToDelete);
 
-        String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+        String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
                 Messages.format(personToDelete));
 
         assertCommandSuccess(contactDeleteCommand, modelWithEvent, expectedMessage, expectedModel);
@@ -64,52 +65,52 @@ public class ContactDeleteCommandTest {
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredContactList().size() + 1);
         ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(outOfBoundIndex);
 
-        assertCommandFailure(contactDeleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(contactDeleteCommand, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showContactAtIndex(model, INDEX_FIRST_CONTACT);
 
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_PERSON);
+        Contact contactToDelete = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
+        ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_CONTACT);
 
-        String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
+        String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(contactToDelete));
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-        showNoPerson(expectedModel);
+        Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
+        expectedModel.deleteContact(contactToDelete);
+        showNoContact(expectedModel);
 
         assertCommandSuccess(contactDeleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showContactAtIndex(model, INDEX_FIRST_CONTACT);
 
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        Index outOfBoundIndex = INDEX_SECOND_CONTACT;
+        // ensures that outOfBoundIndex is still in bounds of contact list
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAppData().getContactList().size());
 
         ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(outOfBoundIndex);
 
-        assertCommandFailure(contactDeleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(contactDeleteCommand, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        ContactDeleteCommand deleteFirstCommand = new ContactDeleteCommand(INDEX_FIRST_PERSON);
-        ContactDeleteCommand deleteSecondCommand = new ContactDeleteCommand(INDEX_SECOND_PERSON);
+        ContactDeleteCommand deleteFirstCommand = new ContactDeleteCommand(INDEX_FIRST_CONTACT);
+        ContactDeleteCommand deleteSecondCommand = new ContactDeleteCommand(INDEX_SECOND_CONTACT);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        ContactDeleteCommand deleteFirstCommandCopy = new ContactDeleteCommand(INDEX_FIRST_PERSON);
+        ContactDeleteCommand deleteFirstCommandCopy = new ContactDeleteCommand(INDEX_FIRST_CONTACT);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // different types -> returns false
@@ -118,7 +119,7 @@ public class ContactDeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different contact -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
@@ -133,9 +134,9 @@ public class ContactDeleteCommandTest {
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
+    private void showNoContact(Model model) {
+        model.updateFilteredContactList(p -> false);
 
-        assertTrue(model.getFilteredPersonList().isEmpty());
+        assertTrue(model.getFilteredContactList().isEmpty());
     }
 }
