@@ -1,4 +1,4 @@
-package nusemp.model.tag;
+package nusemp.model.fields;
 
 import static nusemp.testutil.Assert.assertThrows;
 

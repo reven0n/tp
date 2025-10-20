@@ -1,4 +1,4 @@
-package nusemp.model.event;
+package nusemp.model.fields;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;
@@ -8,44 +8,44 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * Represents an Event's date and time.
- * Guarantees: immutable; is valid as declared in {@link #isValidEventDate(String)}
+ * Represents a date and time.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDate(String)}
  */
-public class EventDate {
+public class Date {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Event date and time should follow this format: DD-MM-YYYY HH:mm (24-hour format)";
+            "Date and time should follow this format: DD-MM-YYYY HH:mm (24-hour format)";
 
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
     public final LocalDateTime value;
 
     /**
-     * Constructs an {@code EventDate}.
+     * Constructs an {@code Date}.
      *
      * @param date A valid date string in DD-MM-YYYY HH:mm format.
      */
-    public EventDate(String date) {
+    public Date(String date) {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        checkArgument(isValidEventDate(trimmedDate), MESSAGE_CONSTRAINTS);
+        checkArgument(isValidDate(trimmedDate), MESSAGE_CONSTRAINTS);
         value = LocalDateTime.parse(trimmedDate, FORMATTER);
     }
 
     /**
-     * Constructs an {@code EventDate} from a LocalDateTime object.
+     * Constructs an {@code Date} from a LocalDateTime object.
      *
      * @param dateTime A LocalDateTime object.
      */
-    public EventDate(LocalDateTime dateTime) {
+    public Date(LocalDateTime dateTime) {
         requireNonNull(dateTime);
         value = dateTime;
     }
 
     /**
-     * Returns true if a given string is a valid event date.
+     * Returns true if a given string is a valid date.
      */
-    public static boolean isValidEventDate(String test) {
+    public static boolean isValidDate(String test) {
         if (test == null || test.trim().isEmpty()) {
             return false;
         }
@@ -76,12 +76,12 @@ public class EventDate {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EventDate)) {
+        if (!(other instanceof Date)) {
             return false;
         }
 
-        EventDate otherEventDate = (EventDate) other;
-        return value.equals(otherEventDate.value);
+        Date otherDate = (Date) other;
+        return value.equals(otherDate.value);
     }
 
     @Override
