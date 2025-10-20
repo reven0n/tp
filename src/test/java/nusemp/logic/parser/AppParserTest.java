@@ -23,7 +23,7 @@ import nusemp.logic.commands.contact.ContactFindCommand;
 import nusemp.logic.commands.contact.ContactListCommand;
 import nusemp.logic.commands.event.EventListCommand;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.fields.Contact;
+import nusemp.model.contact.Contact;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.ContactUtil;

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import nusemp.commons.exceptions.IllegalValueException;
-import nusemp.model.fields.Tag;
+import nusemp.model.tag.Tag;
 
 /**
  * Jackson-friendly version of {@link Tag}.

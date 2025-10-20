@@ -13,7 +13,7 @@ import javafx.collections.transformation.FilteredList;
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
-import nusemp.model.fields.Contact;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 
 /**

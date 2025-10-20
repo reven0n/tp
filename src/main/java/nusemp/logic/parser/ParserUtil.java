@@ -9,12 +9,13 @@ import java.util.Set;
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.fields.Address;
-import nusemp.model.fields.Email;
-import nusemp.model.fields.Name;
-import nusemp.model.fields.Phone;
-import nusemp.model.fields.Date;
-import nusemp.model.fields.Tag;
+import nusemp.model.contact.Address;
+import nusemp.model.contact.Email;
+import nusemp.model.contact.Name;
+import nusemp.model.contact.Phone;
+import nusemp.model.event.EventDate;
+import nusemp.model.event.EventName;
+import nusemp.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -138,12 +139,27 @@ public class ParserUtil {
      * @return the parsed EventDate object
      * @throws ParseException if the given {@code date} is invalid.
      */
-    public static Date parseEventDate(String date) throws ParseException {
+    public static EventDate parseEventDate(String date) throws ParseException {
         requireNonNull(date);
         String trimmedDate = date.trim();
-        if (!Date.isValidEventDate(trimmedDate)) {
-            throw new ParseException(Date.MESSAGE_CONSTRAINTS);
+        if (!EventDate.isValidEventDate(trimmedDate)) {
+            throw new ParseException(EventDate.MESSAGE_CONSTRAINTS);
         }
-        return new Date(trimmedDate);
+        return new EventDate(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code String name} into a {@code EventName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code name} is invalid.
+     */
+    public static EventName parseEventName(String name) throws ParseException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!EventName.isValidEventName(trimmedName)) {
+            throw new ParseException(EventName.MESSAGE_CONSTRAINTS);
+        }
+        return new EventName(trimmedName);
     }
 }

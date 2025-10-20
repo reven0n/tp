@@ -5,12 +5,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import nusemp.logic.commands.contact.ContactEditCommand;
-import nusemp.model.fields.Address;
-import nusemp.model.fields.Contact;
-import nusemp.model.fields.Email;
-import nusemp.model.fields.Name;
-import nusemp.model.fields.Phone;
-import nusemp.model.fields.Tag;
+import nusemp.model.contact.Address;
+import nusemp.model.contact.Contact;
+import nusemp.model.contact.Email;
+import nusemp.model.contact.Name;
+import nusemp.model.contact.Phone;
+import nusemp.model.tag.Tag;
 
 /**
  * A utility class to help with building EditContactDescriptor objects.

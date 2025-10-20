@@ -1,4 +1,4 @@
-package nusemp.model.fields;
+package nusemp.model.contact;
 
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_ADDRESS_BOB;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_EMAIL_BOB;

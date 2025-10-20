@@ -24,13 +24,13 @@ import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
-import nusemp.model.fields.Address;
-import nusemp.model.fields.Contact;
-import nusemp.model.fields.Email;
-import nusemp.model.fields.Name;
-import nusemp.model.fields.Phone;
+import nusemp.model.contact.Address;
+import nusemp.model.contact.Contact;
+import nusemp.model.contact.Email;
+import nusemp.model.contact.Name;
+import nusemp.model.contact.Phone;
 import nusemp.model.event.Event;
-import nusemp.model.fields.Tag;
+import nusemp.model.tag.Tag;
 
 /**
  * Edits the details of an existing contact.

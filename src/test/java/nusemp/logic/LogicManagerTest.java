@@ -28,7 +28,7 @@ import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.UserPrefs;
-import nusemp.model.fields.Contact;
+import nusemp.model.contact.Contact;
 import nusemp.storage.JsonAppDataStorage;
 import nusemp.storage.JsonUserPrefsStorage;
 import nusemp.storage.StorageManager;

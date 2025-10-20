@@ -1,7 +1,7 @@
 package nusemp.testutil;
 
 import nusemp.model.AppData;
-import nusemp.model.fields.Contact;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 
 /**

@@ -9,10 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.ReadOnlyAppData;
-import nusemp.model.fields.Contact;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.fields.Date;
-import nusemp.model.fields.Name;
+import nusemp.model.event.EventDate;
+import nusemp.model.event.EventName;
 
 /**
  * Jackson-friendly version of {@link Event}.
@@ -45,7 +45,7 @@ class JsonAdaptedEvent {
      * Converts a given {@code Event} into this class for Jackson use.
      */
     public JsonAdaptedEvent(Event source) {
-        name = source.getName().toString();
+        name = source.getName().value;
         date = source.getDate().toString();
         participantEmails.addAll(source.getParticipants().stream()
                 .map(contact -> contact.getEmail().value)
@@ -61,21 +61,21 @@ class JsonAdaptedEvent {
     public Event toModelType(ReadOnlyAppData appData) throws IllegalValueException {
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Name.class.getSimpleName()));
+                    EventName.class.getSimpleName()));
         }
-        if (!Name.isValidName(name)) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        if (!EventName.isValidEventName(name)) {
+            throw new IllegalValueException(EventName.MESSAGE_CONSTRAINTS);
         }
-        final Name modelName = new Name(name);
+        final EventName modelName = new EventName(name);
 
         if (date == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Date.class.getSimpleName()));
+                    EventDate.class.getSimpleName()));
         }
-        if (!Date.isValidEventDate(date)) {
-            throw new IllegalValueException(Date.MESSAGE_CONSTRAINTS);
+        if (!EventDate.isValidEventDate(date)) {
+            throw new IllegalValueException(EventDate.MESSAGE_CONSTRAINTS);
         }
-        final Date modelDate = new Date(date);
+        final EventDate modelDate = new EventDate(date);
 
         final List<Contact> modelParticipants = new ArrayList<>();
         for (String email : participantEmails) {

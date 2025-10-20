@@ -21,7 +21,7 @@ import nusemp.logic.parser.ArgumentTokenizer;
 import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.fields.Tag;
+import nusemp.model.tag.Tag;
 
 /**
  * Parses input arguments and creates a new ContactEditCommand object

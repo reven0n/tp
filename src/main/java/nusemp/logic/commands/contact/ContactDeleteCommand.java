@@ -12,7 +12,7 @@ import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
-import nusemp.model.fields.Contact;
+import nusemp.model.contact.Contact;
 
 /**
  * Deletes a contact identified using it's displayed index from the contact list.

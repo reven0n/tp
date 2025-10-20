@@ -1,4 +1,4 @@
-package nusemp.model.fields;
+package nusemp.model.contact;
 
 import static nusemp.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
