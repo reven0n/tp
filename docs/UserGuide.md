@@ -142,8 +142,10 @@ Finds contacts whose fields contain any of the given keywords.
 - The search is **case-insensitive**. e.g. `hans` will match `Hans`, `HANS`, or `HaNs`
 - For **name searches**: Only full words will be matched. e.g. `Han` will not match `Hans`
 - For **email and tag searches**: Partial matches are supported. e.g. `gmail` will match `user@gmail.com`
-- When using **multiple filters** (`--name`, `--email`, `--tag`), contacts matching **any** of the filters will be returned (i.e. `OR` search)
-- When providing **multiple keywords** within a single filter, contacts matching **any** keyword will be returned
+- **Within each field**: OR logic applies - contacts matching **any** keyword will be returned
+  - e.g. `--name alice bob` matches contacts with "alice" OR "bob" in their name
+- **Between different fields**: AND logic applies - contacts must match **all** specified fields
+  - e.g. `--name alice --email gmail` matches contacts with "alice" in name AND "gmail" in email
 
 </box>
 
@@ -188,13 +190,23 @@ Finds contacts whose fields contain any of the given keywords.
 
   ![Example](images/contactFindTagExample.png)
 
+- `contact find --name alice bob --email nus.edu ntu.edu`
+
+  - Finds contacts where name contains (`alice` OR `bob`) AND email contains (`nus.edu` OR `ntu.edu`)
+  - Matches: `Alice Tan` with `alice@nus.edu`, `Bob Lee` with `bob@ntu.edu`
+  - Does NOT match: `Alice Tan` with `alice@gmail.com` (name matches but email doesn't)
+  - Does NOT match: `Charlie Ng` with `charlie@nus.edu` (email matches but name doesn't)
+
+  ![Example](images/contactFindCombinedExample.png)
+
 - `contact find --name John --email gmail --tag colleague`
 
-  - Finds contacts where ANY of the following is true:
-    - Name contains `John`, OR
-    - Email contains `gmail`, OR
+  - Finds contacts where ALL of the following are true:
+    - Name contains `John`, AND
+    - Email contains `gmail`, AND
     - Has tag containing `colleague`
-  - This broadens your search to find more matches
+  - This narrows your search to very specific matches
+  - Only returns contacts that satisfy all three conditions
 
   ![Example](images/contactFindCombinedExample.png)
 
@@ -205,7 +217,8 @@ Finds contacts whose fields contain any of the given keywords.
 - Use **simple name search** when you only need to find someone by name quickly
 - Use **`--email`** to find all contacts from a specific domain (e.g., `--email company.com`)
 - Use **`--tag`** to find all contacts in a category (e.g., `--tag client`, `--tag vendor`)
-- **Combine filters** to cast a wider net when you're not sure which field contains your keyword
+- **Combine multiple filters** to narrow down your search to very specific contacts
+- **Use multiple keywords within a field** to broaden matches within that field (e.g., `--email nus.edu ntu.edu` finds emails from either domain)
 
 </box>
 

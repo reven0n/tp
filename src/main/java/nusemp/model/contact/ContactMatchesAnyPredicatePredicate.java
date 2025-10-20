@@ -6,8 +6,8 @@ import java.util.function.Predicate;
 import nusemp.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Contact} matches any of the predicates given.
- * This combines multiple predicates with OR logic.
+ * Tests that a {@code Contact} matches all of the predicates given.
+ * This combines multiple predicates with AND logic.
  */
 public class ContactMatchesAnyPredicatePredicate implements Predicate<Contact> {
     private final List<Predicate<Contact>> predicates;
@@ -19,7 +19,7 @@ public class ContactMatchesAnyPredicatePredicate implements Predicate<Contact> {
     @Override
     public boolean test(Contact contact) {
         return predicates.stream()
-                .anyMatch(predicate -> predicate.test(contact));
+                .allMatch(predicate -> predicate.test(contact));
     }
 
     @Override

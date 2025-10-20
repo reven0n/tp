@@ -104,20 +104,19 @@ public class ContactFindCommandTest {
     }
 
     @Test
-    public void execute_multiplePredicatesOr_contactsFound() {
-        String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 3);
+    public void execute_multiplePredicatesAnd_contactsFound() {
+        String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 1);
+        // BENSON has name "Benson Meier", email "johnd@example.com", tags ["owesMoney", "friends"]
         NameContainsKeywordsPredicate namePredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("Alice"));
-        EmailContainsKeywordsPredicate emailPredicate =
-                new EmailContainsKeywordsPredicate(Collections.singletonList("cornelia"));
+                new NameContainsKeywordsPredicate(Collections.singletonList("Benson"));
         TagContainsKeywordsPredicate tagPredicate =
                 new TagContainsKeywordsPredicate(Collections.singletonList("owesMoney"));
         ContactMatchesAnyPredicatePredicate combinedPredicate =
-                new ContactMatchesAnyPredicatePredicate(Arrays.asList(namePredicate, emailPredicate, tagPredicate));
+                new ContactMatchesAnyPredicatePredicate(Arrays.asList(namePredicate, tagPredicate));
         ContactFindCommand command = new ContactFindCommand(combinedPredicate);
         expectedModel.updateFilteredContactList(combinedPredicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, BENSON, DANIEL), model.getFilteredContactList());
+        assertEquals(Arrays.asList(BENSON), model.getFilteredContactList());
     }
 
     @Test
