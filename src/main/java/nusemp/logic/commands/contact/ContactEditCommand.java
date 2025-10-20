@@ -25,6 +25,7 @@ import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
+import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
@@ -106,8 +107,9 @@ public class ContactEditCommand extends Command {
         Email updatedEmail = editContactDescriptor.getEmail().orElse(contactToEdit.getEmail());
         Address updatedAddress = editContactDescriptor.getAddress().orElse(contactToEdit.getAddress());
         Set<Tag> updatedTags = editContactDescriptor.getTags().orElse(contactToEdit.getTags());
+        List<Event> events = contactToEdit.getEvents();
 
-        return new Contact(updatedName, updatedEmail, updatedPhone, updatedAddress, updatedTags);
+        return new Contact(updatedName, updatedEmail, updatedPhone, updatedAddress, updatedTags, events);
     }
 
     @Override
