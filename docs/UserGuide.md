@@ -209,7 +209,7 @@ NUS EMP data are saved in the hard disk automatically after every command. There
 
 #### Editing the data file
 
-NUS EMP data are saved automatically as a JSON file `[JAR file location]/data/nus-emp.json`. Advanced users are welcome to update data directly by editing that data file.
+NUS EMP data are saved automatically as a JSON file `[JAR file location]/data/appdata.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <box type="warning" seamless>
 
