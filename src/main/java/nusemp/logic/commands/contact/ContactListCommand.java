@@ -28,4 +28,10 @@ public class ContactListCommand extends Command {
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
         return new CommandResult(String.format(MESSAGE_SUCCESS, model.getFilteredContactList().size()));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || other instanceof ContactListCommand;
+    }
 }

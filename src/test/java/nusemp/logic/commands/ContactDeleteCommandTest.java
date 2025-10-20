@@ -4,6 +4,7 @@ import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showContactAtIndex;
 import static nusemp.testutil.TypicalContacts.getTypicalAppData;
+import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,6 +20,7 @@ import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.contact.Contact;
+import nusemp.model.event.Event;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for
@@ -40,6 +42,25 @@ public class ContactDeleteCommandTest {
         expectedModel.deleteContact(contactToDelete);
 
         assertCommandSuccess(contactDeleteCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_contactLinkedToEvent_removesFromEvent() {
+        Model modelWithEvent = new ModelManager(getTypicalAppData(), new UserPrefs());
+        Contact personToDelete = modelWithEvent.getContactByIndex(INDEX_FIRST_CONTACT);
+        Event meetingWithPerson = MEETING_EMPTY.withParticipant(personToDelete);
+        modelWithEvent.addEvent(meetingWithPerson);
+
+        ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_CONTACT);
+
+        ModelManager expectedModel = new ModelManager(modelWithEvent.getAppData(), new UserPrefs());
+        expectedModel.getEventByIndex(Index.fromOneBased(1)).withoutParticipant(personToDelete);
+        expectedModel.deleteContact(personToDelete);
+
+        String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,
+                Messages.format(personToDelete));
+
+        assertCommandSuccess(contactDeleteCommand, modelWithEvent, expectedMessage, expectedModel);
     }
 
     @Test
