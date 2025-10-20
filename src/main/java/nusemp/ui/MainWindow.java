@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
@@ -44,6 +45,10 @@ public class MainWindow extends UiPart<Stage> {
     private CommandBox terminalCommandBox;
     private boolean isTerminalVisible = false;
 
+    // Theme management
+    private boolean isDarkTheme = true;
+    private Scene scene;
+
     @FXML
     private StackPane commandBoxPlaceholder;
 
@@ -74,6 +79,9 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private Button eventsToggle;
 
+    @FXML
+    private Button themeToggle;
+
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
@@ -84,6 +92,9 @@ public class MainWindow extends UiPart<Stage> {
         this.primaryStage = primaryStage;
         this.logic = logic;
         primaryStage.setTitle("NUS Event Mailer Pro");
+
+        // Store scene reference for theme switching
+        this.scene = primaryStage.getScene();
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
@@ -278,6 +289,44 @@ public class MainWindow extends UiPart<Stage> {
         isTerminalVisible = false;
     }
 
+    /**
+     * Handles the theme toggle button to switch between light and dark themes.
+     */
+    @FXML
+    public void handleThemeToggle() {
+        if (isDarkTheme) {
+            switchToLightTheme();
+        } else {
+            switchToDarkTheme();
+        }
+    }
+
+    /**
+     * Switches to light theme.
+     */
+    private void switchToLightTheme() {
+        scene.getStylesheets().clear();
+        scene.getStylesheets().addAll(
+            getClass().getResource("/view/LightTheme.css").toExternalForm(),
+            getClass().getResource("/view/Extensions.css").toExternalForm()
+        );
+        themeToggle.setText("🌙"); // Moon icon for dark theme
+        isDarkTheme = false;
+    }
+
+    /**
+     * Switches to dark theme.
+     */
+    private void switchToDarkTheme() {
+        scene.getStylesheets().clear();
+        scene.getStylesheets().addAll(
+            getClass().getResource("/view/DarkTheme.css").toExternalForm(),
+            getClass().getResource("/view/Extensions.css").toExternalForm()
+        );
+        themeToggle.setText("☀"); // Sun icon for light theme
+        isDarkTheme = true;
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -354,5 +403,4 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 }
-
 

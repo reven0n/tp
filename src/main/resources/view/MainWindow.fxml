@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.stage.Stage?>
 
 <?import javafx.scene.control.Button?>
@@ -35,13 +36,30 @@
                                     <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
                                 </Menu>
                             </MenuBar>-->
-                            <VBox fx:id="sidebar" prefWidth="80"  alignment="CENTER" spacing="15">
-                                <children>
-                                    <Button text="⌘" onAction="#handleTerminal" styleClass="sidebar-button"/>
-                                    <Button text="?" onAction="#handleHelp" styleClass="sidebar-button"/>
-                                    <Button text="×" onAction="#handleExit" styleClass="sidebar-button"/>
+                            <VBox fx:id="sidebar" prefWidth="80" alignment="CENTER" spacing="15">
 
-                                    <!-- Add more buttons as needed -->
+                                <children>
+
+                                    <VBox spacing="15" alignment="CENTER" VBox.vgrow="NEVER">
+                                        <VBox.margin>
+                                            <Insets top="15" />
+                                        </VBox.margin>
+                                        <children>
+                                            <Button text="⌘" onAction="#handleTerminal" styleClass="sidebar-button"/>
+                                            <Button text="?" onAction="#handleHelp" styleClass="sidebar-button"/>
+                                            <Button text="×" onAction="#handleExit" styleClass="sidebar-button"/>
+                                        </children>
+                                    </VBox>
+
+                                    <!-- Spacer to push theme button to bottom -->
+                                    <Region VBox.vgrow="ALWAYS"/>
+
+                                    <!-- Theme toggle button anchored to bottom -->
+                                    <Button fx:id="themeToggle" text="☀" onAction="#handleThemeToggle" styleClass="sidebar-button">
+                                        <VBox.margin>
+                                            <Insets bottom="15" />
+                                        </VBox.margin>
+                                    </Button>
                                 </children>
                             </VBox>
                             <MenuBar fx:id="menuBar" visible="false" managed="false">
