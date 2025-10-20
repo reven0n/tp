@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import nusemp.model.AppData;
 import nusemp.model.contact.Contact;
 
 /**
@@ -62,17 +61,6 @@ public class TypicalContacts {
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalContacts() {} // prevents instantiation
-
-    /**
-     * Returns an {@code AppData} with all the typical contacts.
-     */
-    public static AppData getTypicalAppData() {
-        AppData appData = new AppData();
-        for (Contact contact : getTypicalContacts()) {
-            appData.addContact(contact);
-        }
-        return appData;
-    }
 
     public static List<Contact> getTypicalContacts() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));

@@ -2,13 +2,13 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.Messages.MESSAGE_CONTACTS_LISTED_OVERVIEW;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalContacts.ALICE;
 import static nusemp.testutil.TypicalContacts.BENSON;
 import static nusemp.testutil.TypicalContacts.CARL;
 import static nusemp.testutil.TypicalContacts.DANIEL;
 import static nusemp.testutil.TypicalContacts.ELLE;
 import static nusemp.testutil.TypicalContacts.FIONA;
-import static nusemp.testutil.TypicalContacts.getTypicalAppData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,8 +31,8 @@ import nusemp.model.contact.TagContainsKeywordsPredicate;
  * Contains integration tests (interaction with the Model) for {@code ContactFindCommand}.
  */
 public class ContactFindCommandTest {
-    private Model model = new ModelManager(getTypicalAppData(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalAppData(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
 
     @Test
     public void equals() {

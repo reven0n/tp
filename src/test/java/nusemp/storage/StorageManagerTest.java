@@ -1,6 +1,6 @@
 package nusemp.storage;
 
-import static nusemp.testutil.TypicalContacts.getTypicalAppData;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -54,7 +54,7 @@ public class StorageManagerTest {
          * {@link JsonAppDataStorage} class.
          * More extensive testing of UserPref saving/reading is done in {@link JsonAppDataStorageTest} class.
          */
-        AppData original = getTypicalAppData();
+        AppData original = getTypicalAppDataWithoutEvent();
         storageManager.saveAppData(original);
         ReadOnlyAppData retrieved = storageManager.readAppData().get();
         assertEquals(original, new AppData(retrieved));

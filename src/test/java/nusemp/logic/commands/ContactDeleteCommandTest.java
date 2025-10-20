@@ -3,7 +3,7 @@ package nusemp.logic.commands;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showContactAtIndex;
-import static nusemp.testutil.TypicalContacts.getTypicalAppData;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
@@ -28,7 +28,7 @@ import nusemp.model.event.Event;
  */
 public class ContactDeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAppData(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
@@ -46,7 +46,7 @@ public class ContactDeleteCommandTest {
 
     @Test
     public void execute_contactLinkedToEvent_removesFromEvent() {
-        Model modelWithEvent = new ModelManager(getTypicalAppData(), new UserPrefs());
+        Model modelWithEvent = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
         Contact personToDelete = modelWithEvent.getContactByIndex(INDEX_FIRST_CONTACT);
         Event meetingWithPerson = MEETING_EMPTY.withParticipant(personToDelete);
         modelWithEvent.addEvent(meetingWithPerson);

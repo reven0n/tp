@@ -2,7 +2,7 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showContactAtIndex;
-import static nusemp.testutil.TypicalContacts.getTypicalAppData;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ public class ContactListCommandTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAppData(), new UserPrefs());
+        model = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
         expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
     }
 
