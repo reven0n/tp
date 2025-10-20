@@ -43,15 +43,15 @@ public class Messages {
                 .append("; Email: ")
                 .append(contact.getEmail());
 
-        if (!contact.getPhone().isEmpty()) {
+        if (contact.hasPhone()) {
             builder.append("; Phone: ").append(contact.getPhone());
         }
 
-        if (!contact.getAddress().isEmpty()) {
+        if (contact.hasAddress()) {
             builder.append("; Address: ").append(contact.getAddress());
         }
 
-        if (!contact.getTags().isEmpty()) {
+        if (contact.hasTags()) {
             builder.append("; Tags: ");
             contact.getTags().forEach(builder::append);
         }
@@ -67,6 +67,11 @@ public class Messages {
         builder.append(event.getName())
                 .append("; Date: ")
                 .append(event.getDate());
+
+        if (event.hasAddress()) {
+            builder.append("; Address: ").append(event.getAddress());
+        }
+
         return builder.toString();
     }
 

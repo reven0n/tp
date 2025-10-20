@@ -8,7 +8,11 @@ import java.util.Objects;
 import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
-import nusemp.model.tag.Tag;
+import nusemp.model.fields.Address;
+import nusemp.model.fields.Email;
+import nusemp.model.fields.Name;
+import nusemp.model.fields.Phone;
+import nusemp.model.fields.Tag;
 
 /**
  * Represents a Contact.
@@ -27,6 +31,8 @@ public class Contact {
 
     /**
      * Every field must be present and not null.
+     * {@code Phone.empty()} or {@code Address.empty()} can be used to represent absence of a phone number or address
+     * respectively.
      */
     public Contact(Name name, Email email, Phone phone, Address address, Set<Tag> tags) {
         requireAllNonNull(name, email, phone, address, tags);
@@ -49,8 +55,16 @@ public class Contact {
         return phone;
     }
 
+    public boolean hasPhone() {
+        return !phone.isEmpty();
+    }
+
     public Address getAddress() {
         return address;
+    }
+
+    public boolean hasAddress() {
+        return !address.isEmpty();
     }
 
     /**
@@ -59,6 +73,10 @@ public class Contact {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public boolean hasTags() {
+        return !tags.isEmpty();
     }
 
     /**

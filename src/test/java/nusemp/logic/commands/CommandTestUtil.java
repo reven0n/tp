@@ -44,6 +44,8 @@ public class CommandTestUtil {
     public static final String VALID_EVENT_NAME_CONFERENCE = "CONFERENCE";
     public static final String VALID_EVENT_DATE_MEETING = "01-10-2025 14:00";
     public static final String VALID_EVENT_DATE_CONFERENCE = "29-02-2024 09:00";
+    public static final String VALID_EVENT_ADDRESS_MEETING = "Meeting Room A";
+    public static final String VALID_EVENT_ADDRESS_CONFERENCE = "Conference Hall B";
 
     // valid Contact descriptions
     public static final String CONTACT_NAME_DESC_AMY = " " + PREFIX_NAME + VALID_CONTACT_NAME_AMY;
@@ -62,6 +64,8 @@ public class CommandTestUtil {
     public static final String EVENT_NAME_DESC_CONFERENCE = " " + PREFIX_NAME + VALID_EVENT_NAME_CONFERENCE;
     public static final String EVENT_DATE_DESC_MEETING = " " + PREFIX_DATE + VALID_EVENT_DATE_MEETING;
     public static final String EVENT_DATE_DESC_CONFERENCE = " " + PREFIX_DATE + VALID_EVENT_DATE_CONFERENCE;
+    public static final String EVENT_ADDRESS_DESC_MEETING = " " + PREFIX_ADDRESS + VALID_EVENT_ADDRESS_MEETING;
+    public static final String EVENT_ADDRESS_DESC_CONFERENCE = " " + PREFIX_ADDRESS + VALID_EVENT_ADDRESS_CONFERENCE;
 
     // invalid Contact descriptions
     public static final String INVALID_CONTACT_NAME_DESC = " " + PREFIX_NAME; // cannot be empty
@@ -143,7 +147,7 @@ public class CommandTestUtil {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredContactList().size());
 
         Contact contact = model.getFilteredContactList().get(targetIndex.getZeroBased());
-        final String[] splitName = contact.getName().fullName.split("\\s+");
+        final String[] splitName = contact.getName().value.split("\\s+");
         model.updateFilteredContactList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredContactList().size());

@@ -243,12 +243,12 @@ Examples:
 
 Adds an event to the event list.
 
-**Format**: `event add --name NAME --date DATE`
+**Format**: `event add --name NAME --date DATE [--address ADDRESS]`
 
 * `DATE` should be in the format `DD-MM-YYYY HH:MM` (24-hour format)
 
 **Examples**:
-* `event add --name Meeting --date 25-12-2025 14:30`
+* `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4`
 * `event add --name Team Lunch --date 01-01-2026 12:00`
 
 #### Listing all events: `event list`
@@ -338,6 +338,6 @@ _Details coming soon ..._
 
 | Action     | Format, Examples  |
 |------------|-------------------|
-| **Add**    | `event add --name NAME --date DATE`<br>e.g. `event add --name Team Meeting --date 25-12-2025 14:30` |
+| **Add**    | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4` |
 | **List**   | `event list` |
 | **Link**   | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2` |
