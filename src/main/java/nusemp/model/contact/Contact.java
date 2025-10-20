@@ -33,18 +33,6 @@ public class Contact {
     /**
      * Every field must be present and not null.
      */
-    public Contact(Name name, Email email, Phone phone, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, email, phone, address, tags);
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.tags.addAll(tags);
-    }
-
-    /**
-     * Every field must be present and not null.
-     */
     public Contact(Name name, Email email, Phone phone, Address address, Set<Tag> tags, List<Event> events) {
         requireAllNonNull(name, email, phone, address, tags, events);
         this.name = name;

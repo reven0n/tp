@@ -52,6 +52,7 @@ public class ContactBuilder {
         phone = contactToCopy.getPhone();
         address = contactToCopy.getAddress();
         tags = new HashSet<>(contactToCopy.getTags());
+        events = new ArrayList<>(contactToCopy.getEvents());
     }
 
     /**

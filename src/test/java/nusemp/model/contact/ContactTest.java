@@ -89,7 +89,8 @@ public class ContactTest {
     @Test
     public void toStringMethod() {
         String expected = Contact.class.getCanonicalName() + "{name=" + ALICE.getName() + ", email=" + ALICE.getEmail()
-                + ", phone=" + ALICE.getPhone() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags() + "}";
+                + ", phone=" + ALICE.getPhone() + ", address=" + ALICE.getAddress() + ", tags=" + ALICE.getTags()
+                + ", events=" + ALICE.getEvents() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }
