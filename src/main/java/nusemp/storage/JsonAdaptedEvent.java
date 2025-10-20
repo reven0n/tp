@@ -113,7 +113,7 @@ class JsonAdaptedEvent {
      *
      * @param appData The app data to search.
      * @param email The email to search for.
-     * @return The contact with the given email.
+     * @return an {@code Optional} containing the contact if found, otherwise {@code Optional.empty()}
      */
     private Optional<Contact> findContactByEmail(ReadOnlyAppData appData, String email) {
         return appData.getContactList().stream()

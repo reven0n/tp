@@ -31,6 +31,8 @@ public class Contact {
 
     /**
      * Every field must be present and not null.
+     * {@code Phone.empty()} or {@code Address.empty()} can be used to represent absence of a phone number or address
+     * respectively.
      */
     public Contact(Name name, Email email, Phone phone, Address address, Set<Tag> tags) {
         requireAllNonNull(name, email, phone, address, tags);

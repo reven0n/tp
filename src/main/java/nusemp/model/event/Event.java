@@ -31,7 +31,7 @@ public class Event {
     private final List<Contact> participants = new ArrayList<>();
 
     /**
-     * Every field must be present and not null.
+     * Every field must be present and not null. {@code Address.empty()} can be used to represent absence of an address.
      */
     public Event(Name name, Date date, Address address, List<Contact> participants) {
         requireAllNonNull(name, date, address, participants);
