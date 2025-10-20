@@ -18,7 +18,7 @@ class DateTest {
     }
 
     @Test
-    public void constructor_validInput_eventDateCreated() {
+    public void constructor_validInput_dateCreated() {
         LocalDateTime dateTime = LocalDateTime.of(2025, 10, 1, 14, 0);
         Date date1 = new Date(dateTime);
         assertEquals(dateTime, date1.value);
@@ -30,18 +30,18 @@ class DateTest {
     }
 
     @Test
-    public void isValidEventDate_null_returnsFalse() {
+    public void isValidDate_null_returnsFalse() {
         assertFalse(Date.isValidDate(null));
     }
 
     @Test
-    public void isValidEventDate_emptyString_returnsFalse() {
+    public void isValidDate_emptyString_returnsFalse() {
         assertFalse(Date.isValidDate(""));
         assertFalse(Date.isValidDate("   "));
     }
 
     @Test
-    public void isValidEventDate_invalidFormat_returnsFalse() {
+    public void isValidDate_invalidFormat_returnsFalse() {
         assertFalse(Date.isValidDate("2025-10-01 14:00")); // Wrong format
         assertFalse(Date.isValidDate("01/10/2025 14:00")); // Wrong format
         assertFalse(Date.isValidDate("01-10-2025 1400")); // Wrong format
@@ -55,7 +55,7 @@ class DateTest {
     }
 
     @Test
-    public void isValidEventDate_validFormat_returnsTrue() {
+    public void isValidDate_validFormat_returnsTrue() {
         assertTrue(Date.isValidDate("01-10-2025 14:00"));
         assertTrue(Date.isValidDate("31-12-2025 23:59"));
         assertTrue(Date.isValidDate("01-01-2025 00:00"));
