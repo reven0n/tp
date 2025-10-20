@@ -2,6 +2,7 @@ package nusemp.storage;
 
 import static nusemp.storage.JsonAdaptedEvent.MISSING_FIELD_MESSAGE_FORMAT;
 import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -36,7 +37,7 @@ class JsonAdaptedEventTest {
     @Test
     public void toModelType_validEventDetails_returnsEvent() throws Exception {
         JsonAdaptedEvent event = new JsonAdaptedEvent(MEETING_FILLED);
-        assertEquals(MEETING_FILLED, event.toModelType(TypicalContacts.getTypicalAppData()));
+        assertEquals(MEETING_FILLED, event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 
     @Test
@@ -44,7 +45,7 @@ class JsonAdaptedEventTest {
         JsonAdaptedEvent event = new JsonAdaptedEvent(null, VALID_DATE, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, () ->
-                event.toModelType(TypicalContacts.getTypicalAppData()));
+                event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 
     @Test
@@ -53,7 +54,7 @@ class JsonAdaptedEventTest {
                 new JsonAdaptedEvent(INVALID_NAME, VALID_DATE, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
         String expectedMessage = Name.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () ->
-                event.toModelType(TypicalContacts.getTypicalAppData()));
+                event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 
     @Test
@@ -61,7 +62,7 @@ class JsonAdaptedEventTest {
         JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, null, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName());
         assertThrows(IllegalValueException.class, expectedMessage, () ->
-                event.toModelType(TypicalContacts.getTypicalAppData()));
+                event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 
     @Test
@@ -70,14 +71,14 @@ class JsonAdaptedEventTest {
                 new JsonAdaptedEvent(VALID_NAME, INVALID_DATE, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
         String expectedMessage = Date.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () ->
-                event.toModelType(TypicalContacts.getTypicalAppData()));
+                event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 
     @Test
     public void toModelType_nullAddress_returnsEvent() throws Exception {
         JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, null, VALID_PARTICIPANT_EMAILS);
         Event expectedEvent = new EventBuilder(MEETING_FILLED).withoutAddress().build();
-        assertEquals(expectedEvent, event.toModelType(TypicalContacts.getTypicalAppData()));
+        assertEquals(expectedEvent, event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 
     @Test
@@ -86,7 +87,7 @@ class JsonAdaptedEventTest {
                 new JsonAdaptedEvent(VALID_NAME, VALID_DATE, INVALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
         String expectedMessage = Address.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () ->
-                event.toModelType(TypicalContacts.getTypicalAppData()));
+                event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 
     @Test
@@ -96,7 +97,7 @@ class JsonAdaptedEventTest {
         JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, VALID_ADDRESS, participantEmails);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () ->
-                event.toModelType(TypicalContacts.getTypicalAppData()));
+                event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 
     @Test

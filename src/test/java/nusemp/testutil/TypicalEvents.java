@@ -36,18 +36,6 @@ public class TypicalEvents {
     public static final Event PARTY_HALF_FILLED = new Event(new Name("PARTY"), new Date("31-12-2024 20:00"),
             ALICE.getAddress(), new ArrayList<>(Arrays.asList(ALICE, BOB, CARL)));
 
-    public static AppData getTypicalAppDataWithEvents() {
-        AppData appData = new AppData();
-        for (Contact contact : TypicalContacts.getTypicalContacts()) {
-            appData.addContact(contact);
-        }
-        for (Event event : getTypicalEvents()) {
-            appData.addEvent(event);
-        }
-
-        return appData;
-    }
-
     public static List<Event> getTypicalEvents() {
         return new ArrayList<>(Arrays.asList(MEETING_EMPTY, CONFERENCE_EMPTY,
                 WORKSHOP_FILLED, PARTY_HALF_FILLED));

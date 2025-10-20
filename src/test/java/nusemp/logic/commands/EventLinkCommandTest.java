@@ -2,7 +2,7 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.testutil.TypicalEvents.getTypicalAppDataWithEvents;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
