@@ -7,7 +7,7 @@ import nusemp.model.event.Event;
 /**
  * A utility class to help with building AppData objects.
  * Example usage: <br>
- *     {@code AppData ab = new AppDataBuilder().withContact("John", "Doe").build();}
+ *     {@code AppData appData = new AppDataBuilder().withContact("John", "Doe").build();}
  */
 public class AppDataBuilder {
 

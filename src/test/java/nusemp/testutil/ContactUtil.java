@@ -33,10 +33,10 @@ public class ContactUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME + contact.getName().value + " ");
         sb.append(PREFIX_EMAIL + contact.getEmail().value + " ");
-        if (!contact.getPhone().isEmpty()) {
+        if (contact.hasPhone()) {
             sb.append(PREFIX_PHONE + contact.getPhone().value + " ");
         }
-        if (!contact.getAddress().isEmpty()) {
+        if (contact.hasAddress()) {
             sb.append(PREFIX_ADDRESS + contact.getAddress().value + " ");
         }
         contact.getTags().stream().forEach(

@@ -1,6 +1,12 @@
 package nusemp.model.event;
 
 import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalContacts.ALICE;
+import static nusemp.testutil.TypicalContacts.BOB;
+import static nusemp.testutil.TypicalContacts.CARL;
+import static nusemp.testutil.TypicalContacts.DANIEL;
+import static nusemp.testutil.TypicalEvents.CONFERENCE_FILLED;
+import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -13,274 +19,154 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
+import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
 import nusemp.testutil.ContactBuilder;
+import nusemp.testutil.EventBuilder;
 
 class EventTest {
-    @Test
-    public void getName_validName_returnsSameName() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-        Event event = new Event(name, date);
-        assertEquals(name, event.getName());
-    }
+    private static final Name VALID_NAME = new Name("Meeting");
+    private static final Date VALID_DATE = new Date("01-10-2025 14:00");
+    private static final Address VALID_ADDRESS = new Address("123 Main St");
+    private static final List<Contact> EMPTY_PARTICIPANT_LIST = new ArrayList<>();
+    private static final List<Contact> VALID_PARTICIPANTS = createParticipantList(ALICE, BOB);
 
-    @Test
-    public void getDate_validDate_returnsSameDate() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-        Event event = new Event(name, date);
-        assertEquals(date, event.getDate());
-    }
-
-    @Test
-    public void getParticipants_noParticipants_returnsEmptySet() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-        Event event = new Event(name, date);
-        assertEquals(0, event.getParticipants().size());
-    }
-
-    @Test
-    public void getParticipants_validParticipants_returnsSameParticipants() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-
-        List<Contact> participants = new ArrayList<>();
-        Contact alice = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
-        Contact bob = new ContactBuilder().withName("Bob").withEmail("bob@example.com").build();
-
-        participants.add(alice);
-        participants.add(bob);
-
-        Event event = new Event(name, date, participants);
-        assertEquals(participants, event.getParticipants());
-    }
-
-    @Test
-    public void withParticipants_addContact_returnsSetWithContact() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-
-        List<Contact> participants1 = new ArrayList<>();
-        Contact bob = new ContactBuilder().withName("Bob").build();
-        List<Contact> participants2 = new ArrayList<>();
-        participants2.add(bob);
-
-        Event event1 = new Event(name, date, participants1);
-        Event event2 = new Event(name, date, participants2);
-        assertEquals(event1.withParticipant(bob), event2);
-        assertNotEquals(event1, event1.withParticipant(bob)); // should be different instances
-    }
-
-    @Test
-    public void withParticipants_addContact_keepsOrder() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-
-        for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
-            List<Contact> participants1 = createParticipantList("Alice", "Charlie");
-            Event event = new Event(name, date, participants1);
-            Contact bob = new ContactBuilder().withName("Bob").withEmail("bob2@example.com").build();
-            List<Contact> expectedParticipants = createParticipantList("Alice", "Charlie", "Bob");
-            assertEquals(event.withParticipant(bob).getParticipants().toString(), expectedParticipants.toString());
-        }
-    }
-
-    @Test
-    public void withoutParticipants_removeContact_returnsSetWithoutContact() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-
-        List<Contact> participants1 = createParticipantList("Bob");
-        Contact bob = new ContactBuilder().withName("Bob").withEmail("bob0@example.com").build();
-        List<Contact> participants2 = new ArrayList<>();
-
-        Event event1 = new Event(name, date, participants1);
-        Event event2 = new Event(name, date, participants2);
-        assertEquals(event1.withoutParticipant(bob), event2);
-        assertNotEquals(event1, event1.withoutParticipant(bob)); // should be different instances
-    }
-
-    @Test
-    public void withoutParticipants_removeContactFromEmptyList_returnsEmptySet() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-        Event event1 = new Event(name, date);
-        Contact bob = new ContactBuilder().withName("Bob").withEmail("bob0@example.com").build();
-        assertEquals(event1.withoutParticipant(bob), event1);
-    }
-
-    @Test
-    public void withoutParticipants_removeContact_keepsOrder() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-
-        for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
-            List<Contact> participants1 = createParticipantList("Alice", "Bob", "Charlie");
-            Event event = new Event(name, date, participants1);
-            Contact bob = new ContactBuilder().withName("Bob").withEmail("bob1@example.com").build();
-            List<Contact> expectedParticipants = createParticipantList("Alice");
-            expectedParticipants.add(new ContactBuilder().withName("Charlie")
-                    .withEmail("charlie2@example.com").build());
-            assertEquals(event.withoutParticipant(bob).getParticipants().toString(), expectedParticipants.toString());
-        }
-    }
-
-    @Test
-    public void isSameEvent_sameNameDifferentDate_returnsTrue() {
-        Name name = new Name("Meeting");
-        Date date1 = new Date("01-10-2025 14:00");
-        Date date2 = new Date("02-10-2025 14:00");
-
-        Event event1 = new Event(name, date1);
-        Event event2 = new Event(name, date2);
-        assertTrue(event1.isSameEvent(event2));
-    }
-
-    @Test
-    public void isSameEvent_differentNameSameDate_returnsFalse() {
-        Name name1 = new Name("Meeting");
-        Name name2 = new Name("Conference");
-        Date date = new Date("01-10-2025 14:00");
-
-        Event event1 = new Event(name1, date);
-        Event event2 = new Event(name2, date);
-        assertFalse(event1.isSameEvent(event2));
-    }
-
-    @Test
-    public void isSameEvent_differentNameDifferentDate_returnsFalse() {
-        Name name1 = new Name("Meeting");
-        Name name2 = new Name("Conference");
-        Date date1 = new Date("01-10-2025 14:00");
-        Date date2 = new Date("02-10-2025 14:00");
-
-        Event event1 = new Event(name1, date1);
-        Event event2 = new Event(name2, date2);
-        assertFalse(event1.isSameEvent(event2));
-    }
-
-    @Test
-    public void isSameEvent_sameNameSameDate_returnsTrue() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-
-        Event event1 = new Event(name, date);
-        Event event2 = new Event(name, date);
-        assertTrue(event1.isSameEvent(event2));
-    }
-
-    @Test
-    public void equals_sameValues_returnsTrue() {
-        Name name1 = new Name("Meeting");
-        Date date1 = new Date("01-10-2025 14:00");
-        List<Contact> participants1 = createParticipantList("Alice", "Bob");
-
-        Name name2 = new Name("Meeting");
-        Date date2 = new Date("01-10-2025 14:00");
-        List<Contact> participants2 = createParticipantList("Alice", "Bob");
-
-        Event event1 = new Event(name1, date1, participants1);
-        Event event2 = new Event(name2, date2, participants2);
-        assertEquals(event1, event2);
-    }
-
-    @Test
-    public void equals_sameObject_returnsTrue() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-        Event event = new Event(name, date);
-        assertEquals(event, event);
-    }
-
-    @Test
-    public void equals_null_returnsFalse() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-        Event event = new Event(name, date);
-        assertNotEquals(null, event);
-    }
-
-    @Test
-    public void equals_differentParticipants_returnsFalse() {
-        Name name1 = new Name("Meeting");
-        Date date1 = new Date("01-10-2025 14:00");
-        List<Contact> participants1 = createParticipantList("Alice", "Bob");
-
-        Name name2 = new Name("Meeting");
-        Date date2 = new Date("01-10-2025 14:00");
-        List<Contact> participants2 = createParticipantList("Alice", "Charlie");
-
-        Event event1 = new Event(name1, date1, participants1);
-        Event event2 = new Event(name2, date2, participants2);
-        assertNotEquals(event1, event2);
-    }
-
-    @Test
-    public void equals_differentName_returnsFalse() {
-        Name name1 = new Name("Meeting");
-        Name name2 = new Name("Conference");
-        Date date = new Date("01-10-2025 14:00");
-
-        List<Contact> participants = createParticipantList("Alice", "Bob");
-
-        Event event1 = new Event(name1, date, participants);
-        Event event2 = new Event(name2, date, participants);
-        assertNotEquals(event1, event2);
-    }
-
-    @Test
-    public void equals_differentDate_returnsFalse() {
-        Name name = new Name("Meeting");
-        Date date1 = new Date("01-10-2025 14:00");
-        Date date2 = new Date("02-10-2025 14:00");
-
-        List<Contact> participants = createParticipantList("Alice", "Bob");
-
-        Event event1 = new Event(name, date1, participants);
-        Event event2 = new Event(name, date2, participants);
-        assertNotEquals(event1, event2);
+    private static List<Contact> createParticipantList(Contact... contacts) {
+        return new ArrayList<>(List.of(contacts));
     }
 
     @Test
     public void constructor_duplicateEmails_throwsDuplicateParticipantException() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
+        List<Contact> participantsWithDuplicateEmail = createParticipantList(ALICE,
+                new ContactBuilder(BOB).withEmail(ALICE.getEmail().value).build());
 
-        // Create two contacts with the same email but different names
-        Contact alice1 = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
-        Contact alice2 = new ContactBuilder().withName("Alice Smith").withEmail("alice@example.com").build();
-
-        List<Contact> participantsWithDuplicateEmail = new ArrayList<>();
-        participantsWithDuplicateEmail.add(alice1);
-        participantsWithDuplicateEmail.add(alice2);
-
-        assertThrows(DuplicateParticipantException.class, () -> new Event(name, date, participantsWithDuplicateEmail));
+        assertThrows(DuplicateParticipantException.class, () ->
+                new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, participantsWithDuplicateEmail));
     }
 
     @Test
-    public void withParticipant_duplicateEmail_throwsDuplicateParticipantException() {
-        Name name = new Name("Meeting");
-        Date date = new Date("01-10-2025 14:00");
-
-        Contact alice1 = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
-        Contact alice2 = new ContactBuilder().withName("Alice Smith").withEmail("alice@example.com").build();
-
-        List<Contact> participants = new ArrayList<>();
-        participants.add(alice1);
-        Event event = new Event(name, date, participants);
-
-        assertThrows(DuplicateParticipantException.class, () -> event.withParticipant(alice2));
+    public void withParticipants_addContact_returnsEventWithContact() {
+        Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
+        Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, createParticipantList(BOB));
+        assertEquals(event1.withParticipant(BOB), event2);
+        assertNotEquals(event1, event1.withParticipant(BOB)); // should be different instances
     }
 
-    private List<Contact> createParticipantList(String... names) {
-        List<Contact> participants = new ArrayList<>();
-        for (int i = 0; i < names.length; i++) {
-            participants.add(new ContactBuilder().withName(names[i])
-                .withEmail(names[i].toLowerCase() + i + "@example.com").build());
+    @Test
+    public void withParticipants_addContact_keepsInsertionOrder() {
+        for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
+            Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, createParticipantList(ALICE, BOB));
+            List<Contact> expectedParticipants = createParticipantList(ALICE, BOB, CARL, DANIEL);
+            assertEquals(expectedParticipants, event.withParticipant(CARL).withParticipant(DANIEL).getParticipants());
         }
-        return participants;
+    }
+
+    @Test
+    public void withParticipant_duplicateEmail_throwsException() {
+        Contact contact = new ContactBuilder().withEmail(BOB.getEmail().value).build();
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, VALID_PARTICIPANTS);
+
+        assertThrows(DuplicateParticipantException.class, () -> event.withParticipant(contact));
+    }
+
+    @Test
+    public void withoutParticipants_removeContact_returnsEventWithoutContact() {
+        Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, createParticipantList(BOB));
+        Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
+        assertEquals(event1.withoutParticipant(BOB), event2);
+        assertNotEquals(event1, event1.withoutParticipant(BOB)); // should be different instances
+    }
+
+    @Test
+    public void withoutParticipants_removeContactFromEmptyList_doesNotThrowError() {
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
+        assertEquals(event, event.withoutParticipant(BOB));
+    }
+
+    @Test
+    public void withoutParticipants_removeContact_keepsInsertionOrder() {
+        for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
+            Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
+                    createParticipantList(ALICE, BOB, CARL, DANIEL));
+            List<Contact> expectedParticipants = createParticipantList(BOB, DANIEL);
+            assertEquals(expectedParticipants,
+                    event.withoutParticipant(CARL).withoutParticipant(ALICE).getParticipants());
+        }
+    }
+
+    @Test
+    public void isSameEvent_sameName_returnsTrue() {
+        Name name = VALID_NAME;
+        Date date1 = VALID_DATE;
+        Date date2 = new Date("02-10-2025 14:00");
+        Address address1 = VALID_ADDRESS;
+        Address address2 = new Address("456 Another St");
+
+        Event event1 = new Event(name, date1, address1);
+        Event event2 = new Event(name, date2, address1);
+        Event event3 = new Event(name, date1, address2);
+        Event event4 = new Event(name, date2, Address.empty());
+
+        assertTrue(event1.isSameEvent(event1)); // same object
+        assertTrue(event1.isSameEvent(event2));
+        assertTrue(event1.isSameEvent(event3));
+        assertTrue(event1.isSameEvent(event4));
+    }
+
+    @Test
+    public void isSameEvent_differentName_returnsFalse() {
+        Name name1 = new Name("Meeting");
+        Name name2 = new Name("Conference");
+
+        Event event1 = new Event(name1, VALID_DATE, VALID_ADDRESS);
+        Event event2 = new Event(name2, VALID_DATE, VALID_ADDRESS);
+        assertFalse(event1.isSameEvent(event2));
+    }
+
+    @Test
+    public void equals() {
+        // same values -> returns true
+        Event event = new Event(MEETING_FILLED.getName(), MEETING_FILLED.getDate(),
+                MEETING_FILLED.getAddress(), MEETING_FILLED.getParticipants());
+        assertTrue(MEETING_FILLED.equals(event));
+
+        // same object -> returns true
+        assertTrue(MEETING_FILLED.equals(MEETING_FILLED));
+
+        // null -> returns false
+        assertFalse(MEETING_FILLED.equals(null));
+
+        // different type -> returns false
+        assertFalse(MEETING_FILLED.equals(5));
+
+        // different event -> returns false
+        assertFalse(MEETING_FILLED.equals(CONFERENCE_FILLED));
+
+        // different name -> returns false
+        Event editedEvent = new EventBuilder(MEETING_FILLED).withName("Conference").build();
+        assertFalse(MEETING_FILLED.equals(editedEvent));
+
+        // different date -> returns false
+        editedEvent = new EventBuilder(MEETING_FILLED).withDate("02-10-2025 14:00").build();
+        assertFalse(MEETING_FILLED.equals(editedEvent));
+
+        // different address -> returns false
+        editedEvent = new EventBuilder(MEETING_FILLED).withAddress("456 Another St").build();
+        assertFalse(MEETING_FILLED.equals(editedEvent));
+
+        // different participants -> returns false
+        editedEvent = new EventBuilder(MEETING_FILLED)
+                .withParticipants(VALID_PARTICIPANTS.toArray(Contact[]::new)).build();
+        assertFalse(MEETING_FILLED.equals(editedEvent));
+    }
+
+    @Test
+    public void toStringMethod() {
+        String expected = Event.class.getCanonicalName() + "{name=" + MEETING_FILLED.getName()
+                + ", date=" + MEETING_FILLED.getDate()
+                + ", address=" + MEETING_FILLED.getAddress()
+                + ", participants=" + MEETING_FILLED.getParticipants() + "}";
+        assertEquals(expected, MEETING_FILLED.toString());
     }
 }

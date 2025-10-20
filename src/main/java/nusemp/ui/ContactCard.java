@@ -43,17 +43,17 @@ public class ContactCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(contact.getName().value);
         email.setText(contact.getEmail().value);
-        if (contact.getPhone().isEmpty()) {
+        if (contact.hasPhone()) {
+            phone.setText(contact.getPhone().value);
+        } else {
             phone.setManaged(false);
             phone.setVisible(false);
-        } else {
-            phone.setText(contact.getPhone().value);
         }
-        if (contact.getAddress().isEmpty()) {
+        if (contact.hasAddress()) {
+            address.setText(contact.getAddress().value);
+        } else {
             address.setManaged(false);
             address.setVisible(false);
-        } else {
-            address.setText(contact.getAddress().value);
         }
         contact.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))

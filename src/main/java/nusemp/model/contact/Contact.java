@@ -53,8 +53,16 @@ public class Contact {
         return phone;
     }
 
+    public boolean hasPhone() {
+        return !phone.isEmpty();
+    }
+
     public Address getAddress() {
         return address;
+    }
+
+    public boolean hasAddress() {
+        return !address.isEmpty();
     }
 
     /**
@@ -63,6 +71,10 @@ public class Contact {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    public boolean hasTags() {
+        return !tags.isEmpty();
     }
 
     /**

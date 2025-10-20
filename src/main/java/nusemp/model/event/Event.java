@@ -12,6 +12,7 @@ import java.util.Set;
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
+import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
 
@@ -26,24 +27,26 @@ public class Event {
     private final Date date;
 
     // Data fields
+    private final Address address;
     private final List<Contact> participants = new ArrayList<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Event(Name name, Date date, List<Contact> participants) {
-        requireAllNonNull(name, date, participants);
+    public Event(Name name, Date date, Address address, List<Contact> participants) {
+        requireAllNonNull(name, date, address, participants);
         checkForDuplicateParticipants(participants);
         this.name = name;
         this.date = date;
+        this.address = address;
         this.participants.addAll(participants);
     }
 
     /**
      * Convenience constructor without participants.
      */
-    public Event(Name name, Date date) {
-        this(name, date, new ArrayList<>());
+    public Event(Name name, Date date, Address address) {
+        this(name, date, address, new ArrayList<>());
     }
 
     public Name getName() {
@@ -52,6 +55,14 @@ public class Event {
 
     public Date getDate() {
         return date;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public boolean hasAddress() {
+        return !address.isEmpty();
     }
 
     /**
@@ -105,7 +116,7 @@ public class Event {
         }
         List<Contact> updatedParticipants = new ArrayList<>(participants);
         updatedParticipants.add(contact);
-        return new Event(name, date, updatedParticipants);
+        return new Event(name, date, address, updatedParticipants);
     }
 
     /**
@@ -116,7 +127,7 @@ public class Event {
         requireAllNonNull(contact);
         List<Contact> updatedParticipants = new ArrayList<>(participants);
         updatedParticipants.remove(contact);
-        return new Event(name, date, updatedParticipants);
+        return new Event(name, date, address, updatedParticipants);
     }
 
     /**
@@ -150,13 +161,14 @@ public class Event {
         Event otherEvent = (Event) other;
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
+                && address.equals(otherEvent.address)
                 && participants.equals(otherEvent.participants);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, date, participants);
+        return Objects.hash(name, date, address, participants);
     }
 
     @Override
@@ -164,6 +176,7 @@ public class Event {
         return new ToStringBuilder(this)
                 .add("name", name)
                 .add("date", date)
+                .add("address", address)
                 .add("participants", participants)
                 .toString();
     }
