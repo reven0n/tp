@@ -3,7 +3,6 @@ package nusemp.model.contact;
 import java.util.List;
 import java.util.function.Predicate;
 
-import nusemp.commons.util.StringUtil;
 import nusemp.commons.util.ToStringBuilder;
 
 /**
