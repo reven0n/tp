@@ -8,7 +8,7 @@ import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_TAG_HUSBAND;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showContactAtIndex;
-import static nusemp.testutil.TypicalContacts.getTypicalAppData;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,7 +35,7 @@ import nusemp.testutil.EditContactDescriptorBuilder;
  */
 public class ContactEditCommandTest {
 
-    private Model model = new ModelManager(getTypicalAppData(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {

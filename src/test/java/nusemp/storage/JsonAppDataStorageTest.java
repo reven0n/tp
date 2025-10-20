@@ -4,7 +4,7 @@ import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalContacts.ALICE;
 import static nusemp.testutil.TypicalContacts.HOON;
 import static nusemp.testutil.TypicalContacts.IDA;
-import static nusemp.testutil.TypicalContacts.getTypicalAppData;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -64,7 +64,7 @@ public class JsonAppDataStorageTest {
     @Test
     public void readAndSaveAppData_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAppData.json");
-        AppData original = getTypicalAppData();
+        AppData original = getTypicalAppDataWithoutEvent();
         JsonAppDataStorage jsonAppDataStorage = new JsonAppDataStorage(filePath);
 
         // Save in new file and read back

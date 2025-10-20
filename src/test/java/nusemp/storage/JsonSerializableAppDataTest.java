@@ -1,6 +1,7 @@
 package nusemp.storage;
 
 import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.nio.file.Path;
@@ -25,7 +26,7 @@ public class JsonSerializableAppDataTest {
         JsonSerializableAppData dataFromFile = JsonUtil.readJsonFile(TYPICAL_CONTACTS_FILE,
                 JsonSerializableAppData.class).get();
         AppData appDataFromFile = dataFromFile.toModelType();
-        AppData typicalContactsAppData = TypicalContacts.getTypicalAppData();
+        AppData typicalContactsAppData = getTypicalAppDataWithoutEvent();
         assertEquals(typicalContactsAppData, appDataFromFile);
     }
 
