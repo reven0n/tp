@@ -277,7 +277,8 @@ public class MainWindow extends UiPart<Stage> {
         isTerminalVisible = true;
 
         // Focus on the terminal command box
-        terminalCommandBox.getRoot().requestFocus();
+        terminalCommandBox.requestFocus();
+
     }
 
     /**
