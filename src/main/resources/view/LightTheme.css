@@ -104,7 +104,7 @@
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #e9ecef;
+    -fx-background-color: #e1e4e6;
 }
 
 .list-cell:filled:selected {
@@ -491,4 +491,9 @@
     -fx-text-fill: white;
     -fx-background-color: radial-gradient(center 50% 50%, radius 40%, white 0%, #f8f9fa 30%, transparent 100%);
     -fx-border-color: none;
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #e9ecef;
 }

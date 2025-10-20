@@ -499,3 +499,7 @@
     -fx-border-color: none;
 }
 
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
+}
