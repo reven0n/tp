@@ -45,7 +45,7 @@ import nusemp.model.fields.Tag;
 import nusemp.testutil.ContactBuilder;
 
 public class ContactAddCommandParserTest {
-    private ContactAddCommandParser parser = new ContactAddCommandParser();
+    private final ContactAddCommandParser parser = new ContactAddCommandParser();
 
     @Test
     public void parse_allFieldsPresent_success() {
@@ -125,10 +125,14 @@ public class ContactAddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Contact expectedContact = new ContactBuilder(AMY).withTags().build();
+        Contact expectedContact1 = new ContactBuilder(AMY).withTags().build();
         assertParseSuccess(parser, CONTACT_NAME_DESC_AMY + CONTACT_PHONE_DESC_AMY
-                        + CONTACT_EMAIL_DESC_AMY + CONTACT_ADDRESS_DESC_AMY,
-                new ContactAddCommand(expectedContact));
+                        + CONTACT_EMAIL_DESC_AMY + CONTACT_ADDRESS_DESC_AMY, new ContactAddCommand(expectedContact1));
+
+        // only name and email
+        Contact expectedContact2 = new ContactBuilder(AMY).withoutPhone().withoutAddress().withTags().build();
+        assertParseSuccess(parser, CONTACT_NAME_DESC_AMY + CONTACT_EMAIL_DESC_AMY,
+                new ContactAddCommand(expectedContact2));
     }
 
     @Test
@@ -139,7 +143,6 @@ public class ContactAddCommandParserTest {
         assertParseFailure(parser, VALID_CONTACT_NAME_BOB + CONTACT_PHONE_DESC_BOB
                         + CONTACT_EMAIL_DESC_BOB + CONTACT_ADDRESS_DESC_BOB,
                 expectedMessage);
-
 
         // missing email prefix
         assertParseFailure(parser, CONTACT_NAME_DESC_BOB + CONTACT_PHONE_DESC_BOB
