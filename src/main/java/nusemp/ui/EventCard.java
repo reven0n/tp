@@ -49,7 +49,7 @@ public class EventCard extends UiPart<Region> {
             address.setVisible(false);
         }
         event.getParticipants().stream()
-                .sorted(Comparator.comparing(contact -> contact.getName().value))
+                .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
                 .forEach(contact -> people.getChildren().add(new Label(contact.getName().value)));
     }
 }
