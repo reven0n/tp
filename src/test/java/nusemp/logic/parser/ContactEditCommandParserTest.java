@@ -27,21 +27,22 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
+import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
+import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_CONTACT;
 
 import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
-import nusemp.logic.commands.ContactEditCommand;
-import nusemp.logic.commands.ContactEditCommand.EditPersonDescriptor;
-import nusemp.model.person.Email;
-import nusemp.model.person.Name;
-import nusemp.model.person.Phone;
+import nusemp.logic.commands.contact.ContactEditCommand;
+import nusemp.logic.commands.contact.ContactEditCommand.EditContactDescriptor;
+import nusemp.logic.parser.contact.ContactEditCommandParser;
+import nusemp.model.contact.Email;
+import nusemp.model.contact.Name;
+import nusemp.model.contact.Phone;
 import nusemp.model.tag.Tag;
-import nusemp.testutil.EditPersonDescriptorBuilder;
+import nusemp.testutil.EditContactDescriptorBuilder;
 
 public class ContactEditCommandParserTest {
 
@@ -90,7 +91,7 @@ public class ContactEditCommandParserTest {
         assertParseFailure(parser, " 1" + INVALID_CONTACT_PHONE_DESC + CONTACT_EMAIL_DESC_AMY,
                 Phone.MESSAGE_CONSTRAINTS);
 
-        // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
+        // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Contact} being edited,
         // parsing it together with a valid tag results in error
         assertParseFailure(parser, " 1" + CONTACT_TAG_DESC_FRIEND + CONTACT_TAG_DESC_HUSBAND + TAG_EMPTY,
                 Tag.MESSAGE_CONSTRAINTS);
@@ -107,11 +108,11 @@ public class ContactEditCommandParserTest {
 
     @Test
     public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
+        Index targetIndex = INDEX_SECOND_CONTACT;
         String userInput = targetIndex.getOneBased() + CONTACT_PHONE_DESC_BOB + CONTACT_TAG_DESC_HUSBAND
                 + CONTACT_EMAIL_DESC_AMY + CONTACT_ADDRESS_DESC_AMY + CONTACT_NAME_DESC_AMY + CONTACT_TAG_DESC_FRIEND;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_AMY)
+        EditContactDescriptor descriptor = new EditContactDescriptorBuilder().withName(VALID_CONTACT_NAME_AMY)
                 .withPhone(VALID_CONTACT_PHONE_BOB).withEmail(VALID_CONTACT_EMAIL_AMY)
                 .withAddress(VALID_CONTACT_ADDRESS_AMY)
                 .withTags(VALID_CONTACT_TAG_HUSBAND, VALID_CONTACT_TAG_FRIEND).build();
@@ -122,11 +123,11 @@ public class ContactEditCommandParserTest {
 
     @Test
     public void parse_someFieldsSpecified_success() {
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_CONTACT;
         String userInput = targetIndex.getOneBased() + CONTACT_PHONE_DESC_BOB + CONTACT_EMAIL_DESC_AMY;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_CONTACT_PHONE_BOB)
-                .withEmail(VALID_CONTACT_EMAIL_AMY).build();
+        ContactEditCommand.EditContactDescriptor descriptor = new EditContactDescriptorBuilder()
+                .withPhone(VALID_CONTACT_PHONE_BOB).withEmail(VALID_CONTACT_EMAIL_AMY).build();
         ContactEditCommand expectedCommand = new ContactEditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -135,33 +136,34 @@ public class ContactEditCommandParserTest {
     @Test
     public void parse_oneFieldSpecified_success() {
         // name
-        Index targetIndex = INDEX_THIRD_PERSON;
+        Index targetIndex = INDEX_THIRD_CONTACT;
         String userInput = targetIndex.getOneBased() + CONTACT_NAME_DESC_AMY;
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_CONTACT_NAME_AMY).build();
+        ContactEditCommand.EditContactDescriptor descriptor =
+                new EditContactDescriptorBuilder().withName(VALID_CONTACT_NAME_AMY).build();
         ContactEditCommand expectedCommand = new ContactEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // phone
         userInput = targetIndex.getOneBased() + CONTACT_PHONE_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withPhone(VALID_CONTACT_PHONE_AMY).build();
+        descriptor = new EditContactDescriptorBuilder().withPhone(VALID_CONTACT_PHONE_AMY).build();
         expectedCommand = new ContactEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // email
         userInput = targetIndex.getOneBased() + CONTACT_EMAIL_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withEmail(VALID_CONTACT_EMAIL_AMY).build();
+        descriptor = new EditContactDescriptorBuilder().withEmail(VALID_CONTACT_EMAIL_AMY).build();
         expectedCommand = new ContactEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // address
         userInput = targetIndex.getOneBased() + CONTACT_ADDRESS_DESC_AMY;
-        descriptor = new EditPersonDescriptorBuilder().withAddress(VALID_CONTACT_ADDRESS_AMY).build();
+        descriptor = new EditContactDescriptorBuilder().withAddress(VALID_CONTACT_ADDRESS_AMY).build();
         expectedCommand = new ContactEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // tags
         userInput = targetIndex.getOneBased() + CONTACT_TAG_DESC_FRIEND;
-        descriptor = new EditPersonDescriptorBuilder().withTags(VALID_CONTACT_TAG_FRIEND).build();
+        descriptor = new EditContactDescriptorBuilder().withTags(VALID_CONTACT_TAG_FRIEND).build();
         expectedCommand = new ContactEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -172,7 +174,7 @@ public class ContactEditCommandParserTest {
         // ContactContactAddCommandParserTest#parse_repeatedNonTagValue_failure()
 
         // valid followed by invalid
-        Index targetIndex = INDEX_FIRST_PERSON;
+        Index targetIndex = INDEX_FIRST_CONTACT;
         String userInput = targetIndex.getOneBased() + INVALID_CONTACT_PHONE_DESC + CONTACT_PHONE_DESC_BOB;
 
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
@@ -202,10 +204,10 @@ public class ContactEditCommandParserTest {
 
     @Test
     public void parse_resetTags_success() {
-        Index targetIndex = INDEX_THIRD_PERSON;
+        Index targetIndex = INDEX_THIRD_CONTACT;
         String userInput = targetIndex.getOneBased() + TAG_EMPTY;
 
-        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags().build();
+        EditContactDescriptor descriptor = new EditContactDescriptorBuilder().withTags().build();
         ContactEditCommand expectedCommand = new ContactEditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);

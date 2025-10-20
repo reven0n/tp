@@ -7,13 +7,14 @@ import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
-import nusemp.logic.commands.ContactListCommand;
+import nusemp.logic.commands.contact.ContactListCommand;
+import nusemp.logic.parser.contact.ContactListCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 
 class ContactListCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(
             Messages.MESSAGE_INVALID_COMMAND_FORMAT, ContactListCommand.MESSAGE_USAGE);
-    private ContactListCommandParser parser = new ContactListCommandParser();
+    private final ContactListCommandParser parser = new ContactListCommandParser();
 
     @Test
     public void parse_validArgs_success() throws ParseException {

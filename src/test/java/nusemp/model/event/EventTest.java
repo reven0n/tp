@@ -11,9 +11,9 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
+import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
-import nusemp.model.person.Person;
-import nusemp.testutil.PersonBuilder;
+import nusemp.testutil.ContactBuilder;
 
 class EventTest {
     @Test
@@ -45,9 +45,9 @@ class EventTest {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        List<Person> participants = new ArrayList<>();
-        Person alice = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
-        Person bob = new PersonBuilder().withName("Bob").withEmail("bob@example.com").build();
+        List<Contact> participants = new ArrayList<>();
+        Contact alice = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Contact bob = new ContactBuilder().withName("Bob").withEmail("bob@example.com").build();
 
         participants.add(alice);
         participants.add(bob);
@@ -57,13 +57,13 @@ class EventTest {
     }
 
     @Test
-    public void withParticipants_addPerson_returnsSetWithPerson() {
+    public void withParticipants_addContact_returnsSetWithContact() {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        List<Person> participants1 = new ArrayList<>();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        List<Person> participants2 = new ArrayList<>();
+        List<Contact> participants1 = new ArrayList<>();
+        Contact bob = new ContactBuilder().withName("Bob").build();
+        List<Contact> participants2 = new ArrayList<>();
         participants2.add(bob);
 
         Event event1 = new Event(name, date, participants1);
@@ -73,27 +73,27 @@ class EventTest {
     }
 
     @Test
-    public void withParticipants_addPerson_keepsOrder() {
+    public void withParticipants_addContact_keepsOrder() {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
-            List<Person> participants1 = createParticipantList("Alice", "Charlie");
+            List<Contact> participants1 = createParticipantList("Alice", "Charlie");
             Event event = new Event(name, date, participants1);
-            Person bob = new PersonBuilder().withName("Bob").withEmail("bob2@example.com").build();
-            List<Person> expectedParticipants = createParticipantList("Alice", "Charlie", "Bob");
+            Contact bob = new ContactBuilder().withName("Bob").withEmail("bob2@example.com").build();
+            List<Contact> expectedParticipants = createParticipantList("Alice", "Charlie", "Bob");
             assertEquals(event.withParticipant(bob).getParticipants().toString(), expectedParticipants.toString());
         }
     }
 
     @Test
-    public void withoutParticipants_removePerson_returnsSetWithoutPerson() {
+    public void withoutParticipants_removeContact_returnsSetWithoutContact() {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        List<Person> participants1 = createParticipantList("Bob");
-        Person bob = new PersonBuilder().withName("Bob").withEmail("bob0@example.com").build();
-        List<Person> participants2 = new ArrayList<>();
+        List<Contact> participants1 = createParticipantList("Bob");
+        Contact bob = new ContactBuilder().withName("Bob").withEmail("bob0@example.com").build();
+        List<Contact> participants2 = new ArrayList<>();
 
         Event event1 = new Event(name, date, participants1);
         Event event2 = new Event(name, date, participants2);
@@ -102,25 +102,25 @@ class EventTest {
     }
 
     @Test
-    public void withoutParticipants_removePersonFromEmptyList_returnsEmptySet() {
+    public void withoutParticipants_removeContactFromEmptyList_returnsEmptySet() {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
         Event event1 = new Event(name, date);
-        Person bob = new PersonBuilder().withName("Bob").withEmail("bob0@example.com").build();
+        Contact bob = new ContactBuilder().withName("Bob").withEmail("bob0@example.com").build();
         assertEquals(event1.withoutParticipant(bob), event1);
     }
 
     @Test
-    public void withoutParticipants_removePerson_keepsOrder() {
+    public void withoutParticipants_removeContact_keepsOrder() {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
-            List<Person> participants1 = createParticipantList("Alice", "Bob", "Charlie");
+            List<Contact> participants1 = createParticipantList("Alice", "Bob", "Charlie");
             Event event = new Event(name, date, participants1);
-            Person bob = new PersonBuilder().withName("Bob").withEmail("bob1@example.com").build();
-            List<Person> expectedParticipants = createParticipantList("Alice");
-            expectedParticipants.add(new PersonBuilder().withName("Charlie")
+            Contact bob = new ContactBuilder().withName("Bob").withEmail("bob1@example.com").build();
+            List<Contact> expectedParticipants = createParticipantList("Alice");
+            expectedParticipants.add(new ContactBuilder().withName("Charlie")
                     .withEmail("charlie2@example.com").build());
             assertEquals(event.withoutParticipant(bob).getParticipants().toString(), expectedParticipants.toString());
         }
@@ -174,11 +174,11 @@ class EventTest {
     public void equals_sameValues_returnsTrue() {
         EventName name1 = new EventName("Meeting");
         EventDate date1 = new EventDate("01-10-2025 14:00");
-        List<Person> participants1 = createParticipantList("Alice", "Bob");
+        List<Contact> participants1 = createParticipantList("Alice", "Bob");
 
         EventName name2 = new EventName("Meeting");
         EventDate date2 = new EventDate("01-10-2025 14:00");
-        List<Person> participants2 = createParticipantList("Alice", "Bob");
+        List<Contact> participants2 = createParticipantList("Alice", "Bob");
 
         Event event1 = new Event(name1, date1, participants1);
         Event event2 = new Event(name2, date2, participants2);
@@ -205,11 +205,11 @@ class EventTest {
     public void equals_differentParticipants_returnsFalse() {
         EventName name1 = new EventName("Meeting");
         EventDate date1 = new EventDate("01-10-2025 14:00");
-        List<Person> participants1 = createParticipantList("Alice", "Bob");
+        List<Contact> participants1 = createParticipantList("Alice", "Bob");
 
         EventName name2 = new EventName("Meeting");
         EventDate date2 = new EventDate("01-10-2025 14:00");
-        List<Person> participants2 = createParticipantList("Alice", "Charlie");
+        List<Contact> participants2 = createParticipantList("Alice", "Charlie");
 
         Event event1 = new Event(name1, date1, participants1);
         Event event2 = new Event(name2, date2, participants2);
@@ -222,7 +222,7 @@ class EventTest {
         EventName name2 = new EventName("Conference");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        List<Person> participants = createParticipantList("Alice", "Bob");
+        List<Contact> participants = createParticipantList("Alice", "Bob");
 
         Event event1 = new Event(name1, date, participants);
         Event event2 = new Event(name2, date, participants);
@@ -235,7 +235,7 @@ class EventTest {
         EventDate date1 = new EventDate("01-10-2025 14:00");
         EventDate date2 = new EventDate("02-10-2025 14:00");
 
-        List<Person> participants = createParticipantList("Alice", "Bob");
+        List<Contact> participants = createParticipantList("Alice", "Bob");
 
         Event event1 = new Event(name, date1, participants);
         Event event2 = new Event(name, date2, participants);
@@ -247,11 +247,11 @@ class EventTest {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        // Create two persons with the same email but different names
-        Person alice1 = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
-        Person alice2 = new PersonBuilder().withName("Alice Smith").withEmail("alice@example.com").build();
+        // Create two contacts with the same email but different names
+        Contact alice1 = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Contact alice2 = new ContactBuilder().withName("Alice Smith").withEmail("alice@example.com").build();
 
-        List<Person> participantsWithDuplicateEmail = new ArrayList<>();
+        List<Contact> participantsWithDuplicateEmail = new ArrayList<>();
         participantsWithDuplicateEmail.add(alice1);
         participantsWithDuplicateEmail.add(alice2);
 
@@ -263,20 +263,20 @@ class EventTest {
         EventName name = new EventName("Meeting");
         EventDate date = new EventDate("01-10-2025 14:00");
 
-        Person alice1 = new PersonBuilder().withName("Alice").withEmail("alice@example.com").build();
-        Person alice2 = new PersonBuilder().withName("Alice Smith").withEmail("alice@example.com").build();
+        Contact alice1 = new ContactBuilder().withName("Alice").withEmail("alice@example.com").build();
+        Contact alice2 = new ContactBuilder().withName("Alice Smith").withEmail("alice@example.com").build();
 
-        List<Person> participants = new ArrayList<>();
+        List<Contact> participants = new ArrayList<>();
         participants.add(alice1);
         Event event = new Event(name, date, participants);
 
         assertThrows(DuplicateParticipantException.class, () -> event.withParticipant(alice2));
     }
 
-    private List<Person> createParticipantList(String... names) {
-        List<Person> participants = new ArrayList<>();
+    private List<Contact> createParticipantList(String... names) {
+        List<Contact> participants = new ArrayList<>();
         for (int i = 0; i < names.length; i++) {
-            participants.add(new PersonBuilder().withName(names[i])
+            participants.add(new ContactBuilder().withName(names[i])
                 .withEmail(names[i].toLowerCase() + i + "@example.com").build());
         }
         return participants;

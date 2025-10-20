@@ -9,39 +9,40 @@ import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.person.Person;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the app data.
  */
 public class ModelManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final AppData appData;
     private final UserPrefs userPrefs;
-    private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Contact> filteredContacts;
     private final FilteredList<Event> filteredEvents;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given appData and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
-        requireAllNonNull(addressBook, userPrefs);
+    public ModelManager(ReadOnlyAppData appData, ReadOnlyUserPrefs userPrefs) {
+        requireAllNonNull(appData, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with app data: " + appData + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
+        this.appData = new AppData(appData);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        filteredEvents = new FilteredList<>(this.addressBook.getEventList());
+        filteredContacts = new FilteredList<>(this.appData.getContactList());
+        filteredEvents = new FilteredList<>(this.appData.getEventList());
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new AppData(), new UserPrefs());
     }
 
     //=========== UserPrefs ==================================================================================
@@ -69,67 +70,66 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+    public Path getAppDataFilePath() {
+        return userPrefs.getAppDataFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
+    public void setAppDataFilePath(Path appDataFilePath) {
+        requireNonNull(appDataFilePath);
+        userPrefs.setAppDataFilePath(appDataFilePath);
     }
 
-    //=========== AddressBook ================================================================================
+    //=========== AppData ================================================================================
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        this.addressBook.resetData(addressBook);
-    }
-
-    @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public void setAppData(ReadOnlyAppData appData) {
+        this.appData.resetData(appData);
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return addressBook.hasPerson(person);
+    public ReadOnlyAppData getAppData() {
+        return appData;
     }
 
     @Override
-    public void deletePerson(Person target) {
-        addressBook.removePerson(target);
+    public boolean hasContact(Contact contact) {
+        requireNonNull(contact);
+        return appData.hasContact(contact);
     }
 
     @Override
-    public void addPerson(Person person) {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public void deleteContact(Contact target) {
+        appData.removeContact(target);
     }
 
     @Override
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
-
-        addressBook.setPerson(target, editedPerson);
+    public void addContact(Contact contact) {
+        appData.addContact(contact);
+        updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    @Override
+    public void setContact(Contact target, Contact editedContact) {
+        requireAllNonNull(target, editedContact);
+
+        appData.setContact(target, editedContact);
+    }
+
+    //=========== Filtered Contact List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the filtered contact list
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+    public ObservableList<Contact> getFilteredContactList() {
+        return filteredContacts;
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredContactList(Predicate<Contact> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredContacts.setPredicate(predicate);
     }
 
     //=========== Event Operations ===========================================================================
@@ -137,38 +137,30 @@ public class ModelManager implements Model {
     @Override
     public boolean hasEvent(Event event) {
         requireNonNull(event);
-        return addressBook.hasEvent(event);
+        return appData.hasEvent(event);
     }
 
     @Override
     public void deleteEvent(Event target) {
-        addressBook.removeEvent(target);
+        appData.removeEvent(target);
     }
 
     @Override
     public void addEvent(Event event) {
-        addressBook.addEvent(event);
+        appData.addEvent(event);
         updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
     }
 
     @Override
     public void setEvent(Event target, Event editedEvent) {
         requireAllNonNull(target, editedEvent);
-        addressBook.setEvent(target, editedEvent);
-    }
-
-    @Override
-    public void addParticipantToEvent(Event event, Person person) {
-        requireAllNonNull(event, person);
-        Event updatedEvent = event.withParticipant(person);
-        addressBook.setEvent(event, updatedEvent);
+        appData.setEvent(target, editedEvent);
     }
 
     //=========== Filtered Event List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Event} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the filtered event list
      */
     @Override
     public ObservableList<Event> getFilteredEventList() {
@@ -184,8 +176,8 @@ public class ModelManager implements Model {
     //=========== Lookup Helper Methods ========================================================
 
     @Override
-    public Person getPersonByIndex(Index index) {
-        return filteredPersons.get(index.getZeroBased());
+    public Contact getContactByIndex(Index index) {
+        return filteredContacts.get(index.getZeroBased());
     }
 
     @Override
@@ -205,9 +197,9 @@ public class ModelManager implements Model {
         }
 
         ModelManager otherModelManager = (ModelManager) other;
-        return addressBook.equals(otherModelManager.addressBook)
+        return appData.equals(otherModelManager.appData)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredPersons.equals(otherModelManager.filteredPersons)
+                && filteredContacts.equals(otherModelManager.filteredContacts)
                 && filteredEvents.equals(otherModelManager.filteredEvents);
     }
 

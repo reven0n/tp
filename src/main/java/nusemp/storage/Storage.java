@@ -5,14 +5,14 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import nusemp.commons.exceptions.DataLoadingException;
-import nusemp.model.ReadOnlyAddressBook;
+import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.UserPrefs;
 
 /**
  * API of the Storage component
  */
-public interface Storage extends AddressBookStorage, UserPrefsStorage {
+public interface Storage extends AppDataStorage, UserPrefsStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataLoadingException;
@@ -21,12 +21,12 @@ public interface Storage extends AddressBookStorage, UserPrefsStorage {
     void saveUserPrefs(ReadOnlyUserPrefs userPrefs) throws IOException;
 
     @Override
-    Path getAddressBookFilePath();
+    Path getAppDataFilePath();
 
     @Override
-    Optional<ReadOnlyAddressBook> readAddressBook() throws DataLoadingException;
+    Optional<ReadOnlyAppData> readAppData() throws DataLoadingException;
 
     @Override
-    void saveAddressBook(ReadOnlyAddressBook addressBook) throws IOException;
+    void saveAppData(ReadOnlyAppData appData) throws IOException;
 
 }

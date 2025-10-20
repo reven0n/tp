@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+
 import nusemp.commons.core.Config;
 import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.Version;
@@ -15,15 +16,15 @@ import nusemp.commons.util.ConfigUtil;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.Logic;
 import nusemp.logic.LogicManager;
-import nusemp.model.AddressBook;
+import nusemp.model.AppData;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
-import nusemp.model.ReadOnlyAddressBook;
+import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.UserPrefs;
 import nusemp.model.util.SampleDataUtil;
-import nusemp.storage.AddressBookStorage;
-import nusemp.storage.JsonAddressBookStorage;
+import nusemp.storage.AppDataStorage;
+import nusemp.storage.JsonAppDataStorage;
 import nusemp.storage.JsonUserPrefsStorage;
 import nusemp.storage.Storage;
 import nusemp.storage.StorageManager;
@@ -48,7 +49,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing NUS EMP ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -57,8 +58,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        AppDataStorage appDataStorage = new JsonAppDataStorage(userPrefs.getAppDataFilePath());
+        storage = new StorageManager(appDataStorage, userPrefsStorage);
 
         model = initModelManager(storage, userPrefs);
 
@@ -68,26 +69,26 @@ public class MainApp extends Application {
     }
 
     /**
-     * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
-     * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
-     * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Returns a {@code ModelManager} with the data from {@code storage}'s app data and {@code userPrefs}. <br>
+     * The data from the sample app data will be used instead if {@code storage}'s app data is not found,
+     * or an empty app data will be used instead if errors occur when reading {@code storage}'s app data.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        logger.info("Using data file : " + storage.getAddressBookFilePath());
+        logger.info("Using data file : " + storage.getAppDataFilePath());
 
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyAppData> appDataOptional;
+        ReadOnlyAppData initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Creating a new data file " + storage.getAddressBookFilePath()
-                        + " populated with a sample AddressBook.");
+            appDataOptional = storage.readAppData();
+            if (!appDataOptional.isPresent()) {
+                logger.info("Creating a new data file " + storage.getAppDataFilePath()
+                        + " populated with a sample app data.");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = appDataOptional.orElseGet(SampleDataUtil::getSampleAppData);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty AddressBook.");
-            initialData = new AddressBook();
+            logger.warning("Data file at " + storage.getAppDataFilePath() + " could not be loaded."
+                    + " Will be starting with an empty app data.");
+            initialData = new AppData();
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -170,13 +171,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting NUS EMP " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping AddressBook ] =============================");
+        logger.info("============================ [ Stopping NUS EMP ] =============================");
         try {
             storage.saveUserPrefs(model.getUserPrefs());
         } catch (IOException e) {

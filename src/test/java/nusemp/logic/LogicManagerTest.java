@@ -1,13 +1,13 @@
 package nusemp.logic;
 
-import static nusemp.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static nusemp.logic.Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX;
 import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_ADDRESS_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_EMAIL_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_NAME_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_PHONE_DESC_AMY;
 import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalPersons.AMY;
+import static nusemp.testutil.TypicalContacts.AMY;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
@@ -20,19 +20,19 @@ import org.junit.jupiter.api.io.TempDir;
 
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
-import nusemp.logic.commands.ContactAddCommand;
-import nusemp.logic.commands.ContactListCommand;
+import nusemp.logic.commands.contact.ContactAddCommand;
+import nusemp.logic.commands.contact.ContactListCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
-import nusemp.model.ReadOnlyAddressBook;
+import nusemp.model.ReadOnlyAppData;
 import nusemp.model.UserPrefs;
-import nusemp.model.person.Person;
-import nusemp.storage.JsonAddressBookStorage;
+import nusemp.model.contact.Contact;
+import nusemp.storage.JsonAppDataStorage;
 import nusemp.storage.JsonUserPrefsStorage;
 import nusemp.storage.StorageManager;
-import nusemp.testutil.PersonBuilder;
+import nusemp.testutil.ContactBuilder;
 
 public class LogicManagerTest {
     private static final IOException DUMMY_IO_EXCEPTION = new IOException("dummy IO exception");
@@ -46,10 +46,9 @@ public class LogicManagerTest {
 
     @BeforeEach
     public void setUp() {
-        JsonAddressBookStorage addressBookStorage =
-                new JsonAddressBookStorage(temporaryFolder.resolve("addressBook.json"));
+        JsonAppDataStorage appDataStorage = new JsonAppDataStorage(temporaryFolder.resolve("appdata.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("userPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(appDataStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);
     }
 
@@ -62,14 +61,14 @@ public class LogicManagerTest {
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
         String deleteCommand = "contact delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandException(deleteCommand, MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validCommand_success() throws Exception {
         String listCommand = CommandType.CONTACT + " " + ContactListCommand.COMMAND_WORD;
         assertCommandSuccess(listCommand,
-                String.format(ContactListCommand.MESSAGE_SUCCESS, model.getFilteredPersonList().size()), model);
+                String.format(ContactListCommand.MESSAGE_SUCCESS, model.getFilteredContactList().size()), model);
     }
 
     @Test
@@ -85,8 +84,8 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
-        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredPersonList().remove(0));
+    public void getFilteredContactList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> logic.getFilteredContactList().remove(0));
     }
 
     /**
@@ -129,7 +128,7 @@ public class LogicManagerTest {
      */
     private void assertCommandFailure(String inputCommand, Class<? extends Throwable> expectedException,
             String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
         assertCommandFailure(inputCommand, expectedException, expectedMessage, expectedModel);
     }
 
@@ -156,10 +155,10 @@ public class LogicManagerTest {
     private void assertCommandFailureForExceptionFromStorage(IOException e, String expectedMessage) {
         Path prefPath = temporaryFolder.resolve("ExceptionUserPrefs.json");
 
-        // Inject LogicManager with an AddressBookStorage that throws the IOException e when saving
-        JsonAddressBookStorage addressBookStorage = new JsonAddressBookStorage(prefPath) {
+        // Inject LogicManager with an AppDataStorage that throws the IOException e when saving
+        JsonAppDataStorage appDataStorage = new JsonAppDataStorage(prefPath) {
             @Override
-            public void saveAddressBook(ReadOnlyAddressBook addressBook, Path filePath)
+            public void saveAppData(ReadOnlyAppData appData, Path filePath)
                     throws IOException {
                 throw e;
             }
@@ -167,16 +166,16 @@ public class LogicManagerTest {
 
         JsonUserPrefsStorage userPrefsStorage =
                 new JsonUserPrefsStorage(temporaryFolder.resolve("ExceptionUserPrefs.json"));
-        StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        StorageManager storage = new StorageManager(appDataStorage, userPrefsStorage);
 
         logic = new LogicManager(model, storage);
 
-        // Triggers the saveAddressBook method by executing an add command
+        // Triggers the saveAppData method by executing an add command
         String addCommand = CommandType.CONTACT + " " + ContactAddCommand.COMMAND_WORD
                 + CONTACT_NAME_DESC_AMY + CONTACT_PHONE_DESC_AMY + CONTACT_EMAIL_DESC_AMY + CONTACT_ADDRESS_DESC_AMY;
-        Person expectedPerson = new PersonBuilder(AMY).withTags().build();
+        Contact expectedContact = new ContactBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
-        expectedModel.addPerson(expectedPerson);
+        expectedModel.addContact(expectedContact);
         assertCommandFailure(addCommand, CommandException.class, expectedMessage, expectedModel);
     }
 }
