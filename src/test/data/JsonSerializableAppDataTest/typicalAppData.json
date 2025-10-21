@@ -1,0 +1,50 @@
+{
+  "contacts" : [ {
+    "name" : "Alex Yeoh",
+    "email" : "alexyeoh@example.com",
+    "phone" : "87438807",
+    "address" : "Blk 30 Geylang Street 29, #06-40",
+    "tags" : [ "friends" ]
+  }, {
+    "name" : "Bernice Yu",
+    "email" : "berniceyu@example.com",
+    "phone" : "99272758",
+    "address" : "Blk 30 Lorong 3 Serangoon Gardens, #07-18",
+    "tags" : [ "colleagues", "friends" ]
+  }, {
+    "name" : "Charlotte Oliveiro",
+    "email" : "charlotte@example.com",
+    "phone" : "93210283",
+    "address" : "Blk 11 Ang Mo Kio Street 74, #11-04",
+    "tags" : [ "neighbours" ]
+  }, {
+    "name" : "David Li",
+    "email" : "lidavid@example.com",
+    "phone" : "91031282",
+    "address" : "Blk 436 Serangoon Gardens Street 26, #16-43",
+    "tags" : [ "family" ]
+  }, {
+    "name" : "Irfan Ibrahim",
+    "email" : "irfan@example.com",
+    "phone" : "92492021",
+    "address" : "Blk 47 Tampines Street 20, #17-35",
+    "tags" : [ "classmates" ]
+  }, {
+    "name" : "Roy Balakrishnan",
+    "email" : "royb@example.com",
+    "phone" : "92624417",
+    "address" : "Blk 45 Aljunied Street 85, #11-31",
+    "tags" : [ "colleagues" ]
+  } ],
+  "events" : [ {
+    "name" : "Team Meeting",
+    "date" : "25-12-2025 14:30",
+    "address" : "Conference Room",
+    "participantEmails" : [ "alexyeoh@example.com", "berniceyu@example.com" ]
+  }, {
+    "name" : "Marathon",
+    "date" : "10-11-2025 02:30",
+    "address" : "Suntec City",
+    "participantEmails" : [ "berniceyu@example.com", "alexyeoh@example.com" ]
+  } ]
+}

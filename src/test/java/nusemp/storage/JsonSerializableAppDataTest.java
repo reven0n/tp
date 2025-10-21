@@ -3,6 +3,8 @@ package nusemp.storage;
 import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,11 +14,14 @@ import org.junit.jupiter.api.Test;
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.commons.util.JsonUtil;
 import nusemp.model.AppData;
+import nusemp.model.contact.Contact;
+import nusemp.model.event.Event;
 
 public class JsonSerializableAppDataTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableAppDataTest");
     private static final Path TYPICAL_CONTACTS_FILE = TEST_DATA_FOLDER.resolve("typicalContactsAppData.json");
+    private static final Path TYPICAL_APPDATA_FILE = TEST_DATA_FOLDER.resolve("typicalAppData.json");
     private static final Path INVALID_CONTACT_FILE = TEST_DATA_FOLDER.resolve("invalidContactAppData.json");
     private static final Path DUPLICATE_CONTACT_FILE = TEST_DATA_FOLDER.resolve("duplicateContactAppData.json");
 
@@ -42,6 +47,83 @@ public class JsonSerializableAppDataTest {
                 JsonSerializableAppData.class).get();
         assertThrows(IllegalValueException.class, JsonSerializableAppData.MESSAGE_DUPLICATE_CONTACT,
                 dataFromFile::toModelType);
+    }
+
+    @Test
+    public void toModelType_bidirectionalLinking_success() throws Exception {
+        JsonSerializableAppData dataFromFile = JsonUtil.readJsonFile(TYPICAL_APPDATA_FILE,
+                JsonSerializableAppData.class).get();
+        AppData appData = dataFromFile.toModelType();
+
+        // Find Alex Yeoh and Bernice Yu
+        Contact alex = appData.getContactList().stream()
+                .filter(c -> c.getEmail().value.equals("alexyeoh@example.com"))
+                .findFirst()
+                .orElse(null);
+
+        Contact bernice = appData.getContactList().stream()
+                .filter(c -> c.getEmail().value.equals("berniceyu@example.com"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(alex);
+        assertNotNull(bernice);
+
+        // Both should have 2 events (Team Meeting and asd)
+        assertEquals(2, alex.getEvents().size());
+        assertEquals(2, bernice.getEvents().size());
+
+        // Verify event names
+        assertTrue(alex.hasEventWithName("Team Meeting"));
+        assertTrue(alex.hasEventWithName("Marathon"));
+        assertTrue(bernice.hasEventWithName("Team Meeting"));
+        assertTrue(bernice.hasEventWithName("Marathon"));
+    }
+
+    @Test
+    public void toModelType_typicalAppDataFile_success() throws Exception {
+        JsonSerializableAppData dataFromFile = JsonUtil.readJsonFile(TYPICAL_APPDATA_FILE,
+                JsonSerializableAppData.class).get();
+        AppData appDataFromFile = dataFromFile.toModelType();
+
+        assertNotNull(appDataFromFile);
+        assertEquals(6, appDataFromFile.getContactList().size());
+        assertEquals(2, appDataFromFile.getEventList().size());
+    }
+
+    @Test
+    public void toModelType_contactsWithoutEvents_success() throws Exception {
+        JsonSerializableAppData dataFromFile = JsonUtil.readJsonFile(TYPICAL_APPDATA_FILE,
+                JsonSerializableAppData.class).get();
+        AppData appData = dataFromFile.toModelType();
+
+        // Find contacts not in any event
+        Contact charlotte = appData.getContactList().stream()
+                .filter(c -> c.getEmail().value.equals("charlotte@example.com"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(charlotte);
+        assertEquals(0, charlotte.getEvents().size());
+    }
+
+    @Test
+    public void toModelType_eventsHaveParticipants_success() throws Exception {
+        JsonSerializableAppData dataFromFile = JsonUtil.readJsonFile(TYPICAL_APPDATA_FILE,
+                JsonSerializableAppData.class).get();
+        AppData appData = dataFromFile.toModelType();
+
+        Event teamMeeting = appData.getEventList().stream()
+                .filter(e -> e.getName().value.equals("Team Meeting"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(teamMeeting);
+        assertEquals(2, teamMeeting.getParticipants().size());
+
+        // Verify participants are Alex and Bernice
+        assertTrue(teamMeeting.hasParticipantWithEmail("alexyeoh@example.com"));
+        assertTrue(teamMeeting.hasParticipantWithEmail("berniceyu@example.com"));
     }
 
 }
