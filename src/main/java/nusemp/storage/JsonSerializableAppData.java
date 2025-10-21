@@ -93,12 +93,8 @@ class JsonSerializableAppData {
                         .orElse(null);
 
                 if (existingContact != null && !existingContact.hasEventWithName(event.getName().value)) {
-                    try {
-                        Contact updatedContact = existingContact.addEvent(event);
-                        appData.setContact(existingContact, updatedContact);
-                    } catch (Exception e) {
-                        // Skip if event already exists
-                    }
+                    Contact updatedContact = existingContact.addEvent(event);
+                    appData.setContact(existingContact, updatedContact);
                 }
             }
         }
