@@ -4,6 +4,7 @@ import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -21,13 +22,19 @@ import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.contact.ContactEditCommand.EditContactDescriptor;
 import nusemp.logic.commands.contact.ContactFindCommand;
 import nusemp.logic.commands.contact.ContactListCommand;
+import nusemp.logic.commands.event.EventAddCommand;
+import nusemp.logic.commands.event.EventDeleteCommand;
+import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventListCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
+import nusemp.model.event.Event;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.ContactUtil;
 import nusemp.testutil.EditContactDescriptorBuilder;
+import nusemp.testutil.EventBuilder;
+import nusemp.testutil.EventUtil;
 
 public class AppParserTest {
 
@@ -95,5 +102,51 @@ public class AppParserTest {
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
                 parser.parseCommand("contact unknownCommand"));
+    }
+
+    @Test
+    public void parseCommand_eventDelete() throws Exception {
+        EventDeleteCommand command = (EventDeleteCommand) parser.parseCommand(
+                "event delete " + INDEX_FIRST_EVENT.getOneBased());
+        assertEquals(new EventDeleteCommand(INDEX_FIRST_EVENT), command);
+    }
+
+    @Test
+    public void parseCommand_eventList() throws Exception {
+        assertTrue(parser.parseCommand(CommandType.EVENT + " " + EventListCommand.COMMAND_WORD)
+                instanceof EventListCommand);
+    }
+
+    @Test
+    public void parseCommand_eventLink() throws Exception {
+        String command = CommandType.EVENT + " " + EventLinkCommand.COMMAND_WORD
+                + " --event 1 --contact 1";
+        assertTrue(parser.parseCommand(command) instanceof EventLinkCommand);
+    }
+
+    @Test
+    public void parseCommand_invalidEventDeleteArgs_throwsParseException() {
+        // No index provided
+        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EventDeleteCommand.MESSAGE_USAGE), () ->
+                parser.parseCommand(CommandType.EVENT + " " + EventDeleteCommand.COMMAND_WORD));
+
+        // Invalid index
+        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                EventDeleteCommand.MESSAGE_USAGE), () ->
+                parser.parseCommand(CommandType.EVENT + " " + EventDeleteCommand.COMMAND_WORD + " abc"));
+    }
+
+    @Test
+    public void parseCommand_unknownEventCommand_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
+                parser.parseCommand(CommandType.EVENT + " unknownCommand"));
+    }
+
+    @Test
+    public void parseCommand_missingEventCommandWord_throwsParseException() {
+        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                HelpCommand.MESSAGE_USAGE), () ->
+                parser.parseCommand(CommandType.EVENT.toString()));
     }
 }
