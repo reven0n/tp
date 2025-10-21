@@ -22,19 +22,15 @@ import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.contact.ContactEditCommand.EditContactDescriptor;
 import nusemp.logic.commands.contact.ContactFindCommand;
 import nusemp.logic.commands.contact.ContactListCommand;
-import nusemp.logic.commands.event.EventAddCommand;
 import nusemp.logic.commands.event.EventDeleteCommand;
 import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventListCommand;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
-import nusemp.model.event.Event;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.ContactUtil;
 import nusemp.testutil.EditContactDescriptorBuilder;
-import nusemp.testutil.EventBuilder;
-import nusemp.testutil.EventUtil;
 
 public class AppParserTest {
 
