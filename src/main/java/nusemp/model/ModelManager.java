@@ -4,8 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -104,7 +102,6 @@ public class ModelManager implements Model {
     public void deleteContact(Contact target) {
         // Remove contact from all linked events
         for (Event event : target.getEvents()) {
-            // Event updatedEvent = event.withoutParticipant(target);
             if (hasEvent(event)) {
                 Event updatedEvent = event.withoutParticipant(target);
                 appData.setEvent(event, updatedEvent);
@@ -163,13 +160,11 @@ public class ModelManager implements Model {
     public void deleteEvent(Event target) {
         // Remove event from all linked contacts
         for (Contact participant : target.getParticipants()) {
-            // Contact updatedContact = participant.removeEvent(target);
             if (hasContact(participant)) {
                 Contact updatedContact = participant.removeEvent(target);
                 appData.setContact(participant, updatedContact);
             }
         }
-
         appData.removeEvent(target);
     }
 
@@ -184,30 +179,6 @@ public class ModelManager implements Model {
         requireAllNonNull(target, editedEvent);
         // update event in the list
         appData.setEvent(target, editedEvent);
-
-        /**
-        // Handle bidirectional linking for removed participants
-        List<Contact> removedParticipants = new ArrayList<>(target.getParticipants());
-        removedParticipants.removeAll(editedEvent.getParticipants());
-
-        for (Contact participant : removedParticipants) {
-            Contact updatedContact = participant.removeEvent(target);
-            if (hasContact(participant)) {
-                appData.setContact(participant, updatedContact);
-            }
-        }
-
-        // Handle bidirectional linking for added participants
-        List<Contact> addedParticipants = new ArrayList<>(editedEvent.getParticipants());
-        addedParticipants.removeAll(target.getParticipants());
-
-        for (Contact participant : addedParticipants) {
-            Contact updatedContact = participant.addEvent(editedEvent);
-            if (hasContact(participant)) {
-                appData.setContact(participant, updatedContact);
-            }
-        }
-         **/
     }
 
     //=========== Filtered Event List Accessors =============================================================

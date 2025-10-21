@@ -69,7 +69,7 @@ public class JsonSerializableAppDataTest {
         assertNotNull(alex);
         assertNotNull(bernice);
 
-        // Both should have 2 events (Team Meeting and asd)
+        // Both should have 2 events (Team Meeting and Marathon)
         assertEquals(2, alex.getEvents().size());
         assertEquals(2, bernice.getEvents().size());
 
