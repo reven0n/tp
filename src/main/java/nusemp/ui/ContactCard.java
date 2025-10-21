@@ -58,5 +58,11 @@ public class ContactCard extends UiPart<Region> {
         contact.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        id.setWrapText(true);
+        name.setWrapText(true);
+        email.setWrapText(true);
+        phone.setWrapText(true);
+        address.setWrapText(true);
+
     }
 }

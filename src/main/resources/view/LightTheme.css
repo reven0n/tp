@@ -315,7 +315,7 @@
 #commandTextField {
     -fx-background-color: transparent #ffffff transparent #ffffff;
     -fx-background-insets: 0;
-    -fx-border-color: #ffffff #ffffff #ffffff #ffffff;
+    -fx-border-color: lightgray lightgray lightgray lightgray;
     -fx-border-insets: 0;
     -fx-border-width: 1;
     -fx-font-family: "Segoe UI Light";
@@ -338,8 +338,8 @@
 }
 
 #people .label {
-    -fx-text-fill: #007acc;
-    -fx-background-color: #ffffff;
+    --fx-text-fill: #ffffff;
+    -fx-background-color: #007acc;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
@@ -397,7 +397,7 @@
 
 /* Terminal Overlay Styles */
 .terminal-overlay {
-    -fx-background-color: rgba(255, 255, 255, 0.9);
+    -fx-background-color: rgba(0, 0, 0, 0.4);
     -fx-alignment: center;
 }
 
@@ -472,12 +472,12 @@
 }
 
 .toggle-active {
-    -fx-background-color: #3e7b91;
+    -fx-background-color: #007acc;
     -fx-text-fill: #333333;
 }
 
 .toggle-active:hover {
-    -fx-background-color: #3e7b91;
+    -fx-background-color: #007acc;
     -fx-text-fill: #333333;
 }
 

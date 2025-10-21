@@ -28,14 +28,6 @@
                 <VBox>
                     <HBox VBox.vgrow="ALWAYS">
                         <children>
-                            <!--<MenuBar fx:id="menuBar">
-                                <Menu mnemonicParsing="false" text="File">
-                                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Help">
-                                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-                                </Menu>
-                            </MenuBar>-->
                             <VBox fx:id="sidebar" prefWidth="80" alignment="CENTER" spacing="15">
 
                                 <children>
@@ -55,7 +47,7 @@
                                     <Region VBox.vgrow="ALWAYS"/>
 
                                     <!-- Theme toggle button anchored to bottom -->
-                                    <Button fx:id="themeToggle" text="☀" onAction="#handleThemeToggle" styleClass="sidebar-button">
+                                    <Button fx:id="themeToggle" onAction="#handleThemeToggle" styleClass="sidebar-button">
                                         <VBox.margin>
                                             <Insets bottom="15" />
                                         </VBox.margin>
@@ -85,9 +77,9 @@
                                         <Insets top="15" />
                                     </StackPane.margin>
 
-                                    <Button fx:id="contactsToggle" text="👤" styleClass="toggle-button, toggle-active"
+                                    <Button fx:id="contactsToggle"  styleClass="toggle-button, toggle-active"
                                             maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleContactViewToggle"/>
-                                    <Button fx:id="eventsToggle" text="🗓️" styleClass="toggle-button, toggle-inactive"
+                                    <Button fx:id="eventsToggle"  styleClass="toggle-button, toggle-inactive"
                                             maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleEventViewToggle"/>
                                 </HBox>
                             </StackPane>
