@@ -28,7 +28,6 @@ import nusemp.logic.commands.contact.ContactListCommand;
 import nusemp.logic.commands.event.EventDeleteCommand;
 import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventListCommand;
-import nusemp.logic.parser.contact.ContactDeleteCommandParser;
 import nusemp.logic.parser.event.EventDeleteCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.Contact;
