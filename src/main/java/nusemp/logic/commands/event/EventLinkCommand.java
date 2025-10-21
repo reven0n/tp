@@ -59,7 +59,6 @@ public class EventLinkCommand extends Command {
         List<Event> lastShownEventList = model.getFilteredEventList();
         List<Contact> lastShownContactList = model.getFilteredContactList();
 
-        // check if the event index and contact index are within bounds
         if (eventIndex.getZeroBased() >= lastShownEventList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
@@ -70,16 +69,27 @@ public class EventLinkCommand extends Command {
         Event eventToUpdate = lastShownEventList.get(eventIndex.getZeroBased());
         Contact contactToLink = lastShownContactList.get(contactIndex.getZeroBased());
 
-        // link the contact to the event
+        // Check for duplicate participant
+        if (eventToUpdate.hasParticipantWithEmail(contactToLink.getEmail().value)) {
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
+                    contactToLink.getEmail()));
+        }
+
+        // Link both sides atomically
         try {
             Event updatedEvent = eventToUpdate.withParticipant(contactToLink);
+            Contact updatedContact = contactToLink.addEvent(updatedEvent);
+
             model.setEvent(eventToUpdate, updatedEvent);
-            return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    contactToLink.getName(), updatedEvent.getName()));
+            model.setContact(contactToLink, updatedContact);
+
+            return new CommandResult(MESSAGE_SUCCESS);
         } catch (DuplicateParticipantException e) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, contactToLink.getEmail()));
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
+                    contactToLink.getEmail()));
         }
     }
+
 
     @Override
     public boolean equals(Object other) {
