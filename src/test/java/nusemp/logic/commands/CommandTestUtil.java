@@ -66,6 +66,9 @@ public class CommandTestUtil {
     public static final String EVENT_DATE_DESC_CONFERENCE = " " + PREFIX_DATE + VALID_EVENT_DATE_CONFERENCE;
     public static final String EVENT_ADDRESS_DESC_MEETING = " " + PREFIX_ADDRESS + VALID_EVENT_ADDRESS_MEETING;
     public static final String EVENT_ADDRESS_DESC_CONFERENCE = " " + PREFIX_ADDRESS + VALID_EVENT_ADDRESS_CONFERENCE;
+    public static final String EVENT_TAG_DESC_MUSIC = " " + PREFIX_TAG + "Music";
+    public static final String EVENT_TAG_DESC_NETWORKING = " " + PREFIX_TAG + "Networking";
+
 
     // invalid Contact descriptions
     public static final String INVALID_CONTACT_NAME_DESC = " " + PREFIX_NAME; // cannot be empty
@@ -79,6 +82,7 @@ public class CommandTestUtil {
     public static final String INVALID_EVENT_DATE_DESC2 = " " + PREFIX_DATE + "2024-12-01 24:00"; // invalid time
     public static final String INVALID_EVENT_DATE_DESC3 = " " + PREFIX_DATE + "2024/12/01 14:00"; // wrong format
     public static final String INVALID_EVENT_DATE_DESC4 = " " + PREFIX_DATE + "2024-12-01"; // missing time
+    public static final String INVALID_EVENT_TAG_DESC = " " + PREFIX_TAG + "Music&"; // '&' not allowed
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

@@ -46,8 +46,8 @@ class JsonAdaptedEvent {
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("name") String name, @JsonProperty("date") String date,
             @JsonProperty("address") String address,
-            @JsonProperty("participantEmails") List<String> participantEmails,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("participantEmails") List<String> participantEmails) {
         this.name = name;
         this.date = date;
         this.address = address;

@@ -7,13 +7,16 @@ import static nusemp.testutil.TypicalContacts.CARL;
 import static nusemp.testutil.TypicalContacts.DANIEL;
 import static nusemp.testutil.TypicalEvents.CONFERENCE_FILLED;
 import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
+import static nusemp.testutil.TypicalEvents.MEETING_WITH_TAGS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,6 +25,7 @@ import nusemp.model.event.exceptions.DuplicateParticipantException;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
+import nusemp.model.fields.Tag;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.EventBuilder;
 
@@ -46,12 +50,87 @@ class EventTest {
     }
 
     @Test
+    public void constructor_withTags_success() {
+        Set<Tag> tags = new HashSet<>();
+        tags.add(new Tag("Music"));
+        tags.add(new Tag("Networking"));
+
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, tags, EMPTY_PARTICIPANT_LIST);
+        assertEquals(tags, event.getTags());
+    }
+
+    @Test
+    public void withTags_addTags_returnsEventWithTags() {
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
+        Set<Tag> tags = new HashSet<>();
+        tags.add(new Tag("Music"));
+
+        Event eventWithTags = event.addTags(tags);
+        assertEquals(tags, eventWithTags.getTags());
+        assertNotEquals(event, eventWithTags); // should be different instances
+    }
+
+    @Test
+    public void withTag_addSingleTag_returnsEventWithTag() {
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
+        Tag tag = new Tag("Music");
+
+        Event eventWithTag = event.addTags(Set.of(tag));
+        assertTrue(eventWithTag.getTags().contains(tag));
+    }
+
+    @Test
+    public void getTags_modifyReturnedSet_doesNotModifyEvent() {
+        Event event = MEETING_WITH_TAGS;
+        Set<Tag> tags = event.getTags();
+
+        assertThrows(UnsupportedOperationException.class, () -> tags.add(new Tag("NewTag")));
+    }
+
+    @Test
     public void withParticipants_addContact_returnsEventWithContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, createParticipantList(BOB));
         assertEquals(event1.withParticipant(BOB), event2);
         assertNotEquals(event1, event1.withParticipant(BOB)); // should be different instances
     }
+
+    @Test
+    public void equals_differentTags_returnsFalse() {
+        Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music").build();
+        Event event2 = new EventBuilder(MEETING_FILLED).withTags("Networking").build();
+        Event event3 = new EventBuilder(MEETING_FILLED).withTags().build();
+
+        assertFalse(event1.equals(event2));
+        assertFalse(event1.equals(event3));
+    }
+
+    @Test
+    public void equals_sameTags_returnsTrue() {
+        Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
+        Event event2 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
+
+        assertTrue(event1.equals(event2));
+    }
+
+    @Test
+    public void withParticipant_preservesTags() {
+        Set<Tag> tags = new HashSet<>();
+        tags.add(new Tag("Music"));
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, tags, EMPTY_PARTICIPANT_LIST);
+
+        Event eventWithParticipant = event.withParticipant(BOB);
+        assertEquals(tags, eventWithParticipant.getTags());
+    }
+
+    @Test
+    public void hashCode_sameTags_returnsSameHashCode() {
+        Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
+        Event event2 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
+
+        assertEquals(event1.hashCode(), event2.hashCode());
+    }
+
 
     @Test
     public void withParticipants_addContact_keepsInsertionOrder() {
@@ -128,7 +207,7 @@ class EventTest {
     public void equals() {
         // same values -> returns true
         Event event = new Event(MEETING_FILLED.getName(), MEETING_FILLED.getDate(),
-                MEETING_FILLED.getAddress(), MEETING_FILLED.getParticipants());
+                MEETING_FILLED.getAddress(), MEETING_FILLED.getTags(), MEETING_FILLED.getParticipants());
         assertTrue(MEETING_FILLED.equals(event));
 
         // same object -> returns true
@@ -166,6 +245,7 @@ class EventTest {
         String expected = Event.class.getCanonicalName() + "{name=" + MEETING_FILLED.getName()
                 + ", date=" + MEETING_FILLED.getDate()
                 + ", address=" + MEETING_FILLED.getAddress()
+                + ", tags=" + MEETING_FILLED.getTags()
                 + ", participants=" + MEETING_FILLED.getParticipants() + "}";
         assertEquals(expected, MEETING_FILLED.toString());
     }

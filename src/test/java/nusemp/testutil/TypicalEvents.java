@@ -33,6 +33,12 @@ public class TypicalEvents {
             new Name("PARTY"), new Date("31-12-2024 20:00"), Address.empty());
     public static final Event PARTY_HALF_FILLED = new Event(new Name("PARTY"), new Date("31-12-2024 20:00"),
             ALICE.getAddress(), new ArrayList<>(Arrays.asList(ALICE, BOB, CARL)));
+    public static final Event MEETING_WITH_TAGS = new EventBuilder()
+            .withName("Meeting")
+            .withDate("01-10-2025 14:00")
+            .withAddress("Conference Room")
+            .withTags("Music", "Networking")
+            .build();
 
     public static List<Event> getTypicalEvents() {
         return new ArrayList<>(Arrays.asList(MEETING_EMPTY, CONFERENCE_EMPTY,
