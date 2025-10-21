@@ -1,6 +1,7 @@
 package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 
@@ -11,8 +12,9 @@ import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.Event;
-import nusemp.model.event.EventDate;
-import nusemp.model.event.EventName;
+import nusemp.model.fields.Address;
+import nusemp.model.fields.Date;
+import nusemp.model.fields.Name;
 
 /**
  * Parses input arguments and creates a new EventAddCommand object
@@ -25,10 +27,8 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
      */
     @Override
     public EventAddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
-                args, PREFIX_NAME, PREFIX_DATE);
-        if (!argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_DATE)
-                || !argMultimap.getPreamble().isEmpty()) {
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_ADDRESS);
+        if (!argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_DATE) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventAddCommand.MESSAGE_USAGE));
         }
 
@@ -45,10 +45,11 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
      * @throws ParseException if there is an error during parsing
      */
     private Event createEvent(ArgumentMultimap argMultimap) throws ParseException {
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DATE);
-        EventName name = ParserUtil.parseEventName(argMultimap.getValue(PREFIX_NAME).get());
-        EventDate date = ParserUtil.parseEventDate(argMultimap.getValue(PREFIX_DATE).get());
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DATE, PREFIX_ADDRESS);
+        Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
+        Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
+        Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
 
-        return new Event(name, date);
+        return new Event(name, date, address);
     }
 }

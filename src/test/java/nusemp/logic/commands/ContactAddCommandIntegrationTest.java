@@ -2,7 +2,7 @@ package nusemp.logic.commands;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.testutil.TypicalContacts.getTypicalAppData;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class ContactAddCommandIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        model = new ModelManager(getTypicalAppData(), new UserPrefs());
+        model = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
     }
 
     @Test

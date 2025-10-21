@@ -1,0 +1,110 @@
+package nusemp.storage;
+
+import static nusemp.storage.JsonAdaptedEvent.MISSING_FIELD_MESSAGE_FORMAT;
+import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
+import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+
+import nusemp.commons.exceptions.IllegalValueException;
+import nusemp.model.AppData;
+import nusemp.model.event.Event;
+import nusemp.model.fields.Address;
+import nusemp.model.fields.Date;
+import nusemp.model.fields.Email;
+import nusemp.model.fields.Name;
+import nusemp.testutil.EventBuilder;
+import nusemp.testutil.TypicalContacts;
+
+class JsonAdaptedEventTest {
+
+    private static final String INVALID_NAME = " ";
+    private static final String INVALID_DATE = "invalid-date";
+    private static final String INVALID_ADDRESS = " ";
+    private static final String INVALID_PARTICIPANT_EMAIL = "invalid-email";
+
+    private static final String VALID_NAME = MEETING_FILLED.getName().value;
+    private static final String VALID_DATE = MEETING_FILLED.getDate().toString();
+    private static final String VALID_ADDRESS = MEETING_FILLED.getAddress().value;
+    private static final List<String> VALID_PARTICIPANT_EMAILS =
+            TypicalContacts.getTypicalContacts().stream().map(c -> c.getEmail().value).toList();
+
+    @Test
+    public void toModelType_validEventDetails_returnsEvent() throws Exception {
+        JsonAdaptedEvent event = new JsonAdaptedEvent(MEETING_FILLED);
+        assertEquals(MEETING_FILLED, event.toModelType(getTypicalAppDataWithoutEvent()));
+    }
+
+    @Test
+    public void toModelType_nullName_throwsIllegalValueException() {
+        JsonAdaptedEvent event = new JsonAdaptedEvent(null, VALID_DATE, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, () ->
+                event.toModelType(getTypicalAppDataWithoutEvent()));
+    }
+
+    @Test
+    public void toModelType_invalidName_throwsIllegalValueException() {
+        JsonAdaptedEvent event =
+                new JsonAdaptedEvent(INVALID_NAME, VALID_DATE, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
+        String expectedMessage = Name.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, () ->
+                event.toModelType(getTypicalAppDataWithoutEvent()));
+    }
+
+    @Test
+    public void toModelType_nullDate_throwsIllegalValueException() {
+        JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, null, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName());
+        assertThrows(IllegalValueException.class, expectedMessage, () ->
+                event.toModelType(getTypicalAppDataWithoutEvent()));
+    }
+
+    @Test
+    public void toModelType_invalidDate_throwsIllegalValueException() {
+        JsonAdaptedEvent event =
+                new JsonAdaptedEvent(VALID_NAME, INVALID_DATE, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
+        String expectedMessage = Date.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, () ->
+                event.toModelType(getTypicalAppDataWithoutEvent()));
+    }
+
+    @Test
+    public void toModelType_nullAddress_returnsEvent() throws Exception {
+        JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, null, VALID_PARTICIPANT_EMAILS);
+        Event expectedEvent = new EventBuilder(MEETING_FILLED).withoutAddress().build();
+        assertEquals(expectedEvent, event.toModelType(getTypicalAppDataWithoutEvent()));
+    }
+
+    @Test
+    public void toModelType_invalidAddress_throwsIllegalValueException() {
+        JsonAdaptedEvent event =
+                new JsonAdaptedEvent(VALID_NAME, VALID_DATE, INVALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
+        String expectedMessage = Address.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, () ->
+                event.toModelType(getTypicalAppDataWithoutEvent()));
+    }
+
+    @Test
+    public void toModelType_invalidParticipantEmail_throwsIllegalValueException() {
+        List<String> participantEmails = new ArrayList<>(VALID_PARTICIPANT_EMAILS);
+        participantEmails.add(INVALID_PARTICIPANT_EMAIL);
+        JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, VALID_ADDRESS, participantEmails);
+        String expectedMessage = Email.MESSAGE_CONSTRAINTS;
+        assertThrows(IllegalValueException.class, expectedMessage, () ->
+                event.toModelType(getTypicalAppDataWithoutEvent()));
+    }
+
+    @Test
+    public void toModelType_missingParticipantEmail_throwsIllegalValueException() {
+        JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, VALID_ADDRESS, VALID_PARTICIPANT_EMAILS);
+        String expectedMessage =
+                String.format(JsonAdaptedEvent.MISSING_PARTICIPANT_EMAIL_MESSAGE, VALID_PARTICIPANT_EMAILS.get(0));
+        assertThrows(IllegalValueException.class, expectedMessage, () -> event.toModelType(new AppData()));
+    }
+}

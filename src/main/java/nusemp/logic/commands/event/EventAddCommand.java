@@ -1,6 +1,7 @@
 package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 
@@ -23,10 +24,12 @@ public class EventAddCommand extends Command {
             + ": Adds an event. "
             + "Parameters: "
             + PREFIX_NAME + " NAME "
-            + PREFIX_DATE + " DATE\n"
+            + PREFIX_DATE + " DATE "
+            + "[" + PREFIX_ADDRESS + " ADDRESS]\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_NAME + " Team Meeting "
-            + PREFIX_DATE + " 25-12-2023 14:30";
+            + PREFIX_DATE + " 25-12-2023 14:30 "
+            + PREFIX_ADDRESS + " Conference Room";
 
     public static final String MESSAGE_SUCCESS = "Successfully added event:\n%1$s";
     public static final String MESSAGE_DUPLICATE_EVENT = "Error adding event: event already exists";

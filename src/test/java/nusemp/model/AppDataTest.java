@@ -3,8 +3,8 @@ package nusemp.model;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_ADDRESS_BOB;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_TAG_HUSBAND;
 import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalContacts.ALICE;
-import static nusemp.testutil.TypicalContacts.getTypicalAppData;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -40,7 +40,7 @@ public class AppDataTest {
 
     @Test
     public void resetData_withValidReadOnlyAppData_replacesData() {
-        AppData newData = getTypicalAppData();
+        AppData newData = getTypicalAppDataWithoutEvent();
         appData.resetData(newData);
         assertEquals(newData, appData);
     }

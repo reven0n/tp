@@ -29,22 +29,32 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label date;
     @FXML
+    private Label address;
+    @FXML
     private FlowPane people;
 
     /**
-     * Creates a {@code EventCard} with the given {@code Event} and index to display.
+     * Creates an {@code EventCard} with the given {@code Event} and index to display.
      */
     public EventCard(Event event, int displayedIndex) {
         super(FXML);
         this.event = event;
         id.setText(displayedIndex + ". ");
-
+      
         name.setText(event.getName().toString());
         name.setWrapText(true);
         date.setText(event.getDate().toString());
         date.setWrapText(true);
+
+        if (event.hasAddress()) {
+            address.setText(event.getAddress().value);
+        } else {
+            address.setManaged(false);
+            address.setVisible(false);
+        }
+
         event.getParticipants().stream()
-                .sorted(Comparator.comparing(contact -> contact.getName().fullName))
-                .forEach(contact -> people.getChildren().add(new Label(contact.getName().fullName)));
+                .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
+                .forEach(contact -> people.getChildren().add(new Label(contact.getName().value)));
     }
 }

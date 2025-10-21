@@ -6,6 +6,7 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+import static nusemp.model.util.SampleDataUtil.EMPTY_EVENT_LIST;
 
 import java.util.Set;
 
@@ -15,12 +16,12 @@ import nusemp.logic.parser.ArgumentTokenizer;
 import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.contact.Address;
 import nusemp.model.contact.Contact;
-import nusemp.model.contact.Email;
-import nusemp.model.contact.Name;
-import nusemp.model.contact.Phone;
-import nusemp.model.tag.Tag;
+import nusemp.model.fields.Address;
+import nusemp.model.fields.Email;
+import nusemp.model.fields.Name;
+import nusemp.model.fields.Phone;
+import nusemp.model.fields.Tag;
 
 /**
  * Parses input arguments and creates a new ContactAddCommand object
@@ -53,7 +54,7 @@ public class ContactAddCommandParser implements Parser<ContactAddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        return new Contact(name, email, phone, address, tagList);
+        return new Contact(name, email, phone, address, tagList, EMPTY_EVENT_LIST);
     }
 
 }

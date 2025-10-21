@@ -1,17 +1,17 @@
-package nusemp.model.contact;
+package nusemp.model.fields;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Contact's name.
+ * Represents a name.
  * Guarantees: immutable; is valid as declared in {@link #isValidName(String)}
  */
 public class Name {
 
-    public static final String MESSAGE_CONSTRAINTS = "Contact names should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Names can take any values, and it should not be blank";
 
-    public final String fullName;
+    public final String value;
 
     /**
      * Constructs a {@code Name}.
@@ -20,8 +20,9 @@ public class Name {
      */
     public Name(String name) {
         requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_CONSTRAINTS);
-        fullName = name;
+        String trimmedName = name.trim();
+        checkArgument(isValidName(trimmedName), MESSAGE_CONSTRAINTS);
+        value = trimmedName;
     }
 
     /**
@@ -34,7 +35,7 @@ public class Name {
 
     @Override
     public String toString() {
-        return fullName;
+        return value;
     }
 
     @Override
@@ -49,12 +50,12 @@ public class Name {
         }
 
         Name otherName = (Name) other;
-        return fullName.equals(otherName.fullName);
+        return value.equals(otherName.value);
     }
 
     @Override
     public int hashCode() {
-        return fullName.hashCode();
+        return value.hashCode();
     }
 
 }
