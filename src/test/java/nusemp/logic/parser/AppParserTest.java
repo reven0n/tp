@@ -118,8 +118,8 @@ public class AppParserTest {
 
     @Test
     public void parseCommand_eventLink() throws Exception {
-        String command = CommandType.EVENT + " " + EventLinkCommand.COMMAND_WORD
-                + PREFIX_EVENT + " 1" + PREFIX_CONTACT + " 1";
+        String command = CommandType.EVENT + " " + EventLinkCommand.COMMAND_WORD + " "
+                + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 1";
         assertTrue(parser.parseCommand(command) instanceof EventLinkCommand);
     }
 
