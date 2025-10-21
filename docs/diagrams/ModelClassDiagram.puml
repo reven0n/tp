@@ -40,7 +40,6 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AppData *--> "1" UniqueContactList
 UniqueContactList --> "~* all" Contact
-UserPrefs -[hidden]down-> UniqueEventList
 AppData *--[norank]> "1" UniqueEventList
 UniqueEventList --> "~* all" Event
 Contact *--> "1" Name
@@ -48,16 +47,17 @@ Contact *--> "1" Email
 Contact *--> "0..1" Phone
 Contact *--> "0..1" Address
 Contact *--> "*" Tag
-Contact -[hidden]right-> I
-I -[hidden]right-> Event
+Contact "~* participant" <-[norank]-> "~* participating" Event
 Event *--> "1" Name
 Event *--> "1" Date
 Event *--> "0..1" Address
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
+ModelManager -down-> "~* filtered" Contact
+ModelManager -down-> "~* filtered" Event
 
-ModelManager --> "~* filtered" Contact
-ModelManager --> "~* filtered" Event
+'Hidden relationships to improve diagram layout
+UserPrefs -[hidden]down- UniqueEventList
+ModelManager -down[hidden]- Address
+Tag -[hidden]right- Phone
+Phone -[hidden]right- Email
 @enduml
