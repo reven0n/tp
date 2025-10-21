@@ -18,6 +18,7 @@ import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.contact.ContactFindCommand;
 import nusemp.logic.commands.contact.ContactListCommand;
 import nusemp.logic.commands.event.EventAddCommand;
+import nusemp.logic.commands.event.EventDeleteCommand;
 import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventListCommand;
 import nusemp.logic.parser.contact.ContactAddCommandParser;
@@ -26,6 +27,7 @@ import nusemp.logic.parser.contact.ContactEditCommandParser;
 import nusemp.logic.parser.contact.ContactFindCommandParser;
 import nusemp.logic.parser.contact.ContactListCommandParser;
 import nusemp.logic.parser.event.EventAddCommandParser;
+import nusemp.logic.parser.event.EventDeleteCommandParser;
 import nusemp.logic.parser.event.EventLinkCommandParser;
 import nusemp.logic.parser.event.EventListCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
@@ -159,6 +161,9 @@ public class AppParser {
 
         case EventLinkCommand.COMMAND_WORD:
             return new EventLinkCommandParser().parse(arguments);
+
+        case EventDeleteCommand.COMMAND_WORD:
+            return new EventDeleteCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
