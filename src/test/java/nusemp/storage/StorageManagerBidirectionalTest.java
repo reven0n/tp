@@ -65,7 +65,7 @@ public class StorageManagerBidirectionalTest {
 
     @Test
     public void saveAndReadAppData_bidirectionalLinkingPreserved() throws Exception {
-        ReadOnlyAppData original = storageManager.readAppData(Path.of("data", "appdata.json")).get();
+        ReadOnlyAppData original = storageManager.readAppData(TEST_DATA_FOLDER.resolve("typicalAppData.json")).get();
         storageManager.saveAppData(original);
         ReadOnlyAppData retrieved = storageManager.readAppData().get();
 
