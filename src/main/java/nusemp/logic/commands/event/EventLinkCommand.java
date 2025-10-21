@@ -70,16 +70,26 @@ public class EventLinkCommand extends Command {
         Event eventToUpdate = lastShownEventList.get(eventIndex.getZeroBased());
         Contact contactToLink = lastShownContactList.get(contactIndex.getZeroBased());
 
-        // link the contact to the event
+        // Check for duplicate participant
+        if (eventToUpdate.hasParticipantWithEmail(contactToLink.getEmail().value)) {
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
+                    contactToLink.getEmail()));
+        }
+
+        // Link both sides
         try {
             Event updatedEvent = eventToUpdate.withParticipant(contactToLink);
+            Contact updatedContact = contactToLink.addEvent(updatedEvent);
+
             model.setEvent(eventToUpdate, updatedEvent);
-            return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    contactToLink.getName(), updatedEvent.getName()));
+            model.setContact(contactToLink, updatedContact);
+
+            return new CommandResult(MESSAGE_SUCCESS);
         } catch (DuplicateParticipantException e) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, contactToLink.getEmail()));
         }
     }
+
 
     @Override
     public boolean equals(Object other) {
