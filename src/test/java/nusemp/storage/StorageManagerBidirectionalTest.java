@@ -17,12 +17,13 @@ import nusemp.model.event.Event;
 
 public class StorageManagerBidirectionalTest {
 
+    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableAppDataTest");
+
     @TempDir
     public Path testFolder;
 
     private StorageManager storageManager;
 
-    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableAppDataTest");
 
     @BeforeEach
     public void setUp() {
