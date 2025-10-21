@@ -2,6 +2,9 @@ package nusemp.logic.parser;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
+import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
+import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
@@ -25,6 +28,8 @@ import nusemp.logic.commands.contact.ContactListCommand;
 import nusemp.logic.commands.event.EventDeleteCommand;
 import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventListCommand;
+import nusemp.logic.parser.contact.ContactDeleteCommandParser;
+import nusemp.logic.parser.event.EventDeleteCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
@@ -102,9 +107,8 @@ public class AppParserTest {
 
     @Test
     public void parseCommand_eventDelete() throws Exception {
-        EventDeleteCommand command = (EventDeleteCommand) parser.parseCommand(
-                "event delete " + INDEX_FIRST_EVENT.getOneBased());
-        assertEquals(new EventDeleteCommand(INDEX_FIRST_EVENT), command);
+        EventDeleteCommandParser parser = new EventDeleteCommandParser();
+        assertParseSuccess(parser, "1", new EventDeleteCommand(INDEX_FIRST_EVENT));
     }
 
     @Test
@@ -116,7 +120,7 @@ public class AppParserTest {
     @Test
     public void parseCommand_eventLink() throws Exception {
         String command = CommandType.EVENT + " " + EventLinkCommand.COMMAND_WORD
-                + " --event 1 --contact 1";
+                + PREFIX_EVENT + " 1" + PREFIX_CONTACT + " 1";
         assertTrue(parser.parseCommand(command) instanceof EventLinkCommand);
     }
 

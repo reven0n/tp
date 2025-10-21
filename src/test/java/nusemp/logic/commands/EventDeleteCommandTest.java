@@ -53,7 +53,8 @@ public class EventDeleteCommandTest {
     public void execute_validIndexFilteredList_success() {
         showEventAtIndex(model, INDEX_FIRST_EVENT);
 
-        Event eventToDelete = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
+        Event eventToDelete = model.getEventByIndex(INDEX_FIRST_EVENT);
+
         EventDeleteCommand eventDeleteCommand = new EventDeleteCommand(INDEX_FIRST_EVENT);
 
         String expectedMessage = String.format(EventDeleteCommand.MESSAGE_DELETE_EVENT_SUCCESS,
