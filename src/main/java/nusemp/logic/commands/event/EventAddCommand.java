@@ -27,7 +27,7 @@ public class EventAddCommand extends Command {
             + PREFIX_NAME + " NAME "
             + PREFIX_DATE + " DATE "
             + "[" + PREFIX_ADDRESS + " ADDRESS]"
-            + PREFIX_TAG + " TAG\n"
+            + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_NAME + " Team Meeting "
             + PREFIX_DATE + " 25-12-2025 14:30 "
