@@ -7,11 +7,14 @@ import static nusemp.logic.commands.CommandTestUtil.EVENT_DATE_DESC_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_DATE_DESC_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_NAME_DESC_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_NAME_DESC_MEETING;
+import static nusemp.logic.commands.CommandTestUtil.EVENT_TAG_DESC_MUSIC;
+import static nusemp.logic.commands.CommandTestUtil.EVENT_TAG_DESC_NETWORKING;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_EVENT_DATE_DESC1;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_EVENT_DATE_DESC2;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_EVENT_DATE_DESC3;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_EVENT_DATE_DESC4;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_EVENT_NAME_DESC;
+import static nusemp.logic.commands.CommandTestUtil.INVALID_EVENT_TAG_DESC;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_DATE_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_NAME_MEETING;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -21,14 +24,18 @@ import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static nusemp.testutil.TypicalEvents.CONFERENCE_EMPTY;
 import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
+import static nusemp.testutil.TypicalEvents.MEETING_WITH_TAGS;
 
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
 import nusemp.logic.commands.event.EventAddCommand;
 import nusemp.logic.parser.event.EventAddCommandParser;
+import nusemp.model.event.Event;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
+import nusemp.model.fields.Tag;
+import nusemp.testutil.EventBuilder;
 
 class EventAddCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(
@@ -92,5 +99,31 @@ class EventAddCommandParserTest {
         // valid name and date with whitespaces
         assertParseSuccess(parser, EVENT_NAME_DESC_CONFERENCE + "   " + EVENT_DATE_DESC_CONFERENCE + "   ",
                 new EventAddCommand(CONFERENCE_EMPTY));
+    }
+
+    @Test
+    public void parse_allFieldsPresent_success() {
+        Event expectedEvent = new EventBuilder(MEETING_WITH_TAGS).build();
+
+        // with tags
+        assertParseSuccess(parser, EVENT_NAME_DESC_MEETING + EVENT_DATE_DESC_MEETING
+                        + EVENT_ADDRESS_DESC_MEETING + EVENT_TAG_DESC_MUSIC + EVENT_TAG_DESC_NETWORKING,
+                new EventAddCommand(expectedEvent));
+    }
+
+    @Test
+    public void parse_repeatedTag_success() {
+        // multiple tags - all accepted
+        Event expectedEvent = new EventBuilder(MEETING_EMPTY)
+                .withTags("Music", "Networking").build();
+        assertParseSuccess(parser, EVENT_NAME_DESC_MEETING + EVENT_DATE_DESC_MEETING
+                        + EVENT_TAG_DESC_MUSIC + EVENT_TAG_DESC_NETWORKING,
+                new EventAddCommand(expectedEvent));
+    }
+
+    @Test
+    public void parse_invalidTag_failure() {
+        assertParseFailure(parser, EVENT_NAME_DESC_MEETING + EVENT_DATE_DESC_MEETING
+                + INVALID_EVENT_TAG_DESC, Tag.MESSAGE_CONSTRAINTS);
     }
 }

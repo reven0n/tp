@@ -16,6 +16,7 @@ import nusemp.model.event.exceptions.ParticipantNotFoundException;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
+import nusemp.model.fields.Tag;
 
 /**
  * Represents an Event.
@@ -30,6 +31,8 @@ public class Event {
     // Data fields
     private final Address address;
     private final List<ContactStatus> participants = new ArrayList<>();
+    private final Set<Tag> tags = new HashSet<>();
+    private final List<Contact> participants = new ArrayList<>();
 
     /**
      * Every field must be present and not null. {@code Address.empty()} can be used to represent absence of an address.
@@ -40,14 +43,15 @@ public class Event {
         this.name = name;
         this.date = date;
         this.address = address;
+        this.tags.addAll(tags);
         this.participants.addAll(participants);
     }
 
     /**
-     * Convenience constructor without participants.
+     * Convenience constructor without participants or tags.
      */
     public Event(Name name, Date date, Address address) {
-        this(name, date, address, new ArrayList<>());
+        this(name, date, address, new HashSet<>(), new ArrayList<>());
     }
 
     public Name getName() {
@@ -60,6 +64,18 @@ public class Event {
 
     public Address getAddress() {
         return address;
+    }
+
+    /**
+     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Tag> getTags() {
+        return Collections.unmodifiableSet(tags);
+    }
+
+    public boolean hasTags() {
+        return !tags.isEmpty();
     }
 
     public boolean hasAddress() {
@@ -185,13 +201,14 @@ public class Event {
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
                 && address.equals(otherEvent.address)
+                && tags.equals(otherEvent.tags)
                 && participants.equals(otherEvent.participants);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, date, address, participants);
+        return Objects.hash(name, date, address, tags, participants);
     }
 
     @Override
@@ -200,6 +217,7 @@ public class Event {
                 .add("name", name)
                 .add("date", date)
                 .add("address", address)
+                .add("tags", tags)
                 .add("participants", participants)
                 .toString();
     }
