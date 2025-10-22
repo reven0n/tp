@@ -12,6 +12,7 @@ import java.util.Set;
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
+import nusemp.model.event.exceptions.ParticipantNotFoundException;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
@@ -87,6 +88,27 @@ public class Event {
         requireAllNonNull(email);
         return participants.stream()
                 .anyMatch(status -> status.getContact().getEmail().value.equals(email));
+    }
+
+    /**
+     * Returns a new Event with the given contact status updated if it exists.
+     * This maintains immutability by returning a new Event instance.
+     */
+    public Event updateContactStatus(ContactStatus updatedStatus) throws ParticipantNotFoundException {
+        requireAllNonNull(updatedStatus);
+        if (!hasParticipant(updatedStatus.getContact())) {
+            throw new ParticipantNotFoundException();
+        }
+
+        List<ContactStatus> updatedParticipants = new ArrayList<>(participants);
+        for (int i = 0; i < updatedParticipants.size(); i++) {
+            ContactStatus currentStatus = updatedParticipants.get(i);
+            if (currentStatus.hasSameContact(updatedStatus.getContact())) {
+                updatedParticipants.set(i, updatedStatus);
+                break;
+            }
+        }
+        return new Event(name, date, address, updatedParticipants);
     }
 
     /**

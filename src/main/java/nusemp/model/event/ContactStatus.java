@@ -14,10 +14,10 @@ public class ContactStatus {
 
     /**
      * Overloaded constructor that creates a ContactStatus with specified status and contact.
-     * @param status Status of the contact.
      * @param contact Contact associated with the status.
+     * @param status Status of the contact.
      */
-    public ContactStatus(Status status, Contact contact) {
+    public ContactStatus(Contact contact, Status status) {
         this.status = status;
         this.contact = contact;
     }
@@ -27,7 +27,7 @@ public class ContactStatus {
      * @param contact Contact associated with the status.
      */
     public ContactStatus(Contact contact) {
-        this.status = Status.GOING;
+        this.status = Status.ATTENDING;
         this.contact = contact;
     }
 
