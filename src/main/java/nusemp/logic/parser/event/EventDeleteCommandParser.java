@@ -17,6 +17,7 @@ public class EventDeleteCommandParser implements Parser<EventDeleteCommand> {
      * and returns a EventDeleteCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
+    @Override
     public EventDeleteCommand parse(String args) throws ParseException {
         try {
             Index index = ParserUtil.parseIndex(args);
