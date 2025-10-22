@@ -13,6 +13,7 @@ import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
+import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 
 
@@ -48,21 +49,25 @@ class EventLinkCommandTest {
     }
 
     @Test
-    public void execute_validIndices_success() {
+    public void execute_validIndices_success() throws Exception {
         Index validEventIndex = Index.fromOneBased(1);
         Index validContactIndex = Index.fromOneBased(1);
-        Event editedEvent = model.getEventByIndex(validEventIndex).withParticipant(
-                model.getContactByIndex(validContactIndex)
-        );
-        EventLinkCommand eventLinkCommand = new EventLinkCommand(validEventIndex, validContactIndex);
-        String expectedMessage = String.format(EventLinkCommand.MESSAGE_SUCCESS,
-                model.getContactByIndex(validContactIndex).getName(),
-                model.getEventByIndex(validEventIndex).getName()
-        );
 
+        Event eventToUpdate = model.getEventByIndex(validEventIndex);
+        Contact contactToLink = model.getContactByIndex(validContactIndex);
+
+        // Create both updated objects for bidirectional linking
+        Event updatedEvent = eventToUpdate.withParticipant(contactToLink);
+        Contact updatedContact = contactToLink.addEvent(updatedEvent);
+
+        EventLinkCommand eventLinkCommand = new EventLinkCommand(validEventIndex, validContactIndex);
+
+        // Set up expected model with both sides of the link
         Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.setEvent(model.getEventByIndex(validEventIndex), editedEvent);
+        expectedModel.setEvent(eventToUpdate, updatedEvent);
+        expectedModel.setContact(contactToLink, updatedContact);
 
         assertCommandSuccess(eventLinkCommand, model, EventLinkCommand.MESSAGE_SUCCESS, expectedModel);
     }
+
 }
