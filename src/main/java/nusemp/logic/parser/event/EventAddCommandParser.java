@@ -4,6 +4,10 @@ import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
+import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.ArrayList;
+import java.util.Set;
 
 import nusemp.logic.commands.event.EventAddCommand;
 import nusemp.logic.parser.ArgumentMultimap;
@@ -15,6 +19,7 @@ import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
+import nusemp.model.fields.Tag;
 
 /**
  * Parses input arguments and creates a new EventAddCommand object
@@ -27,7 +32,8 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
      */
     @Override
     public EventAddCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_ADDRESS);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_ADDRESS,
+                PREFIX_TAG);
         if (!argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_DATE) || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventAddCommand.MESSAGE_USAGE));
         }
@@ -49,7 +55,8 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Date date = ParserUtil.parseDate(argMultimap.getValue(PREFIX_DATE).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
+        Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        return new Event(name, date, address);
+        return new Event(name, date, address, tagList, new ArrayList<>());
     }
 }

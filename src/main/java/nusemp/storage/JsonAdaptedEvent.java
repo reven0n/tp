@@ -1,8 +1,10 @@
 package nusemp.storage;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -17,6 +19,7 @@ import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
+import nusemp.model.fields.Tag;
 
 /**
  * Jackson-friendly version of {@link Event}.
@@ -35,18 +38,24 @@ class JsonAdaptedEvent {
 
     private final List<String> participantEmails = new ArrayList<>();
 
+    private final List<JsonAdaptedTag> tags = new ArrayList<>();
+
     /**
      * Constructs a {@code JsonAdaptedEvent} with the given event details.
      */
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("name") String name, @JsonProperty("date") String date,
             @JsonProperty("address") String address,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("participantEmails") List<String> participantEmails) {
         this.name = name;
         this.date = date;
         this.address = address;
         if (participantEmails != null) {
             this.participantEmails.addAll(participantEmails);
+        }
+        if (tags != null) {
+            this.tags.addAll(tags);
         }
     }
 
@@ -60,6 +69,9 @@ class JsonAdaptedEvent {
         participantEmails.addAll(source.getParticipants().stream()
                 .map(contact -> contact.getEmail().value)
                 .collect(Collectors.toList()));
+        tags.addAll(source.getTags().stream()
+                .map(JsonAdaptedTag::new)
+                .toList());
     }
 
     /**
@@ -69,6 +81,11 @@ class JsonAdaptedEvent {
      * @throws IllegalValueException if there were any data constraints violated in the adapted event.
      */
     public Event toModelType(ReadOnlyAppData appData) throws IllegalValueException {
+        final List<Tag> eventTags = new ArrayList<>();
+        for (JsonAdaptedTag tag : tags) {
+            eventTags.add(tag.toModelType());
+        }
+
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Name.class.getSimpleName()));
@@ -105,7 +122,9 @@ class JsonAdaptedEvent {
             modelParticipants.add(participant);
         }
 
-        return new Event(modelName, modelDate, modelAddress, modelParticipants);
+        final Set<Tag> modelTags = new HashSet<>(eventTags);
+
+        return new Event(modelName, modelDate, modelAddress, modelTags, modelParticipants);
     }
 
     /**
