@@ -96,7 +96,7 @@ public class Event {
      */
     public Event updateContactStatus(ContactStatus updatedStatus) throws ParticipantNotFoundException {
         requireAllNonNull(updatedStatus);
-        if (!hasParticipant(updatedStatus.getContact())) {
+        if (!hasParticipantWithEmail(updatedStatus.getContact().getEmail().value)) {
             throw new ParticipantNotFoundException();
         }
 
