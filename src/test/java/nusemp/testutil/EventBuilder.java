@@ -3,7 +3,7 @@ package nusemp.testutil;
 import java.util.ArrayList;
 import java.util.List;
 
-import nusemp.model.contact.Contact;
+import nusemp.model.event.ContactStatus;
 import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
@@ -21,7 +21,7 @@ public class EventBuilder {
     private Name name;
     private Date date;
     private Address address;
-    private List<Contact> participants;
+    private List<ContactStatus> participants;
 
     /**
      * Creates an EventBuilder with the default details.
@@ -78,7 +78,7 @@ public class EventBuilder {
     /**
      * Replaces the participants of the {@code Event} that we are building.
      */
-    public EventBuilder withParticipants(Contact... participants) {
+    public EventBuilder withParticipants(ContactStatus[] participants) {
         this.participants = new ArrayList<>(List.of(participants));
         return this;
     }

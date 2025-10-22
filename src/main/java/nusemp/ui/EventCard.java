@@ -49,7 +49,8 @@ public class EventCard extends UiPart<Region> {
             address.setVisible(false);
         }
         event.getParticipants().stream()
-                .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
-                .forEach(contact -> people.getChildren().add(new Label(contact.getName().value)));
+                .sorted(Comparator.comparing(status -> status.getContact().getName().value.toLowerCase()))
+                .forEach(status -> people.getChildren()
+                        .add(new Label(status.getContact().getName().value)));
     }
 }

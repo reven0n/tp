@@ -14,6 +14,7 @@ import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
+import nusemp.model.event.ContactStatus;
 import nusemp.model.event.Event;
 
 /**
@@ -103,7 +104,7 @@ public class ModelManager implements Model {
         // Remove contact from all linked events
         for (Event event : target.getEvents()) {
             if (hasEvent(event)) {
-                Event updatedEvent = event.withoutParticipant(target);
+                Event updatedEvent = event.withoutParticipantStatus(target);
                 appData.setEvent(event, updatedEvent);
             }
         }
@@ -149,7 +150,7 @@ public class ModelManager implements Model {
      * @return the updated event with the edited contact as participant
      */
     private Event createUpdatedEvent(Event event, Contact target, Contact editedContact) {
-        return event.withoutParticipant(target).withParticipant(editedContact);
+        return event.withoutParticipantStatus(target).withParticipantStatus(editedContact);
     }
 
     //=========== Filtered Contact List Accessors =============================================================
@@ -179,7 +180,8 @@ public class ModelManager implements Model {
     @Override
     public void deleteEvent(Event target) {
         // Remove event from all linked contacts
-        for (Contact participant : target.getParticipants()) {
+        for (ContactStatus participantStatus : target.getParticipants()) {
+            Contact participant = participantStatus.getContact();
             if (hasContact(participant)) {
                 Contact updatedContact = participant.removeEvent(target);
                 appData.setContact(participant, updatedContact);

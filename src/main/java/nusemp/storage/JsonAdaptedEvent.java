@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
+import nusemp.model.event.ContactStatus;
 import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
@@ -58,7 +59,7 @@ class JsonAdaptedEvent {
         date = source.getDate().toString();
         address = source.getAddress().value;
         participantEmails.addAll(source.getParticipants().stream()
-                .map(contact -> contact.getEmail().value)
+                .map(status -> status.getContact().getEmail().value)
                 .collect(Collectors.toList()));
     }
 
@@ -95,14 +96,14 @@ class JsonAdaptedEvent {
             modelAddress = new Address(address);
         }
 
-        final List<Contact> modelParticipants = new ArrayList<>();
+        final List<ContactStatus> modelParticipants = new ArrayList<>();
         for (String email : participantEmails) {
             if (!Email.isValidEmail(email)) {
                 throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
             }
             Contact participant = findContactByEmail(appData, email).orElseThrow(() ->
                     new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
-            modelParticipants.add(participant);
+            modelParticipants.add(new ContactStatus(participant)); // Not handling status here
         }
 
         return new Event(modelName, modelDate, modelAddress, modelParticipants);

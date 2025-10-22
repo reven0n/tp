@@ -57,7 +57,7 @@ class EventLinkCommandTest {
         Contact contactToLink = model.getContactByIndex(validContactIndex);
 
         // Create both updated objects for bidirectional linking
-        Event updatedEvent = eventToUpdate.withParticipant(contactToLink);
+        Event updatedEvent = eventToUpdate.withParticipantStatus(contactToLink);
         Contact updatedContact = contactToLink.addEvent(updatedEvent);
 
         EventLinkCommand eventLinkCommand = new EventLinkCommand(validEventIndex, validContactIndex);
