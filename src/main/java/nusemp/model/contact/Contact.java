@@ -190,8 +190,7 @@ public class Contact {
                 && email.equals(otherContact.email)
                 && phone.equals(otherContact.phone)
                 && address.equals(otherContact.address)
-                && tags.equals(otherContact.tags)
-                && events.equals(otherContact.events);
+                && tags.equals(otherContact.tags);
     }
 
     @Override
