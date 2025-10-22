@@ -16,12 +16,12 @@ Class UniqueContactList
 Class UniqueEventList
 Class Contact
 Class Event
-Class Address
-Class Date
 Class Email
-Class Name
 Class Phone
+Class Name
+Class Address
 Class Tag
+Class Date
 
 Class I #FFFFFF
 }
@@ -42,22 +42,23 @@ AppData *--> "1 " UniqueContactList
 UniqueContactList --> "~* all   " Contact
 AppData *--[norank]> "1" UniqueEventList
 UniqueEventList --> " ~* all" Event
-Contact *--> "1" Name
-Contact *--> "1" Email
-Contact *--> "0..1" Phone
-Contact *--> "0..1" Address
+Contact *--> Email
+Contact *--> Phone
+Contact *--> Name
+Contact *--> Address
 Contact *--> "*" Tag
 Contact "~* participant" <-[norank]-> "~* participating" Event
-Event *--> "1 " Name
-Event *--> "1" Date
-Event *--> "0..1" Address
+Event *--> Name
+Event *--> Date
+Event *--> "~*" Tag
+Event *-[norank]-> Address
 
 'Hidden relationships to improve diagram layout
 UserPrefs -[hidden]down- UniqueEventList
 UserPrefs -[hidden]-- I
-ModelManager -down[hidden]- Address
-Tag -[hidden]right- Phone
-Email -[hidden]right- Name
+ModelManager -down[hidden]- Tag
+Email -[hidden]right- Phone
+Phone -[hidden]right- Address
 ModelManager -down[hidden]-> " " Contact
 
 ModelManager -down-> "~* filtered" Contact
