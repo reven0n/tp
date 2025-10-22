@@ -57,8 +57,8 @@ class EventTest {
     public void withParticipants_addContact_returnsEventWithContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, createParticipantStatusList(BOB));
-        assertEquals(event1.withParticipantStatus(BOB), event2);
-        assertNotEquals(event1, event1.withParticipantStatus(BOB)); // should be different instances
+        assertEquals(event1.withParticipant(BOB), event2);
+        assertNotEquals(event1, event1.withParticipant(BOB)); // should be different instances
     }
 
     @Test
@@ -67,7 +67,7 @@ class EventTest {
             Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, createParticipantStatusList(ALICE, BOB));
             List<ContactStatus> expectedParticipants = createParticipantStatusList(ALICE, BOB, CARL, DANIEL);
             assertEquals(expectedParticipants,
-                    event.withParticipantStatus(CARL).withParticipantStatus(DANIEL).getParticipants());
+                    event.withParticipant(CARL).withParticipant(DANIEL).getParticipants());
         }
     }
 
@@ -76,21 +76,21 @@ class EventTest {
         Contact contact = new ContactBuilder().withEmail(BOB.getEmail().value).build();
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, VALID_PARTICIPANTS);
 
-        assertThrows(DuplicateParticipantException.class, () -> event.withParticipantStatus(contact));
+        assertThrows(DuplicateParticipantException.class, () -> event.withParticipant(contact));
     }
 
     @Test
     public void withoutParticipants_removeContact_returnsEventWithoutContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, createParticipantStatusList(BOB));
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
-        assertEquals(event1.withoutParticipantStatus(BOB), event2);
-        assertNotEquals(event1, event1.withoutParticipantStatus(BOB)); // should be different instances
+        assertEquals(event1.withoutParticipant(BOB), event2);
+        assertNotEquals(event1, event1.withoutParticipant(BOB)); // should be different instances
     }
 
     @Test
     public void withoutParticipants_removeContactFromEmptyList_doesNotThrowError() {
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
-        assertEquals(event, event.withoutParticipantStatus(BOB));
+        assertEquals(event, event.withoutParticipant(BOB));
     }
 
     @Test
@@ -100,7 +100,7 @@ class EventTest {
                     createParticipantStatusList(ALICE, BOB, CARL, DANIEL));
             List<ContactStatus> expectedParticipants = createParticipantStatusList(BOB, DANIEL);
             assertEquals(expectedParticipants,
-                    event.withoutParticipantStatus(CARL).withoutParticipantStatus(ALICE).getParticipants());
+                    event.withoutParticipant(CARL).withoutParticipant(ALICE).getParticipants());
         }
     }
 

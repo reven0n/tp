@@ -78,7 +78,7 @@ public class EventLinkCommand extends Command {
 
         // Link both sides
         try {
-            Event updatedEvent = eventToUpdate.withParticipantStatus(contactToLink);
+            Event updatedEvent = eventToUpdate.withParticipant(contactToLink);
             Contact updatedContact = contactToLink.addEvent(updatedEvent);
 
             model.setEvent(eventToUpdate, updatedEvent);
