@@ -498,3 +498,31 @@
     /* Empty cells will not have alternating colours */
     -fx-background: #e9ecef;
 }
+
+/* Copy button styles */
+.copy-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6c757d;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+    -fx-cursor: hand;
+    -fx-background-radius: 5px;
+    -fx-border-width: 0;
+}
+
+.copy-button:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.05);
+    -fx-text-fill: #495057;
+}
+
+.copy-button:pressed {
+    -fx-background-color: rgba(0, 0, 0, 0.1);
+}
+
+.copy-button:focused {
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-background-color: inherit;
+    -fx-border-color: transparent;
+    -fx-effect: none;
+}

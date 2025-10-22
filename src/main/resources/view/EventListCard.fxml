@@ -2,12 +2,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
@@ -30,7 +32,16 @@
       <FlowPane fx:id="tags" />
       <Label fx:id="date" styleClass="cell_small_label" wrapText="true" text="\$date" />
       <Label fx:id="address" styleClass="cell_small_label" wrapText="true" text="\$address" />
-      <FlowPane fx:id="people" />
+      <FlowPane fx:id="people" HBox.hgrow="ALWAYS"/>
+      <Label fx:id="exportContent" visible="false"/>
     </VBox>
   </GridPane>
+
+  <!-- Copy Button positioned at top right -->
+  <StackPane alignment="TOP_RIGHT" HBox.hgrow="NEVER">
+    <padding>
+      <Insets top="10" right="10" />
+    </padding>
+    <Button fx:id="copyButton" onAction="#handleCopyEmails" styleClass="copy-button" />
+  </StackPane>
 </HBox>
