@@ -31,6 +31,8 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
+    private FlowPane tags;
+    @FXML
     private FlowPane people;
 
     /**
@@ -52,6 +54,9 @@ public class EventCard extends UiPart<Region> {
             address.setVisible(false);
         }
 
+        event.getTags().stream()
+                .sorted(Comparator.comparing(tag -> tag.tagName))
+                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         event.getParticipants().stream()
                 .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
                 .forEach(contact -> people.getChildren().add(new Label(contact.getName().value)));
