@@ -3,12 +3,11 @@ package nusemp.storage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import javafx.util.Pair;
 
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.ReadOnlyAppData;
@@ -39,7 +38,7 @@ class JsonAdaptedEvent {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String address;
 
-    private final List<Pair<String, String>> partcipantStatuses = new ArrayList<>();
+    private final List<JsonAdaptedParticipantStatus> partcipantStatuses = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonAdaptedEvent} with the given event details.
@@ -47,7 +46,7 @@ class JsonAdaptedEvent {
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("name") String name, @JsonProperty("date") String date,
             @JsonProperty("address") String address,
-            @JsonProperty("participantStatuses") List<Pair<String, String>> participantStatuses) {
+            @JsonProperty("participantStatuses") List<JsonAdaptedParticipantStatus> participantStatuses) {
         this.name = name;
         this.date = date;
         this.address = address;
@@ -64,9 +63,9 @@ class JsonAdaptedEvent {
         date = source.getDate().toString();
         address = source.getAddress().value;
         partcipantStatuses.addAll(source.getParticipants().stream()
-                .map(status -> new Pair<>(
+                .map(status -> new JsonAdaptedParticipantStatus(
                         status.getContact().getEmail().value, status.getStatus().toString()))
-                .toList());
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -103,9 +102,9 @@ class JsonAdaptedEvent {
         }
 
         final List<ContactStatus> modelParticipants = new ArrayList<>();
-        for (Pair<String, String> contactStatus : partcipantStatuses) {
-            String email = contactStatus.getKey();
-            String statusStr = contactStatus.getValue();
+        for (JsonAdaptedParticipantStatus contactStatus : partcipantStatuses) {
+            String email = contactStatus.getParticipantEmail();
+            String statusStr = contactStatus.getParticipantStatus();
             if (!Email.isValidEmail(email)) {
                 throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
             }
