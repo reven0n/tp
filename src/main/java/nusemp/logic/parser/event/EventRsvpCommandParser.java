@@ -11,7 +11,6 @@ import nusemp.logic.parser.ArgumentMultimap;
 import nusemp.logic.parser.ArgumentTokenizer;
 import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.ParserUtil;
-import nusemp.logic.parser.Prefix;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.Status;
 
