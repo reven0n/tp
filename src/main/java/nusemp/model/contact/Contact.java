@@ -48,6 +48,17 @@ public class Contact {
         this.tags.addAll(tags);
         this.events.addAll(events);
     }
+    /**
+     * Convenience constructor without linked events.
+     */
+    public Contact(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+        requireAllNonNull(name, email, phone, address, tags, events);
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.tags.addAll(tags);
+    }
 
     public Name getName() {
         return name;
@@ -145,6 +156,7 @@ public class Contact {
         updatedEvents.remove(event);
         return new Contact(name, email, phone, address, tags, updatedEvents);
     }
+
     /**
      * Returns true if both contacts have the same email.
      * This defines a weaker notion of equality between two contacts.

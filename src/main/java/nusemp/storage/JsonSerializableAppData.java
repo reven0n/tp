@@ -73,7 +73,31 @@ class JsonSerializableAppData {
             appData.addEvent(event);
         }
 
+        // Populate contact event lists based on event participants
+        populateContactEventLists(appData);
+
         return appData;
+    }
+
+    /**
+     * Populates the event lists in contacts based on event participants.
+     * For each event, adds the event to all its participants' event lists.
+     */
+    private void populateContactEventLists(AppData appData) {
+        for (Event event : appData.getEventList()) {
+            for (Contact participant : event.getParticipants()) {
+                // Find the contact in appData and update it
+                Contact existingContact = appData.getContactList().stream()
+                        .filter(c -> c.getEmail().equals(participant.getEmail()))
+                        .findFirst()
+                        .orElse(null);
+
+                if (existingContact != null && !existingContact.hasEventWithName(event.getName().value)) {
+                    Contact updatedContact = existingContact.addEvent(event);
+                    appData.setContact(existingContact, updatedContact);
+                }
+            }
+        }
     }
 
 }
