@@ -33,6 +33,8 @@ public class ContactCard extends UiPart<Region> {
     private Label address;
     @FXML
     private FlowPane tags;
+    @FXML
+    private FlowPane events;
 
     /**
      * Creates a {@code ContactCard} with the given {@code Contact} and index to display.
@@ -58,6 +60,8 @@ public class ContactCard extends UiPart<Region> {
         contact.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        contact.getEvents()
+                .forEach(event -> events.getChildren().add(new Label(event.getName().value)));
         id.setWrapText(true);
         name.setWrapText(true);
         email.setWrapText(true);

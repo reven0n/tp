@@ -100,7 +100,7 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #f8f9fa;
+    -fx-background-color: #eaedf0;
 }
 
 .list-cell:filled:odd {
@@ -332,18 +332,19 @@
     -fx-background-radius: 0;
 }
 
-#people {
+#people, #events {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#people .label {
-    --fx-text-fill: #ffffff;
+#people .label, #events .label {
+    -fx-text-fill: #ffffff;
     -fx-background-color: #007acc;
-    -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
-    -fx-font-size: 11;
+    -fx-padding: 3 4;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-size: 12;
+    -fx-font-weight: 500;
 }
 
 #tags {
@@ -352,11 +353,11 @@
 }
 
 #tags .label {
-    -fx-text-fill: #ffffff;
-    -fx-background-color: #007acc;
-    -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
+    -fx-text-fill: #000000;
+    -fx-background-color: #ffffff;
+    -fx-padding: 3 6;
+    -fx-border-radius: 10;
+    -fx-background-radius: 2 10 10 10;
     -fx-font-size: 11;
 }
 
