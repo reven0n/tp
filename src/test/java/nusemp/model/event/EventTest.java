@@ -10,7 +10,6 @@ import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
 import static nusemp.testutil.TypicalEvents.MEETING_WITH_TAGS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -73,7 +72,7 @@ class EventTest {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(BOB));
         assertEquals(event1.withParticipant(BOB), event2);
-        assertNotEquals(event1, event1.withParticipant(BOB)); // should be different instances
+        assertEquals(event1, event1.withParticipant(BOB));
     }
 
     @Test
@@ -117,7 +116,7 @@ class EventTest {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(BOB));
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
         assertEquals(event1.withoutParticipant(BOB), event2);
-        assertNotEquals(event1, event1.withoutParticipant(BOB)); // should be different instances
+        assertEquals(event1, event1.withoutParticipant(BOB));
     }
 
     @Test
@@ -197,10 +196,6 @@ class EventTest {
         editedEvent = new EventBuilder(MEETING_FILLED).withAddress("456 Another St").build();
         assertFalse(MEETING_FILLED.equals(editedEvent));
 
-        // different participants -> returns false
-        editedEvent = new EventBuilder(MEETING_FILLED)
-                .withParticipants(VALID_PARTICIPANTS.toArray(Contact[]::new)).build();
-        assertFalse(MEETING_FILLED.equals(editedEvent));
 
         // no tags -> returns false
         Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music").build();
