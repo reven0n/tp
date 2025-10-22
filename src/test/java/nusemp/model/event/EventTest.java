@@ -60,26 +60,6 @@ class EventTest {
     }
 
     @Test
-    public void withTags_addTags_returnsEventWithTags() {
-        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
-        Set<Tag> tags = new HashSet<>();
-        tags.add(new Tag("Music"));
-
-        Event eventWithTags = event.addTags(tags);
-        assertEquals(tags, eventWithTags.getTags());
-        assertNotEquals(event, eventWithTags); // should be different instances
-    }
-
-    @Test
-    public void withTag_addSingleTag_returnsEventWithTag() {
-        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_PARTICIPANT_LIST);
-        Tag tag = new Tag("Music");
-
-        Event eventWithTag = event.addTags(Set.of(tag));
-        assertTrue(eventWithTag.getTags().contains(tag));
-    }
-
-    @Test
     public void getTags_modifyReturnedSet_doesNotModifyEvent() {
         Event event = MEETING_WITH_TAGS;
         Set<Tag> tags = event.getTags();
@@ -96,24 +76,6 @@ class EventTest {
     }
 
     @Test
-    public void equals_differentTags_returnsFalse() {
-        Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music").build();
-        Event event2 = new EventBuilder(MEETING_FILLED).withTags("Networking").build();
-        Event event3 = new EventBuilder(MEETING_FILLED).withTags().build();
-
-        assertFalse(event1.equals(event2));
-        assertFalse(event1.equals(event3));
-    }
-
-    @Test
-    public void equals_sameTags_returnsTrue() {
-        Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
-        Event event2 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
-
-        assertTrue(event1.equals(event2));
-    }
-
-    @Test
     public void withParticipant_preservesTags() {
         Set<Tag> tags = new HashSet<>();
         tags.add(new Tag("Music"));
@@ -124,7 +86,7 @@ class EventTest {
     }
 
     @Test
-    public void hashCode_sameTags_returnsSameHashCode() {
+    public void hashCode_sameFields_returnsSameHashCode() {
         Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
         Event event2 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
 
@@ -238,6 +200,20 @@ class EventTest {
         editedEvent = new EventBuilder(MEETING_FILLED)
                 .withParticipants(VALID_PARTICIPANTS.toArray(Contact[]::new)).build();
         assertFalse(MEETING_FILLED.equals(editedEvent));
+
+        // no tags -> returns false
+        Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music").build();
+        Event event2 = new EventBuilder(MEETING_FILLED).withTags("Networking").build();
+        Event event3 = new EventBuilder(MEETING_FILLED).withTags().build();
+
+        assertFalse(event1.equals(event2));
+        assertFalse(event1.equals(event3));
+
+        // same tags -> returns true
+        Event event4 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
+        Event event5 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
+
+        assertTrue(event4.equals(event5));
     }
 
     @Test

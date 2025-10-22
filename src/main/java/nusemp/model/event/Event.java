@@ -26,10 +26,10 @@ public class Event {
     // Identity fields
     private final Name name;
     private final Date date;
-    private final Set<Tag> tags;
 
     // Data fields
     private final Address address;
+    private final Set<Tag> tags = new HashSet<>();
     private final List<Contact> participants = new ArrayList<>();
 
     /**
@@ -41,7 +41,7 @@ public class Event {
         this.name = name;
         this.date = date;
         this.address = address;
-        this.tags = new HashSet<>(tags);
+        this.tags.addAll(tags);
         this.participants.addAll(participants);
     }
 
@@ -50,20 +50,6 @@ public class Event {
      */
     public Event(Name name, Date date, Address address) {
         this(name, date, address, new HashSet<>(), new ArrayList<>());
-    }
-
-    /**
-     * Convenience constructor with tags but without participants.
-     */
-    public Event(Name name, Date date, Address address, Set<Tag> tags) {
-        this(name, date, address, tags, new ArrayList<>());
-    }
-
-    /**
-     * Convenience constructor with participants but without tags.
-     */
-    public Event(Name name, Date date, Address address, List<Contact> participants) {
-        this(name, date, address, new HashSet<>(), participants);
     }
 
     public Name getName() {
@@ -84,10 +70,6 @@ public class Event {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
-    }
-
-    public Event addTags(Set<Tag> newTags) {
-        return new Event(name, date, address, newTags, participants);
     }
 
     public boolean hasTags() {

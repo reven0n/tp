@@ -11,7 +11,6 @@ import static nusemp.testutil.TypicalContacts.GEORGE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 import nusemp.model.event.Event;
