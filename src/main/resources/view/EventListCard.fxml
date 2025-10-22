@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
 
+
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -31,13 +32,13 @@
       </HBox>
       <Label fx:id="date" styleClass="cell_small_label" text="\$date" />
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" />
-      <FlowPane fx:id="people" />
+      <FlowPane fx:id="people" HBox.hgrow="ALWAYS"/>
       <Label fx:id="exportContent" visible="false"/>
     </VBox>
   </GridPane>
 
   <!-- Copy Button positioned at top right -->
-  <StackPane alignment="TOP_RIGHT">
+  <StackPane alignment="TOP_RIGHT" HBox.hgrow="NEVER">
     <padding>
       <Insets top="10" right="10" />
     </padding>

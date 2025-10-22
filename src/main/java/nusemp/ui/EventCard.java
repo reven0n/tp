@@ -68,6 +68,13 @@ public class EventCard extends UiPart<Region> {
         svgPath.setStyle("-fx-fill: none; -fx-stroke: #a8a8a8; -fx-stroke-width: 1");
         copyButton.setGraphic(svgPath);
 
+
+        cardPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
+            if (newScene != null) {
+                cardPane.maxWidthProperty().bind(newScene.widthProperty().subtract(100));
+            }
+        });
+
         this.event = event;
         id.setText(displayedIndex + ". ");
         name.setText(event.getName().toString());
@@ -82,6 +89,7 @@ public class EventCard extends UiPart<Region> {
             address.setVisible(false);
         }
 
+
         event.getParticipants().stream()
                 .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
                 .forEach(contact -> {
@@ -89,6 +97,7 @@ public class EventCard extends UiPart<Region> {
                     people.getChildren().add(new Label(name));
                     exportContentData = exportContentData + name + ",";
                 });
+
 
         if (!exportContentData.isEmpty()) {
             exportContentData = exportContentData.substring(0, exportContentData.length() - 1);
