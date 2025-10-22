@@ -32,12 +32,11 @@ public class Event {
     private final Address address;
     private final List<ContactStatus> participants = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
-    private final List<Contact> participants = new ArrayList<>();
 
     /**
      * Every field must be present and not null. {@code Address.empty()} can be used to represent absence of an address.
      */
-    public Event(Name name, Date date, Address address, List<ContactStatus> participants) {
+    public Event(Name name, Date date, Address address, Set<Tag> tags, List<ContactStatus> participants) {
         requireAllNonNull(name, date, address, participants);
         checkForDuplicateParticipant(participants);
         this.name = name;
@@ -124,7 +123,7 @@ public class Event {
                 break;
             }
         }
-        return new Event(name, date, address, updatedParticipants);
+        return new Event(name, date, address, tags, updatedParticipants);
     }
 
     /**
@@ -154,7 +153,7 @@ public class Event {
         }
         List<ContactStatus> updatedParticipantStatuses = new ArrayList<>(participants);
         updatedParticipantStatuses.add(new ContactStatus(contact));
-        return new Event(name, date, address, updatedParticipantStatuses);
+        return new Event(name, date, address, tags, updatedParticipantStatuses);
     }
 
 
@@ -166,7 +165,7 @@ public class Event {
         requireAllNonNull(contact);
         List<ContactStatus> updatedParticipantStatuses = new ArrayList<>(participants);
         updatedParticipantStatuses.removeIf(status -> status.hasSameContact(contact));
-        return new Event(name, date, address, updatedParticipantStatuses);
+        return new Event(name, date, address, tags, updatedParticipantStatuses);
     }
 
     /**

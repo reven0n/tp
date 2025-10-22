@@ -41,7 +41,7 @@ class JsonAdaptedEvent {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String address;
 
-    private final List<JsonAdaptedParticipantStatus> partcipantStatuses = new ArrayList<>();
+    private final List<JsonAdaptedParticipantStatus> participantStatuses = new ArrayList<>();
 
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
@@ -50,14 +50,13 @@ class JsonAdaptedEvent {
      */
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("name") String name, @JsonProperty("date") String date,
-            @JsonProperty("address") String address,
+            @JsonProperty("address") String address, @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("participantStatuses") List<JsonAdaptedParticipantStatus> participantStatuses) {
-            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.date = date;
         this.address = address;
         if (participantStatuses != null) {
-            this.partcipantStatuses.addAll(participantStatuses);
+            this.participantStatuses.addAll(participantStatuses);
         }
         if (tags != null) {
             this.tags.addAll(tags);
@@ -71,7 +70,7 @@ class JsonAdaptedEvent {
         name = source.getName().value;
         date = source.getDate().toString();
         address = source.getAddress().value;
-        partcipantStatuses.addAll(source.getParticipants().stream()
+        participantStatuses.addAll(source.getParticipants().stream()
                 .map(status -> new JsonAdaptedParticipantStatus(
                         status.getContact().getEmail().value, status.getStatus().toString()))
                 .collect(Collectors.toList()));
@@ -119,7 +118,7 @@ class JsonAdaptedEvent {
         }
 
         final List<ContactStatus> modelParticipants = new ArrayList<>();
-        for (JsonAdaptedParticipantStatus contactStatus : partcipantStatuses) {
+        for (JsonAdaptedParticipantStatus contactStatus : participantStatuses) {
             String email = contactStatus.getParticipantEmail();
             String statusStr = contactStatus.getParticipantStatus();
             if (!Email.isValidEmail(email)) {

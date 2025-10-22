@@ -92,11 +92,8 @@ public class EventCard extends UiPart<Region> {
 
         event.getParticipants().stream()
                 .sorted(Comparator.comparing(status -> status.getContact().getName().value.toLowerCase()))
-                .forEach(status -> people.getChildren()
-                        .add(new Label(status.getContact().getName().value)));
-                .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
-                .forEach(contact -> {
-                    String name = contact.getName().value;
+                .forEach(status -> {
+                    String name = status.getContact().getName().value;
                     people.getChildren().add(new Label(name));
                     exportContentData = exportContentData + name + ",";
                 });

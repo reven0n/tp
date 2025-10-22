@@ -93,8 +93,16 @@ public class EventBuilder {
     /**
      * Replaces the participants of the {@code Event} that we are building.
      */
-    public EventBuilder withParticipants(ContactStatus[] participants) {
+    public EventBuilder withParticipants(ContactStatus... participants) {
         this.participants = new ArrayList<>(List.of(participants));
+        return this;
+    }
+
+    /**
+     * Replaces the participants of the {@code Event} that we are building.
+     */
+    public EventBuilder withParticipants(List<ContactStatus> participants) {
+        this.participants = new ArrayList<>(participants);
         return this;
     }
 

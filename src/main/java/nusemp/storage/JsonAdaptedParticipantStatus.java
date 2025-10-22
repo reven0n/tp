@@ -12,14 +12,14 @@ public class JsonAdaptedParticipantStatus {
     private final String participantStatus;
 
     /**
-     * Constructs a {@code JsonAdaptedParticipantStatus} with the given key and value.
-     * @param key
-     * @param value
+     * Constructs a {@code JsonAdaptedParticipantStatus} with the given email and status.
+     * @param email Email of the participant.
+     * @param status Status of the participant for the event.
      */
     @JsonCreator
-    public JsonAdaptedParticipantStatus(@JsonProperty("key") String key, @JsonProperty("value") String value) {
-        this.participantEmail = key;
-        this.participantStatus = value;
+    public JsonAdaptedParticipantStatus(@JsonProperty("email") String email, @JsonProperty("status") String status) {
+        this.participantEmail = email;
+        this.participantStatus = status;
     }
 
     public String getParticipantEmail() {
