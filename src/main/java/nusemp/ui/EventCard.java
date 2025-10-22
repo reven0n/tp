@@ -40,14 +40,18 @@ public class EventCard extends UiPart<Region> {
         super(FXML);
         this.event = event;
         id.setText(displayedIndex + ". ");
-        name.setText(event.getName().value);
+        name.setText(event.getName().toString());
+        name.setWrapText(true);
         date.setText(event.getDate().toString());
+        date.setWrapText(true);
+
         if (event.hasAddress()) {
             address.setText(event.getAddress().value);
         } else {
             address.setManaged(false);
             address.setVisible(false);
         }
+
         event.getParticipants().stream()
                 .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
                 .forEach(contact -> people.getChildren().add(new Label(contact.getName().value)));
