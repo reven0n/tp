@@ -5,6 +5,7 @@ import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
 import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
 import static nusemp.testutil.TypicalEvents.MEETING_WITH_TAGS;
+import static nusemp.testutil.TypicalEvents.MEETING_WITH_TAGS_FILLED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ class JsonAdaptedEventTest {
     public void toModelType_nullAddress_returnsEvent() throws Exception {
         JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, null, VALID_TAGS,
                 VALID_PARTICIPANT_EMAILS);
-        Event expectedEvent = new EventBuilder(MEETING_FILLED).withoutAddress().build();
+        Event expectedEvent = new EventBuilder(MEETING_WITH_TAGS_FILLED).withoutAddress().build();
         assertEquals(expectedEvent, event.toModelType(getTypicalAppDataWithoutEvent()));
     }
 

@@ -1,11 +1,17 @@
 package nusemp.testutil;
 
 import static nusemp.testutil.TypicalContacts.ALICE;
+import static nusemp.testutil.TypicalContacts.BENSON;
 import static nusemp.testutil.TypicalContacts.BOB;
 import static nusemp.testutil.TypicalContacts.CARL;
+import static nusemp.testutil.TypicalContacts.DANIEL;
+import static nusemp.testutil.TypicalContacts.ELLE;
+import static nusemp.testutil.TypicalContacts.FIONA;
+import static nusemp.testutil.TypicalContacts.GEORGE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import nusemp.model.event.Event;
@@ -34,11 +40,18 @@ public class TypicalEvents {
     public static final Event PARTY_HALF_FILLED = new Event(new Name("PARTY"), new Date("31-12-2024 20:00"),
             ALICE.getAddress(), new ArrayList<>(Arrays.asList(ALICE, BOB, CARL)));
     public static final Event MEETING_WITH_TAGS = new EventBuilder()
-            .withName("Meeting")
+            .withName("MEETING")
             .withDate("01-10-2025 14:00")
-            .withAddress("Conference Room")
+            .withAddress("Meeting Room A")
             .withTags("Music", "Networking")
             .build();
+    public static final Event MEETING_WITH_TAGS_FILLED = new EventBuilder()
+            .withName("MEETING")
+            .withDate("01-10-2025 14:00")
+            .withAddress("Meeting Room A")
+            .withTags("Music", "Networking")
+            .withParticipants(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE)
+            .build();;
 
     public static List<Event> getTypicalEvents() {
         return new ArrayList<>(Arrays.asList(MEETING_EMPTY, CONFERENCE_EMPTY,
