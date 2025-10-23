@@ -43,7 +43,7 @@ public class ContactShowCommand extends Command {
         List<Contact> lastShownList = model.getFilteredContactList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
         }
 
         Contact targetContact = lastShownList.get(targetIndex.getZeroBased());

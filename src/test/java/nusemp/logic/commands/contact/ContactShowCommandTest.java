@@ -46,7 +46,7 @@ public class ContactShowCommandTest {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredContactList().size() + 1);
         ContactShowCommand contactShowCommand = new ContactShowCommand(outOfBoundIndex);
 
-        assertCommandFailure(contactShowCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        assertCommandFailure(contactShowCommand, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class ContactShowCommandTest {
 
         ContactShowCommand contactShowCommand = new ContactShowCommand(outOfBoundIndex);
 
-        assertCommandFailure(contactShowCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+        assertCommandFailure(contactShowCommand, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
     @Test
