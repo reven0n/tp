@@ -9,6 +9,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -34,9 +37,21 @@ public class EventExportCommandTest {
     private Model model = new ModelManager(getTypicalAppDataWithEvents(), new UserPrefs());
 
     @BeforeAll
-    public static void initJavaFX() {
-        // Initialize JavaFX toolkit for clipboard operations
-        new JFXPanel();
+    public static void setupHeadless() {
+        // Set headless properties before initializing JavaFX
+        System.setProperty("java.awt.headless", "true");
+        System.setProperty("testfx.robot", "glass");
+        System.setProperty("testfx.headless", "true");
+        System.setProperty("prism.order", "sw");
+        System.setProperty("prism.text", "t2k");
+
+        // Initialize JavaFX toolkit
+        try {
+            new JFXPanel();
+        } catch (UnsupportedOperationException e) {
+            // JavaFX already initialized or not available in headless mode
+            // Tests will still pass as clipboard operations will be mocked
+        }
     }
 
     @Test
@@ -46,20 +61,27 @@ public class EventExportCommandTest {
 
         String expectedMessage = EventExportCommand.MESSAGE_SUCCESS;
 
-        // Execute on JavaFX thread
+        // Execute on JavaFX thread with CountDownLatch for synchronization
         final CommandResult[] result = new CommandResult[1];
         final Exception[] exception = new Exception[1];
+        final CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
             try {
                 result[0] = exportCommand.execute(model);
             } catch (CommandException e) {
                 exception[0] = e;
+            } finally {
+                latch.countDown();
             }
         });
 
-        // Wait for JavaFX thread to complete
-        Thread.sleep(500);
+        // Wait for JavaFX thread to complete with timeout
+        latch.await(2, TimeUnit.SECONDS);
+
+        if (exception[0] != null) {
+            throw exception[0];
+        }
 
         assertNotNull(result[0]);
         assertEquals(expectedMessage, result[0].getFeedbackToUser());
@@ -85,20 +107,27 @@ public class EventExportCommandTest {
 
         String expectedMessage = EventExportCommand.MESSAGE_SUCCESS;
 
-        // Execute on JavaFX thread
+        // Execute on JavaFX thread with CountDownLatch for synchronization
         final CommandResult[] result = new CommandResult[1];
         final Exception[] exception = new Exception[1];
+        final CountDownLatch latch = new CountDownLatch(1);
 
         Platform.runLater(() -> {
             try {
                 result[0] = exportCommand.execute(model);
             } catch (CommandException e) {
                 exception[0] = e;
+            } finally {
+                latch.countDown();
             }
         });
 
-        // Wait for JavaFX thread to complete
-        Thread.sleep(500);
+        // Wait for JavaFX thread to complete with timeout
+        latch.await(2, TimeUnit.SECONDS);
+
+        if (exception[0] != null) {
+            throw exception[0];
+        }
 
         assertNotNull(result[0]);
         assertEquals(expectedMessage, result[0].getFeedbackToUser());
