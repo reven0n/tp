@@ -1,5 +1,10 @@
 package nusemp.logic.commands.event;
 
+import java.util.Comparator;
+import java.util.List;
+
+import static java.util.Objects.requireNonNull;
+
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 
@@ -11,11 +16,6 @@ import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.event.Event;
-
-import java.util.Comparator;
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Exports all contacts linked to an event.
@@ -30,7 +30,7 @@ public class EventExportCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Successfully exported contacts linked to event to your clipboard.";
 
-    public String exportContentData = "";
+    private String exportContentData = "";
 
     private final Index eventIndex;
 
