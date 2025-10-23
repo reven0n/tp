@@ -106,10 +106,10 @@ class JsonAdaptedEventTest {
 
     @Test
     public void toModelType_invalidParticipantEmail_throwsIllegalValueException() {
-        List<JsonAdaptedParticipant> participantStatus = new ArrayList<>(VALID_PARTICIPANT_STATUS);
-        participantStatus.add(INVALID_PARTICIPANT_EMAIL);
+        List<JsonAdaptedParticipant> participants = new ArrayList<>(VALID_PARTICIPANT_STATUS);
+        participants.add(INVALID_PARTICIPANT_EMAIL);
         JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, VALID_ADDRESS, VALID_TAGS,
-                participantStatus);
+                participants);
         String expectedMessage = Email.MESSAGE_CONSTRAINTS;
         assertThrows(IllegalValueException.class, expectedMessage, () ->
                 event.toModelType(getTypicalAppDataWithoutEvent()));

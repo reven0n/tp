@@ -102,24 +102,24 @@ public class Event {
     public boolean hasParticipantWithEmail(String email) {
         requireAllNonNull(email);
         return participants.stream()
-                .anyMatch(status -> status.getContact().getEmail().value.equals(email));
+                .anyMatch(p -> p.getContact().getEmail().value.equals(email));
     }
 
     /**
      * Returns a new Event with the given participant updated if it exists.
      * This maintains immutability by returning a new Event instance.
      */
-    public Event withUpdatedParticipant(Participant updatedStatus) throws ParticipantNotFoundException {
-        requireAllNonNull(updatedStatus);
-        if (!hasParticipantWithEmail(updatedStatus.getContact().getEmail().value)) {
+    public Event withUpdatedParticipant(Participant updatedParticipant) throws ParticipantNotFoundException {
+        requireAllNonNull(updatedParticipant);
+        if (!hasParticipantWithEmail(updatedParticipant.getContact().getEmail().value)) {
             throw new ParticipantNotFoundException();
         }
 
         List<Participant> updatedParticipants = new ArrayList<>(participants);
         for (int i = 0; i < updatedParticipants.size(); i++) {
-            Participant currentStatus = updatedParticipants.get(i);
-            if (currentStatus.containsContact(updatedStatus.getContact())) {
-                updatedParticipants.set(i, updatedStatus);
+            Participant currentParticipant = updatedParticipants.get(i);
+            if (currentParticipant.containsContact(updatedParticipant.getContact())) {
+                updatedParticipants.set(i, updatedParticipant);
                 break;
             }
         }
@@ -151,9 +151,9 @@ public class Event {
         if (hasParticipantWithEmail(contact.getEmail().value)) {
             throw new DuplicateParticipantException();
         }
-        List<Participant> updatedParticipantStatuses = new ArrayList<>(participants);
-        updatedParticipantStatuses.add(new Participant(contact));
-        return new Event(name, date, address, tags, updatedParticipantStatuses);
+        List<Participant> updatedParticipants = new ArrayList<>(participants);
+        updatedParticipants.add(new Participant(contact));
+        return new Event(name, date, address, tags, updatedParticipants);
     }
 
 
@@ -163,9 +163,9 @@ public class Event {
      */
     public Event withoutContact(Contact contact) {
         requireAllNonNull(contact);
-        List<Participant> updatedParticipantStatuses = new ArrayList<>(participants);
-        updatedParticipantStatuses.removeIf(status -> status.containsContact(contact));
-        return new Event(name, date, address, tags, updatedParticipantStatuses);
+        List<Participant> updatedParticipants = new ArrayList<>(participants);
+        updatedParticipants.removeIf(p -> p.containsContact(contact));
+        return new Event(name, date, address, tags, updatedParticipants);
     }
 
     /**

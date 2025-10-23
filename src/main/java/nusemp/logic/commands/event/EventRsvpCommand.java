@@ -60,10 +60,10 @@ public class EventRsvpCommand extends Command {
         requireNonNull(model);
         Contact contactToRsvp = getContactFromModel(model);
         Event eventToRsvp = getEventFromModel(model);
-        Participant updatedStatus = new Participant(contactToRsvp, status);
+        Participant updatedParticipant = new Participant(contactToRsvp, status);
 
         try {
-            Event rsvpedEvent = eventToRsvp.withUpdatedParticipant(updatedStatus);
+            Event rsvpedEvent = eventToRsvp.withUpdatedParticipant(updatedParticipant);
             model.setEvent(eventToRsvp, rsvpedEvent);
             return new CommandResult(String.format(MESSAGE_SUCCESS,
                     Messages.format(eventToRsvp), Messages.format(contactToRsvp)));

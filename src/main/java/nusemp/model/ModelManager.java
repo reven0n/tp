@@ -180,11 +180,11 @@ public class ModelManager implements Model {
     @Override
     public void deleteEvent(Event target) {
         // Remove event from all linked contacts
-        for (Participant participantStatus : target.getParticipants()) {
-            Contact participant = participantStatus.getContact();
-            if (hasContact(participant)) {
-                Contact updatedContact = participant.removeEvent(target);
-                appData.setContact(participant, updatedContact);
+        for (Participant participant : target.getParticipants()) {
+            Contact contact = participant.getContact();
+            if (hasContact(contact)) {
+                Contact updatedContact = contact.removeEvent(target);
+                appData.setContact(contact, updatedContact);
             }
         }
         appData.removeEvent(target);

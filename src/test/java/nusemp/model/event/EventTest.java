@@ -37,11 +37,11 @@ class EventTest {
     private static final Set<Tag> EMPTY_TAG_SET = new HashSet<>();
 
     private static List<Participant> createParticipantList(Contact... contacts) {
-        List<Participant> participantStatuses = new ArrayList<>();
+        List<Participant> participants = new ArrayList<>();
         for (Contact contact : contacts) {
-            participantStatuses.add(new Participant(contact));
+            participants.add(new Participant(contact));
         }
-        return participantStatuses;
+        return participants;
     }
 
     @Test
