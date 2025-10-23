@@ -1,4 +1,4 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_ADDRESS_DESC_AMY;
@@ -36,7 +36,6 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
 import nusemp.logic.commands.contact.ContactAddCommand;
-import nusemp.logic.parser.contact.ContactAddCommandParser;
 import nusemp.model.contact.Contact;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;

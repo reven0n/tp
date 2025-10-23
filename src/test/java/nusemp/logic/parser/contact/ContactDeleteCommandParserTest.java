@@ -1,4 +1,4 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -8,7 +8,6 @@ import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.commands.contact.ContactDeleteCommand;
-import nusemp.logic.parser.contact.ContactDeleteCommandParser;
 
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations

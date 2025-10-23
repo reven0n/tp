@@ -15,7 +15,7 @@ import nusemp.model.Model;
 import nusemp.model.event.Event;
 
 /**
- * Deletes a event identified using it's displayed index from the event list.
+ * Shows all contacts part of the event identified using it's displayed index from the event list.
  */
 public class EventShowCommand extends Command {
 
