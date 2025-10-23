@@ -1,5 +1,15 @@
 package nusemp.logic.commands;
 
+import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
+import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.event.EventExportCommand;
@@ -7,13 +17,6 @@ import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 
-import org.junit.jupiter.api.Test;
-
-import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
-import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
-import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
-import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for

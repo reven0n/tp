@@ -1,14 +1,15 @@
 package nusemp.logic.parser;
 
-import nusemp.logic.commands.event.EventExportCommand;
-import nusemp.logic.parser.event.EventExportCommandParser;
-
-import org.junit.jupiter.api.Test;
-
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
+
+import org.junit.jupiter.api.Test;
+
+import nusemp.logic.commands.event.EventExportCommand;
+import nusemp.logic.parser.event.EventExportCommandParser;
+
 
 /**
  * Contains unit tests for EventExportCommandParser.
