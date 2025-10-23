@@ -267,6 +267,18 @@ Links a contact to an event, allowing you to associate participants with specifi
 **Examples**:
 * `event list` followed by `contact list` then `event link --event 1 --contact 2` links the 2nd contact to the 1st event
 
+#### Exporting contacts belonging to an event: `event export`
+
+Exports all contacts linked to an event into your clipboard, allowing you to easily paste them into an email.
+
+**Format**: `event export EVENT_INDEX`
+
+* `EVENT_INDEX` refers to the index number shown in the displayed event list
+
+**Examples**:
+* `event export` followed by `1` exports all contacts linked to the 1st event into your clipboard.
+
+
 ---
 
 ### Exiting the program: `exit`
@@ -334,8 +346,9 @@ _Details coming soon ..._
 
 ### Event commands
 
-| Action     | Format, Examples  |
-|------------|-------------------|
+| Action     | Format, Examples                                                                                                                            |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add**    | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4` |
-| **List**   | `event list` |
-| **Link**   | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2` |
+| **List**   | `event list`                                                                                                                                |
+| **Link**   | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
+| **Export** | `event export` <br>e.g. `event export 1`                                                                                                     |
