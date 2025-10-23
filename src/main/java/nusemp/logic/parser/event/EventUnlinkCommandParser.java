@@ -5,7 +5,6 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 
 import nusemp.commons.core.index.Index;
-import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventUnlinkCommand;
 import nusemp.logic.parser.ArgumentMultimap;
 import nusemp.logic.parser.ArgumentTokenizer;
@@ -45,7 +44,7 @@ public class EventUnlinkCommandParser implements Parser<EventUnlinkCommand> {
             contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventLinkCommand.MESSAGE_USAGE), pe);
+                    EventUnlinkCommand.MESSAGE_USAGE), pe);
         }
 
         return new EventUnlinkCommand(eventIndex, contactIndex);
