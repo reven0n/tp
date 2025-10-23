@@ -117,7 +117,7 @@ public class AppData implements ReadOnlyAppData {
      */
     private void removeContactFromEvents(Contact contact) {
         for (Event event : events) {
-            if (event.hasParticipant(contact)) {
+            if (event.hasContact(contact)) {
                 Event updatedEvent = event.withoutContact(contact);
                 events.setEvent(event, updatedEvent);
             }

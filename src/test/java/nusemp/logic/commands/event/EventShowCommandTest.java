@@ -36,7 +36,7 @@ public class EventShowCommandTest {
                 eventToShow.getParticipants().size(), Messages.format(eventToShow));
 
         ModelManager expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.updateFilteredContactList(eventToShow::hasParticipant);
+        expectedModel.updateFilteredContactList(eventToShow::hasContact);
 
         assertCommandSuccess(eventShowCommand, model, expectedMessage, expectedModel);
     }
@@ -61,7 +61,7 @@ public class EventShowCommandTest {
                 eventToShow.getParticipants().size(), Messages.format(eventToShow));
 
         Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.updateFilteredContactList(eventToShow::hasParticipant);
+        expectedModel.updateFilteredContactList(eventToShow::hasContact);
         showEventAtIndex(expectedModel, INDEX_THIRD_EVENT);
 
         assertCommandSuccess(eventShowCommand, model, expectedMessage, expectedModel);

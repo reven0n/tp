@@ -37,7 +37,7 @@ public class TypicalAppData {
         for (Contact contact : TypicalContacts.getTypicalContacts()) {
             Contact updatedContact = contact;
             for (Event event : appData.getEventList()) {
-                if (event.hasParticipant(contact)) {
+                if (event.hasContact(contact)) {
                     updatedContact = updatedContact.addEvent(event);
                 }
             }

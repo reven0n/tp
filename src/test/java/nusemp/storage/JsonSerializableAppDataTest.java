@@ -122,8 +122,8 @@ public class JsonSerializableAppDataTest {
         assertEquals(2, teamMeeting.getParticipants().size());
 
         // Verify participants are Alex and Bernice
-        assertTrue(teamMeeting.hasParticipantWithEmail("alexyeoh@example.com"));
-        assertTrue(teamMeeting.hasParticipantWithEmail("berniceyu@example.com"));
+        assertTrue(teamMeeting.hasContactWithEmail("alexyeoh@example.com"));
+        assertTrue(teamMeeting.hasContactWithEmail("berniceyu@example.com"));
     }
 
 }
