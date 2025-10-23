@@ -233,6 +233,18 @@ Examples:
 - `contact list` followed by `contact delete 2` deletes the 2nd contact in the full contact list.
 - `contact find Betsy` followed by `contact delete 1` deletes the 1st contact in the results of the `contact find` command.
 
+#### Showing events in contact: `contact show`
+
+Shows all the events that the specified contact is part of.
+
+Format: `contact show INDEX`
+
+- The index refers to the index number shown in the displayed contact list. It should be a positive integer.
+
+Examples:
+
+- `event link --event 1 --contact 2` followed by `contact show 2` shows only the 1st event in the full event list.
+
 ---
 
 ### Managing events: `event`
@@ -325,12 +337,13 @@ _Details coming soon ..._
 ### Contact commands
 
 | Action     | Format, Examples                                                                                                                                                                                                                                                                                              |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ---------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add**    | `contact add --name NAME --email EMAIL [--phone PHONE_NUMBER] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name James --email james@e.com --phone 91234567 --address Work --tag friend --tag colleague`                                                                                           |
 | **Delete** | `contact delete INDEX`<br> e.g. `contact delete 3`                                                                                                                                                                                                                                                            |
 | **Edit**   | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE_NUMBER] [--address ADDRESS] [--tag TAG]…`<br> e.g. `contact edit 2 --name James Lee --email jameslee@example.com`                                                                                                                            |
 | **Find**   | `contact find KEYWORD [MORE_KEYWORDS]...`<br>e.g. `contact find James Jake`<br><br>`contact find [--name KEYWORD]... [--email KEYWORD]... [--tag KEYWORD]...`<br>e.g. `contact find --email gmail`<br>e.g. `contact find --tag friend`<br>e.g. `contact find --name John --email company.com --tag colleague` |
 | **List**   | `contact list`                                                                                                                                                                                                                                                                                                |
+| **Show**   | `contact show INDEX`<br> e.g. `contact show 1`                                                                                                                                                                                                                                                                |
 
 ### Event commands
 
