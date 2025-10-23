@@ -16,6 +16,7 @@
 This project is based on the AddressBook-Level3 project created by the SE-EDU initiative.
 
 AI was used throughout the development of this project:
+
 - GitHub Copilot was used for auto-completing code snippets.
 - Claude Sonnet 4.5 was used to generate the unit tests.
 - Claude Haiku 4.5 was used to review long documents and tool-use to ensure document consistency.
@@ -167,100 +168,9 @@ Classes used by multiple components are in the `nusemp.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
-
-#### Proposed Implementation
-
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
-
-- `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-- `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-- `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
-
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
-
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
-
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
-
-<puml src="diagrams/UndoRedoState0.puml" alt="UndoRedoState0" />
-
-Step 2. The user executes `delete 5` command to delete the 5th contact in the NUS EMP. The `delete` command calls the commit mechanism, causing the modified state to be saved in the state history, and the current state pointer is shifted to the newly inserted state.
-
-<puml src="diagrams/UndoRedoState1.puml" alt="UndoRedoState1" />
-
-Step 3. The user executes `contact add --name David …` to add a new contact. The `add` command also calls the commit mechanism, causing another modified state to be saved into the state history.
-
-<puml src="diagrams/UndoRedoState2.puml" alt="UndoRedoState2" />
-
-<box type="info" seamless>
-
-**Note:** If a command fails its execution, it will not call the commit mechanism, so the application state will not be saved into the state history.
-
-</box>
-
-Step 4. The user now decides that adding the contact was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call the undo mechanism, which will shift the current state pointer once to the left, pointing it to the previous application state, and restores the application to that state.
-
-<puml src="diagrams/UndoRedoState3.puml" alt="UndoRedoState3" />
-
-<box type="info" seamless>
-
-**Note:** If the current state pointer is at index 0, pointing to the initial application state, then there are no previous states to restore. The `undo` command uses the appropriate check method to verify if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</box>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-<puml src="diagrams/UndoSequenceDiagram-Logic.puml" alt="UndoSequenceDiagram-Logic" />
-
-<box type="info" seamless>
-
-**Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</box>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-<puml src="diagrams/UndoSequenceDiagram-Model.puml" alt="UndoSequenceDiagram-Model" />
-
-The `redo` command does the opposite — it calls the redo mechanism, which shifts the current state pointer once to the right, pointing to the previously undone state, and restores the application to that state.
-
-<box type="info" seamless>
-
-**Note:** If the current state pointer is at the end of the state history, pointing to the latest application state, then there are no undone states to restore. The `redo` command uses the appropriate check method to verify if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</box>
-
-Step 5. The user then decides to execute the command `contact list`. Commands that do not modify the application data, such as `list`, will usually not call the commit, undo, or redo mechanisms. Thus, the state history remains unchanged.
-
-<puml src="diagrams/UndoRedoState4.puml" alt="UndoRedoState4" />
-
-Step 6. The user executes `clear`, which calls the commit mechanism. Since the current state pointer is not pointing at the end of the state history, all application states after the current pointer will be purged. Reason: It no longer makes sense to redo the `contact add --name David …` command. This is the behavior that most modern desktop applications follow.
-
-<puml src="diagrams/UndoRedoState5.puml" alt="UndoRedoState5" />
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<puml src="diagrams/CommitActivityDiagram.puml" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-- **Alternative 1 (current choice):** Saves the entire address book.
-
-  - Pros: Easy to implement.
-  - Cons: May have performance issues in terms of memory usage.
-
-- **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  - Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  - Cons: We must ensure that the implementation of each individual command are correct.
-
-_{more aspects and alternatives to be added}_
-
 ### \[Proposed\] Data archiving
+
+_{Explain here how the data archiving feature will be implemented}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
@@ -292,7 +202,7 @@ Streamlines event communication workflow by integrating contact management with 
 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-| Priority | As a …         | I want to …                                                               | So that I can…                                        |
+| Priority | As a …          | I want to …                                                                | So that I can…                                         |
 | -------- | --------------- | -------------------------------------------------------------------------- | ------------------------------------------------------ |
 | `* * *`  | event organizer | add a contact with standard fields (Name, Phone, Email, Address)           | build my core contact database                         |
 | `* * *`  | event organizer | associate a specific Role (e.g., 'Speaker', 'Attendee', 'VIP', 'Sponsor')  | categorize and filter my contacts effectively          |
@@ -428,8 +338,8 @@ Use case ends.
 **Extensions**
 
 - 2a. No contacts exist.
-    - 2a1. System informs the user that there are no contacts.
-    - Use case ends.
+  - 2a1. System informs the user that there are no contacts.
+  - Use case ends.
 
 ---
 
@@ -463,11 +373,11 @@ Use case ends.
 **Extensions**
 
 - 1a. Given contact is invalid, or does not exist.
-    - 1a1. System shows an error message, indicating the invalid contact.
-    - Use case resumes at step 1.
+  - 1a1. System shows an error message, indicating the invalid contact.
+  - Use case resumes at step 1.
 - 2a. Error encountered when deleting contact from storage.
-    - 2a1. System shows an error message.
-    - Use case ends.
+  - 2a1. System shows an error message.
+  - Use case ends.
 
 ---
 
