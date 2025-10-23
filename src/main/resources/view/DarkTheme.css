@@ -503,3 +503,31 @@
     /* Empty cells will not have alternating colours */
     -fx-background: #383838;
 }
+
+/* Copy button styles */
+.copy-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #B9BBBE;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 10px;
+    -fx-cursor: hand;
+    -fx-background-radius: 5px;
+    -fx-border-width: 0;
+}
+
+.copy-button:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.1);
+    -fx-text-fill: #FFFFFF;
+}
+
+.copy-button:pressed {
+    -fx-background-color: rgba(255, 255, 255, 0.2);
+}
+
+.copy-button:focused {
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-background-color: inherit;
+    -fx-border-color: transparent;
+    -fx-effect: none;
+}

@@ -26,7 +26,7 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app that helps you manage hundreds
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the User Guide in your default browser.<br>
    Some example commands you can try:
 
    - `contact list` : Lists all contacts.
@@ -75,9 +75,7 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app that helps you manage hundreds
 
 ### Viewing help: `help`
 
-Shows a message explaining how to access the help page.
-
-![help message](images/helpMessage.png)
+Opens the User Guide in your default browser.
 
 **Format**: `help`
 
