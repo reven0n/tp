@@ -104,7 +104,7 @@ public class ModelManager implements Model {
         // Remove contact from all linked events
         for (Event event : target.getEvents()) {
             if (hasEvent(event)) {
-                Event updatedEvent = event.withoutParticipant(target);
+                Event updatedEvent = event.withoutContact(target);
                 appData.setEvent(event, updatedEvent);
             }
         }
@@ -150,7 +150,7 @@ public class ModelManager implements Model {
      * @return the updated event with the edited contact as participant
      */
     private Event createUpdatedEvent(Event event, Contact target, Contact editedContact) {
-        return event.withoutParticipant(target).withParticipant(editedContact);
+        return event.withoutContact(target).withContact(editedContact);
     }
 
     //=========== Filtered Contact List Accessors =============================================================

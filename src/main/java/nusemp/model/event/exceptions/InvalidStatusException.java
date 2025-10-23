@@ -5,6 +5,6 @@ package nusemp.model.event.exceptions;
  */
 public class InvalidStatusException extends RuntimeException {
     public InvalidStatusException(String status) {
-        super(status + " is not a valid contact status");
+        super(status + " is not a valid rsvp status");
     }
 }

@@ -109,7 +109,7 @@ public class Event {
      * Returns a new Event with the given contact status updated if it exists.
      * This maintains immutability by returning a new Event instance.
      */
-    public Event updateContactStatus(Participant updatedStatus) throws ParticipantNotFoundException {
+    public Event withUpdatedContactStatus(Participant updatedStatus) throws ParticipantNotFoundException {
         requireAllNonNull(updatedStatus);
         if (!hasParticipantWithEmail(updatedStatus.getContact().getEmail().value)) {
             throw new ParticipantNotFoundException();
@@ -146,7 +146,7 @@ public class Event {
      * This maintains immutability by returning a new Event instance.
      * @throws DuplicateParticipantException if the participant already exists in the event.
      */
-    public Event withParticipant(Contact contact) {
+    public Event withContact(Contact contact) {
         requireAllNonNull(contact);
         if (hasParticipantWithEmail(contact.getEmail().value)) {
             throw new DuplicateParticipantException();
@@ -161,7 +161,7 @@ public class Event {
      * Returns a new Event with the given participant removed.
      * This maintains immutability by returning a new Event instance.
      */
-    public Event withoutParticipant(Contact contact) {
+    public Event withoutContact(Contact contact) {
         requireAllNonNull(contact);
         List<Participant> updatedParticipantStatuses = new ArrayList<>(participants);
         updatedParticipantStatuses.removeIf(status -> status.containsContact(contact));
