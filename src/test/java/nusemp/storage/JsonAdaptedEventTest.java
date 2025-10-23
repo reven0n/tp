@@ -40,8 +40,7 @@ class JsonAdaptedEventTest {
     private static final List<JsonAdaptedTag> VALID_TAGS = MEETING_WITH_TAGS.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
-    //private static final List<String> VALID_PARTICIPANT_EMAILS =
-    //        TypicalContacts.getTypicalContacts().stream().map(c -> c.getEmail().value).toList();
+
     private static final List<JsonAdaptedParticipant> VALID_PARTICIPANT_STATUS =
             TypicalContacts.getTypicalContacts().stream().map(c -> new JsonAdaptedParticipant(
                     c.getEmail().value, Status.ATTENDING.toString())).toList();
