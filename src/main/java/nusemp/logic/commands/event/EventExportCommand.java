@@ -1,8 +1,8 @@
 package nusemp.logic.commands.event;
 
-import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.Command;
@@ -10,16 +10,12 @@ import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
-import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.exceptions.DuplicateParticipantException;
 
 import java.util.Comparator;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
-import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
-import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 
 /**
  * Exports all contacts linked to an event.
