@@ -1,9 +1,9 @@
 package nusemp.logic.commands.event;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.Comparator;
 import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
@@ -24,7 +24,7 @@ public class EventExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Exports all contacts linked to an event identified by the index number used in the displayed event list.\n"
+            + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1";
 
