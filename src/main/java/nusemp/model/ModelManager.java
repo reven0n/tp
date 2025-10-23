@@ -135,7 +135,7 @@ public class ModelManager implements Model {
      */
     private void updateEventsForEmailChange(Contact target, Contact editedContact) {
         for (Event event : target.getEvents()) {
-            if (hasEvent(event) && event.hasParticipantWithEmail(target.getEmail().value)) {
+            if (hasEvent(event) && event.hasContactWithEmail(target.getEmail().value)) {
                 Event updatedEvent = createUpdatedEvent(event, target, editedContact);
                 appData.setEvent(event, updatedEvent);
             }
