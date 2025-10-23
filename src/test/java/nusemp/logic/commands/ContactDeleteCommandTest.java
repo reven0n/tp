@@ -48,13 +48,13 @@ public class ContactDeleteCommandTest {
     public void execute_contactLinkedToEvent_removesFromEvent() {
         Model modelWithEvent = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
         Contact personToDelete = modelWithEvent.getContactByIndex(INDEX_FIRST_CONTACT);
-        Event meetingWithPerson = MEETING_EMPTY.withParticipant(personToDelete);
+        Event meetingWithPerson = MEETING_EMPTY.withContact(personToDelete);
         modelWithEvent.addEvent(meetingWithPerson);
 
         ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_CONTACT);
 
         ModelManager expectedModel = new ModelManager(modelWithEvent.getAppData(), new UserPrefs());
-        expectedModel.getEventByIndex(Index.fromOneBased(1)).withoutParticipant(personToDelete);
+        expectedModel.getEventByIndex(Index.fromOneBased(1)).withoutContact(personToDelete);
         expectedModel.deleteContact(personToDelete);
 
         String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,

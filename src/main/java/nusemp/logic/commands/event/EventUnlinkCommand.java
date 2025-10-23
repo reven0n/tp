@@ -74,7 +74,7 @@ public class EventUnlinkCommand extends Command {
         // unlink both sides
         try {
             // Remove contact from event's participant list
-            Event updatedEvent = eventToEdit.withoutParticipant(contactToUnlink);
+            Event updatedEvent = eventToEdit.withoutContact(contactToUnlink);
             model.setEvent(eventToEdit, updatedEvent);
 
             // Remove event from contact's event list
