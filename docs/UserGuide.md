@@ -291,6 +291,18 @@ Examples:
 
 - `event link --event 1 --contact 2` followed by `event show 1` shows only the 2nd contact in the full contact list.
 
+#### Exporting contacts belonging to an event: `event export`
+
+Exports all contacts linked to an event into your clipboard, allowing you to easily paste them into an email.
+
+**Format**: `event export INDEX`
+
+* `INDEX` refers to the index number shown in the displayed event list
+
+**Examples**:
+* `event export 1` exports all contacts linked to the 1st event into your clipboard.
+
+
 ---
 
 ### Exiting the program: `exit`
@@ -359,9 +371,11 @@ _Details coming soon ..._
 
 ### Event commands
 
-| Action   | Format, Examples  |
-|----------|-------------------|
-| **Add**  | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4` |
-| **List** | `event list` |
-| **Link** | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2` |
+| Action     | Format, Examples                                                                                                                            |
+|------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**    | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4` |
+| **List**   | `event list`                                                                                                                                |
+| **Link**   | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
 | **Show** | `event show INDEX`<br>e.g. `event show 1` |
+| **Export** | `event export INDEX` <br>e.g. `event export 1`                                                                                                     |
+
