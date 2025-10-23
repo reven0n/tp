@@ -6,12 +6,10 @@ import nusemp.logic.commands.event.EventExportCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
-import nusemp.model.event.Event;
 
 import org.junit.jupiter.api.Test;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
-import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
