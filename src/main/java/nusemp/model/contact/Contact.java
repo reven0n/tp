@@ -48,6 +48,7 @@ public class Contact {
         this.tags.addAll(tags);
         this.events.addAll(events);
     }
+
     /**
      * Convenience constructor without linked events.
      */

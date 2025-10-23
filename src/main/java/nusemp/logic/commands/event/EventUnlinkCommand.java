@@ -67,14 +67,14 @@ public class EventUnlinkCommand extends Command {
         Contact contactToUnlink = lastShownContactList.get(contactIndex.getZeroBased());
 
         // Check if contact is actually a participant
-        if (!eventToEdit.hasParticipantWithEmail(contactToUnlink.getEmail().value)) {
+        if (!eventToEdit.hasContactWithEmail(contactToUnlink.getEmail().value)) {
             throw new CommandException(MESSAGE_CONTACT_NOT_FOUND);
         }
 
         // unlink both sides
         try {
             // Remove contact from event's participant list
-            Event updatedEvent = eventToEdit.withoutParticipant(contactToUnlink);
+            Event updatedEvent = eventToEdit.withoutContact(contactToUnlink);
             model.setEvent(eventToEdit, updatedEvent);
 
             // Remove event from contact's event list

@@ -1,4 +1,4 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_ADDRESS_DESC_CONFERENCE;
@@ -30,7 +30,6 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
 import nusemp.logic.commands.event.EventAddCommand;
-import nusemp.logic.parser.event.EventAddCommandParser;
 import nusemp.model.event.Event;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;

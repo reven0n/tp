@@ -22,6 +22,7 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
      *
      * @throws ParseException if the user input does not conform the expected format
      */
+    @Override
     public EventLinkCommand parse(String args) throws ParseException {
         // tokenize the arguments with their respective prefixes
         ArgumentMultimap argMultimap =

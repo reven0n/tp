@@ -15,6 +15,8 @@ import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
+import nusemp.model.event.Status;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
@@ -29,6 +31,8 @@ class JsonAdaptedEvent {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Event's %s field is missing!";
     public static final String MISSING_PARTICIPANT_EMAIL_MESSAGE =
             "Participant with email %s not found in contact list";
+    public static final String INVALID_PARTICIPANT_STATUS_MESSAGE =
+            "Participant status is invalid for participant with email %s";
 
     private final String name;
     private final String date;
@@ -36,7 +40,7 @@ class JsonAdaptedEvent {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String address;
 
-    private final List<String> participantEmails = new ArrayList<>();
+    private final List<JsonAdaptedParticipant> participants = new ArrayList<>();
 
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
@@ -45,14 +49,13 @@ class JsonAdaptedEvent {
      */
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("name") String name, @JsonProperty("date") String date,
-            @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags,
-            @JsonProperty("participantEmails") List<String> participantEmails) {
+            @JsonProperty("address") String address, @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("participants") List<JsonAdaptedParticipant> participants) {
         this.name = name;
         this.date = date;
         this.address = address;
-        if (participantEmails != null) {
-            this.participantEmails.addAll(participantEmails);
+        if (participants != null) {
+            this.participants.addAll(participants);
         }
         if (tags != null) {
             this.tags.addAll(tags);
@@ -66,8 +69,9 @@ class JsonAdaptedEvent {
         name = source.getName().value;
         date = source.getDate().toString();
         address = source.getAddress().value;
-        participantEmails.addAll(source.getParticipants().stream()
-                .map(contact -> contact.getEmail().value)
+        participants.addAll(source.getParticipants().stream()
+                .map(status -> new JsonAdaptedParticipant(
+                        status.getContact().getEmail().value, status.getStatus().toString()))
                 .collect(Collectors.toList()));
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
@@ -112,14 +116,22 @@ class JsonAdaptedEvent {
             modelAddress = new Address(address);
         }
 
-        final List<Contact> modelParticipants = new ArrayList<>();
-        for (String email : participantEmails) {
+        final List<Participant> modelParticipants = new ArrayList<>();
+        for (JsonAdaptedParticipant participant : participants) {
+            String email = participant.getEmail();
+            String statusStr = participant.getStatus();
             if (!Email.isValidEmail(email)) {
                 throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
             }
-            Contact participant = findContactByEmail(appData, email).orElseThrow(() ->
+            Contact contact = findContactByEmail(appData, email).orElseThrow(() ->
                     new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
-            modelParticipants.add(participant);
+
+            if (!Status.isValidStatus(statusStr)) {
+                throw new IllegalValueException(String.format(INVALID_PARTICIPANT_STATUS_MESSAGE, email));
+            }
+
+            Status status = Status.fromString(statusStr);
+            modelParticipants.add(new Participant(contact, status));
         }
 
         final Set<Tag> modelTags = new HashSet<>(eventTags);
