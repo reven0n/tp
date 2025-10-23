@@ -1,4 +1,4 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.event;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
-import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
@@ -57,7 +56,7 @@ class EventLinkCommandTest {
         Contact contactToLink = model.getContactByIndex(validContactIndex);
 
         // Create both updated objects for bidirectional linking
-        Event updatedEvent = eventToUpdate.withParticipant(contactToLink);
+        Event updatedEvent = eventToUpdate.withContact(contactToLink);
         Contact updatedContact = contactToLink.addEvent(updatedEvent);
 
         EventLinkCommand eventLinkCommand = new EventLinkCommand(validEventIndex, validContactIndex);

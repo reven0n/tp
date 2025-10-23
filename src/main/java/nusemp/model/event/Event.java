@@ -12,6 +12,7 @@ import java.util.Set;
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
+import nusemp.model.event.exceptions.ParticipantNotFoundException;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
@@ -29,15 +30,15 @@ public class Event {
 
     // Data fields
     private final Address address;
+    private final List<Participant> participants = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
-    private final List<Contact> participants = new ArrayList<>();
 
     /**
      * Every field must be present and not null. {@code Address.empty()} can be used to represent absence of an address.
      */
-    public Event(Name name, Date date, Address address, Set<Tag> tags, List<Contact> participants) {
-        requireAllNonNull(name, date, address, participants, tags);
-        checkForDuplicateParticipants(participants);
+    public Event(Name name, Date date, Address address, Set<Tag> tags, List<Participant> participants) {
+        requireAllNonNull(name, date, address, participants);
+        checkForDuplicateParticipant(participants);
         this.name = name;
         this.date = date;
         this.address = address;
@@ -84,34 +85,56 @@ public class Event {
      * Returns an immutable participant list, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public List<Contact> getParticipants() {
+    public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
 
     /**
-     * Returns true if the event has the given participant.
+     * Returns true if the event has the given contact.
      */
-    public boolean hasParticipant(Contact contact) {
+    public boolean hasContact(Contact contact) {
         requireAllNonNull(contact);
-        return participants.contains(contact);
+        return participants.stream().anyMatch(p -> p.containsContact(contact));
     }
 
     /**
-     * Returns true if the event has a participant with the given email.
+     * Returns true if the event has a contact with the given email.
      */
-    public boolean hasParticipantWithEmail(String email) {
+    public boolean hasContactWithEmail(String email) {
         requireAllNonNull(email);
         return participants.stream()
-                .anyMatch(contact -> contact.getEmail().value.equals(email));
+                .anyMatch(p -> p.getContact().getEmail().value.equals(email));
+    }
+
+    /**
+     * Returns a new Event with the given participant updated if it exists.
+     * This maintains immutability by returning a new Event instance.
+     */
+    public Event withUpdatedParticipant(Participant updatedParticipant) throws ParticipantNotFoundException {
+        requireAllNonNull(updatedParticipant);
+        if (!hasContactWithEmail(updatedParticipant.getContact().getEmail().value)) {
+            throw new ParticipantNotFoundException();
+        }
+
+        List<Participant> updatedParticipants = new ArrayList<>(participants);
+        for (int i = 0; i < updatedParticipants.size(); i++) {
+            Participant currentParticipant = updatedParticipants.get(i);
+            if (currentParticipant.containsContact(updatedParticipant.getContact())) {
+                updatedParticipants.set(i, updatedParticipant);
+                break;
+            }
+        }
+        return new Event(name, date, address, tags, updatedParticipants);
     }
 
     /**
      * Checks if the given list of participants contains duplicate emails.
      * @throws DuplicateParticipantException if duplicates are found.
      */
-    private static void checkForDuplicateParticipants(List<Contact> participants) {
+    private static void checkForDuplicateParticipant(List<Participant> participants) {
         Set<String> emails = new HashSet<>();
-        for (Contact contact : participants) {
+        for (Participant participant : participants) {
+            Contact contact = participant.getContact();
             String email = contact.getEmail().value;
             if (!emails.add(email)) {
                 throw new DuplicateParticipantException();
@@ -124,24 +147,25 @@ public class Event {
      * This maintains immutability by returning a new Event instance.
      * @throws DuplicateParticipantException if the participant already exists in the event.
      */
-    public Event withParticipant(Contact contact) {
+    public Event withContact(Contact contact) {
         requireAllNonNull(contact);
-        if (hasParticipantWithEmail(contact.getEmail().value)) {
+        if (hasContactWithEmail(contact.getEmail().value)) {
             throw new DuplicateParticipantException();
         }
-        List<Contact> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.add(contact);
+        List<Participant> updatedParticipants = new ArrayList<>(participants);
+        updatedParticipants.add(new Participant(contact));
         return new Event(name, date, address, tags, updatedParticipants);
     }
+
 
     /**
      * Returns a new Event with the given participant removed.
      * This maintains immutability by returning a new Event instance.
      */
-    public Event withoutParticipant(Contact contact) {
+    public Event withoutContact(Contact contact) {
         requireAllNonNull(contact);
-        List<Contact> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.remove(contact);
+        List<Participant> updatedParticipants = new ArrayList<>(participants);
+        updatedParticipants.removeIf(p -> p.containsContact(contact));
         return new Event(name, date, address, tags, updatedParticipants);
     }
 
