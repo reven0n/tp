@@ -88,11 +88,10 @@ public class EventCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         event.getParticipants().stream()
-                .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
-                .forEach(contact -> {
-                    String name = contact.getName().value;
-                    String email = contact.getEmail().value;
-
+                .sorted(Comparator.comparing(p -> p.getContact().getName().value.toLowerCase()))
+                .forEach(p -> {
+                    String name = p.getContact().getName().value;
+                    String email = p.getContact().getEmail().value;
                     people.getChildren().add(new Label(name));
                     exportContentData = exportContentData + email + ",";
                 });
