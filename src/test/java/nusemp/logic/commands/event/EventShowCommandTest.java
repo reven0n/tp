@@ -5,6 +5,7 @@ import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
+import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_EVENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -35,7 +36,7 @@ public class EventShowCommandTest {
                 eventToShow.getParticipants().size(), Messages.format(eventToShow));
 
         ModelManager expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.updateFilteredContactList(c -> eventToShow.hasParticipantWithEmail(c.getEmail().value));
+        expectedModel.updateFilteredContactList(eventToShow::hasParticipant);
 
         assertCommandSuccess(eventShowCommand, model, expectedMessage, expectedModel);
     }
@@ -50,7 +51,6 @@ public class EventShowCommandTest {
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        /* TODO: Fix this test
         showEventAtIndex(model, INDEX_THIRD_EVENT);
 
         Event eventToShow = model.getEventByIndex(INDEX_FIRST_EVENT);
@@ -61,10 +61,10 @@ public class EventShowCommandTest {
                 eventToShow.getParticipants().size(), Messages.format(eventToShow));
 
         Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.updateFilteredContactList(c -> eventToShow.hasParticipantWithEmail(c.getEmail().value));
+        expectedModel.updateFilteredContactList(eventToShow::hasParticipant);
+        showEventAtIndex(expectedModel, INDEX_THIRD_EVENT);
 
         assertCommandSuccess(eventShowCommand, model, expectedMessage, expectedModel);
-        */
     }
 
     @Test
@@ -122,14 +122,5 @@ public class EventShowCommandTest {
         model.updateFilteredEventList(e -> e.getName().value.equals(eventName));
 
         assertEquals(1, model.getFilteredEventList().size());
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no events.
-     */
-    private void showNoEvent(Model model) {
-        model.updateFilteredEventList(e -> false);
-
-        assertTrue(model.getFilteredEventList().isEmpty());
     }
 }
