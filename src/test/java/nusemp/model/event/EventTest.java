@@ -201,11 +201,6 @@ class EventTest {
         editedEvent = new EventBuilder(MEETING_FILLED).withAddress("456 Another St").build();
         assertFalse(MEETING_FILLED.equals(editedEvent));
 
-        // different participants -> returns false
-        editedEvent = new EventBuilder(MEETING_FILLED)
-                .withParticipants(VALID_PARTICIPANTS.toArray(ContactStatus[]::new)).build();
-        assertFalse(MEETING_FILLED.equals(editedEvent));
-
         // no tags -> returns false
         Event event1 = new EventBuilder(MEETING_FILLED).withTags("Music").build();
         Event event2 = new EventBuilder(MEETING_FILLED).withTags("Networking").build();

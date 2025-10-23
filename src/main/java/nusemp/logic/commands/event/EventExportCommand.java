@@ -56,9 +56,10 @@ public class EventExportCommand extends Command {
         }
         Event eventToExport = lastShownEventList.get(eventIndex.getZeroBased());
         eventToExport.getParticipants().stream()
-                .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
+                .sorted(Comparator.comparing(status -> status
+                        .getContact().getName().value.toLowerCase()))
                 .forEach(contact -> {
-                    String email = contact.getEmail().value;
+                    String email = contact.getContact().getEmail().value;
 
                     exportContentData = exportContentData + email + ",";
                 });

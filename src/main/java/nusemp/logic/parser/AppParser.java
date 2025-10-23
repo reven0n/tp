@@ -176,7 +176,7 @@ public class AppParser {
 
         case EventRsvpCommand.COMMAND_WORD:
             return new EventRsvpCommandParser().parse(arguments);
-            
+
         case EventExportCommand.COMMAND_WORD:
             return new EventExportCommandParser().parse(arguments);
 
