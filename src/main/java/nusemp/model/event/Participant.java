@@ -1,14 +1,11 @@
 package nusemp.model.event;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nusemp.model.contact.Contact;
 
 /**
  * Represents the contact status of an event.
  */
-public class ContactStatus {
+public class Participant {
     private final Status status;
     private final Contact contact;
 
@@ -17,16 +14,16 @@ public class ContactStatus {
      * @param contact Contact associated with the status.
      * @param status Status of the contact.
      */
-    public ContactStatus(Contact contact, Status status) {
+    public Participant(Contact contact, Status status) {
         this.status = status;
         this.contact = contact;
     }
 
     /**
-     * Overloaded constructor that creates a ContactStatus with default status GOING.
+     * Overloaded constructor that creates a ContactStatus with default status ATTENDING.
      * @param contact Contact associated with the status.
      */
-    public ContactStatus(Contact contact) {
+    public Participant(Contact contact) {
         this.status = Status.ATTENDING;
         this.contact = contact;
     }
@@ -39,21 +36,8 @@ public class ContactStatus {
         return contact;
     }
 
-    public boolean hasSameContact(Contact otherContact) {
+    public boolean containsContact(Contact otherContact) {
         return this.contact.equals(otherContact);
-    }
-
-    /**
-     * Converts a list of contacts to a list of ContactStatus with default status GOING.
-     * @param contacts List of contacts to be converted.
-     * @return List of ContactStatus objects.
-     */
-    public static List<ContactStatus> convertToContactStatusList(List<Contact> contacts) {
-        List<ContactStatus> contactStatusList = new ArrayList<>();
-        for (Contact contact : contacts) {
-            contactStatusList.add(new ContactStatus(contact));
-        }
-        return contactStatusList;
     }
 
     @Override
@@ -67,11 +51,11 @@ public class ContactStatus {
             return true;
         }
 
-        if (!(other instanceof ContactStatus)) {
+        if (!(other instanceof Participant)) {
             return false;
         }
 
-        ContactStatus otherStatus = (ContactStatus) other;
+        Participant otherStatus = (Participant) other;
         return status == otherStatus.status && contact.equals(otherStatus.contact);
     }
 }

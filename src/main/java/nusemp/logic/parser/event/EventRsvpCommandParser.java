@@ -43,13 +43,9 @@ public class EventRsvpCommandParser implements Parser<EventRsvpCommand> {
         Index contactIndex;
         Status status;
 
-        try {
-            eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
-            contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
-            status = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(pe.getMessage()));
-        }
+        eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
+        contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
+        status = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
 
         return new EventRsvpCommand(eventIndex, contactIndex, status);
     }

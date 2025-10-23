@@ -1,6 +1,5 @@
 package nusemp.testutil;
 
-import static nusemp.model.event.ContactStatus.convertToContactStatusList;
 import static nusemp.testutil.TypicalContacts.ALICE;
 import static nusemp.testutil.TypicalContacts.BENSON;
 import static nusemp.testutil.TypicalContacts.BOB;
@@ -16,8 +15,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import nusemp.model.contact.Contact;
-import nusemp.model.event.ContactStatus;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
@@ -77,7 +76,7 @@ public class TypicalEvents {
                 WORKSHOP_FILLED, PARTY_HALF_FILLED));
     }
 
-    private static List<ContactStatus> convertToContactStatusList(Contact... contacts) {
-        return Stream.of(contacts).map(ContactStatus::new).toList();
+    private static List<Participant> convertToContactStatusList(Contact... contacts) {
+        return Stream.of(contacts).map(Participant::new).toList();
     }
 }

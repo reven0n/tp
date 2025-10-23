@@ -11,8 +11,8 @@ import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.AppData;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
-import nusemp.model.event.ContactStatus;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 
 /**
  * An Immutable AppData that is serializable to JSON format.
@@ -86,7 +86,7 @@ class JsonSerializableAppData {
      */
     private void populateContactEventLists(AppData appData) {
         for (Event event : appData.getEventList()) {
-            for (ContactStatus participantStatus : event.getParticipants()) {
+            for (Participant participantStatus : event.getParticipants()) {
                 Contact participant = participantStatus.getContact();
                 // Find the contact in appData and update it
                 Contact existingContact = appData.getContactList().stream()

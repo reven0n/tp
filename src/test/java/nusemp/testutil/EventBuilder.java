@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import nusemp.model.event.ContactStatus;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
@@ -25,7 +25,7 @@ public class EventBuilder {
     private Name name;
     private Date date;
     private Address address;
-    private List<ContactStatus> participants;
+    private List<Participant> participants;
     private Set<Tag> tags;
 
     /**
@@ -93,7 +93,7 @@ public class EventBuilder {
     /**
      * Replaces the participants of the {@code Event} that we are building.
      */
-    public EventBuilder withParticipants(ContactStatus... participants) {
+    public EventBuilder withParticipants(Participant... participants) {
         this.participants = new ArrayList<>(List.of(participants));
         return this;
     }
@@ -101,7 +101,7 @@ public class EventBuilder {
     /**
      * Replaces the participants of the {@code Event} that we are building.
      */
-    public EventBuilder withParticipants(List<ContactStatus> participants) {
+    public EventBuilder withParticipants(List<Participant> participants) {
         this.participants = new ArrayList<>(participants);
         return this;
     }

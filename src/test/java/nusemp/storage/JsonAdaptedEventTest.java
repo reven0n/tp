@@ -31,8 +31,8 @@ class JsonAdaptedEventTest {
     private static final String INVALID_DATE = "invalid-date";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_TAG = "Music&";
-    private static final JsonAdaptedParticipantStatus INVALID_PARTICIPANT_EMAIL =
-            new JsonAdaptedParticipantStatus("invalid-email", "ATTENDING");
+    private static final JsonAdaptedParticipant INVALID_PARTICIPANT_EMAIL =
+            new JsonAdaptedParticipant("invalid-email", "ATTENDING");
 
     private static final String VALID_NAME = MEETING_FILLED.getName().value;
     private static final String VALID_DATE = MEETING_FILLED.getDate().toString();
@@ -42,8 +42,8 @@ class JsonAdaptedEventTest {
             .collect(Collectors.toList());
     //private static final List<String> VALID_PARTICIPANT_EMAILS =
     //        TypicalContacts.getTypicalContacts().stream().map(c -> c.getEmail().value).toList();
-    private static final List<JsonAdaptedParticipantStatus> VALID_PARTICIPANT_STATUS =
-            TypicalContacts.getTypicalContacts().stream().map(c -> new JsonAdaptedParticipantStatus(
+    private static final List<JsonAdaptedParticipant> VALID_PARTICIPANT_STATUS =
+            TypicalContacts.getTypicalContacts().stream().map(c -> new JsonAdaptedParticipant(
                     c.getEmail().value, Status.ATTENDING.toString())).toList();
 
     @Test
@@ -107,7 +107,7 @@ class JsonAdaptedEventTest {
 
     @Test
     public void toModelType_invalidParticipantEmail_throwsIllegalValueException() {
-        List<JsonAdaptedParticipantStatus> participantStatus = new ArrayList<>(VALID_PARTICIPANT_STATUS);
+        List<JsonAdaptedParticipant> participantStatus = new ArrayList<>(VALID_PARTICIPANT_STATUS);
         participantStatus.add(INVALID_PARTICIPANT_EMAIL);
         JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, VALID_ADDRESS, VALID_TAGS,
                 participantStatus);
@@ -122,7 +122,7 @@ class JsonAdaptedEventTest {
                 VALID_PARTICIPANT_STATUS);
         String expectedMessage =
                 String.format(JsonAdaptedEvent.MISSING_PARTICIPANT_EMAIL_MESSAGE,
-                        VALID_PARTICIPANT_STATUS.get(0).getParticipantEmail());
+                        VALID_PARTICIPANT_STATUS.get(0).getEmail());
         assertThrows(IllegalValueException.class, expectedMessage, () -> event.toModelType(new AppData()));
     }
 

@@ -32,21 +32,21 @@ class EventTest {
     private static final Name VALID_NAME = new Name("Meeting");
     private static final Date VALID_DATE = new Date("01-10-2025 14:00");
     private static final Address VALID_ADDRESS = new Address("123 Main St");
-    private static final List<ContactStatus> EMPTY_PARTICIPANT_LIST = new ArrayList<>();
-    private static final List<ContactStatus> VALID_PARTICIPANTS = createParticipantList(ALICE, BOB);
+    private static final List<Participant> EMPTY_PARTICIPANT_LIST = new ArrayList<>();
+    private static final List<Participant> VALID_PARTICIPANTS = createParticipantList(ALICE, BOB);
     private static final Set<Tag> EMPTY_TAG_SET = new HashSet<>();
 
-    private static List<ContactStatus> createParticipantList(Contact... contacts) {
-        List<ContactStatus> participantStatuses = new ArrayList<>();
+    private static List<Participant> createParticipantList(Contact... contacts) {
+        List<Participant> participantStatuses = new ArrayList<>();
         for (Contact contact : contacts) {
-            participantStatuses.add(new ContactStatus(contact));
+            participantStatuses.add(new Participant(contact));
         }
         return participantStatuses;
     }
 
     @Test
     public void constructor_duplicateEmails_throwsDuplicateParticipantException() {
-        List<ContactStatus> participantsWithDuplicateEmail = createParticipantList(ALICE,
+        List<Participant> participantsWithDuplicateEmail = createParticipantList(ALICE,
                 new ContactBuilder(BOB).withEmail(ALICE.getEmail().value).build());
 
         assertThrows(DuplicateParticipantException.class, () ->
@@ -102,7 +102,7 @@ class EventTest {
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
             Event event = new Event(
                     VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(ALICE, BOB));
-            List<ContactStatus> expectedParticipants = createParticipantList(ALICE, BOB, CARL, DANIEL);
+            List<Participant> expectedParticipants = createParticipantList(ALICE, BOB, CARL, DANIEL);
             assertEquals(expectedParticipants,
                     event.withParticipant(CARL).withParticipant(DANIEL).getParticipants());
         }
@@ -135,7 +135,7 @@ class EventTest {
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
             Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET,
                     createParticipantList(ALICE, BOB, CARL, DANIEL));
-            List<ContactStatus> expectedParticipants = createParticipantList(BOB, DANIEL);
+            List<Participant> expectedParticipants = createParticipantList(BOB, DANIEL);
             assertEquals(expectedParticipants,
                     event.withoutParticipant(CARL).withoutParticipant(ALICE).getParticipants());
         }

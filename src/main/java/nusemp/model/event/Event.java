@@ -30,13 +30,13 @@ public class Event {
 
     // Data fields
     private final Address address;
-    private final List<ContactStatus> participants = new ArrayList<>();
+    private final List<Participant> participants = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null. {@code Address.empty()} can be used to represent absence of an address.
      */
-    public Event(Name name, Date date, Address address, Set<Tag> tags, List<ContactStatus> participants) {
+    public Event(Name name, Date date, Address address, Set<Tag> tags, List<Participant> participants) {
         requireAllNonNull(name, date, address, participants);
         checkForDuplicateParticipant(participants);
         this.name = name;
@@ -85,7 +85,7 @@ public class Event {
      * Returns an immutable participant list, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public List<ContactStatus> getParticipants() {
+    public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
     /**
@@ -109,16 +109,16 @@ public class Event {
      * Returns a new Event with the given contact status updated if it exists.
      * This maintains immutability by returning a new Event instance.
      */
-    public Event updateContactStatus(ContactStatus updatedStatus) throws ParticipantNotFoundException {
+    public Event updateContactStatus(Participant updatedStatus) throws ParticipantNotFoundException {
         requireAllNonNull(updatedStatus);
         if (!hasParticipantWithEmail(updatedStatus.getContact().getEmail().value)) {
             throw new ParticipantNotFoundException();
         }
 
-        List<ContactStatus> updatedParticipants = new ArrayList<>(participants);
+        List<Participant> updatedParticipants = new ArrayList<>(participants);
         for (int i = 0; i < updatedParticipants.size(); i++) {
-            ContactStatus currentStatus = updatedParticipants.get(i);
-            if (currentStatus.hasSameContact(updatedStatus.getContact())) {
+            Participant currentStatus = updatedParticipants.get(i);
+            if (currentStatus.containsContact(updatedStatus.getContact())) {
                 updatedParticipants.set(i, updatedStatus);
                 break;
             }
@@ -130,10 +130,10 @@ public class Event {
      * Checks if the given list of participants contains duplicate emails.
      * @throws DuplicateParticipantException if duplicates are found.
      */
-    private static void checkForDuplicateParticipant(List<ContactStatus> participants) {
+    private static void checkForDuplicateParticipant(List<Participant> participants) {
         Set<String> emails = new HashSet<>();
-        for (ContactStatus contactStatus : participants) {
-            Contact contact = contactStatus.getContact();
+        for (Participant participant : participants) {
+            Contact contact = participant.getContact();
             String email = contact.getEmail().value;
             if (!emails.add(email)) {
                 throw new DuplicateParticipantException();
@@ -151,8 +151,8 @@ public class Event {
         if (hasParticipantWithEmail(contact.getEmail().value)) {
             throw new DuplicateParticipantException();
         }
-        List<ContactStatus> updatedParticipantStatuses = new ArrayList<>(participants);
-        updatedParticipantStatuses.add(new ContactStatus(contact));
+        List<Participant> updatedParticipantStatuses = new ArrayList<>(participants);
+        updatedParticipantStatuses.add(new Participant(contact));
         return new Event(name, date, address, tags, updatedParticipantStatuses);
     }
 
@@ -163,8 +163,8 @@ public class Event {
      */
     public Event withoutParticipant(Contact contact) {
         requireAllNonNull(contact);
-        List<ContactStatus> updatedParticipantStatuses = new ArrayList<>(participants);
-        updatedParticipantStatuses.removeIf(status -> status.hasSameContact(contact));
+        List<Participant> updatedParticipantStatuses = new ArrayList<>(participants);
+        updatedParticipantStatuses.removeIf(status -> status.containsContact(contact));
         return new Event(name, date, address, tags, updatedParticipantStatuses);
     }
 

@@ -14,8 +14,8 @@ import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
-import nusemp.model.event.ContactStatus;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 
 /**
  * Represents the in-memory model of the app data.
@@ -180,7 +180,7 @@ public class ModelManager implements Model {
     @Override
     public void deleteEvent(Event target) {
         // Remove event from all linked contacts
-        for (ContactStatus participantStatus : target.getParticipants()) {
+        for (Participant participantStatus : target.getParticipants()) {
             Contact participant = participantStatus.getContact();
             if (hasContact(participant)) {
                 Contact updatedContact = participant.removeEvent(target);

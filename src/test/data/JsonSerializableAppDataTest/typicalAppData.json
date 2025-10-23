@@ -40,23 +40,23 @@
     "name" : "Team Meeting",
     "date" : "25-12-2025 14:30",
     "address" : "Conference Room",
-    "participantStatuses" : [ {
-      "participantEmail" : "alexyeoh@example.com",
-      "participantStatus" : "attending"
+    "participants": [ {
+      "email": "alexyeoh@example.com",
+      "status": "attending"
     }, {
-      "participantEmail" : "berniceyu@example.com",
-      "participantStatus" : "attending"
+      "email": "berniceyu@example.com",
+      "status": "attending"
     } ]
     }, {
     "name" : "Marathon",
     "date" : "10-11-2025 02:30",
     "address" : "Suntec City",
-    "participantStatuses" : [ {
-      "participantEmail" : "berniceyu@example.com",
-      "participantStatus" : "attending"
+    "participants": [ {
+      "email": "berniceyu@example.com",
+      "status": "attending"
     }, {
-      "participantEmail" : "alexyeoh@example.com",
-      "participantStatus" : "attending"
+      "email": "alexyeoh@example.com",
+      "status": "attending"
     } ]
   } ]
 }

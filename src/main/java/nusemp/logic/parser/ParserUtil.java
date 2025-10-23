@@ -10,7 +10,6 @@ import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.Status;
-import nusemp.model.event.exceptions.InvalidStatusException;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
@@ -159,10 +158,10 @@ public class ParserUtil {
     public static Status parseStatus(String status) throws ParseException {
         requireNonNull(status);
         String trimmedStatus = status.trim();
-        try {
-            return Status.convertStringToStatus(trimmedStatus);
-        } catch (InvalidStatusException e) {
+        if (!Status.isValidStatus(trimmedStatus)) {
             throw new ParseException(Status.MESSAGE_CONSTRAINTS);
         }
+
+        return Status.fromString(trimmedStatus);
     }
 }

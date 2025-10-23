@@ -1,6 +1,7 @@
 package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -15,8 +16,8 @@ import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
-import nusemp.model.event.ContactStatus;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 import nusemp.model.event.Status;
 import nusemp.model.event.exceptions.ParticipantNotFoundException;
 
@@ -35,9 +36,6 @@ public class EventRsvpCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Successfully RSVPed to event: %1$s for contact: %2$s";
 
-    public static final String MESSAGE_DUPLICATE_STATUS = "Contact: %1$s has already has the status %2$s to event: "
-            + "%3$s";
-
     public static final String MESSAGE_CONTACT_NOT_PARTICIPANT = "Contact: %1$s is not a participant of event: %2$s";
 
     private final Index eventIndex;
@@ -51,9 +49,7 @@ public class EventRsvpCommand extends Command {
      * @param contactIndex
      */
     public EventRsvpCommand(Index eventIndex, Index contactIndex, Status status) {
-        requireNonNull(eventIndex);
-        requireNonNull(contactIndex);
-        requireNonNull(status);
+        requireAllNonNull(eventIndex, contactIndex, status);
         this.eventIndex = eventIndex;
         this.contactIndex = contactIndex;
         this.status = status;
@@ -64,7 +60,7 @@ public class EventRsvpCommand extends Command {
         requireNonNull(model);
         Contact contactToRsvp = getContactFromModel(model);
         Event eventToRsvp = getEventFromModel(model);
-        ContactStatus updatedStatus = new ContactStatus(contactToRsvp, status);
+        Participant updatedStatus = new Participant(contactToRsvp, status);
 
         try {
             Event rsvpedEvent = eventToRsvp.updateContactStatus(updatedStatus);
