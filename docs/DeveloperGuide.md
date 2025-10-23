@@ -138,6 +138,12 @@ The `Model` component,
 - stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 - does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
+For `Contact` and `Event` classes,
+
+- `Event` contains a list of `Participant` objects, each of which contains a `Contact` and a `Status` enum that is not shown in the diagram.
+- In turn, each `Contact` contains a list of `Event` objects that the contact is a participant of.
+- All field classes are required when creating a `Contact` or `Event` object, but optional fields (e.g. `Phone`, `Address`) are represented by their respective classes with an empty value.
+
 ### Storage component
 
 **API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-F15b-2/tp/tree/master/src/main/java/nusemp/storage/Storage.java)
