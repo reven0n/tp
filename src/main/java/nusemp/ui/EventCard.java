@@ -91,8 +91,10 @@ public class EventCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
                 .forEach(contact -> {
                     String name = contact.getName().value;
+                    String email = contact.getEmail().value;
+
                     people.getChildren().add(new Label(name));
-                    exportContentData = exportContentData + name + ",";
+                    exportContentData = exportContentData + email + ",";
                 });
 
 
