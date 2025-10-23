@@ -3,6 +3,7 @@
 skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
+skinparam responseMessageBelowArrow true
 
 Package Model as ModelPackage <<Rectangle>>{
 Class "<<interface>>\nReadOnlyAppData" as ReadOnlyAppData
@@ -18,49 +19,63 @@ Class Contact
 Class Event
 Class Email
 Class Phone
-Class Name
 Class Address
+Class Name
 Class Tag
 Class Date
+Class Participant
 
 Class I #FFFFFF
+
 }
 
+'Main model classes
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
-
-AppData .up.|> ReadOnlyAppData
-
-ModelManager .up.|> Model
 Model .right.> ReadOnlyUserPrefs
 Model .left.> ReadOnlyAppData
 ModelManager -left-> "1" AppData
 ModelManager -right-> "1" UserPrefs
+AppData .up.|> ReadOnlyAppData
+ModelManager .up.|> Model
 UserPrefs .up.|> ReadOnlyUserPrefs
 
+'Contact and Event lists
 AppData *--> "1 " UniqueContactList
-UniqueContactList --> "~* all   " Contact
+UniqueContactList --> "~* all" Contact : ""
+ModelManager -down[norank]-> "~* filtered   " Contact
 AppData *--[norank]> "1" UniqueEventList
-UniqueEventList --> " ~* all" Event
-Contact *--> Email
-Contact *--> Phone
-Contact *--> Name
-Contact *--> Address
-Contact *--> "*" Tag
-Contact "~* participant" <-[norank]-> "~* participating" Event
-Event *--> Name
-Event *--> Date
+'Note: "all" role is switched to "filtered" because of uml formatting issues
+UniqueEventList --> "     ~* filtered" Event
+'Note: "filtered" role is switched to "all" because of uml formatting issues
+ModelManager -down[norank]-> "~* all   " Event
+
+'Contact and Event participant relationship
+Participant -down-> "1" Contact
+Participant "~*" <-down- Event
+Participant <-down[hidden]- Event
+
+'Contact and Event fields
+Contact *--> "1" Email
+Contact *--> "1" Phone
+Contact *--> "1" Address
+Contact *-[norank]-> "1" Name
+Contact *--> "~*" Tag
+Contact -right-> "~*" Event
+Event *--> "1" Address
+Event *--> "1" Date
 Event *--> "~*" Tag
-Event *-[norank]-> Address
+Event *-[norank]-> "1" Name
 
 'Hidden relationships to improve diagram layout
-UserPrefs -[hidden]down- UniqueEventList
-UserPrefs -[hidden]-- I
+ModelManager -down[hidden]- UniqueEventList
+UniqueContactList -down[hidden]- Participant
+UniqueEventList -down[hidden]- Participant
+ModelManager -down[hidden]-> Participant
+ModelManager -down[hidden]-> Participant
+ModelManager -down[hidden]-> Contact
 ModelManager -down[hidden]- Tag
+UserPrefs -[hidden]-- I
 Email -[hidden]right- Phone
-Phone -[hidden]right- Address
-ModelManager -down[hidden]-> " " Contact
-
-ModelManager -down-> "~* filtered" Contact
-ModelManager -down-> "~* filtered " Event
+Phone -[hidden]right- Name
 @enduml
