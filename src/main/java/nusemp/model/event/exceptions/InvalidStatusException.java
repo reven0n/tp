@@ -1,7 +1,7 @@
 package nusemp.model.event.exceptions;
 
 /**
- * Signals that the provided contact status is invalid.
+ * Signals that the provided status is invalid.
  */
 public class InvalidStatusException extends RuntimeException {
     public InvalidStatusException(String status) {

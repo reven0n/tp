@@ -106,10 +106,10 @@ public class Event {
     }
 
     /**
-     * Returns a new Event with the given contact status updated if it exists.
+     * Returns a new Event with the given participant updated if it exists.
      * This maintains immutability by returning a new Event instance.
      */
-    public Event withUpdatedContactStatus(Participant updatedStatus) throws ParticipantNotFoundException {
+    public Event withUpdatedParticipant(Participant updatedStatus) throws ParticipantNotFoundException {
         requireAllNonNull(updatedStatus);
         if (!hasParticipantWithEmail(updatedStatus.getContact().getEmail().value)) {
             throw new ParticipantNotFoundException();

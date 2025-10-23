@@ -3,7 +3,7 @@ package nusemp.model.event;
 import nusemp.model.contact.Contact;
 
 /**
- * Represents the contact status of an event.
+ * Represents the participant and status of an event.
  */
 public class Participant {
     private final Status status;
