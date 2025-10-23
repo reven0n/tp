@@ -273,7 +273,7 @@ Exports all contacts linked to an event into your clipboard, allowing you to eas
 
 **Format**: `event export EVENT_INDEX`
 
-* `EVENT_INDEX` refers to the index number shown in the displayed event list
+* `INDEX` refers to the index number shown in the displayed event list
 
 **Examples**:
 * `event export` followed by `1` exports all contacts linked to the 1st event into your clipboard.
