@@ -6,16 +6,22 @@ import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.event.EventExportCommand;
+import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
+import nusemp.model.event.Event;
 
 
 /**
@@ -26,6 +32,37 @@ public class EventExportCommandTest {
 
     private Model model = new ModelManager(getTypicalAppDataWithEvents(), new UserPrefs());
 
+    @BeforeAll
+    public static void initJavaFX() {
+        // Initialize JavaFX toolkit for clipboard operations
+        new JFXPanel();
+    }
+
+    @Test
+    public void execute_validIndexUnfilteredList_success() throws Exception {
+        Event eventToExport = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
+        EventExportCommand exportCommand = new EventExportCommand(INDEX_FIRST_EVENT);
+
+        String expectedMessage = EventExportCommand.MESSAGE_SUCCESS;
+
+        // Execute on JavaFX thread
+        final CommandResult[] result = new CommandResult[1];
+        final Exception[] exception = new Exception[1];
+
+        Platform.runLater(() -> {
+            try {
+                result[0] = exportCommand.execute(model);
+            } catch (CommandException e) {
+                exception[0] = e;
+            }
+        });
+
+        // Wait for JavaFX thread to complete
+        Thread.sleep(500);
+
+        assertNotNull(result[0]);
+        assertEquals(expectedMessage, result[0].getFeedbackToUser());
+    }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
@@ -33,6 +70,37 @@ public class EventExportCommandTest {
         EventExportCommand exportCommand = new EventExportCommand(outOfBoundIndex);
 
         assertCommandFailure(exportCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_validIndexFilteredList_success() throws Exception {
+        // Get the event first before filtering
+        Event targetEvent = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
+
+        // Filter the list to show only the target event
+        model.updateFilteredEventList(event -> event.equals(targetEvent));
+
+        EventExportCommand exportCommand = new EventExportCommand(INDEX_FIRST_EVENT);
+
+        String expectedMessage = EventExportCommand.MESSAGE_SUCCESS;
+
+        // Execute on JavaFX thread
+        final CommandResult[] result = new CommandResult[1];
+        final Exception[] exception = new Exception[1];
+
+        Platform.runLater(() -> {
+            try {
+                result[0] = exportCommand.execute(model);
+            } catch (CommandException e) {
+                exception[0] = e;
+            }
+        });
+
+        // Wait for JavaFX thread to complete
+        Thread.sleep(500);
+
+        assertNotNull(result[0]);
+        assertEquals(expectedMessage, result[0].getFeedbackToUser());
     }
 
     @Test
