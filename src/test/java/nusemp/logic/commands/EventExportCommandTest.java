@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
+
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.event.EventExportCommand;
