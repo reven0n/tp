@@ -1,4 +1,4 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.event.EventLinkCommand;
-import nusemp.logic.parser.event.EventLinkCommandParser;
 
 class EventLinkCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(

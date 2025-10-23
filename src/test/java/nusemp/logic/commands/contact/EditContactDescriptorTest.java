@@ -1,4 +1,4 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.contact;
 
 import static nusemp.logic.commands.CommandTestUtil.DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.DESC_BOB;
@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.contact.ContactEditCommand.EditContactDescriptor;
 import nusemp.testutil.EditContactDescriptorBuilder;
 

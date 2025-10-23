@@ -1,4 +1,4 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.event;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import nusemp.logic.commands.event.EventListCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
