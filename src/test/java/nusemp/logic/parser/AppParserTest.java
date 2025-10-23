@@ -126,7 +126,7 @@ public class AppParserTest {
 
     @Test
     public void parseCommand_eventShow() throws Exception {
-        String command = CommandType.EVENT + " " + EventShowCommand.COMMAND_WORD + " " + PREFIX_EVENT + " 1";
+        String command = CommandType.EVENT + " " + EventShowCommand.COMMAND_WORD + " 1";
         assertTrue(parser.parseCommand(command) instanceof EventShowCommand);
     }
 

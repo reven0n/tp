@@ -3,7 +3,6 @@ package nusemp.logic.parser.event;
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import nusemp.commons.core.index.Index;
-import nusemp.logic.commands.event.EventDeleteCommand;
 import nusemp.logic.commands.event.EventShowCommand;
 import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.ParserUtil;
@@ -24,7 +23,7 @@ public class EventShowCommandParser implements Parser<EventShowCommand> {
             return new EventShowCommand(index);
         } catch (ParseException pe) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventDeleteCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventShowCommand.MESSAGE_USAGE), pe);
         }
     }
 }

@@ -14,7 +14,7 @@ import nusemp.logic.commands.event.EventShowCommand;
  */
 public class EventShowCommandParserTest {
 
-    private EventShowCommandParser parser = new EventShowCommandParser();
+    private final EventShowCommandParser parser = new EventShowCommandParser();
 
     @Test
     public void parse_validArgs_returnsEventShowCommand() {
