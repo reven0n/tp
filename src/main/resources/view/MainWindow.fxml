@@ -12,8 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.stage.Stage?>
-
 <?import javafx.scene.control.Button?>
+
 <fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="NUS Event Mailer Pro" type="Stage" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <icons>
         <Image url="@/images/address_book_32.png" />

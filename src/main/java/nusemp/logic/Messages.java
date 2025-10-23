@@ -72,6 +72,11 @@ public class Messages {
             builder.append("; Address: ").append(event.getAddress());
         }
 
+        if (event.hasTags()) {
+            builder.append("; Tags: ");
+            event.getTags().forEach(builder::append);
+        }
+
         return builder.toString();
     }
 
