@@ -200,8 +200,7 @@ public class Event {
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
                 && address.equals(otherEvent.address)
-                && tags.equals(otherEvent.tags)
-                && participants.equals(otherEvent.participants);
+                && tags.equals(otherEvent.tags);
     }
 
     @Override
