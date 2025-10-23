@@ -12,6 +12,7 @@ import nusemp.model.AppData;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 
 /**
  * An Immutable AppData that is serializable to JSON format.
@@ -85,10 +86,11 @@ class JsonSerializableAppData {
      */
     private void populateContactEventLists(AppData appData) {
         for (Event event : appData.getEventList()) {
-            for (Contact participant : event.getParticipants()) {
+            for (Participant participant : event.getParticipants()) {
+                Contact contact = participant.getContact();
                 // Find the contact in appData and update it
                 Contact existingContact = appData.getContactList().stream()
-                        .filter(c -> c.getEmail().equals(participant.getEmail()))
+                        .filter(c -> c.getEmail().equals(contact.getEmail()))
                         .findFirst()
                         .orElse(null);
 

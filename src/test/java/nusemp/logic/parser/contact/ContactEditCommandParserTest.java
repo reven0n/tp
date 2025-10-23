@@ -1,4 +1,4 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_ADDRESS_DESC_AMY;
@@ -37,7 +37,6 @@ import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.contact.ContactEditCommand.EditContactDescriptor;
-import nusemp.logic.parser.contact.ContactEditCommandParser;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Phone;

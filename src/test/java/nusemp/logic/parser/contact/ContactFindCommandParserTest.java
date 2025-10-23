@@ -1,4 +1,4 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -9,7 +9,6 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.commands.contact.ContactFindCommand;
-import nusemp.logic.parser.contact.ContactFindCommandParser;
 import nusemp.model.contact.ContactMatchesAnyPredicatePredicate;
 import nusemp.model.contact.EmailContainsKeywordsPredicate;
 import nusemp.model.contact.NameContainsKeywordsPredicate;

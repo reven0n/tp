@@ -1,4 +1,4 @@
-package nusemp.logic.parser;
+package nusemp.logic.parser.contact;
 
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.logic.Messages;
 import nusemp.logic.commands.contact.ContactListCommand;
-import nusemp.logic.parser.contact.ContactListCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 
 class ContactListCommandParserTest {

@@ -132,18 +132,17 @@ How the parsing works:
 
 The `Model` component,
 
-- stores the NUS EMP data i.e., all `Person` objects (which are contained in a `UniquePersonList` object) and `Event` objects (which are contained in a `UniqueEventList` object).
-- stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores all data in NUS EMP i.e., all `Contact` objects (which are contained in a `UniqueContactList` object) and `Event` objects (which are contained in a `UniqueEventList` object).
+- stores the currently 'selected' `Contact` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Contact>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+- stores the currently 'selected' `Event` objects as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Event>`, similar to the `Contact` list.
 - stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 - does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
-<box type="info" seamless>
+For `Contact` and `Event` classes,
 
-**Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
-
-<puml src="diagrams/BetterModelClassDiagram.puml" width="450" />
-
-</box>
+- `Event` contains a list of `Participant` objects, each of which contains a `Contact` and a `Status` enum that is not shown in the diagram.
+- In turn, each `Contact` contains a list of `Event` objects that the contact is a participant of.
+- All field classes are required when creating a `Contact` or `Event` object, but optional fields (e.g. `Phone`, `Address`) are represented by their respective classes with an empty value.
 
 ### Storage component
 
@@ -293,31 +292,32 @@ Streamlines event communication workflow by integrating contact management with 
 Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
 | Priority | As a …         | I want to …                                                               | So that I can…                                        |
-| -------- | --------------- | -------------------------------------------------------------------------- | ------------------------------------------------------ |
-| `* * *`  | event organizer | add a contact with standard fields (Name, Phone, Email, Address)           | build my core contact database                         |
-| `* * *`  | event organizer | associate a specific Role (e.g., 'Speaker', 'Attendee', 'VIP', 'Sponsor')  | categorize and filter my contacts effectively          |
-| `* * *`  | event organizer | delete a contact from the address book                                     | remove outdated or irrelevant entries                  |
-| `* * *`  | event organizer | create a new event with name, date, time, and venue                        | start organizing my contacts around it                 |
-| `* * *`  | event organizer | view a list of all my events, showing key details and their status         | get an overview of upcoming, past, or cancelled events |
-| `* * *`  | event organizer | associate contacts from my address book with a specific event              | build an attendee list for the event                   |
-| `* * *`  | event organizer | get a list of contacts defined by tags, roles, or event association        | target communications and manage groups efficiently    |
-| `* *`    | event organizer | set RSVP status for a contact for a specific event                         | track attendance commitments                           |
-| `* *`    | event organizer | edit any field of an existing contact, including role and RSVP status      | keep contact information up-to-date                    |
-| `* *`    | event organizer | view all details of a contact, including role, tags, and associated events | see a clean, readable summary                          |
-| `* *`    | event organizer | find contacts by searching any field (Name, Role, Tag, Email)              | quickly locate specific individuals                    |
-| `* *`    | event organizer | add multiple tags to a contact                                             | perform complex filtering                              |
-| `* *`    | event organizer | filter contact list by tags and roles                                      | create highly specific lists                           |
-| `* *`    | event organizer | list all contacts, with option to sort by Name or Role                     | get a general overview                                 |
-| `* *`    | event organizer | remove a contact from an event without deleting from address book          | manage event participation flexibly                    |
-| `* *`    | event organizer | archive a past event                                                       | keep main view uncluttered but retain data             |
-| `* *`    | event organizer | set event status to 'Cancelled'                                            | exclude it from mailings                               |
-| `* *`    | event organizer | import contacts from a CSV file                                            | quickly populate my address book                       |
-| `* *`    | event organizer | export contacts or filtered subset to CSV                                  | backup or use in another application                   |
-| `* *`    | user            | create a complete backup of application data                               | safeguard my information                               |
-| `* *`    | user            | restore application data from a backup file                                | recover from data loss                                 |
-| `* *`    | user            | specify storage location for data and backups                              | organize my files as needed                            |
-| `*`      | user            | sort contacts by name                                                      | locate a person easily                                 |
-| `*`      | user            | manage additional entity types related to contacts (tasks, loans, grades)  | extend functionality as needed                         |
+| -------- | --------------- |---------------------------------------------------------------------------| ------------------------------------------------------ |
+| `* * *`  | event organizer | add a contact with standard fields (Name, Phone, Email, Address)          | build my core contact database                         |
+| `* * *`  | event organizer | associate a specific Role (e.g., 'Speaker', 'Attendee', 'VIP', 'Sponsor') | categorize and filter my contacts effectively          |
+| `* * *`  | event organizer | delete a contact from the address book                                    | remove outdated or irrelevant entries                  |
+| `* * *`  | event organizer | create a new event with name, date, time, and venue                       | start organizing my contacts around it                 |
+| `* * *`  | event organizer | view a list of all my events, showing key details and their status        | get an overview of upcoming, past, or cancelled events |
+| `* * *`  | event organizer | associate contacts from my address book with a specific event             | build an attendee list for the event                   |
+| `* * *`  | event organizer | get a list of contacts defined by tags, roles, or event association       | target communications and manage groups efficiently    |
+| `* *`    | event organizer | set RSVP status for a contact for a specific event                        | track attendance commitments                           |
+| `* *`    | event organizer | edit any field of an existing contact, including role and RSVP status     | keep contact information up-to-date                    |
+| `* *`    | event organizer | view all details of a contact, including tags, and associated events      | see a clean, readable summary                          |
+| `* *`    | event organizer | view all details of an event, including tags, and associated contacts     | see a clean, readable summary                          |
+| `* *`    | event organizer | find contacts by searching any field (Name, Role, Tag, Email)             | quickly locate specific individuals                    |
+| `* *`    | event organizer | add multiple tags to a contact                                            | perform complex filtering                              |
+| `* *`    | event organizer | filter contact list by tags and roles                                     | create highly specific lists                           |
+| `* *`    | event organizer | list all contacts, with option to sort by Name or Role                    | get a general overview                                 |
+| `* *`    | event organizer | remove a contact from an event without deleting from address book         | manage event participation flexibly                    |
+| `* *`    | event organizer | archive a past event                                                      | keep main view uncluttered but retain data             |
+| `* *`    | event organizer | set event status to 'Cancelled'                                           | exclude it from mailings                               |
+| `* *`    | event organizer | import contacts from a CSV file                                           | quickly populate my address book                       |
+| `* *`    | event organizer | export contacts or filtered subset to CSV                                 | backup or use in another application                   |
+| `* *`    | user            | create a complete backup of application data                              | safeguard my information                               |
+| `* *`    | user            | restore application data from a backup file                               | recover from data loss                                 |
+| `* *`    | user            | specify storage location for data and backups                             | organize my files as needed                            |
+| `*`      | user            | sort contacts by name                                                     | locate a person easily                                 |
+| `*`      | user            | manage additional entity types related to contacts (tasks, loans, grades) | extend functionality as needed                         |
 
 ### Use cases
 
