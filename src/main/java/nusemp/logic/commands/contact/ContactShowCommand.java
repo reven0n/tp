@@ -28,7 +28,7 @@ public class ContactShowCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_EVENT_SHOW_SUCCESS =
+    public static final String MESSAGE_CONTACT_SHOW_SUCCESS =
             "Successfully shown %1$s event(s) that has the contact:\n%2$s";
 
     private final Index targetIndex;
@@ -48,7 +48,7 @@ public class ContactShowCommand extends Command {
 
         Contact targetContact = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredEventList(targetContact::hasEvent);
-        return new CommandResult(String.format(MESSAGE_EVENT_SHOW_SUCCESS,
+        return new CommandResult(String.format(MESSAGE_CONTACT_SHOW_SUCCESS,
                 model.getFilteredEventList().size(), Messages.format(targetContact)));
     }
 

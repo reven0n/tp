@@ -25,6 +25,8 @@ import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.contact.ContactEditCommand.EditContactDescriptor;
 import nusemp.logic.commands.contact.ContactFindCommand;
 import nusemp.logic.commands.contact.ContactListCommand;
+import nusemp.logic.commands.contact.ContactShowCommand;
+import nusemp.logic.commands.event.EventAddCommand;
 import nusemp.logic.commands.event.EventDeleteCommand;
 import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventListCommand;
@@ -32,37 +34,16 @@ import nusemp.logic.parser.event.EventDeleteCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
+import nusemp.model.event.Event;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.ContactUtil;
 import nusemp.testutil.EditContactDescriptorBuilder;
+import nusemp.testutil.EventBuilder;
+import nusemp.testutil.EventUtil;
 
 public class AppParserTest {
 
     private final AppParser parser = new AppParser();
-
-    @Test
-    public void parseCommand_add() throws Exception {
-        Contact contact = new ContactBuilder().build();
-        ContactAddCommand command = (ContactAddCommand) parser.parseCommand(ContactUtil.getAddCommand(contact));
-        assertEquals(new ContactAddCommand(contact), command);
-    }
-
-    @Test
-    public void parseCommand_delete() throws Exception {
-        ContactDeleteCommand command = (ContactDeleteCommand) parser.parseCommand(CommandType.CONTACT + " "
-                + ContactDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_CONTACT.getOneBased());
-        assertEquals(new ContactDeleteCommand(INDEX_FIRST_CONTACT), command);
-    }
-
-    @Test
-    public void parseCommand_edit() throws Exception {
-        Contact contact = new ContactBuilder().build();
-        EditContactDescriptor descriptor = new EditContactDescriptorBuilder(contact).build();
-        ContactEditCommand command = (ContactEditCommand) parser.parseCommand(CommandType.CONTACT + " "
-                + ContactEditCommand.COMMAND_WORD + " " + INDEX_FIRST_CONTACT.getOneBased() + " "
-                + ContactUtil.getEditContactDescriptorDetails(descriptor));
-        assertEquals(new ContactEditCommand(INDEX_FIRST_CONTACT, descriptor), command);
-    }
 
     @Test
     public void parseCommand_exit() throws Exception {
@@ -71,25 +52,9 @@ public class AppParserTest {
     }
 
     @Test
-    public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        ContactFindCommand command = (ContactFindCommand) parser.parseCommand(CommandType.CONTACT + " "
-                + ContactFindCommand.COMMAND_WORD + " " + String.join(" ", keywords));
-        assertEquals(new ContactFindCommand(new NameContainsKeywordsPredicate(keywords)), command);
-    }
-
-    @Test
     public void parseCommand_help() throws Exception {
         assertTrue(parser.parseCommand(CommandType.HELP.toString()) instanceof HelpCommand);
         assertTrue(parser.parseCommand(CommandType.HELP + " 3") instanceof HelpCommand);
-    }
-
-    @Test
-    public void parseCommand_list() throws Exception {
-        assertTrue(parser.parseCommand(CommandType.CONTACT + " " + ContactListCommand.COMMAND_WORD)
-                instanceof ContactListCommand);
-        assertTrue(parser.parseCommand(CommandType.EVENT + " " + ContactListCommand.COMMAND_WORD)
-                instanceof EventListCommand);
     }
 
     @Test
@@ -101,7 +66,65 @@ public class AppParserTest {
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
+                parser.parseCommand("unknownCommand"));
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
                 parser.parseCommand("contact unknownCommand"));
+        assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () ->
+                parser.parseCommand("event unknownCommand"));
+    }
+
+    @Test
+    public void parseCommand_contactAdd() throws Exception {
+        Contact contact = new ContactBuilder().build();
+        ContactAddCommand command = (ContactAddCommand) parser.parseCommand(ContactUtil.getAddCommand(contact));
+        assertEquals(new ContactAddCommand(contact), command);
+    }
+
+    @Test
+    public void parseCommand_contactDelete() throws Exception {
+        ContactDeleteCommand command = (ContactDeleteCommand) parser.parseCommand(CommandType.CONTACT + " "
+                + ContactDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_CONTACT.getOneBased());
+        assertEquals(new ContactDeleteCommand(INDEX_FIRST_CONTACT), command);
+    }
+
+    @Test
+    public void parseCommand_contactEdit() throws Exception {
+        Contact contact = new ContactBuilder().build();
+        EditContactDescriptor descriptor = new EditContactDescriptorBuilder(contact).build();
+        ContactEditCommand command = (ContactEditCommand) parser.parseCommand(CommandType.CONTACT + " "
+                + ContactEditCommand.COMMAND_WORD + " " + INDEX_FIRST_CONTACT.getOneBased() + " "
+                + ContactUtil.getEditContactDescriptorDetails(descriptor));
+        assertEquals(new ContactEditCommand(INDEX_FIRST_CONTACT, descriptor), command);
+    }
+
+    @Test
+    public void parseCommand_contactFind() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        ContactFindCommand command = (ContactFindCommand) parser.parseCommand(CommandType.CONTACT + " "
+                + ContactFindCommand.COMMAND_WORD + " " + String.join(" ", keywords));
+        assertEquals(new ContactFindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+    }
+
+    @Test
+    public void parseCommand_contactList() throws Exception {
+        assertTrue(parser.parseCommand(CommandType.CONTACT + " " + ContactListCommand.COMMAND_WORD)
+                instanceof ContactListCommand);
+        assertTrue(parser.parseCommand(CommandType.EVENT + " " + ContactListCommand.COMMAND_WORD)
+                instanceof EventListCommand);
+    }
+
+    @Test
+    public void parseCommand_contactShow() throws Exception {
+        ContactShowCommand command = (ContactShowCommand) parser.parseCommand(CommandType.CONTACT + " "
+                + ContactShowCommand.COMMAND_WORD + " " + INDEX_FIRST_CONTACT.getOneBased());
+        assertEquals(new ContactShowCommand(INDEX_FIRST_CONTACT), command);
+    }
+
+    @Test
+    public void parseCommand_eventAdd() throws Exception {
+        Event event = new EventBuilder().build();
+        EventAddCommand command = (EventAddCommand) parser.parseCommand(EventUtil.getAddCommand(event));
+        assertEquals(new EventAddCommand(event), command);
     }
 
     @Test
