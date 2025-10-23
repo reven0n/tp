@@ -10,7 +10,6 @@ import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
 import static nusemp.testutil.TypicalEvents.MEETING_WITH_TAGS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -33,17 +32,21 @@ class EventTest {
     private static final Name VALID_NAME = new Name("Meeting");
     private static final Date VALID_DATE = new Date("01-10-2025 14:00");
     private static final Address VALID_ADDRESS = new Address("123 Main St");
+    private static final List<Participant> EMPTY_PARTICIPANT_LIST = new ArrayList<>();
+    private static final List<Participant> VALID_PARTICIPANTS = createParticipantList(ALICE, BOB);
     private static final Set<Tag> EMPTY_TAG_SET = new HashSet<>();
-    private static final List<Contact> EMPTY_PARTICIPANT_LIST = new ArrayList<>();
-    private static final List<Contact> VALID_PARTICIPANTS = createParticipantList(ALICE, BOB);
 
-    private static List<Contact> createParticipantList(Contact... contacts) {
-        return new ArrayList<>(List.of(contacts));
+    private static List<Participant> createParticipantList(Contact... contacts) {
+        List<Participant> participants = new ArrayList<>();
+        for (Contact contact : contacts) {
+            participants.add(new Participant(contact));
+        }
+        return participants;
     }
 
     @Test
     public void constructor_duplicateEmails_throwsDuplicateParticipantException() {
-        List<Contact> participantsWithDuplicateEmail = createParticipantList(ALICE,
+        List<Participant> participantsWithDuplicateEmail = createParticipantList(ALICE,
                 new ContactBuilder(BOB).withEmail(ALICE.getEmail().value).build());
 
         assertThrows(DuplicateParticipantException.class, () ->
@@ -72,17 +75,17 @@ class EventTest {
     public void withParticipants_addContact_returnsEventWithContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(BOB));
-        assertEquals(event1.withParticipant(BOB), event2);
-        assertNotEquals(event1, event1.withParticipant(BOB)); // should be different instances
+        assertEquals(event1.withContact(BOB), event2);
+        assertEquals(event1, event1.withContact(BOB));
     }
 
     @Test
-    public void withParticipant_preservesTags() {
+    public void withContact_preservesTags() {
         Set<Tag> tags = new HashSet<>();
         tags.add(new Tag("Music"));
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, tags, EMPTY_PARTICIPANT_LIST);
 
-        Event eventWithParticipant = event.withParticipant(BOB);
+        Event eventWithParticipant = event.withContact(BOB);
         assertEquals(tags, eventWithParticipant.getTags());
     }
 
@@ -97,33 +100,34 @@ class EventTest {
     @Test
     public void withParticipants_addContact_keepsInsertionOrder() {
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
-            Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET,
-                    createParticipantList(ALICE, BOB));
-            List<Contact> expectedParticipants = createParticipantList(ALICE, BOB, CARL, DANIEL);
-            assertEquals(expectedParticipants, event.withParticipant(CARL).withParticipant(DANIEL).getParticipants());
+            Event event = new Event(
+                    VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(ALICE, BOB));
+            List<Participant> expectedParticipants = createParticipantList(ALICE, BOB, CARL, DANIEL);
+            assertEquals(expectedParticipants,
+                    event.withContact(CARL).withContact(DANIEL).getParticipants());
         }
     }
 
     @Test
-    public void withParticipant_duplicateEmail_throwsException() {
+    public void withContact_duplicateEmail_throwsException() {
         Contact contact = new ContactBuilder().withEmail(BOB.getEmail().value).build();
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, VALID_PARTICIPANTS);
 
-        assertThrows(DuplicateParticipantException.class, () -> event.withParticipant(contact));
+        assertThrows(DuplicateParticipantException.class, () -> event.withContact(contact));
     }
 
     @Test
     public void withoutParticipants_removeContact_returnsEventWithoutContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(BOB));
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
-        assertEquals(event1.withoutParticipant(BOB), event2);
-        assertNotEquals(event1, event1.withoutParticipant(BOB)); // should be different instances
+        assertEquals(event1.withoutContact(BOB), event2);
+        assertEquals(event1, event1.withoutContact(BOB));
     }
 
     @Test
     public void withoutParticipants_removeContactFromEmptyList_doesNotThrowError() {
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
-        assertEquals(event, event.withoutParticipant(BOB));
+        assertEquals(event, event.withoutContact(BOB));
     }
 
     @Test
@@ -131,9 +135,9 @@ class EventTest {
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
             Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET,
                     createParticipantList(ALICE, BOB, CARL, DANIEL));
-            List<Contact> expectedParticipants = createParticipantList(BOB, DANIEL);
+            List<Participant> expectedParticipants = createParticipantList(BOB, DANIEL);
             assertEquals(expectedParticipants,
-                    event.withoutParticipant(CARL).withoutParticipant(ALICE).getParticipants());
+                    event.withoutContact(CARL).withoutContact(ALICE).getParticipants());
         }
     }
 
@@ -195,11 +199,6 @@ class EventTest {
 
         // different address -> returns false
         editedEvent = new EventBuilder(MEETING_FILLED).withAddress("456 Another St").build();
-        assertFalse(MEETING_FILLED.equals(editedEvent));
-
-        // different participants -> returns false
-        editedEvent = new EventBuilder(MEETING_FILLED)
-                .withParticipants(VALID_PARTICIPANTS.toArray(Contact[]::new)).build();
         assertFalse(MEETING_FILLED.equals(editedEvent));
 
         // no tags -> returns false

@@ -1,4 +1,4 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.contact;
 
 import static nusemp.logic.commands.CommandTestUtil.DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.DESC_BOB;
@@ -19,9 +19,7 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
-import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.contact.ContactEditCommand.EditContactDescriptor;
-import nusemp.logic.commands.contact.ContactListCommand;
 import nusemp.model.AppData;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;

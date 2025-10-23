@@ -42,6 +42,8 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
+    private FlowPane tags;
+    @FXML
     private FlowPane people;
     @FXML
     private Label exportContent;
@@ -52,10 +54,6 @@ public class EventCard extends UiPart<Region> {
      * Creates an {@code EventCard} with the given {@code Event} and index to display.
      */
     public EventCard(Event event, int displayedIndex) {
-
-
-
-
         super(FXML);
 
         SVGPath svgPath = new SVGPath();
@@ -68,7 +66,6 @@ public class EventCard extends UiPart<Region> {
         svgPath.setStyle("-fx-fill: none; -fx-stroke: #a8a8a8; -fx-stroke-width: 1");
         copyButton.setGraphic(svgPath);
 
-
         cardPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
                 cardPane.maxWidthProperty().bind(newScene.widthProperty().subtract(100));
@@ -78,9 +75,7 @@ public class EventCard extends UiPart<Region> {
         this.event = event;
         id.setText(displayedIndex + ". ");
         name.setText(event.getName().toString());
-        name.setWrapText(true);
         date.setText(event.getDate().toString());
-        date.setWrapText(true);
 
         if (event.hasAddress()) {
             address.setText(event.getAddress().value);
@@ -89,13 +84,16 @@ public class EventCard extends UiPart<Region> {
             address.setVisible(false);
         }
 
-
+        event.getTags().stream()
+                .sorted(Comparator.comparing(tag -> tag.tagName))
+                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         event.getParticipants().stream()
-                .sorted(Comparator.comparing(contact -> contact.getName().value.toLowerCase()))
-                .forEach(contact -> {
-                    String name = contact.getName().value;
+                .sorted(Comparator.comparing(p -> p.getContact().getName().value.toLowerCase()))
+                .forEach(p -> {
+                    String name = p.getContact().getName().value;
+                    String email = p.getContact().getEmail().value;
                     people.getChildren().add(new Label(name));
-                    exportContentData = exportContentData + name + ",";
+                    exportContentData = exportContentData + email + ",";
                 });
 
 

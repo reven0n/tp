@@ -33,7 +33,16 @@ public class TypicalAppData {
         for (Event event : getTypicalEvents()) {
             appData.addEvent(event);
         }
-
+        // Add linked events to each contact
+        for (Contact contact : TypicalContacts.getTypicalContacts()) {
+            Contact updatedContact = contact;
+            for (Event event : appData.getEventList()) {
+                if (event.hasContact(contact)) {
+                    updatedContact = updatedContact.addEvent(event);
+                }
+            }
+            appData.setContact(contact, updatedContact);
+        }
         return appData;
     }
 }

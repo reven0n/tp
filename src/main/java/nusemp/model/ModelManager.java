@@ -15,6 +15,7 @@ import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 
 /**
  * Represents the in-memory model of the app data.
@@ -103,7 +104,7 @@ public class ModelManager implements Model {
         // Remove contact from all linked events
         for (Event event : target.getEvents()) {
             if (hasEvent(event)) {
-                Event updatedEvent = event.withoutParticipant(target);
+                Event updatedEvent = event.withoutContact(target);
                 appData.setEvent(event, updatedEvent);
             }
         }
@@ -134,7 +135,7 @@ public class ModelManager implements Model {
      */
     private void updateEventsForEmailChange(Contact target, Contact editedContact) {
         for (Event event : target.getEvents()) {
-            if (hasEvent(event) && event.hasParticipantWithEmail(target.getEmail().value)) {
+            if (hasEvent(event) && event.hasContactWithEmail(target.getEmail().value)) {
                 Event updatedEvent = createUpdatedEvent(event, target, editedContact);
                 appData.setEvent(event, updatedEvent);
             }
@@ -149,7 +150,7 @@ public class ModelManager implements Model {
      * @return the updated event with the edited contact as participant
      */
     private Event createUpdatedEvent(Event event, Contact target, Contact editedContact) {
-        return event.withoutParticipant(target).withParticipant(editedContact);
+        return event.withoutContact(target).withContact(editedContact);
     }
 
     //=========== Filtered Contact List Accessors =============================================================
@@ -179,10 +180,11 @@ public class ModelManager implements Model {
     @Override
     public void deleteEvent(Event target) {
         // Remove event from all linked contacts
-        for (Contact participant : target.getParticipants()) {
-            if (hasContact(participant)) {
-                Contact updatedContact = participant.removeEvent(target);
-                appData.setContact(participant, updatedContact);
+        for (Participant participant : target.getParticipants()) {
+            Contact contact = participant.getContact();
+            if (hasContact(contact)) {
+                Contact updatedContact = contact.removeEvent(target);
+                appData.setContact(contact, updatedContact);
             }
         }
         appData.removeEvent(target);

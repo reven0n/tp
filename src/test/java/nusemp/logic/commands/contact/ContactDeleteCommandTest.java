@@ -1,4 +1,4 @@
-package nusemp.logic.commands;
+package nusemp.logic.commands.contact;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
-import nusemp.logic.commands.contact.ContactDeleteCommand;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
@@ -48,13 +47,13 @@ public class ContactDeleteCommandTest {
     public void execute_contactLinkedToEvent_removesFromEvent() {
         Model modelWithEvent = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
         Contact personToDelete = modelWithEvent.getContactByIndex(INDEX_FIRST_CONTACT);
-        Event meetingWithPerson = MEETING_EMPTY.withParticipant(personToDelete);
+        Event meetingWithPerson = MEETING_EMPTY.withContact(personToDelete);
         modelWithEvent.addEvent(meetingWithPerson);
 
         ContactDeleteCommand contactDeleteCommand = new ContactDeleteCommand(INDEX_FIRST_CONTACT);
 
         ModelManager expectedModel = new ModelManager(modelWithEvent.getAppData(), new UserPrefs());
-        expectedModel.getEventByIndex(Index.fromOneBased(1)).withoutParticipant(personToDelete);
+        expectedModel.getEventByIndex(Index.fromOneBased(1)).withoutContact(personToDelete);
         expectedModel.deleteContact(personToDelete);
 
         String expectedMessage = String.format(ContactDeleteCommand.MESSAGE_DELETE_CONTACT_SUCCESS,

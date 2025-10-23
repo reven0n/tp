@@ -48,6 +48,7 @@ public class Contact {
         this.tags.addAll(tags);
         this.events.addAll(events);
     }
+
     /**
      * Convenience constructor without linked events.
      */
@@ -190,8 +191,7 @@ public class Contact {
                 && email.equals(otherContact.email)
                 && phone.equals(otherContact.phone)
                 && address.equals(otherContact.address)
-                && tags.equals(otherContact.tags)
-                && events.equals(otherContact.events);
+                && tags.equals(otherContact.tags);
     }
 
     @Override
