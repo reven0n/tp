@@ -351,4 +351,4 @@ _Details coming soon ..._
 | **Add**    | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4` |
 | **List**   | `event list`                                                                                                                                |
 | **Link**   | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
-| **Export** | `event export` <br>e.g. `event export 1`                                                                                                     |
+| **Export** | `event export INDEX` <br>e.g. `event export 1`                                                                                                     |
