@@ -65,12 +65,5 @@ public class ContactCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         contact.getEvents()
                 .forEach(event -> events.getChildren().add(new Label(event.getName().value)));
-
-        id.setWrapText(true);
-        name.setWrapText(true);
-        email.setWrapText(true);
-        phone.setWrapText(true);
-        address.setWrapText(true);
-
     }
 }

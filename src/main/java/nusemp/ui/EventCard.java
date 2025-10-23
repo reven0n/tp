@@ -75,9 +75,7 @@ public class EventCard extends UiPart<Region> {
         this.event = event;
         id.setText(displayedIndex + ". ");
         name.setText(event.getName().toString());
-        name.setWrapText(true);
         date.setText(event.getDate().toString());
-        date.setWrapText(true);
 
         if (event.hasAddress()) {
             address.setText(event.getAddress().value);
