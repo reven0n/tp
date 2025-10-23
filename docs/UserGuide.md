@@ -276,7 +276,7 @@ Exports all contacts linked to an event into your clipboard, allowing you to eas
 * `INDEX` refers to the index number shown in the displayed event list
 
 **Examples**:
-* `event export` followed by `1` exports all contacts linked to the 1st event into your clipboard.
+* `event export 1` exports all contacts linked to the 1st event into your clipboard.
 
 
 ---
