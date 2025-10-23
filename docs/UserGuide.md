@@ -271,7 +271,7 @@ Links a contact to an event, allowing you to associate participants with specifi
 
 Exports all contacts linked to an event into your clipboard, allowing you to easily paste them into an email.
 
-**Format**: `event export EVENT_INDEX`
+**Format**: `event export INDEX`
 
 * `INDEX` refers to the index number shown in the displayed event list
 
