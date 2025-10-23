@@ -265,7 +265,19 @@ Links a contact to an event, allowing you to associate participants with specifi
 * `CONTACT_INDEX` refers to the index number shown in the displayed contact list
 
 **Examples**:
-* `event list` followed by `contact list` then `event link --event 1 --contact 2` links the 2nd contact to the 1st event
+* `event list` followed by `contact list` then `event link --event 1 --contact 2` links the 2nd contact to the 1st event.
+
+#### Show contacts in event: `event show`
+
+Shows all the contacts that are part of the specified event.
+
+Format: `event show INDEX`
+
+- The index refers to the index number shown in the displayed event list. It should be a positive integer.
+
+Examples:
+
+- `event link --event 1 --contact 2` followed by `event show 1` shows only the 2nd contact in the full contact list.
 
 ---
 
@@ -334,8 +346,9 @@ _Details coming soon ..._
 
 ### Event commands
 
-| Action     | Format, Examples  |
-|------------|-------------------|
-| **Add**    | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4` |
-| **List**   | `event list` |
-| **Link**   | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2` |
+| Action   | Format, Examples  |
+|----------|-------------------|
+| **Add**  | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4` |
+| **List** | `event list` |
+| **Link** | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2` |
+| **Show** | `event show INDEX`<br>e.g. `event show 1` |

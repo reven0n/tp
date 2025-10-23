@@ -60,7 +60,7 @@ public class StorageManagerBidirectionalTest {
                 .orElse(null);
 
         assertEquals(2, teamMeeting.getParticipants().size());
-        assertTrue(teamMeeting.hasParticipantWithEmail("alexyeoh@example.com"));
+        assertTrue(teamMeeting.hasContactWithEmail("alexyeoh@example.com"));
     }
 
     @Test

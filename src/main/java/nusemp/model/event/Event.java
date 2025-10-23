@@ -88,18 +88,19 @@ public class Event {
     public List<Participant> getParticipants() {
         return Collections.unmodifiableList(participants);
     }
+
     /**
-     * Returns true if the event has the given participant.
+     * Returns true if the event has the given contact.
      */
-    public boolean hasParticipant(Contact contact) {
+    public boolean hasContact(Contact contact) {
         requireAllNonNull(contact);
-        return participants.contains(contact);
+        return participants.stream().anyMatch(p -> p.containsContact(contact));
     }
 
     /**
-     * Returns true if the event has a participant with the given email.
+     * Returns true if the event has a contact with the given email.
      */
-    public boolean hasParticipantWithEmail(String email) {
+    public boolean hasContactWithEmail(String email) {
         requireAllNonNull(email);
         return participants.stream()
                 .anyMatch(p -> p.getContact().getEmail().value.equals(email));
@@ -111,7 +112,7 @@ public class Event {
      */
     public Event withUpdatedParticipant(Participant updatedParticipant) throws ParticipantNotFoundException {
         requireAllNonNull(updatedParticipant);
-        if (!hasParticipantWithEmail(updatedParticipant.getContact().getEmail().value)) {
+        if (!hasContactWithEmail(updatedParticipant.getContact().getEmail().value)) {
             throw new ParticipantNotFoundException();
         }
 
@@ -148,7 +149,7 @@ public class Event {
      */
     public Event withContact(Contact contact) {
         requireAllNonNull(contact);
-        if (hasParticipantWithEmail(contact.getEmail().value)) {
+        if (hasContactWithEmail(contact.getEmail().value)) {
             throw new DuplicateParticipantException();
         }
         List<Participant> updatedParticipants = new ArrayList<>(participants);
