@@ -72,6 +72,23 @@ public class EventExportCommand extends Command {
         return new CommandResult(MESSAGE_SUCCESS);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
 
+        // instanceof handles nulls
+        if (!(other instanceof EventExportCommand)) {
+            return false;
+        }
 
+        EventExportCommand otherExportCommand = (EventExportCommand) other;
+        return eventIndex.equals(otherExportCommand.eventIndex);
+    }
+
+    @Override
+    public String toString() {
+        return EventExportCommand.class.getCanonicalName() + "{eventIndex=" + eventIndex + "}";
+    }
 }
