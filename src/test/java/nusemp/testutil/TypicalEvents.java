@@ -1,6 +1,6 @@
 package nusemp.testutil;
 
-import static nusemp.testutil.EventUtil.convertToContactStatusList;
+import static nusemp.testutil.EventUtil.convertToParticipantList;
 import static nusemp.testutil.TypicalContacts.ALICE;
 import static nusemp.testutil.TypicalContacts.BENSON;
 import static nusemp.testutil.TypicalContacts.BOB;
@@ -29,7 +29,7 @@ public class TypicalEvents {
             .withName("MEETING")
             .withDate("01-10-2025 14:00")
             .withAddress("Meeting Room")
-            .withParticipants(convertToContactStatusList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE))
+            .withParticipants(convertToParticipantList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE))
             .build();
     public static final Event CONFERENCE_EMPTY = new Event(
             new Name("CONFERENCE"), new Date("29-02-2024 09:00"), Address.empty());
@@ -37,7 +37,7 @@ public class TypicalEvents {
             .withName("CONFERENCE")
             .withDate("29-02-2024 09:00")
             .withAddress("Conference Room")
-            .withParticipants(convertToContactStatusList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE))
+            .withParticipants(convertToParticipantList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE))
             .build();
     public static final Event WORKSHOP_EMPTY = new Event(
             new Name("WORKSHOP"), new Date("01-10-2025 14:00"), Address.empty());
@@ -45,7 +45,7 @@ public class TypicalEvents {
             .withName("WORKSHOP")
             .withDate("01-10-2025 14:00")
             .withAddress("SR2")
-            .withParticipants(convertToContactStatusList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE))
+            .withParticipants(convertToParticipantList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE))
             .build();
     public static final Event PARTY_EMPTY = new Event(
             new Name("PARTY"), new Date("31-12-2024 20:00"), Address.empty());
@@ -53,7 +53,7 @@ public class TypicalEvents {
             .withName("PARTY")
             .withDate("31-12-2024 20:00")
             .withAddress(ALICE.getAddress().toString())
-            .withParticipants(convertToContactStatusList(ALICE, BOB, CARL))
+            .withParticipants(convertToParticipantList(ALICE, BOB, CARL))
             .build();
     public static final Event MEETING_WITH_TAGS = new EventBuilder()
             .withName("MEETING")
@@ -66,7 +66,7 @@ public class TypicalEvents {
             .withDate("01-10-2025 14:00")
             .withAddress("Meeting Room A")
             .withTags("Music", "Networking")
-            .withParticipants(convertToContactStatusList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE))
+            .withParticipants(convertToParticipantList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE))
             .build();;
 
     public static List<Event> getTypicalEvents() {

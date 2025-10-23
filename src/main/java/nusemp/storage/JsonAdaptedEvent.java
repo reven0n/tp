@@ -117,13 +117,13 @@ class JsonAdaptedEvent {
         }
 
         final List<Participant> modelParticipants = new ArrayList<>();
-        for (JsonAdaptedParticipant contactStatus : participants) {
-            String email = contactStatus.getEmail();
-            String statusStr = contactStatus.getStatus();
+        for (JsonAdaptedParticipant participant : participants) {
+            String email = participant.getEmail();
+            String statusStr = participant.getStatus();
             if (!Email.isValidEmail(email)) {
                 throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
             }
-            Contact participant = findContactByEmail(appData, email).orElseThrow(() ->
+            Contact contact = findContactByEmail(appData, email).orElseThrow(() ->
                     new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
 
             if (!Status.isValidStatus(statusStr)) {
@@ -131,7 +131,7 @@ class JsonAdaptedEvent {
             }
 
             Status status = Status.fromString(statusStr);
-            modelParticipants.add(new Participant(participant, status));
+            modelParticipants.add(new Participant(contact, status));
         }
 
         final Set<Tag> modelTags = new HashSet<>(eventTags);

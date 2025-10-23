@@ -10,7 +10,7 @@ public class Participant {
     private final Contact contact;
 
     /**
-     * Overloaded constructor that creates a ContactStatus with specified status and contact.
+     * Overloaded constructor that creates a {@code Participant} with specified status and contact.
      * @param contact Contact associated with the status.
      * @param status Status of the contact.
      */
@@ -20,7 +20,7 @@ public class Participant {
     }
 
     /**
-     * Overloaded constructor that creates a ContactStatus with default status ATTENDING.
+     * Overloaded constructor that creates a {@code Participant} with default status ATTENDING.
      * @param contact Contact associated with the status.
      */
     public Participant(Contact contact) {

@@ -38,7 +38,7 @@ public class EventUtil {
         return sb.toString();
     }
 
-    public static List<Participant> convertToContactStatusList(Contact... contacts) {
+    public static List<Participant> convertToParticipantList(Contact... contacts) {
         return Stream.of(contacts).map(Participant::new).toList();
     }
 }
