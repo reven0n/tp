@@ -67,17 +67,17 @@ public class ContactCard extends UiPart<Region> {
         contact.getEvents()
                 .forEach(event -> {
                     event.getParticipants().stream()
-                    .forEach(p -> {
-                        String email = p.getContact().getEmail().value;
-                        if (email.equals(contact.getEmail().value)) {
-                            Label label = new Label(event.getName().value);
-                            if (p.getStatus() != Status.ATTENDING) {
-                                label.setStyle("-fx-background-color: #a8a8a8;");
-                            }
-                            events.getChildren().add(label);
+                        .forEach(p -> {
+                            String email = p.getContact().getEmail().value;
+                            if (email.equals(contact.getEmail().value)) {
+                                Label label = new Label(event.getName().value);
+                                if (p.getStatus() != Status.ATTENDING) {
+                                    label.setStyle("-fx-background-color: #a8a8a8;");
+                                }
+                                events.getChildren().add(label);
 
-                        }
-                    });
+                            }
+                        });
 
                 });
     }
