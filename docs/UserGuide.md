@@ -293,14 +293,14 @@ Examples:
 
 #### Exporting contacts belonging to an event: `event export`
 
-Exports all contacts linked to an event into your clipboard, allowing you to easily paste them into an email.
+Exports all contacts that are attending the event into your clipboard, allowing you to easily paste them into an email.
 
 **Format**: `event export INDEX`
 
 * `INDEX` refers to the index number shown in the displayed event list
 
 **Examples**:
-* `event export 1` exports all contacts linked to the 1st event into your clipboard.
+* `event export 1` exports all contacts attending the 1st event into your clipboard.
 
 
 ---
