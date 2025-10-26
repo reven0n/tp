@@ -9,6 +9,7 @@ import java.util.Set;
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
+import nusemp.model.event.EventStatus;
 import nusemp.model.event.Status;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
@@ -163,5 +164,22 @@ public class ParserUtil {
         }
 
         return Status.fromString(trimmedStatus);
+    }
+
+    /**
+     * Parses a {@code String eventStatus} into an {@code EventStatus}.
+     * Leading and trailing whitespaces will be trimmed.
+     * @param eventStatus the event status string to be parsed
+     * @return the parsed EventStatus object
+     * @throws ParseException if the given {@code eventStatus} is invalid.
+     */
+    public static EventStatus parseEventStatus(String eventStatus) throws ParseException {
+        requireNonNull(eventStatus);
+        String trimmedEventStatus = eventStatus.trim();
+        if (!EventStatus.isValidEventStatus(trimmedEventStatus)) {
+            throw new ParseException(EventStatus.MESSAGE_CONSTRAINTS);
+        }
+
+        return EventStatus.fromString(trimmedEventStatus);
     }
 }
