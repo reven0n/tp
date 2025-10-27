@@ -26,7 +26,7 @@ import nusemp.logic.parser.exceptions.ParseException;
 
 /**
  * The Main Window. Provides the basic application layout containing
- * a menu bar and space where other JavaFX elements can be placed.
+ * a sidebar and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart<Stage> {
 
@@ -53,9 +53,6 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane commandBoxPlaceholder;
-
-    @FXML
-    private MenuItem helpMenuItem;
 
     @FXML
     private StackPane contactListPanelPlaceholder;
@@ -135,8 +132,6 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     private void setAccelerators() {
-        setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
-
         // Add Ctrl+T shortcut for terminal
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             if (event.isControlDown() && event.getCode() == KeyCode.T) {
@@ -338,8 +333,8 @@ public class MainWindow extends UiPart<Stage> {
     private void switchToLightTheme() {
         scene.getStylesheets().clear();
         scene.getStylesheets().addAll(
-            getClass().getResource("/view/LightTheme.css").toExternalForm(),
-            getClass().getResource("/view/Extensions.css").toExternalForm()
+            getClass().getResource("/css/LightTheme.css").toExternalForm(),
+            getClass().getResource("/css/Extensions.css").toExternalForm()
         );
         SVGPath svgPath = new SVGPath();
         svgPath.setContent("M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.7"
@@ -355,8 +350,8 @@ public class MainWindow extends UiPart<Stage> {
     private void switchToDarkTheme() {
         scene.getStylesheets().clear();
         scene.getStylesheets().addAll(
-            getClass().getResource("/view/DarkTheme.css").toExternalForm(),
-            getClass().getResource("/view/Extensions.css").toExternalForm()
+            getClass().getResource("/css/DarkTheme.css").toExternalForm(),
+            getClass().getResource("/css/Extensions.css").toExternalForm()
         );
         SVGPath svgPath = new SVGPath();
         svgPath.setContent("M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773"

@@ -3,9 +3,6 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -21,69 +18,53 @@
     <scene>
         <Scene>
             <stylesheets>
-                <URL value="@DarkTheme.css" />
-                <URL value="@Extensions.css" />
+                <URL value="@../css/DarkTheme.css" />
+                <URL value="@../css/Extensions.css" />
             </stylesheets>
             <StackPane>
                 <VBox>
                     <HBox VBox.vgrow="ALWAYS">
-                        <children>
-                            <VBox fx:id="sidebar" prefWidth="80" alignment="CENTER" spacing="15">
+                        <VBox fx:id="sidebar" prefWidth="64" alignment="CENTER" spacing="15">
 
-                                <children>
-
-                                    <VBox spacing="15" alignment="CENTER" VBox.vgrow="NEVER">
-                                        <VBox.margin>
-                                            <Insets top="15" />
-                                        </VBox.margin>
-                                        <children>
-                                            <Button text="⌘" onAction="#handleTerminal" styleClass="sidebar-button"/>
-                                            <Button text="?" onAction="#handleHelp" styleClass="sidebar-button"/>
-                                            <Button text="×" onAction="#handleExit" styleClass="sidebar-button"/>
-                                        </children>
-                                    </VBox>
-
-                                    <!-- Spacer to push theme button to bottom -->
-                                    <Region VBox.vgrow="ALWAYS"/>
-
-                                    <!-- Theme toggle button anchored to bottom -->
-                                    <Button fx:id="themeToggle" onAction="#handleThemeToggle" styleClass="sidebar-button">
-                                        <VBox.margin>
-                                            <Insets bottom="15" />
-                                        </VBox.margin>
-                                    </Button>
-                                </children>
+                            <VBox spacing="15" alignment="CENTER" VBox.vgrow="NEVER">
+                                <VBox.margin>
+                                    <Insets top="15"/>
+                                </VBox.margin>
+                                <Button text="⌘" onAction="#handleTerminal" styleClass="sidebar-button"/>
+                                <Button text="?" onAction="#handleHelp" styleClass="sidebar-button"/>
+                                <Button text="×" onAction="#handleExit" styleClass="sidebar-button"/>
                             </VBox>
-                            <MenuBar fx:id="menuBar" visible="false" managed="false">
-                                <Menu mnemonicParsing="false" text="File">
-                                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Help">
-                                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-                                </Menu>
-                            </MenuBar>
 
-                            <StackPane HBox.hgrow="ALWAYS">
-                                <VBox fx:id="contactList" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
-                                    <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10" />
-                                    </padding>
-                                    <StackPane fx:id="contactListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
-                                </VBox>
+                            <!-- Spacer to push theme button to bottom -->
+                            <Region VBox.vgrow="ALWAYS"/>
 
-                                <HBox fx:id="toggleSlider" styleClass="toggle-slider"
-                                      StackPane.alignment="TOP_CENTER" maxWidth="160" maxHeight="40" spacing="0">
-                                    <StackPane.margin>
-                                        <Insets top="15" />
-                                    </StackPane.margin>
+                            <!-- Theme toggle button anchored to bottom -->
+                            <Button fx:id="themeToggle" onAction="#handleThemeToggle" styleClass="sidebar-button">
+                                <VBox.margin>
+                                    <Insets bottom="15"/>
+                                </VBox.margin>
+                            </Button>
+                        </VBox>
 
-                                    <Button fx:id="contactsToggle"  styleClass="toggle-button, toggle-active"
-                                            maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleContactViewToggle"/>
-                                    <Button fx:id="eventsToggle"  styleClass="toggle-button, toggle-inactive"
-                                            maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleEventViewToggle"/>
-                                </HBox>
-                            </StackPane>
-                        </children>
+                        <StackPane HBox.hgrow="ALWAYS">
+                            <VBox fx:id="contactList" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
+                                <StackPane fx:id="contactListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
+                            </VBox>
+
+                            <HBox fx:id="toggleSlider" styleClass="toggle-slider"
+                                  StackPane.alignment="TOP_CENTER" maxWidth="160" maxHeight="40" spacing="0">
+                                <StackPane.margin>
+                                    <Insets top="15"/>
+                                </StackPane.margin>
+
+                                <Button fx:id="contactsToggle" styleClass="toggle-button, toggle-active"
+                                        maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS"
+                                        onAction="#handleContactViewToggle"/>
+                                <Button fx:id="eventsToggle" styleClass="toggle-button, toggle-inactive"
+                                        maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS"
+                                        onAction="#handleEventViewToggle"/>
+                            </HBox>
+                        </StackPane>
                     </HBox>
                     <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER" />
                 </VBox>

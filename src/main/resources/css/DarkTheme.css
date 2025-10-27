@@ -1,3 +1,15 @@
+@font-face {
+    src: url('../fonts/Inter-Regular.ttf');
+}
+
+@font-face {
+    src: url('../fonts/Inter-Medium.ttf');
+}
+
+@font-face {
+    src: url('../fonts/Inter-Light.ttf');
+}
+
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
     background-color: #383838; /* Used in the default.html file */
@@ -5,28 +17,28 @@
 
 .label {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Inter Medium";
     -fx-text-fill: #555555;
     -fx-opacity: 0.9;
 }
 
 .label-bright {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Inter Medium";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .label-header {
     -fx-font-size: 32pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Inter Light";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .text-field {
     -fx-font-size: 12pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Inter Medium";
 }
 
 .tab-pane {
@@ -66,7 +78,7 @@
 
 .table-view .column-header .label {
     -fx-font-size: 20pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Inter Light";
     -fx-text-fill: white;
     -fx-alignment: center-left;
     -fx-opacity: 1;
@@ -121,13 +133,19 @@
 }
 
 .cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Inter Medium";
     -fx-font-size: 16px;
     -fx-text-fill: #010504;
 }
 
+.icon_small {
+    -fx-fill: rgba(255, 255, 255, .87);
+    -fx-scale-x: 0.75;
+    -fx-scale-y: 0.75;
+}
+
 .cell_small_label {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Inter";
     -fx-font-size: 13px;
     -fx-text-fill: #010504;
 }
@@ -146,19 +164,9 @@
     -fx-background-color: derive(#1d1d1d, 30%);
 }
 
-.result-display {
-    -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
-}
-
-.result-display .label {
-    -fx-text-fill: black !important;
-}
-
 .status-bar .label {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Inter Light";
+    -fx-font-size: 10.5pt;
     -fx-text-fill: white;
     -fx-padding: 4px;
     -fx-pref-height: 30px;
@@ -192,21 +200,6 @@
     -fx-text-fill: white;
 }
 
-.menu-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
-}
-
-.menu-bar .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
-    -fx-opacity: 0.9;
-}
-
-.menu .left-container {
-    -fx-background-color: black;
-}
-
 /*
  * Metro style Push Button
  * Author: Pedro Duque Vieira
@@ -218,7 +211,7 @@
     -fx-border-width: 2;
     -fx-background-radius: 0;
     -fx-background-color: #1d1d1d;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-family: "Inter", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
@@ -282,29 +275,23 @@
 }
 
 .scroll-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-size: 10; /* Change width of scroll bar. */
 }
 
 .scroll-bar .thumb {
-    -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
+    -fx-background-color: rgba(255,255,255,.3);
+    -fx-background-radius: 5;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: rgba(255,255,255,.4);
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0 0 0 0;
-}
-
-.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-}
-
-.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
-}
-
-.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
 }
 
 #cardPane {
@@ -323,7 +310,7 @@
     -fx-border-color: #383838 #383838 #ffffff #383838;
     -fx-border-insets: 0;
     -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Inter Light";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
 }
@@ -338,8 +325,8 @@
 }
 
 #people, #events {
-    -fx-hgap: 7;
-    -fx-vgap: 3;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
 }
 
 #people .label, #events .label {
@@ -354,8 +341,8 @@
 
 
 #tags {
-    -fx-hgap: 7;
-    -fx-vgap: 3;
+    -fx-hgap: 5;
+    -fx-vgap: 5;
 }
 
 #tags .label {

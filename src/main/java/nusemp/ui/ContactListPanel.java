@@ -1,14 +1,11 @@
 package nusemp.ui;
 
-import java.util.logging.Logger;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
-import nusemp.commons.core.LogsCenter;
 import nusemp.model.contact.Contact;
 
 /**
@@ -16,7 +13,6 @@ import nusemp.model.contact.Contact;
  */
 public class ContactListPanel extends UiPart<Region> {
     private static final String FXML = "ContactListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ContactListPanel.class);
 
     @FXML
     private ListView<Contact> contactListView;
@@ -27,7 +23,11 @@ public class ContactListPanel extends UiPart<Region> {
     public ContactListPanel(ObservableList<Contact> contactList) {
         super(FXML);
         contactListView.setItems(contactList);
-        contactListView.setCellFactory(listView -> new ContactListViewCell());
+        contactListView.setCellFactory(listView -> {
+            ContactListViewCell cell = new ContactListViewCell();
+            cell.prefWidthProperty().bind(listView.widthProperty().subtract(12));
+            return cell;
+        });
     }
 
     /**

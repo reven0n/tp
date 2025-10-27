@@ -33,17 +33,19 @@ public class EventCard extends UiPart<Region> {
     private String exportContentData = "";
 
     @FXML
-    private HBox cardPane;
+    private StackPane cardPane;
     @FXML
     private Label name;
     @FXML
     private Label id;
     @FXML
+    private FlowPane tags;
+    @FXML
     private Label date;
     @FXML
     private Label address;
     @FXML
-    private FlowPane tags;
+    private HBox addressBox;
     @FXML
     private FlowPane people;
     @FXML
@@ -69,7 +71,7 @@ public class EventCard extends UiPart<Region> {
 
         cardPane.sceneProperty().addListener((obs, oldScene, newScene) -> {
             if (newScene != null) {
-                cardPane.maxWidthProperty().bind(newScene.widthProperty().subtract(100));
+                cardPane.maxWidthProperty().bind(newScene.widthProperty().subtract(50));
             }
         });
 
@@ -81,13 +83,33 @@ public class EventCard extends UiPart<Region> {
         if (event.hasAddress()) {
             address.setText(event.getAddress().value);
         } else {
-            address.setManaged(false);
-            address.setVisible(false);
+            addressBox.setManaged(false);
+            addressBox.setVisible(false);
         }
 
-        event.getTags().stream()
-                .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        if (event.hasTags()) {
+            event.getTags().stream()
+                    .sorted(Comparator.comparing(tag -> tag.tagName))
+                    .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        } else {
+            tags.setManaged(false);
+            tags.setVisible(false);
+        }
+
+        if (event.hasParticipants()) {
+            addPeople();
+        } else {
+            people.setManaged(false);
+            people.setVisible(false);
+        }
+
+        if (!exportContentData.isEmpty()) {
+            exportContentData = exportContentData.substring(0, exportContentData.length() - 1);
+        }
+        exportContent.setText(exportContentData);
+    }
+
+    private void addPeople() {
         event.getParticipants().stream()
                 .sorted(Comparator.comparing(p -> p.getContact().getName().value.toLowerCase()))
                 .forEach(p -> {
@@ -99,17 +121,10 @@ public class EventCard extends UiPart<Region> {
                         exportContentData = exportContentData + email + ",";
                     } else {
                         label.setStyle("-fx-background-color: #a8a8a8;");
-
                     }
                     people.getChildren().add(label);
 
                 });
-
-
-        if (!exportContentData.isEmpty()) {
-            exportContentData = exportContentData.substring(0, exportContentData.length() - 1);
-        }
-        exportContent.setText(exportContentData);
     }
 
     /**
