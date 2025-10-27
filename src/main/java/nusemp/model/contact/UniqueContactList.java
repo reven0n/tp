@@ -50,6 +50,14 @@ public class UniqueContactList implements Iterable<Contact> {
         internalList.add(toAdd);
     }
 
+    private int findContactIndex(Contact toFind) {
+        for (int i = 0; i < internalList.size(); i++) {
+            if (internalList.get(i).isSameContact(toFind)) {
+                return i;
+            }
+        }
+        return -1; // Contact not found
+    }
     /**
      * Replaces the contact {@code target} in the list with {@code editedContact}.
      * {@code target} must exist in the list.
@@ -58,7 +66,7 @@ public class UniqueContactList implements Iterable<Contact> {
     public void setContact(Contact target, Contact editedContact) {
         requireAllNonNull(target, editedContact);
 
-        int index = internalList.indexOf(target);
+        int index = findContactIndex(target);
         if (index == -1) {
             throw new ContactNotFoundException();
         }
