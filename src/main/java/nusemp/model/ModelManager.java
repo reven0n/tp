@@ -101,13 +101,6 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteContact(Contact target) {
-        // Remove contact from all linked events
-        for (Event event : target.getEvents()) {
-            if (hasEvent(event)) {
-                Event updatedEvent = event.withoutContact(target);
-                appData.setEvent(event, updatedEvent);
-            }
-        }
         appData.removeContact(target);
     }
 
@@ -121,36 +114,6 @@ public class ModelManager implements Model {
     public void setContact(Contact target, Contact editedContact) {
         requireAllNonNull(target, editedContact);
         appData.setContact(target, editedContact);
-
-        // Update all events that had the old contact as participant
-        if (!target.getEmail().equals(editedContact.getEmail())) {
-            updateEventsForEmailChange(target, editedContact);
-        }
-    }
-
-    /**
-     * Updates all events that had the old contact as participant when the contact's email is changed.
-     * @param target the original contact before edit
-     * @param editedContact the edited contact with updated email
-     */
-    private void updateEventsForEmailChange(Contact target, Contact editedContact) {
-        for (Event event : target.getEvents()) {
-            if (hasEvent(event) && event.hasContactWithEmail(target.getEmail().value)) {
-                Event updatedEvent = createUpdatedEvent(event, target, editedContact);
-                appData.setEvent(event, updatedEvent);
-            }
-        }
-    }
-
-    /**
-     * Creates an updated event by replacing the target contact with the edited contact.
-     * @param event the original event
-     * @param target the original contact who is being replaced
-     * @param editedContact the contact to be replaced with
-     * @return the updated event with the edited contact as participant
-     */
-    private Event createUpdatedEvent(Event event, Contact target, Contact editedContact) {
-        return event.withoutContact(target).withContact(editedContact);
     }
 
     //=========== Filtered Contact List Accessors =============================================================
@@ -179,14 +142,6 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteEvent(Event target) {
-        // Remove event from all linked contacts
-        for (Participant participant : target.getParticipants()) {
-            Contact contact = participant.getContact();
-            if (hasContact(contact)) {
-                Contact updatedContact = contact.removeEvent(target);
-                appData.setContact(contact, updatedContact);
-            }
-        }
         appData.removeEvent(target);
     }
 
@@ -199,7 +154,6 @@ public class ModelManager implements Model {
     @Override
     public void setEvent(Event target, Event editedEvent) {
         requireAllNonNull(target, editedEvent);
-        // update event in the list
         appData.setEvent(target, editedEvent);
     }
 

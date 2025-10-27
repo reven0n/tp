@@ -11,6 +11,7 @@ import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.UniqueContactList;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 import nusemp.model.event.UniqueEventList;
 
 /**
@@ -99,6 +100,36 @@ public class AppData implements ReadOnlyAppData {
         requireNonNull(editedContact);
 
         contacts.setContact(target, editedContact);
+
+        // Update all events that had the old contact as participant
+        if (!target.getEmail().equals(editedContact.getEmail())) {
+            updateEventsForEmailChange(target, editedContact);
+        }
+    }
+
+    /**
+     * Updates all events that had the old contact as participant when the contact's email is changed.
+     * @param target the original contact before edit
+     * @param editedContact the edited contact with updated email
+     */
+    private void updateEventsForEmailChange(Contact target, Contact editedContact) {
+        for (Event event : target.getEvents()) {
+            if (hasEvent(event) && event.hasContactWithEmail(target.getEmail().value)) {
+                Event updatedEvent = createUpdatedEvent(event, target, editedContact);
+                setEvent(event, updatedEvent);
+            }
+        }
+    }
+
+    /**
+     * Creates an updated event by replacing the target contact with the edited contact.
+     * @param event the original event
+     * @param target the original contact who is being replaced
+     * @param editedContact the contact to be replaced with
+     * @return the updated event with the edited contact as participant
+     */
+    private Event createUpdatedEvent(Event event, Contact target, Contact editedContact) {
+        return event.withoutContact(target).withContact(editedContact);
     }
 
     /**
@@ -158,6 +189,15 @@ public class AppData implements ReadOnlyAppData {
      * {@code event} must exist in the event list.
      */
     public void removeEvent(Event event) {
+        // Remove event from all linked contacts
+        for (Participant participant : event.getParticipants()) {
+            Contact contact = participant.getContact();
+            if (hasContact(contact)) {
+                Contact updatedContact = contact.removeEvent(event);
+                setContact(contact, updatedContact);
+            }
+        }
+
         events.remove(event);
     }
 
