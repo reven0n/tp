@@ -7,6 +7,7 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
+import static nusemp.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -91,6 +92,7 @@ public class ContactEditCommand extends Command {
         }
 
         model.setContact(contactToEdit, editedContact);
+        updateEventWithEditedContact(model, contactToEdit, editedContact);
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
         return new CommandResult(String.format(MESSAGE_EDIT_CONTACT_SUCCESS, Messages.format(editedContact)));
     }
@@ -110,6 +112,17 @@ public class ContactEditCommand extends Command {
         List<Event> events = contactToEdit.getEvents();
 
         return new Contact(updatedName, updatedEmail, updatedPhone, updatedAddress, updatedTags, events);
+    }
+
+    private void updateEventWithEditedContact(Model model, Contact contact, Contact editedContact) {
+        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        List<Event> allEvents = model.getFilteredEventList();
+        for (Event event : allEvents) {
+            if (model.hasEvent(event) && event.hasContactWithEmail(contact.getEmail().value)) {
+                Event updatedEvent = event.withoutContact(contact).withContact(editedContact);
+                model.setEvent(event, updatedEvent);
+            }
+        }
     }
 
     @Override
