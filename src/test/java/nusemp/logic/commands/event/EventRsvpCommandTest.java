@@ -6,6 +6,7 @@ import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_EVENT;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
@@ -44,12 +45,16 @@ class EventRsvpCommandTest {
     public void execute_contactNotParticipant_throwsCommandException() {
         Index validEventIndex = INDEX_FIRST_EVENT;
         Index validContactIndex = INDEX_FIRST_CONTACT;
+
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);
+        Event eventToUpdate = model.getEventByIndex(validEventIndex);
         ParticipantStatus validStatus = ParticipantStatus.CANCELLED;
+
         Command eventRsvpCommand = new EventRsvpCommand(validEventIndex, validContactIndex, validStatus);
 
+        assertFalse(eventToUpdate.hasContactWithEmail(contactToRsvp.getEmail().value));
         assertCommandFailure(eventRsvpCommand, model, String.format(EventRsvpCommand.MESSAGE_CONTACT_NOT_PARTICIPANT,
-                Messages.format(contactToRsvp), Messages.format(model.getEventByIndex(validEventIndex))));
+                Messages.format(contactToRsvp), Messages.format(eventToUpdate)));
     }
 
     @Test
