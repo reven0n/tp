@@ -197,7 +197,8 @@ public class MainApp extends Application {
 
         // Show corruption alert if data was corrupted during initialization
         if (corruptionBackupPath != null) {
-            ((UiManager) ui).showDataCorruptionAlert(corruptionBackupPath, corruptionErrorDetails);
+            UiManager uiManager = (UiManager) ui;
+            uiManager.showDataCorruptionAlert(corruptionBackupPath, corruptionErrorDetails);
         }
     }
 
