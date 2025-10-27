@@ -8,6 +8,7 @@ import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_EVENT;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -49,10 +50,11 @@ class EventRsvpCommandTest {
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
         ParticipantStatus validStatus = ParticipantStatus.CANCELLED;
+        // Confirm contact is not a participant
+        assertFalse(eventToUpdate.hasContactWithEmail(contactToRsvp.getEmail().value));
 
         Command eventRsvpCommand = new EventRsvpCommand(validEventIndex, validContactIndex, validStatus);
 
-        assertFalse(eventToUpdate.hasContactWithEmail(contactToRsvp.getEmail().value));
         assertCommandFailure(eventRsvpCommand, model, String.format(EventRsvpCommand.MESSAGE_CONTACT_NOT_PARTICIPANT,
                 Messages.format(contactToRsvp), Messages.format(eventToUpdate)));
     }
@@ -61,23 +63,21 @@ class EventRsvpCommandTest {
     public void execute_invalidIndexes_throwsCommandException() {
         // Test invalid event index
         Index outOfBoundEventIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
-        Index validContactIndex = INDEX_FIRST_CONTACT;
         EventRsvpCommand command1 = new EventRsvpCommand(
-                outOfBoundEventIndex, validContactIndex, ParticipantStatus.ATTENDING);
+                outOfBoundEventIndex, INDEX_FIRST_CONTACT, ParticipantStatus.ATTENDING);
         assertCommandFailure(command1, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
 
         // Test invalid contact index
-        Index validEventIndex = INDEX_THIRD_EVENT;
         Index outOfBoundContactIndex = Index.fromOneBased(model.getFilteredContactList().size() + 1);
         EventRsvpCommand command2 = new EventRsvpCommand(
-                validEventIndex, outOfBoundContactIndex, ParticipantStatus.ATTENDING);
+                INDEX_THIRD_EVENT, outOfBoundContactIndex, ParticipantStatus.ATTENDING);
         assertCommandFailure(command2, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_sameStatus_success() {
-        Index validEventIndex = INDEX_THIRD_EVENT; // WORKSHOP_FILLED
-        Index validContactIndex = INDEX_FIRST_CONTACT; // ALICE
+        Index validEventIndex = INDEX_THIRD_EVENT;
+        Index validContactIndex = INDEX_FIRST_CONTACT;
         ParticipantStatus currentStatus = ParticipantStatus.ATTENDING;
 
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
@@ -97,12 +97,13 @@ class EventRsvpCommandTest {
 
     @Test
     public void execute_validInputs_success() {
-        Index validEventIndex = Index.fromOneBased(3); // WORKSHOP_FILLED
-        Index validContactIndex = Index.fromOneBased(1); // ALICE
+        Index validEventIndex = Index.fromOneBased(3);
+        Index validContactIndex = Index.fromOneBased(1);
         ParticipantStatus newStatus = ParticipantStatus.CANCELLED;
 
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);
+        assertTrue(eventToUpdate.hasContactWithEmail(contactToRsvp.getEmail().value)); // Confirm participant exists
 
         // Create updated event with new participant status
         Participant updatedParticipant = new Participant(contactToRsvp, newStatus);

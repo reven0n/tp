@@ -97,4 +97,21 @@ public class EventRsvpCommand extends Command {
 
         return lastShownContactList.get(contactIndex.getZeroBased());
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EventRsvpCommand)) {
+            return false;
+        }
+
+        EventRsvpCommand otherEventRsvpCommand = (EventRsvpCommand) other;
+        return eventIndex.equals(otherEventRsvpCommand.eventIndex)
+                && contactIndex.equals(otherEventRsvpCommand.contactIndex)
+                && status == otherEventRsvpCommand.status;
+    }
 }
