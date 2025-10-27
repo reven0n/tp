@@ -10,24 +10,24 @@ import java.util.List;
  * E.g. '--tag ' in 'contact add James --tag friend'.
  */
 public class Prefix {
-    private final String[] values;
+    private final String[] prefixes;
 
     /**
      * Constructs a prefix.
      * Multiple values can be defined, which all act as synonyms for the same prefix.
      * Note that the first value would be the primary value, used for display in toString().
      *
-     * @param values The prefix values. Must contain at least one value, and none of the values can be null.
+     * @param prefixes The prefix values. Must contain at least one value, and none of the values can be null.
      */
-    public Prefix(String... values) {
-        assert values.length > 0 : "There should be at least one prefix string!";
-        requireAllNonNull((Object[]) values);
+    public Prefix(String... prefixes) {
+        assert prefixes.length > 0 : "There should be at least one prefix string!";
+        requireAllNonNull((Object[]) prefixes);
 
-        this.values = values;
+        this.prefixes = prefixes;
     }
 
     public List<String> getPrefixes() {
-        return List.of(values);
+        return List.of(prefixes);
     }
 
     /**
@@ -35,12 +35,12 @@ public class Prefix {
      */
     @Override
     public String toString() {
-        return values[0];
+        return prefixes[0];
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(values);
+        return Arrays.hashCode(prefixes);
     }
 
     @Override
@@ -55,6 +55,6 @@ public class Prefix {
         }
 
         Prefix otherPrefix = (Prefix) other;
-        return Arrays.equals(values, otherPrefix.values);
+        return Arrays.equals(prefixes, otherPrefix.prefixes);
     }
 }

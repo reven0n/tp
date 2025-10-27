@@ -35,8 +35,8 @@ public class ArgumentTokenizer {
     }
 
     private static boolean hasNoConflicts(Prefix... prefixes) {
-        List<String> allPrefixStrings = Arrays.stream(prefixes).flatMap(p -> p.getPrefixes().stream()).toList();
-        return allPrefixStrings.size() == Set.copyOf(allPrefixStrings).size();
+        List<String> allPrefixes = Arrays.stream(prefixes).flatMap(p -> p.getPrefixes().stream()).toList();
+        return allPrefixes.size() == Set.copyOf(allPrefixes).size();
     }
 
     /**
@@ -82,13 +82,14 @@ public class ArgumentTokenizer {
      */
     private static int findPrefixPosition(String argsString, Prefix prefix, int fromIndex) {
         int prefixIndex = -1;
-        // get first index for all prefix strings for the same prefix
-        for (String prefixString : prefix.getPrefixes()) {
-            int prefixStringIndex = argsString.indexOf(" " + prefixString, fromIndex);
-            if (prefixStringIndex == -1) {
-                continue;
+        // get first index for all prefix synonyms for the same prefix
+        for (String synonym : prefix.getPrefixes()) {
+            int synonymIndex = argsString.indexOf(" " + synonym, fromIndex);
+            if (prefixIndex == -1) {
+                prefixIndex = synonymIndex;
+            } else if (synonymIndex != -1) {
+                prefixIndex = Math.min(prefixIndex, synonymIndex);
             }
-            prefixIndex = prefixIndex == -1 ? prefixStringIndex : Math.min(prefixIndex, prefixStringIndex);
         }
         return prefixIndex == -1 ? -1 : prefixIndex + 1; // +1 as offset for whitespace
     }
@@ -136,12 +137,12 @@ public class ArgumentTokenizer {
                                         PrefixPosition nextPrefixPosition) {
         Prefix prefix = currentPrefixPosition.getPrefix();
         String prefixStart = argsString.substring(currentPrefixPosition.getStartPosition());
-        List<String> matchingPrefixStrings = prefix.getPrefixes().stream().filter(prefixStart::startsWith).toList();
+        List<String> matchingPrefixSynonyms = prefix.getPrefixes().stream().filter(prefixStart::startsWith).toList();
 
-        assert matchingPrefixStrings.size() == 1 : "There should only be one matching prefix string!";
+        assert matchingPrefixSynonyms.size() == 1 : "There should only be one matching prefix!";
 
-        int prefixStringLength = matchingPrefixStrings.get(0).length();
-        int valueStartPos = currentPrefixPosition.getStartPosition() + prefixStringLength;
+        int prefixLength = matchingPrefixSynonyms.get(0).length();
+        int valueStartPos = currentPrefixPosition.getStartPosition() + prefixLength;
         String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
 
         return value.trim();
