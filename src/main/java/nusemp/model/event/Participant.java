@@ -40,8 +40,15 @@ public class Participant {
         return contact;
     }
 
-    public boolean containsContact(Contact otherContact) {
+    public boolean equalsContact(Contact otherContact) {
         return this.contact.equals(otherContact);
+    }
+
+    /**
+     * Checks if this participant has the same contact as another participant using less strict comparison.
+     */
+    public boolean hasSameContact(Participant otherParticipant) {
+        return this.contact.isSameContact(otherParticipant.getContact());
     }
 
     @Override

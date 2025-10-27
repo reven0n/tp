@@ -95,7 +95,7 @@ public class Event {
      */
     public boolean hasContact(Contact contact) {
         requireAllNonNull(contact);
-        return participants.stream().anyMatch(p -> p.containsContact(contact));
+        return participants.stream().anyMatch(p -> p.equalsContact(contact));
     }
 
     /**
@@ -120,13 +120,12 @@ public class Event {
         List<Participant> updatedParticipants = new ArrayList<>(participants);
         for (int i = 0; i < updatedParticipants.size(); i++) {
             Participant currentParticipant = updatedParticipants.get(i);
-            if (currentParticipant.containsContact(updatedParticipant.getContact())) {
+            if (currentParticipant.hasSameContact(updatedParticipant)) {
                 updatedParticipants.set(i, updatedParticipant);
                 break;
             }
         }
 
-        checkForDuplicateParticipant(updatedParticipants);
         return new Event(name, date, address, tags, updatedParticipants);
     }
 
@@ -168,7 +167,7 @@ public class Event {
     public Event withoutContact(Contact contact) {
         requireAllNonNull(contact);
         List<Participant> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.removeIf(p -> p.containsContact(contact));
+        updatedParticipants.removeIf(p -> p.equalsContact(contact));
         return new Event(name, date, address, tags, updatedParticipants);
     }
 

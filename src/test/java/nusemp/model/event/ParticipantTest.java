@@ -25,15 +25,15 @@ class ParticipantTest {
     }
 
     @Test
-    public void containsContact_sameContact_returnsTrue() {
+    public void equalsContact_sameContact_returnsTrue() {
         Participant participant = new Participant(ALICE, Status.ATTENDING);
-        assertTrue(participant.containsContact(ALICE));
+        assertTrue(participant.equalsContact(ALICE));
     }
 
     @Test
-    public void containsContact_differentContact_returnsFalse() {
+    public void equalsContact_differentContact_returnsFalse() {
         Participant participant = new Participant(ALICE, Status.ATTENDING);
-        assertFalse(participant.containsContact(null));
+        assertFalse(participant.equalsContact(null));
     }
 
     @Test

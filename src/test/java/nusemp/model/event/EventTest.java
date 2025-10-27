@@ -23,6 +23,7 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
+import nusemp.model.event.exceptions.ParticipantNotFoundException;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
@@ -44,6 +45,27 @@ class EventTest {
             participants.add(new Participant(contact));
         }
         return participants;
+    }
+
+    /**
+     * Stricter check for same participants based on all fields.
+     */
+    private static boolean checkForSameParticipant(Event event1, Event event2) {
+        List<Participant> participants1 = event1.getParticipants();
+        List<Participant> participants2 = event2.getParticipants();
+
+        if (participants1.size() != participants2.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < participants1.size(); i++) {
+            Participant p1 = participants1.get(i);
+            Participant p2 = participants2.get(i);
+            if (!p1.equals(p2)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Test
@@ -76,12 +98,24 @@ class EventTest {
     @Test
     public void withUpdatedParticipant_updateParticipantName_returnsEventWithUpdatedParticipant() {
         Contact updatedBob = new ContactBuilder(BOB).withName("Robert").build();
-        Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
+        Participant updatedParticipant = new Participant(updatedBob);
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
                 EMPTY_TAG_SET, createParticipantList(BOB, ALICE));
-        Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
-                EMPTY_TAG_SET, createParticipantList(updatedBob, ALICE));
-        assertEquals(event1.withUpdatedParticipant(new Participant(updatedBob)), event2);
-        assertEquals(event1, event1.withUpdatedParticipant(new Participant(updatedBob)));
+        Event updatedEvent = event.withUpdatedParticipant(updatedParticipant);
+        assertFalse(checkForSameParticipant(event, updatedEvent)); //check that other participants are unchanged
+        assertEquals(updatedEvent.getParticipants().get(0), updatedParticipant);
+        assertEquals(updatedEvent, event);
+    }
+
+    @Test
+    public void withUpdatedParticipant_updateParticipantStatus_returnsEventWithUpdatedParticipant() {
+        Participant updatedParticipant = new Participant(BOB, Status.CANCELLED);
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
+                EMPTY_TAG_SET, createParticipantList(BOB, ALICE));
+        Event updatedEvent = event.withUpdatedParticipant(updatedParticipant);
+        assertFalse(checkForSameParticipant(event, updatedEvent)); //check that other participants are unchanged
+        assertEquals(updatedEvent.getParticipants().get(0), updatedParticipant);
+        assertEquals(updatedEvent, event);
     }
 
     @Test
@@ -89,10 +123,9 @@ class EventTest {
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
                 EMPTY_TAG_SET, createParticipantList(ALICE));
 
-        Contact nonExistentContact = new ContactBuilder(BOB).build();
-        Participant nonExistentParticipant = new Participant(nonExistentContact);
+        Participant nonExistentParticipant = new Participant(BOB);
 
-        assertThrows(DuplicateParticipantException.class, () ->
+        assertThrows(ParticipantNotFoundException.class, () ->
                 event.withUpdatedParticipant(nonExistentParticipant));
     }
 
