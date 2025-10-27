@@ -26,7 +26,8 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app that helps you manage hundreds
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the User Guide in your default browser.<br>
+1. Type the command in the command box (Opened with CTRL-T or the "⌘" button on the sidebar) and press Enter to execute it.
+<br />  e.g. typing **`help`** and pressing Enter will open the User Guide in your default browser.<br>
    Some example commands you can try:
 
    - `contact list` : Lists all contacts.
@@ -76,6 +77,7 @@ NUS Event Mailer Pro (NUS EMP) is a **desktop app that helps you manage hundreds
 ### Viewing help: `help`
 
 Opens the User Guide in your default browser.
+<br/>Clicking the "?" button on the sidebar will also open the User Guide in your browser.
 
 **Format**: `help`
 
@@ -90,9 +92,16 @@ Adds a contact to the contact list.
 **Format**: `contact add --name NAME --email EMAIL [--phone PHONE_NUMBER] [--address ADDRESS] [--tag TAG]…`
 
 **Examples**:
+```
+contact add --name John Doe --email johnd@example.com
+```
+- Adds a contact with the name `John Doe` and email `johnd@example.com`.
+```
+contact add --name Betsy Crowe --tag friend --email betsycrowe@example.com --address NUS --phone 12345678 --tag colleague
+```
+- Adds a contact with the name `Betsy Crowe` and email `betsycrowe@example.com` with a tag, address and phone number.
+> Tip: Fields can be specified in any order, but only `--tag` can be specified multiple times.
 
-- `contact add --name John Doe --email johnd@example.com`
-- `contact add --name Betsy Crowe --tag friend --email betsycrowe@example.com --address NUS --phone 12345678 --tag colleague`
 
 #### Listing all contacts: `contact list`
 
@@ -112,8 +121,7 @@ Edits an existing contact in the contact list.
 
 <box type="tip" seamless>
 
-**Tips on editing contacts:**
-
+ **Tips on editing contacts:**
 - You can find the index of the contact in the displayed contact list. The index should be a positive integer.
 - You can specify an empty string to clear any optional field. e.g. `contact edit 1 --phone` clears the phone number of the first contact. Note that a contact's name and email cannot be cleared.
 - Likewise, you can remove all the contact's tags by typing `--tag` without specifying any tags after it.
@@ -122,9 +130,13 @@ Edits an existing contact in the contact list.
 
 **Examples**:
 
-- `contact edit 1 --phone 91234567 --email johndoe@example.com`
+```
+contact edit 1 --phone 91234567 --email johndoe@example.com
+```
   - Edits the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
-- `contact edit 2 --name Betsy Crower --phone --tag`
+```
+contact edit 2 --name Betsy Crower --phone --tag
+```
   - Edits the name of the 2nd contact to be `Betsy Crower`, removes the phone number and clears all existing tags.
 
 #### Finding contacts: `contact find`
@@ -161,34 +173,39 @@ Finds contacts whose fields contain any of the given keywords.
    - Use one or more filters in any combination
 
 **Examples**:
-
-- `contact find John`
-
+```
+contact find John
+```
   - Finds contacts whose names contain the word `John`
   - Returns: `John Doe`, `John Smith`
 
   ![Example](images/contactFindNameExample.png)
-
-- `contact find alex david`
-
+```
+contact find alex david
+```
   - Finds contacts whose names contain `Alex` OR `David`
   - Returns: `Alex Yeoh`, `David Li`
-
-- `contact find --email gmail`
+```
+contact find --email gmail
+```
 
   - Finds contacts whose email addresses contain `gmail`
   - Returns contacts with emails like `alex@gmail.com`, `user.name@gmail.com`
 
   ![Example](images/contactFindEmailExample.png)
 
-- `contact find --tag friend`
+```
+contact find --tag friend
+```
 
   - Finds contacts with tags containing `friend`
   - Returns contacts tagged with `friend`, `friends`, `best-friend`, etc.
 
   ![Example](images/contactFindTagExample.png)
 
-- `contact find --name alice bob --email nus.edu ntu.edu`
+```
+contact find --name alice bob --email nus.edu ntu.edu
+```
 
   - Finds contacts where name contains (`alice` OR `bob`) AND email contains (`nus.edu` OR `ntu.edu`)
   - Matches: `Alice Tan` with `alice@nus.edu`, `Bob Lee` with `bob@ntu.edu`
@@ -197,7 +214,9 @@ Finds contacts whose fields contain any of the given keywords.
 
   ![Example](images/contactFindCombinedExample.png)
 
-- `contact find --name John --email gmail --tag colleague`
+```
+contact find --name John --email gmail --tag colleague
+```
 
   - Finds contacts where ALL of the following are true:
     - Name contains `John`, AND
@@ -230,8 +249,16 @@ Format: `contact delete INDEX`
 
 Examples:
 
-- `contact list` followed by `contact delete 2` deletes the 2nd contact in the full contact list.
-- `contact find Betsy` followed by `contact delete 1` deletes the 1st contact in the results of the `contact find` command.
+```
+contact list
+contact delete 2`
+```
+- Deletes the 2nd contact in the full contact list.
+```
+contact find Betsy
+contact delete 1
+```
+- Deletes the 1st contact in the results of the `contact find` command.
 
 #### Showing events in contact: `contact show`
 
@@ -243,7 +270,11 @@ Format: `contact show INDEX`
 
 Examples:
 
-- `event link --event 1 --contact 2` followed by `contact show 2` shows only the 1st event in the full event list.
+```
+event link --event 1 --contact 2
+contact show 2
+```
+- Shows only the 1st event in the full event list.
 
 ---
 
@@ -258,8 +289,12 @@ Adds an event to the event list.
 * `DATE` should be in the format `DD-MM-YYYY HH:MM` (24-hour format)
 
 **Examples**:
-* `event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4`
-* `event add --name Team Lunch --date 01-01-2026 12:00`
+```
+event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4
+```
+```
+event add --name Team Lunch --date 01-01-2026 12:00
+```
 
 #### Listing all events: `event list`
 
@@ -277,7 +312,12 @@ Links a contact to an event, allowing you to associate participants with specifi
 * `CONTACT_INDEX` refers to the index number shown in the displayed contact list
 
 **Examples**:
-* `event list` followed by `contact list` then `event link --event 1 --contact 2` links the 2nd contact to the 1st event.
+```
+event list
+contact list
+event link --event 1 --contact 2
+```
+- Links the 2nd contact to the 1st event.
 
 #### Show contacts in event: `event show`
 
@@ -293,14 +333,20 @@ Examples:
 
 #### Exporting contacts belonging to an event: `event export`
 
+
 Exports all contacts that are attending the event into your clipboard, allowing you to easily paste them into an email.
+Clicking the button with the file icon located on the right of each event card will also copy the contacts into the clipboard.
+
 
 **Format**: `event export INDEX`
 
 * `INDEX` refers to the index number shown in the displayed event list
 
 **Examples**:
-* `event export 1` exports all contacts attending the 1st event into your clipboard.
+```
+event export 1
+```
+- Exports all contacts linked to the 1st event into your clipboard.
 
 
 ---
