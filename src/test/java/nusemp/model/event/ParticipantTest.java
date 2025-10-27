@@ -13,41 +13,41 @@ class ParticipantTest {
     @Test
     public void constructor_withoutStatus_success() {
         Participant participant = new Participant(ALICE);
-        assertEquals(Status.ATTENDING, participant.getStatus());
+        assertEquals(ParticipantStatus.ATTENDING, participant.getStatus());
         assertEquals(ALICE, participant.getContact());
     }
 
     @Test
     public void constructor_nullParameters_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new Participant(null, Status.ATTENDING));
+        assertThrows(NullPointerException.class, () -> new Participant(null, ParticipantStatus.ATTENDING));
         assertThrows(NullPointerException.class, () -> new Participant(ALICE, null));
         assertThrows(NullPointerException.class, () -> new Participant(null));
     }
 
     @Test
     public void equalsContact_sameContact_returnsTrue() {
-        Participant participant = new Participant(ALICE, Status.ATTENDING);
+        Participant participant = new Participant(ALICE, ParticipantStatus.ATTENDING);
         assertTrue(participant.equalsContact(ALICE));
     }
 
     @Test
     public void equalsContact_differentContact_returnsFalse() {
-        Participant participant = new Participant(ALICE, Status.ATTENDING);
+        Participant participant = new Participant(ALICE, ParticipantStatus.ATTENDING);
         assertFalse(participant.equalsContact(null));
     }
 
     @Test
     public void toStringMethod() {
-        Participant participant = new Participant(ALICE, Status.CANCELLED);
+        Participant participant = new Participant(ALICE, ParticipantStatus.CANCELLED);
         String expectedString = "Contact: " + ALICE.toString() + ", Status: cancelled";
         assertEquals(expectedString, participant.toString());
     }
 
     @Test
     public void equals() {
-        Participant participant1 = new Participant(ALICE, Status.ATTENDING);
-        Participant participant2 = new Participant(ALICE, Status.ATTENDING);
-        Participant participant3 = new Participant(ALICE, Status.CANCELLED);
+        Participant participant1 = new Participant(ALICE, ParticipantStatus.ATTENDING);
+        Participant participant2 = new Participant(ALICE, ParticipantStatus.ATTENDING);
+        Participant participant3 = new Participant(ALICE, ParticipantStatus.CANCELLED);
 
         // same object -> returns true
         assertEquals(participant1, participant1);

@@ -8,7 +8,7 @@ import nusemp.model.contact.Contact;
  * Represents the contact and their participation status in an event.
  */
 public class Participant {
-    private final Status status;
+    private final ParticipantStatus status;
     private final Contact contact;
 
     /**
@@ -16,7 +16,7 @@ public class Participant {
      * @param contact Contact associated with the status.
      * @param status Status of the contact.
      */
-    public Participant(Contact contact, Status status) {
+    public Participant(Contact contact, ParticipantStatus status) {
         requireAllNonNull(contact, status);
         this.status = status;
         this.contact = contact;
@@ -28,11 +28,11 @@ public class Participant {
      */
     public Participant(Contact contact) {
         requireAllNonNull(contact);
-        this.status = Status.ATTENDING;
+        this.status = ParticipantStatus.ATTENDING;
         this.contact = contact;
     }
 
-    public Status getStatus() {
+    public ParticipantStatus getStatus() {
         return status;
     }
 

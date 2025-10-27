@@ -109,7 +109,7 @@ class EventTest {
 
     @Test
     public void withUpdatedParticipant_updateParticipantStatus_returnsEventWithUpdatedParticipant() {
-        Participant updatedParticipant = new Participant(BOB, Status.CANCELLED);
+        Participant updatedParticipant = new Participant(BOB, ParticipantStatus.CANCELLED);
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
                 EMPTY_TAG_SET, createParticipantList(BOB, ALICE));
         Event updatedEvent = event.withUpdatedParticipant(updatedParticipant);
