@@ -15,7 +15,6 @@ import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
 
 /**
  * Represents the in-memory model of the app data.
