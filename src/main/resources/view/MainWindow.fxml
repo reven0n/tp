@@ -11,80 +11,81 @@
 <?import javafx.stage.Stage?>
 <?import javafx.scene.control.Button?>
 
-<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="NUS Event Mailer Pro" type="Stage" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <icons>
-        <Image url="@/images/address_book_32.png" />
-    </icons>
-    <scene>
-        <Scene>
-            <stylesheets>
-                <URL value="@../css/DarkTheme.css" />
-                <URL value="@../css/Extensions.css" />
-            </stylesheets>
-            <StackPane>
-                <VBox>
-                    <HBox VBox.vgrow="ALWAYS">
-                        <VBox fx:id="sidebar" prefWidth="64" alignment="CENTER" spacing="15">
+<?import javafx.scene.control.Tooltip?>
+<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="NUS Event Mailer Pro" type="Stage"
+         xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <scene>
+    <Scene>
+      <stylesheets>
+        <URL value="@../css/DarkTheme.css"/>
+        <URL value="@../css/Extensions.css"/>
+      </stylesheets>
+      <StackPane>
+        <VBox>
+          <HBox VBox.vgrow="ALWAYS">
+            <VBox fx:id="sidebar" prefWidth="64" alignment="CENTER" spacing="15">
 
-                            <VBox spacing="15" alignment="CENTER" VBox.vgrow="NEVER">
-                                <VBox.margin>
-                                    <Insets top="15"/>
-                                </VBox.margin>
-                                <Button text="⌘" onAction="#handleTerminal" styleClass="sidebar-button"/>
-                                <Button text="?" onAction="#handleHelp" styleClass="sidebar-button"/>
-                                <Button text="×" onAction="#handleExit" styleClass="sidebar-button"/>
-                            </VBox>
+              <Button fx:id="contactsToggle" onAction="#handleContactViewToggle" styleClass="sidebar-button">
+                <VBox.margin>
+                  <Insets top="15"/>
+                </VBox.margin>
+                <tooltip>
+                  <Tooltip text="View Contacts"/>
+                </tooltip>
+              </Button>
+              <Button fx:id="eventsToggle" onAction="#handleEventViewToggle" styleClass="sidebar-button">
+                <tooltip>
+                  <Tooltip text="View Events"/>
+                </tooltip>
+              </Button>
 
-                            <!-- Spacer to push theme button to bottom -->
-                            <Region VBox.vgrow="ALWAYS"/>
+              <!-- Spacer to push theme button to bottom -->
+              <Region VBox.vgrow="ALWAYS"/>
 
-                            <!-- Theme toggle button anchored to bottom -->
-                            <Button fx:id="themeToggle" onAction="#handleThemeToggle" styleClass="sidebar-button">
-                                <VBox.margin>
-                                    <Insets bottom="15"/>
-                                </VBox.margin>
-                            </Button>
-                        </VBox>
+              <!-- Theme toggle button anchored to bottom -->
+              <Button text="?" onAction="#handleHelp" styleClass="sidebar-button">
+                <tooltip>
+                  <Tooltip text="Open User Guide"/>
+                </tooltip>
+              </Button>
+              <Button fx:id="themeToggle" onAction="#handleThemeToggle" styleClass="sidebar-button">
+                <tooltip>
+                  <Tooltip text="Change Theme"/>
+                </tooltip>
+              </Button>
+              <Button text="⌘" onAction="#handleTerminal" styleClass="sidebar-button">
+                <VBox.margin>
+                  <Insets bottom="15"/>
+                </VBox.margin>
+                <tooltip>
+                  <Tooltip text="Open Command Terminal"/>
+                </tooltip>
+              </Button>
+            </VBox>
+            <VBox fx:id="contactList" styleClass="pane-with-border" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+              <StackPane fx:id="contactListPanelPlaceholder" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+            </VBox>
+          </HBox>
+          <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER"/>
+        </VBox>
 
-                        <StackPane HBox.hgrow="ALWAYS">
-                            <VBox fx:id="contactList" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
-                                <StackPane fx:id="contactListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
-                            </VBox>
-
-                            <HBox fx:id="toggleSlider" styleClass="toggle-slider"
-                                  StackPane.alignment="TOP_CENTER" maxWidth="160" maxHeight="40" spacing="0">
-                                <StackPane.margin>
-                                    <Insets top="15"/>
-                                </StackPane.margin>
-
-                                <Button fx:id="contactsToggle" styleClass="toggle-button, toggle-active"
-                                        maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS"
-                                        onAction="#handleContactViewToggle"/>
-                                <Button fx:id="eventsToggle" styleClass="toggle-button, toggle-inactive"
-                                        maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS"
-                                        onAction="#handleEventViewToggle"/>
-                            </HBox>
-                        </StackPane>
-                    </HBox>
-                    <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER" />
-                </VBox>
-
-                <!-- Terminal Overlay -->
-                <StackPane fx:id="terminalOverlay" visible="false" managed="false" styleClass="terminal-overlay">
-                    <VBox alignment="CENTER" maxWidth="600" maxHeight="400" styleClass="terminal-window">
-                        <StackPane fx:id="terminalResultDisplayPlaceholder" minHeight="250" styleClass="terminal-result-display" VBox.vgrow="ALWAYS">
-                            <padding>
-                                <Insets bottom="10" left="15" right="15" top="15" />
-                            </padding>
-                        </StackPane>
-                        <StackPane fx:id="terminalCommandBoxPlaceholder" styleClass="terminal-command-box" VBox.vgrow="NEVER">
-                            <padding>
-                                <Insets bottom="15" left="15" right="15" top="10" />
-                            </padding>
-                        </StackPane>
-                    </VBox>
-                </StackPane>
+        <!-- Terminal Overlay -->
+        <StackPane fx:id="terminalOverlay" visible="false" managed="false" styleClass="terminal-overlay">
+          <VBox alignment="CENTER" maxWidth="600" maxHeight="400" styleClass="terminal-window">
+            <StackPane fx:id="terminalResultDisplayPlaceholder" minHeight="250" styleClass="terminal-result-display"
+                       VBox.vgrow="ALWAYS">
+              <padding>
+                <Insets bottom="10" left="15" right="15" top="15"/>
+              </padding>
             </StackPane>
-        </Scene>
-    </scene>
+            <StackPane fx:id="terminalCommandBoxPlaceholder" styleClass="terminal-command-box" VBox.vgrow="NEVER">
+              <padding>
+                <Insets bottom="15" left="15" right="15" top="10"/>
+              </padding>
+            </StackPane>
+          </VBox>
+        </StackPane>
+      </StackPane>
+    </Scene>
+  </scene>
 </fx:root>
