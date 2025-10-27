@@ -1,8 +1,11 @@
 package nusemp.logic.parser;
 
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -24,8 +27,16 @@ public class ArgumentTokenizer {
      * @return           ArgumentMultimap object that maps prefixes to their arguments
      */
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
+        requireAllNonNull(argsString, prefixes);
+        assert hasNoConflicts(prefixes) : "There should be no conflicting prefixes!";
+
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
+    }
+
+    private static boolean hasNoConflicts(Prefix... prefixes) {
+        List<String> allPrefixes = Arrays.stream(prefixes).flatMap(p -> p.getPrefixes().stream()).toList();
+        return allPrefixes.size() == Set.copyOf(allPrefixes).size();
     }
 
     /**
@@ -47,11 +58,11 @@ public class ArgumentTokenizer {
     private static List<PrefixPosition> findPrefixPositions(String argsString, Prefix prefix) {
         List<PrefixPosition> positions = new ArrayList<>();
 
-        int prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), 0);
+        int prefixPosition = findPrefixPosition(argsString, prefix, 0);
         while (prefixPosition != -1) {
             PrefixPosition extendedPrefix = new PrefixPosition(prefix, prefixPosition);
             positions.add(extendedPrefix);
-            prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), prefixPosition);
+            prefixPosition = findPrefixPosition(argsString, prefix, prefixPosition);
         }
 
         return positions;
@@ -69,10 +80,18 @@ public class ArgumentTokenizer {
      * {@code argsString} = "e/hi p/900", {@code prefix} = "p/" and
      * {@code fromIndex} = 0, this method returns 5.
      */
-    private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
-        return prefixIndex == -1 ? -1
-                : prefixIndex + 1; // +1 as offset for whitespace
+    private static int findPrefixPosition(String argsString, Prefix prefix, int fromIndex) {
+        int prefixIndex = -1;
+        // get first index for all prefix synonyms for the same prefix
+        for (String synonym : prefix.getPrefixes()) {
+            int synonymIndex = argsString.indexOf(" " + synonym, fromIndex);
+            if (prefixIndex == -1) {
+                prefixIndex = synonymIndex;
+            } else if (synonymIndex != -1) {
+                prefixIndex = Math.min(prefixIndex, synonymIndex);
+            }
+        }
+        return prefixIndex == -1 ? -1 : prefixIndex + 1; // +1 as offset for whitespace
     }
 
     /**
@@ -117,8 +136,13 @@ public class ArgumentTokenizer {
                                         PrefixPosition currentPrefixPosition,
                                         PrefixPosition nextPrefixPosition) {
         Prefix prefix = currentPrefixPosition.getPrefix();
+        String prefixStart = argsString.substring(currentPrefixPosition.getStartPosition());
+        List<String> matchingPrefixSynonyms = prefix.getPrefixes().stream().filter(prefixStart::startsWith).toList();
 
-        int valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
+        assert matchingPrefixSynonyms.size() == 1 : "There should only be one matching prefix!";
+
+        int prefixLength = matchingPrefixSynonyms.get(0).length();
+        int valueStartPos = currentPrefixPosition.getStartPosition() + prefixLength;
         String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
 
         return value.trim();

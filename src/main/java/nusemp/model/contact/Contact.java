@@ -171,6 +171,20 @@ public class Contact {
                 && otherContact.getEmail().isSameEmail(getEmail());
     }
 
+    private boolean hasSameEvents(Contact otherContact) {
+        if (otherContact.events.size() != this.events.size()) {
+            return false;
+        }
+
+        for (Event event : otherContact.events) {
+            if (!this.hasEventWithName(event.getName().value)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Returns true if both contacts have the same identity and data fields.
      * This defines a stronger notion of equality between two contacts.
@@ -191,7 +205,8 @@ public class Contact {
                 && email.equals(otherContact.email)
                 && phone.equals(otherContact.phone)
                 && address.equals(otherContact.address)
-                && tags.equals(otherContact.tags);
+                && tags.equals(otherContact.tags)
+                && hasSameEvents(otherContact);
     }
 
     @Override
