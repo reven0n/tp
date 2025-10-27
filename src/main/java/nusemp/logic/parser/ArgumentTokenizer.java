@@ -1,10 +1,12 @@
 package nusemp.logic.parser;
 
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Tokenizes arguments string of the form: {@code preamble <prefix> value <prefix> value ...}<br>
@@ -25,8 +27,16 @@ public class ArgumentTokenizer {
      * @return           ArgumentMultimap object that maps prefixes to their arguments
      */
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
+        requireAllNonNull(argsString, prefixes);
+        assert hasNoConflicts(prefixes) : "There should be no conflicting prefixes!";
+
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
+    }
+
+    private static boolean hasNoConflicts(Prefix... prefixes) {
+        List<String> allPrefixStrings = Arrays.stream(prefixes).flatMap(p -> p.getPrefixes().stream()).toList();
+        return allPrefixStrings.size() == Set.copyOf(allPrefixStrings).size();
     }
 
     /**
