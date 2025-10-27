@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Tokenizes arguments string of the form: {@code preamble <prefix> value <prefix> value ...}<br>
@@ -47,11 +48,11 @@ public class ArgumentTokenizer {
     private static List<PrefixPosition> findPrefixPositions(String argsString, Prefix prefix) {
         List<PrefixPosition> positions = new ArrayList<>();
 
-        int prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), 0);
+        int prefixPosition = findPrefixPosition(argsString, prefix, 0);
         while (prefixPosition != -1) {
             PrefixPosition extendedPrefix = new PrefixPosition(prefix, prefixPosition);
             positions.add(extendedPrefix);
-            prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), prefixPosition);
+            prefixPosition = findPrefixPosition(argsString, prefix, prefixPosition);
         }
 
         return positions;
@@ -69,10 +70,17 @@ public class ArgumentTokenizer {
      * {@code argsString} = "e/hi p/900", {@code prefix} = "p/" and
      * {@code fromIndex} = 0, this method returns 5.
      */
-    private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
-        int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
-        return prefixIndex == -1 ? -1
-                : prefixIndex + 1; // +1 as offset for whitespace
+    private static int findPrefixPosition(String argsString, Prefix prefix, int fromIndex) {
+        int prefixIndex = -1;
+        // get first index for all prefix strings for the same prefix
+        for (String prefixString : prefix.getPrefixes()) {
+            int prefixStringIndex = argsString.indexOf(" " + prefixString, fromIndex);
+            if (prefixStringIndex == -1) {
+                continue;
+            }
+            prefixIndex = prefixIndex == -1 ? prefixStringIndex : Math.min(prefixIndex, prefixStringIndex);
+        }
+        return prefixIndex == -1 ? -1 : prefixIndex + 1; // +1 as offset for whitespace
     }
 
     /**
@@ -117,8 +125,12 @@ public class ArgumentTokenizer {
                                         PrefixPosition currentPrefixPosition,
                                         PrefixPosition nextPrefixPosition) {
         Prefix prefix = currentPrefixPosition.getPrefix();
+        String prefixStart = argsString.substring(currentPrefixPosition.getStartPosition());
+        List<String> matchingPrefixStrings = prefix.getPrefixes().stream().filter(prefixStart::startsWith).toList();
+        assert matchingPrefixStrings.size() == 1 : "There should only be one matching prefix string!";
+        int prefixStringLength = matchingPrefixStrings.get(0).length();
 
-        int valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
+        int valueStartPos = currentPrefixPosition.getStartPosition() + prefixStringLength;
         String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
 
         return value.trim();
