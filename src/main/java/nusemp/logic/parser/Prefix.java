@@ -15,7 +15,7 @@ public class Prefix {
     /**
      * Constructs a prefix.
      * Multiple values can be defined, which all act as synonyms for the same prefix.
-     * Note that the first value would be the primary value, used to display in toString().
+     * Note that the first value would be the primary value, used for display in toString().
      *
      * @param values The prefix values. Must contain at least one value, and none of the values can be null.
      */

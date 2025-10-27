@@ -137,9 +137,10 @@ public class ArgumentTokenizer {
         Prefix prefix = currentPrefixPosition.getPrefix();
         String prefixStart = argsString.substring(currentPrefixPosition.getStartPosition());
         List<String> matchingPrefixStrings = prefix.getPrefixes().stream().filter(prefixStart::startsWith).toList();
-        assert matchingPrefixStrings.size() == 1 : "There should only be one matching prefix string!";
-        int prefixStringLength = matchingPrefixStrings.get(0).length();
 
+        assert matchingPrefixStrings.size() == 1 : "There should only be one matching prefix string!";
+
+        int prefixStringLength = matchingPrefixStrings.get(0).length();
         int valueStartPos = currentPrefixPosition.getStartPosition() + prefixStringLength;
         String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
 
