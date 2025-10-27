@@ -284,10 +284,13 @@ class EventTest {
                 .withParticipants(createParticipantList(ALICE, updatedBobName)).build();
         Event event9 = new EventBuilder(MEETING_EMPTY)
                 .withParticipants(createParticipantList(ALICE, updatedBobEmail)).build();
+        Event event10 = new EventBuilder(MEETING_EMPTY)
+                .withParticipants(createParticipantList(updatedBobName, ALICE)).build();
 
         assertNotEquals(event6, event7); // missing participant should not be equal
         assertEquals(event6, event8); // same email, different name should be equal
         assertNotEquals(event6, event9); // different email should not be equal
+        assertEquals(event6, event10); // different order should be equal
     }
 
     @Test

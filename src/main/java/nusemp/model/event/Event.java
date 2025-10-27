@@ -15,7 +15,6 @@ import nusemp.model.event.exceptions.DuplicateParticipantException;
 import nusemp.model.event.exceptions.ParticipantNotFoundException;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
-import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
 
@@ -191,10 +190,9 @@ public class Event {
         if (participants.size() != otherParticipants.size()) {
             return false;
         }
-        for (int i = 0; i < participants.size(); i++) {
-            Email thisEmail = participants.get(i).getContact().getEmail();
-            Email otherEmail = otherParticipants.get(i).getContact().getEmail();
-            if (!thisEmail.equals(otherEmail)) {
+
+        for (Participant participant : otherParticipants) {
+            if (!hasContactWithEmail(participant.getContact().getEmail().value)) {
                 return false;
             }
         }

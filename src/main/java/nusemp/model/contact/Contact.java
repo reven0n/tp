@@ -176,10 +176,8 @@ public class Contact {
             return false;
         }
 
-        for (int i = 0; i < this.events.size(); i++) {
-            Event thisEvent = this.events.get(i);
-            Event otherEvent = otherContact.events.get(i);
-            if (!thisEvent.isSameEvent(otherEvent)) {
+        for (Event event : otherContact.events) {
+            if (!this.hasEventWithName(event.getName().value)) {
                 return false;
             }
         }
