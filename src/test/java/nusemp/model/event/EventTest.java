@@ -290,7 +290,7 @@ class EventTest {
         assertNotEquals(event6, event7); // missing participant should not be equal
         assertEquals(event6, event8); // same email, different name should be equal
         assertNotEquals(event6, event9); // different email should not be equal
-        assertEquals(event6, event10); // different order should be equal
+        assertNotEquals(event6, event10); // different order should not be equal
     }
 
     @Test

@@ -191,11 +191,14 @@ public class Event {
             return false;
         }
 
-        for (Participant participant : otherParticipants) {
-            if (!hasContactWithEmail(participant.getContact().getEmail().value)) {
+        for (int i = 0; i < participants.size(); i++) {
+            String email1 = participants.get(i).getContact().getEmail().value;
+            String email2 = otherParticipants.get(i).getContact().getEmail().value;
+            if (!email1.equals(email2)) {
                 return false;
             }
         }
+
         return true;
     }
 
