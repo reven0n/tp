@@ -125,6 +125,8 @@ public class Event {
                 break;
             }
         }
+
+        checkForDuplicateParticipant(updatedParticipants);
         return new Event(name, date, address, tags, updatedParticipants);
     }
 
@@ -211,11 +213,10 @@ public class Event {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Event)) {
+        if (!(other instanceof Event otherEvent)) {
             return false;
         }
 
-        Event otherEvent = (Event) other;
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
                 && address.equals(otherEvent.address)

@@ -6,10 +6,12 @@ import static nusemp.testutil.TypicalContacts.BOB;
 import static nusemp.testutil.TypicalContacts.CARL;
 import static nusemp.testutil.TypicalContacts.DANIEL;
 import static nusemp.testutil.TypicalEvents.CONFERENCE_FILLED;
+import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
 import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
 import static nusemp.testutil.TypicalEvents.MEETING_WITH_TAGS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -73,21 +75,33 @@ class EventTest {
 
     @Test
     public void withUpdatedParticipant_updateParticipantName_returnsEventWithUpdatedParticipant() {
-        Participant updatedBob = new Participant(new ContactBuilder(BOB).withName("Robert").build());
+        Contact updatedBob = new ContactBuilder(BOB).withName("Robert").build();
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
                 EMPTY_TAG_SET, createParticipantList(BOB, ALICE));
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
                 EMPTY_TAG_SET, createParticipantList(updatedBob, ALICE));
-        assertEquals(event1.withUpdatedParticipant(updatedBob), event2);
-        assertEquals(event1, event1.withUpdatedParticipant(updatedBob));
+        assertEquals(event1.withUpdatedParticipant(new Participant(updatedBob)), event2);
+        assertEquals(event1, event1.withUpdatedParticipant(new Participant(updatedBob)));
+    }
+
+    @Test
+    public void withUpdatedParticipant_participantNotFound_throwsException() {
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
+                EMPTY_TAG_SET, createParticipantList(ALICE));
+
+        Contact nonExistentContact = new ContactBuilder(BOB).build();
+        Participant nonExistentParticipant = new Participant(nonExistentContact);
+
+        assertThrows(DuplicateParticipantException.class, () ->
+                event.withUpdatedParticipant(nonExistentParticipant));
     }
 
     @Test
     public void withContact_addContact_returnsEventWithContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(BOB));
+        assertNotEquals(event1, event1.withContact(BOB)); //check that original event is unchanged
         assertEquals(event1.withContact(BOB), event2);
-        assertEquals(event1, event1.withContact(BOB));
     }
 
     @Test
@@ -131,8 +145,8 @@ class EventTest {
     public void withoutContact_removeContact_returnsEventWithoutContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(BOB));
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
+        assertNotEquals(event1, event1.withoutContact(BOB)); //check that original event is unchanged
         assertEquals(event1.withoutContact(BOB), event2);
-        assertEquals(event1, event1.withoutContact(BOB));
     }
 
     @Test
@@ -225,6 +239,22 @@ class EventTest {
         Event event5 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
 
         assertTrue(event4.equals(event5));
+
+        // different participant emails -> returns false
+        Contact updatedBobName = new ContactBuilder(BOB).withName("Robert").build();
+        Contact updatedBobEmail = new ContactBuilder(BOB).withEmail("bob1234@example.com").build();
+        Event event6 = new EventBuilder(MEETING_EMPTY)
+                .withParticipants(createParticipantList(ALICE, BOB)).build();
+        Event event7 = new EventBuilder(MEETING_EMPTY)
+                .withParticipants(createParticipantList(ALICE)).build();
+        Event event8 = new EventBuilder(MEETING_EMPTY)
+                .withParticipants(createParticipantList(ALICE, updatedBobName)).build();
+        Event event9 = new EventBuilder(MEETING_EMPTY)
+                .withParticipants(createParticipantList(ALICE, updatedBobEmail)).build();
+
+        assertNotEquals(event6, event7); // missing participant should not be equal
+        assertEquals(event6, event8); // same email, different name should be equal
+        assertNotEquals(event6, event9); // different email should not be equal
     }
 
     @Test
