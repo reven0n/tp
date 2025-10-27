@@ -95,7 +95,7 @@ public class Event {
      */
     public boolean hasContact(Contact contact) {
         requireAllNonNull(contact);
-        return participants.stream().anyMatch(p -> p.equalsContact(contact));
+        return participants.stream().anyMatch(p -> p.getContact().isSameContact(contact));
     }
 
     /**
