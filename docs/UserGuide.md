@@ -333,8 +333,10 @@ Examples:
 
 #### Exporting contacts belonging to an event: `event export`
 
-Exports all contacts linked to an event into your clipboard, allowing you to easily paste them into an email.
+
+Exports all contacts that are attending the event into your clipboard, allowing you to easily paste them into an email.
 Clicking the button with the file icon located on the right of each event card will also copy the contacts into the clipboard.
+
 
 **Format**: `event export INDEX`
 
