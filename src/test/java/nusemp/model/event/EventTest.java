@@ -72,7 +72,18 @@ class EventTest {
     }
 
     @Test
-    public void withParticipants_addContact_returnsEventWithContact() {
+    public void withUpdatedParticipant_updateParticipantName_returnsEventWithUpdatedParticipant() {
+        Participant updatedBob = new Participant(new ContactBuilder(BOB).withName("Robert").build());
+        Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
+                EMPTY_TAG_SET, createParticipantList(BOB, ALICE));
+        Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
+                EMPTY_TAG_SET, createParticipantList(updatedBob, ALICE));
+        assertEquals(event1.withUpdatedParticipant(updatedBob), event2);
+        assertEquals(event1, event1.withUpdatedParticipant(updatedBob));
+    }
+
+    @Test
+    public void withContact_addContact_returnsEventWithContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(BOB));
         assertEquals(event1.withContact(BOB), event2);
@@ -98,7 +109,7 @@ class EventTest {
     }
 
     @Test
-    public void withParticipants_addContact_keepsInsertionOrder() {
+    public void withContact_addContact_keepsInsertionOrder() {
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
             Event event = new Event(
                     VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(ALICE, BOB));
@@ -117,7 +128,7 @@ class EventTest {
     }
 
     @Test
-    public void withoutParticipants_removeContact_returnsEventWithoutContact() {
+    public void withoutContact_removeContact_returnsEventWithoutContact() {
         Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, createParticipantList(BOB));
         Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
         assertEquals(event1.withoutContact(BOB), event2);
@@ -125,13 +136,13 @@ class EventTest {
     }
 
     @Test
-    public void withoutParticipants_removeContactFromEmptyList_doesNotThrowError() {
+    public void withoutContact_removeContactFromEmptyList_doesNotThrowError() {
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
         assertEquals(event, event.withoutContact(BOB));
     }
 
     @Test
-    public void withoutParticipants_removeContact_keepsInsertionOrder() {
+    public void withoutContact_removeContact_keepsInsertionOrder() {
         for (int i = 0; i < 5; i++) { // test multiple times to ensure order is maintained
             Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EMPTY_TAG_SET,
                     createParticipantList(ALICE, BOB, CARL, DANIEL));

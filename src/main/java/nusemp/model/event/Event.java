@@ -15,6 +15,7 @@ import nusemp.model.event.exceptions.DuplicateParticipantException;
 import nusemp.model.event.exceptions.ParticipantNotFoundException;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
+import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
 
@@ -183,6 +184,23 @@ public class Event {
     }
 
     /**
+     * Returns true if both of the emails in the lists are the same.
+     */
+    private boolean isSameParticipantList(List<Participant> otherParticipants) {
+        if (participants.size() != otherParticipants.size()) {
+            return false;
+        }
+        for (int i = 0; i < participants.size(); i++) {
+            Email thisEmail = participants.get(i).getContact().getEmail();
+            Email otherEmail = otherParticipants.get(i).getContact().getEmail();
+            if (!thisEmail.equals(otherEmail)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Returns true if both events have the same identity and data fields.
      * This defines a stronger notion of equality between two events.
      */
@@ -201,7 +219,8 @@ public class Event {
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
                 && address.equals(otherEvent.address)
-                && tags.equals(otherEvent.tags);
+                && tags.equals(otherEvent.tags)
+                && isSameParticipantList(otherEvent.participants);
     }
 
     @Override
