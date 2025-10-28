@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.ParticipantStatus;
@@ -235,36 +232,34 @@ public class ParticipantMap {
     }
 
     /**
-     * Gets all events for the given contact as an Unmodifiable Observable List.
+     * Gets all events for the given contact as a List.
      */
-    public ObservableList<ParticipantEvent> getEventsForContact(Contact contact) {
+    public List<Event> getEventsForContact(Contact contact) {
         requireAllNonNull(contact);
         Map<Event, ParticipantEvent> events = byContact.get(contact);
-        List<ParticipantEvent> participantEvents = new ArrayList<>();
         if (events == null) {
-            return FXCollections.unmodifiableObservableList(
-                    FXCollections.observableList(participantEvents));
+            return new ArrayList<>();
         }
 
+        List<ParticipantEvent> participantEvents = new ArrayList<>();
         participantEvents.addAll(events.values());
-        return FXCollections.unmodifiableObservableList(
-                FXCollections.observableList(participantEvents));
+        return participantEvents.stream()
+                .map(ParticipantEvent::getEvent).toList();
     }
 
     /**
-     * Gets all contacts for the given event as an Unmodifiable Observable List.
+     * Gets all contacts for the given event as a List.
      */
-    public ObservableList<ParticipantEvent> getContactsForEvent(Event event) {
+    public List<Contact> getContactsForEvent(Event event) {
         requireAllNonNull(event);
         Map<Contact, ParticipantEvent> contacts = byEvent.get(event);
-        List<ParticipantEvent> participantEvents = new ArrayList<>();
         if (contacts == null) {
-            return FXCollections.unmodifiableObservableList(
-                    FXCollections.observableList(participantEvents));
+            return new ArrayList<>();
         }
 
+        List<ParticipantEvent> participantEvents = new ArrayList<>();
         participantEvents.addAll(contacts.values());
-        return FXCollections.unmodifiableObservableList(
-                FXCollections.observableList(participantEvents));
+        return participantEvents.stream()
+                .map(ParticipantEvent::getContact).toList();
     }
 }
