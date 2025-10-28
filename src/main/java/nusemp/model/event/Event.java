@@ -172,7 +172,7 @@ public class Event {
     public Event withoutContact(Contact contact) {
         requireAllNonNull(contact);
         List<Participant> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.removeIf(p -> p.containsContact(contact));
+        updatedParticipants.removeIf(p -> p.equalsContact(contact));
         return new Event(name, date, address, status, tags, updatedParticipants);
     }
 
@@ -223,6 +223,7 @@ public class Event {
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
                 && address.equals(otherEvent.address)
+                && status.equals(otherEvent.status)
                 && tags.equals(otherEvent.tags)
                 && isSameParticipantList(otherEvent.participants);
     }

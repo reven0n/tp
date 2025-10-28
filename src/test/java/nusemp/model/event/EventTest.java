@@ -133,8 +133,10 @@ class EventTest {
 
     @Test
     public void withContact_addContact_returnsEventWithContact() {
-        Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.STARTING, EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
-        Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.STARTING, EMPTY_TAG_SET, createParticipantList(BOB));
+        Event event1 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.STARTING,
+                EMPTY_TAG_SET, EMPTY_PARTICIPANT_LIST);
+        Event event2 = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.STARTING,
+                EMPTY_TAG_SET, createParticipantList(BOB));
         assertNotEquals(event1, event1.withContact(BOB)); //check that original event is unchanged
         assertEquals(event1.withContact(BOB), event2);
     }
