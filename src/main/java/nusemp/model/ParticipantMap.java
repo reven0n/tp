@@ -2,8 +2,14 @@ package nusemp.model;
 
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
@@ -203,5 +209,63 @@ public class ParticipantMap {
             events.remove(oldEvent);
             events.put(newEvent, updatedParticipantEvent);
         }
+    }
+
+    public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
+        requireAllNonNull(contact, event);
+        Map<Event, ParticipantEvent> events = byContact.get(contact);
+        if (events == null) {
+            return null;
+        }
+
+        ParticipantEvent participantEvent = events.get(event);
+        if (participantEvent == null) {
+            return null;
+        }
+
+        return participantEvent.getStatus();
+    }
+
+    /**
+     * Checks if the given contact is a participant in the given event.
+     */
+    public boolean hasParticipantEvent(Contact contact, Event event) {
+        requireAllNonNull(contact, event);
+        Map<Event, ParticipantEvent> events = byContact.get(contact);
+        return events != null && events.containsKey(event);
+    }
+
+    /**
+     * Gets all events for the given contact.
+     */
+    public ObservableList<ParticipantEvent> getEventsForContact(Contact contact) {
+        requireAllNonNull(contact);
+        Map<Event, ParticipantEvent> events = byContact.get(contact);
+        List<ParticipantEvent> participantEvents = new ArrayList<>();
+        if (events == null) {
+            return FXCollections.unmodifiableObservableList(
+                    FXCollections.observableList(participantEvents));
+        }
+
+        participantEvents.addAll(events.values());
+        return FXCollections.unmodifiableObservableList(
+                FXCollections.observableList(participantEvents));
+    }
+
+    /**
+     * Gets all contacts for the given event.
+     */
+    public ObservableList<ParticipantEvent> getContactsForEvent(Event event) {
+        requireAllNonNull(event);
+        Map<Contact, ParticipantEvent> contacts = byEvent.get(event);
+        List<ParticipantEvent> participantEvents = new ArrayList<>();
+        if (contacts == null) {
+            return FXCollections.unmodifiableObservableList(
+                    FXCollections.observableList(participantEvents));
+        }
+
+        participantEvents.addAll(contacts.values());
+        return FXCollections.unmodifiableObservableList(
+                FXCollections.observableList(participantEvents));
     }
 }
