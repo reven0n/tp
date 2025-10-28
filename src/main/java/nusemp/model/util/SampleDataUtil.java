@@ -11,6 +11,7 @@ import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
+import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Phone;
@@ -44,10 +45,26 @@ public class SampleDataUtil {
         };
     }
 
+    public static Event[] getSampleEvents() {
+        return new Event[] {
+            new Event(new Name("Project Meeting"), new Date("01-06-2025 13:00"),
+                    new Address("NUS School of Computing"), getTagSet("work"),
+                    new ArrayList<>()),
+            new Event(new Name("Birthday Party"), new Date("29-10-2025 12:00"),
+                    new Address("123 Party Ave")),
+            new Event(new Name("Conference"), new Date("30-10-2025 10:00"),
+                    new Address("Convention Center"), getTagSet("NUS"), new ArrayList<>())
+        };
+    }
+
     public static ReadOnlyAppData getSampleAppData() {
         AppData appData = new AppData();
         for (Contact sampleContact : getSampleContacts()) {
             appData.addContact(sampleContact);
+        }
+
+        for (Event sampleEvent : getSampleEvents()) {
+            appData.addEvent(sampleEvent);
         }
         return appData;
     }
