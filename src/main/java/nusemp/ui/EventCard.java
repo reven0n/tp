@@ -95,7 +95,7 @@ public class EventCard extends UiPart<Region> {
                     String email = p.getContact().getEmail().value;
 
                     Label label = new Label(name);
-                    if (p.getStatus() == ParticipantStatus.ATTENDING) {
+                    if (p.getStatus() == ParticipantStatus.AVAILABLE) {
                         exportContentData = exportContentData + email + ",";
                     } else {
                         label.setStyle("-fx-background-color: #a8a8a8;");

@@ -126,7 +126,7 @@ class JsonAdaptedEvent {
             Contact contact = findContactByEmail(appData, email).orElseThrow(() ->
                     new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
 
-            if (ParticipantStatus.isNotValidStatus(statusStr)) {
+            if (!ParticipantStatus.isValidStatus(statusStr)) {
                 throw new IllegalValueException(String.format(INVALID_PARTICIPANT_STATUS_MESSAGE, email));
             }
 

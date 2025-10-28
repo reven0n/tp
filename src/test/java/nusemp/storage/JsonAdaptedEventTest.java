@@ -43,7 +43,7 @@ class JsonAdaptedEventTest {
 
     private static final List<JsonAdaptedParticipant> VALID_PARTICIPANT_STATUS =
             TypicalContacts.getTypicalContacts().stream().map(c -> new JsonAdaptedParticipant(
-                    c.getEmail().value, ParticipantStatus.ATTENDING.toString())).toList();
+                    c.getEmail().value, ParticipantStatus.AVAILABLE.toString())).toList();
 
     @Test
     public void toModelType_validEventDetails_returnsEvent() throws Exception {

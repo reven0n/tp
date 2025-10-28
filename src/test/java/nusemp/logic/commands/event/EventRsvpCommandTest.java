@@ -32,13 +32,13 @@ class EventRsvpCommandTest {
         assertThrows(NullPointerException.class, () -> new EventRsvpCommand(
                 null, Index.fromOneBased(1), null));
         assertThrows(NullPointerException.class, () -> new EventRsvpCommand(
-                null, null, ParticipantStatus.ATTENDING));
+                null, null, ParticipantStatus.AVAILABLE));
     }
 
     @Test
     public void execute_nullModel_throwsNullPointerException() {
         EventRsvpCommand command = new EventRsvpCommand(Index.fromOneBased(1),
-                Index.fromOneBased(1), ParticipantStatus.ATTENDING);
+                Index.fromOneBased(1), ParticipantStatus.AVAILABLE);
         assertThrows(NullPointerException.class, () -> command.execute(null));
     }
 
@@ -49,7 +49,7 @@ class EventRsvpCommandTest {
 
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
-        ParticipantStatus validStatus = ParticipantStatus.CANCELLED;
+        ParticipantStatus validStatus = ParticipantStatus.UNAVAILABLE;
         // Confirm contact is not a participant
         assertFalse(eventToUpdate.hasContactWithEmail(contactToRsvp.getEmail().value));
 
@@ -64,13 +64,13 @@ class EventRsvpCommandTest {
         // Test invalid event index
         Index outOfBoundEventIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
         EventRsvpCommand command1 = new EventRsvpCommand(
-                outOfBoundEventIndex, INDEX_FIRST_CONTACT, ParticipantStatus.ATTENDING);
+                outOfBoundEventIndex, INDEX_FIRST_CONTACT, ParticipantStatus.AVAILABLE);
         assertCommandFailure(command1, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
 
         // Test invalid contact index
         Index outOfBoundContactIndex = Index.fromOneBased(model.getFilteredContactList().size() + 1);
         EventRsvpCommand command2 = new EventRsvpCommand(
-                INDEX_THIRD_EVENT, outOfBoundContactIndex, ParticipantStatus.ATTENDING);
+                INDEX_THIRD_EVENT, outOfBoundContactIndex, ParticipantStatus.AVAILABLE);
         assertCommandFailure(command2, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
@@ -78,7 +78,7 @@ class EventRsvpCommandTest {
     public void execute_sameStatus_success() {
         Index validEventIndex = INDEX_THIRD_EVENT;
         Index validContactIndex = INDEX_FIRST_CONTACT;
-        ParticipantStatus currentStatus = ParticipantStatus.ATTENDING;
+        ParticipantStatus currentStatus = ParticipantStatus.AVAILABLE;
 
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);
@@ -99,7 +99,7 @@ class EventRsvpCommandTest {
     public void execute_validInputs_success() {
         Index validEventIndex = Index.fromOneBased(3);
         Index validContactIndex = Index.fromOneBased(1);
-        ParticipantStatus newStatus = ParticipantStatus.CANCELLED;
+        ParticipantStatus newStatus = ParticipantStatus.UNAVAILABLE;
 
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);

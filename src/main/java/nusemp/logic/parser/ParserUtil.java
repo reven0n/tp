@@ -158,7 +158,7 @@ public class ParserUtil {
     public static ParticipantStatus parseStatus(String status) throws ParseException {
         requireNonNull(status);
         String trimmedStatus = status.trim();
-        if (ParticipantStatus.isNotValidStatus(trimmedStatus)) {
+        if (!ParticipantStatus.isValidStatus(trimmedStatus)) {
             throw new ParseException(ParticipantStatus.MESSAGE_CONSTRAINTS);
         }
 

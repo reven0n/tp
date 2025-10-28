@@ -71,7 +71,7 @@ public class ContactCard extends UiPart<Region> {
                             String email = p.getContact().getEmail().value;
                             if (email.equals(contact.getEmail().value)) {
                                 Label label = new Label(event.getName().value);
-                                if (p.getStatus() != ParticipantStatus.ATTENDING) {
+                                if (p.getStatus() != ParticipantStatus.AVAILABLE) {
                                     label.setStyle("-fx-background-color: #a8a8a8;");
                                 }
                                 events.getChildren().add(label);

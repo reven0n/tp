@@ -5,10 +5,10 @@ package nusemp.model.event;
  * Represents the status of a participant in an event.
  */
 public enum ParticipantStatus {
-    CANCELLED, ATTENDING, UNKNOWN;
+    UNAVAILABLE, AVAILABLE, UNKNOWN;
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Status should be either 'attending' or 'cancelled' (case insensitive)";
+            "Status should be either 'available' or 'unavailable' (case insensitive)";
 
     @Override
     public String toString() {
@@ -29,9 +29,9 @@ public enum ParticipantStatus {
     }
 
     /**
-     * Checks if the given status string is not a valid Status enum value.
+     * Checks if the given status string is a valid Status enum value.
      */
-    public static boolean isNotValidStatus(String test) {
+    public static boolean isValidStatus(String test) {
         for (ParticipantStatus status : ParticipantStatus.values()) {
             if (status.name().equalsIgnoreCase(test)) {
                 return false;

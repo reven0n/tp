@@ -28,7 +28,7 @@ public class Participant {
      */
     public Participant(Contact contact) {
         requireAllNonNull(contact);
-        this.status = ParticipantStatus.ATTENDING;
+        this.status = ParticipantStatus.AVAILABLE;
         this.contact = contact;
     }
 

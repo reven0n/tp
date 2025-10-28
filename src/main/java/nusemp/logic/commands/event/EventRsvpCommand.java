@@ -32,7 +32,7 @@ public class EventRsvpCommand extends Command {
             + PREFIX_EVENT + " EVENT_INDEX " + PREFIX_CONTACT + " CONTACT_INDEX " + PREFIX_STATUS + " STATUS\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 2" + " " + PREFIX_STATUS + " "
-            + ParticipantStatus.ATTENDING;
+            + ParticipantStatus.AVAILABLE;
 
     public static final String MESSAGE_SUCCESS = "Successfully RSVPed to event: %1$s for contact: %2$s";
 

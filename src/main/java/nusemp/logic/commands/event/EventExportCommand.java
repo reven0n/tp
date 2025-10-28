@@ -61,7 +61,7 @@ public class EventExportCommand extends Command {
                 .forEach(p -> {
                     String email = p.getContact().getEmail().value;
 
-                    if (p.getStatus() == ParticipantStatus.ATTENDING) {
+                    if (p.getStatus() == ParticipantStatus.AVAILABLE) {
                         exportContentData = exportContentData + email + ",";
                     }
                 });
