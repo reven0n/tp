@@ -143,15 +143,18 @@ contact edit 2 --name Betsy Crower --phone --tag
 
 Finds contacts whose fields contain any of the given keywords.
 
-**Format**: `contact find KEYWORD [MORE_KEYWORDS]...` or `contact find [--name KEYWORD]... [--email KEYWORD]... [--tag KEYWORD]...`
+**Format**: `contact find KEYWORD [MORE_KEYWORDS]...` or `contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`
+
+where `FIELD` is one of: `name`, `email`, `phone`, `address`, `tag`
+
+At least one parameter must be provided.
 
 <box type="info" seamless>
 
 **Understanding the search behavior:**
 
 - The search is **case-insensitive**. e.g. `hans` will match `Hans`, `HANS`, or `HaNs`
-- For **name searches**: Only full words will be matched. e.g. `Han` will not match `Hans`
-- For **email and tag searches**: Partial matches are supported. e.g. `gmail` will match `user@gmail.com`
+- **All fields** support partial matches. e.g. `han` will match `Hans`, `gmail` will match `user@gmail.com`
 - **Within each field**: OR logic applies - contacts matching **any** keyword will be returned
   - e.g. `--name alice bob` matches contacts with "alice" OR "bob" in their name
 - **Between different fields**: AND logic applies - contacts must match **all** specified fields
@@ -167,9 +170,9 @@ Finds contacts whose fields contain any of the given keywords.
    - Searches only in contact names
    - Example: `contact find John` returns contacts with "John" in their name
 
-2. **Advanced search with filters**:
-   - Format: `contact find [--name KEYWORD]... [--email KEYWORD]... [--tag KEYWORD]...`
-   - You can search by name, email, and/or tags
+2. **Advanced search with field filters**:
+   - Format: `contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`
+   - You can search by name, email, phone, address, and/or tags
    - Use one or more filters in any combination
 
 **Examples**:
@@ -193,6 +196,20 @@ contact find --email gmail
   - Returns contacts with emails like `alex@gmail.com`, `user.name@gmail.com`
 
   ![Example](images/contactFindEmailExample.png)
+
+```
+contact find --phone 9123
+```
+
+  - Finds contacts whose phone numbers contain `9123`
+  - Returns contacts with phone numbers like `91234567`, `81239999`
+
+```
+contact find --address serangoon
+```
+
+  - Finds contacts whose addresses contain `serangoon`
+  - Returns contacts with addresses like `Blk 123 Serangoon North`, `Serangoon Gardens`
 
 ```
 contact find --tag friend
@@ -233,6 +250,8 @@ contact find --name John --email gmail --tag colleague
 
 - Use **simple name search** when you only need to find someone by name quickly
 - Use **`--email`** to find all contacts from a specific domain (e.g., `--email company.com`)
+- Use **`--phone`** to find contacts with specific phone number patterns (e.g., `--phone 9123`)
+- Use **`--address`** to find contacts in a specific area (e.g., `--address tampines`, `--address jurong`)
 - Use **`--tag`** to find all contacts in a category (e.g., `--tag client`, `--tag vendor`)
 - **Combine multiple filters** to narrow down your search to very specific contacts
 - **Use multiple keywords within a field** to broaden matches within that field (e.g., `--email nus.edu ntu.edu` finds emails from either domain)
@@ -411,7 +430,7 @@ _Details coming soon ..._
 | **Add**    | `contact add --name NAME --email EMAIL [--phone PHONE_NUMBER] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name James --email james@e.com --phone 91234567 --address Work --tag friend --tag colleague`                                                                                           |
 | **Delete** | `contact delete INDEX`<br> e.g. `contact delete 3`                                                                                                                                                                                                                                                            |
 | **Edit**   | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE_NUMBER] [--address ADDRESS] [--tag TAG]…`<br> e.g. `contact edit 2 --name James Lee --email jameslee@example.com`                                                                                                                            |
-| **Find**   | `contact find KEYWORD [MORE_KEYWORDS]...`<br>e.g. `contact find James Jake`<br><br>`contact find [--name KEYWORD]... [--email KEYWORD]... [--tag KEYWORD]...`<br>e.g. `contact find --email gmail`<br>e.g. `contact find --tag friend`<br>e.g. `contact find --name John --email company.com --tag colleague` |
+| **Find**   | `contact find KEYWORD [MORE_KEYWORDS]...`<br>e.g. `contact find James`<br><br>`contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`<br>where FIELD is one of: name, email, phone, address, tag<br>e.g. `contact find --email gmail`<br>e.g. `contact find --phone 9123`<br>e.g. `contact find --address serangoon`<br>e.g. `contact find --name John --email company.com` |
 | **List**   | `contact list`                                                                                                                                                                                                                                                                                                |
 | **Show**   | `contact show INDEX`<br> e.g. `contact show 1`                                                                                                                                                                                                                                                                |
 

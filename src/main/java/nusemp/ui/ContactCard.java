@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
 import nusemp.model.contact.Contact;
-import nusemp.model.event.Status;
+import nusemp.model.event.ParticipantStatus;
 
 /**
  * An UI component that displays information of a {@code Contact}.
@@ -71,7 +71,7 @@ public class ContactCard extends UiPart<Region> {
                             String email = p.getContact().getEmail().value;
                             if (email.equals(contact.getEmail().value)) {
                                 Label label = new Label(event.getName().value);
-                                if (p.getStatus() != Status.ATTENDING) {
+                                if (p.getStatus() != ParticipantStatus.AVAILABLE) {
                                     label.setStyle("-fx-background-color: #a8a8a8;");
                                 }
                                 events.getChildren().add(label);

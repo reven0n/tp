@@ -12,7 +12,7 @@ import nusemp.logic.parser.ArgumentTokenizer;
 import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.event.Status;
+import nusemp.model.event.ParticipantStatus;
 
 /**
  * Parses the given {@code String} of arguments in the context of the EventRsvpCommand
@@ -41,16 +41,16 @@ public class EventRsvpCommandParser implements Parser<EventRsvpCommand> {
 
         Index eventIndex;
         Index contactIndex;
-        Status status;
+        ParticipantStatus participantStatus;
 
         try {
             eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
             contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
-            status = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
+            participantStatus = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventRsvpCommand.MESSAGE_USAGE), pe);
         }
 
-        return new EventRsvpCommand(eventIndex, contactIndex, status);
+        return new EventRsvpCommand(eventIndex, contactIndex, participantStatus);
     }
 }

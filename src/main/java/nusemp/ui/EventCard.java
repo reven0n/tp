@@ -18,7 +18,7 @@ import javafx.stage.Popup;
 import javafx.util.Duration;
 
 import nusemp.model.event.Event;
-import nusemp.model.event.Status;
+import nusemp.model.event.ParticipantStatus;
 
 
 /**
@@ -95,7 +95,7 @@ public class EventCard extends UiPart<Region> {
                     String email = p.getContact().getEmail().value;
 
                     Label label = new Label(name);
-                    if (p.getStatus() == Status.ATTENDING) {
+                    if (p.getStatus() == ParticipantStatus.AVAILABLE) {
                         exportContentData = exportContentData + email + ",";
                     } else {
                         label.setStyle("-fx-background-color: #a8a8a8;");
