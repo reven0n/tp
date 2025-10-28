@@ -39,7 +39,7 @@ class ParticipantTest {
     @Test
     public void toStringMethod() {
         Participant participant = new Participant(ALICE, ParticipantStatus.UNAVAILABLE);
-        String expectedString = "Contact: " + ALICE.toString() + ", Status: cancelled";
+        String expectedString = "Contact: " + ALICE.toString() + ", Status: unavailable";
         assertEquals(expectedString, participant.toString());
     }
 

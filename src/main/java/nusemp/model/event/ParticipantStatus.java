@@ -34,9 +34,9 @@ public enum ParticipantStatus {
     public static boolean isValidStatus(String test) {
         for (ParticipantStatus status : ParticipantStatus.values()) {
             if (status.name().equalsIgnoreCase(test)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }

@@ -102,7 +102,7 @@ class EventRsvpCommandParserTest {
 
         // leading and trailing spaces
         assertParseSuccess(parser, "   " + PREFIX_EVENT + " 3 "
-                + PREFIX_CONTACT + " 4 " + PREFIX_STATUS + " CAncelled   ",
+                + PREFIX_CONTACT + " 4 " + PREFIX_STATUS + " UNavailable   ",
                 new EventRsvpCommand(Index.fromOneBased(3), Index.fromOneBased(4),
                         ParticipantStatus.UNAVAILABLE));
     }
