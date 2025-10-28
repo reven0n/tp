@@ -116,6 +116,12 @@ public class ContactEditCommand extends Command {
         return new Contact(updatedName, updatedEmail, updatedPhone, updatedAddress, updatedTags, events);
     }
 
+    /**
+     * Updates all events that had the old contact as participant when the contact's email is changed.
+     * @param model the model containing the events and contacts
+     * @param contact the original contact before edit
+     * @param editedContact the edited contact with updated email
+     */
     private void updateEventWithEditedContact(Model model, Contact contact, Contact editedContact) {
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         List<Event> allEvents = model.getFilteredEventList();

@@ -103,7 +103,7 @@ public class AppData implements ReadOnlyAppData {
         contacts.setContact(target, editedContact);
 
         // Update all events that had the old contact as participant
-        if (!target.getEmail().equals(editedContact.getEmail())) {
+        if (!target.isSameContact(editedContact)) {
             updateEventsForEmailChange(target, editedContact);
         }
     }
