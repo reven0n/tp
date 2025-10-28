@@ -30,27 +30,30 @@ public class Event {
 
     // Data fields
     private final Address address;
+    private final EventStatus status;
     private final List<Participant> participants = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null. {@code Address.empty()} can be used to represent absence of an address.
      */
-    public Event(Name name, Date date, Address address, Set<Tag> tags, List<Participant> participants) {
-        requireAllNonNull(name, date, address, participants);
+    public Event(Name name, Date date, Address address, EventStatus status, Set<Tag> tags,
+            List<Participant> participants) {
+        requireAllNonNull(name, date, address, status, participants);
         checkForDuplicateParticipant(participants);
         this.name = name;
         this.date = date;
         this.address = address;
+        this.status = status;
         this.tags.addAll(tags);
         this.participants.addAll(participants);
     }
 
     /**
-     * Convenience constructor without participants or tags.
+     * Convenience constructor without participants or tags, with default status STARTING.
      */
     public Event(Name name, Date date, Address address) {
-        this(name, date, address, new HashSet<>(), new ArrayList<>());
+        this(name, date, address, EventStatus.STARTING, new HashSet<>(), new ArrayList<>());
     }
 
     public Name getName() {
@@ -63,6 +66,10 @@ public class Event {
 
     public Address getAddress() {
         return address;
+    }
+
+    public EventStatus getStatus() {
+        return status;
     }
 
     /**
@@ -124,8 +131,7 @@ public class Event {
                 break;
             }
         }
-
-        return new Event(name, date, address, tags, updatedParticipants);
+        return new Event(name, date, address, status, tags, updatedParticipants);
     }
 
     /**
@@ -155,7 +161,7 @@ public class Event {
         }
         List<Participant> updatedParticipants = new ArrayList<>(participants);
         updatedParticipants.add(new Participant(contact));
-        return new Event(name, date, address, tags, updatedParticipants);
+        return new Event(name, date, address, status, tags, updatedParticipants);
     }
 
 
@@ -166,8 +172,8 @@ public class Event {
     public Event withoutContact(Contact contact) {
         requireAllNonNull(contact);
         List<Participant> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.removeIf(p -> p.getContact().isSameContact(contact));
-        return new Event(name, date, address, tags, updatedParticipants);
+        updatedParticipants.removeIf(p -> p.equalsContact(contact));
+        return new Event(name, date, address, status, tags, updatedParticipants);
     }
 
     /**
@@ -220,6 +226,7 @@ public class Event {
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
                 && address.equals(otherEvent.address)
+                && status.equals(otherEvent.status)
                 && tags.equals(otherEvent.tags)
                 && isSameParticipantList(otherEvent.participants);
     }
@@ -227,7 +234,7 @@ public class Event {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, date, address, tags, participants);
+        return Objects.hash(name, date, address, status, tags, participants);
     }
 
     @Override
@@ -236,6 +243,7 @@ public class Event {
                 .add("name", name)
                 .add("date", date)
                 .add("address", address)
+                .add("status", status)
                 .add("tags", tags)
                 .add("participants", participants)
                 .toString();

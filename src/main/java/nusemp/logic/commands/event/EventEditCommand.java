@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
+import static nusemp.logic.parser.CliSyntax.PREFIX_STATUS;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
@@ -24,6 +25,7 @@ import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.event.Event;
+import nusemp.model.event.EventStatus;
 import nusemp.model.event.Participant;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
@@ -34,6 +36,7 @@ import nusemp.model.fields.Tag;
  * Edits the details of an existing event.
  */
 public class EventEditCommand extends Command {
+
     public static final String COMMAND_WORD = "edit";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
@@ -44,10 +47,11 @@ public class EventEditCommand extends Command {
             + "[" + PREFIX_NAME + " NAME] "
             + "[" + PREFIX_DATE + " DATE] "
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
+            + "[" + PREFIX_STATUS + " STATUS] "
             + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + " Team Meeting "
-            + PREFIX_DATE + " 2024-12-25";
+            + PREFIX_NAME + " Annual Meeting "
+            + PREFIX_STATUS + " ongoing";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Successfully edited event:\n%1$s";
     public static final String MESSAGE_NOT_EDITED =
@@ -101,10 +105,11 @@ public class EventEditCommand extends Command {
         Name updatedName = editEventDescriptor.getName().orElse(eventToEdit.getName());
         Date updatedDate = editEventDescriptor.getDate().orElse(eventToEdit.getDate());
         Address updatedAddress = editEventDescriptor.getAddress().orElse(eventToEdit.getAddress());
+        EventStatus updatedStatus = editEventDescriptor.getStatus().orElse(eventToEdit.getStatus());
         Set<Tag> updatedTags = editEventDescriptor.getTags().orElse(eventToEdit.getTags());
         List<Participant> participants = eventToEdit.getParticipants();
 
-        return new Event(updatedName, updatedDate, updatedAddress, updatedTags, participants);
+        return new Event(updatedName, updatedDate, updatedAddress, updatedStatus, updatedTags, participants);
     }
 
     @Override
@@ -113,6 +118,7 @@ public class EventEditCommand extends Command {
             return true;
         }
 
+        // instanceof handles nulls
         if (!(other instanceof EventEditCommand)) {
             return false;
         }
@@ -138,6 +144,7 @@ public class EventEditCommand extends Command {
         private Name name;
         private Date date;
         private Address address;
+        private EventStatus status;
         private Set<Tag> tags;
 
         public EditEventDescriptor() {}
@@ -150,6 +157,7 @@ public class EventEditCommand extends Command {
             setName(toCopy.name);
             setDate(toCopy.date);
             setAddress(toCopy.address);
+            setStatus(toCopy.status);
             setTags(toCopy.tags);
         }
 
@@ -157,7 +165,7 @@ public class EventEditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, date, address, tags);
+            return CollectionUtil.isAnyNonNull(name, date, address, status, tags);
         }
 
         public void setName(Name name) {
@@ -184,6 +192,14 @@ public class EventEditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setStatus(EventStatus status) {
+            this.status = status;
+        }
+
+        public Optional<EventStatus> getStatus() {
+            return Optional.ofNullable(status);
+        }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -207,13 +223,16 @@ public class EventEditCommand extends Command {
                 return true;
             }
 
+            // instanceof handles nulls
             if (!(other instanceof EditEventDescriptor)) {
                 return false;
             }
+
             EditEventDescriptor otherEditEventDescriptor = (EditEventDescriptor) other;
             return Objects.equals(name, otherEditEventDescriptor.name)
                     && Objects.equals(date, otherEditEventDescriptor.date)
                     && Objects.equals(address, otherEditEventDescriptor.address)
+                    && Objects.equals(status, otherEditEventDescriptor.status)
                     && Objects.equals(tags, otherEditEventDescriptor.tags);
         }
 
@@ -223,6 +242,7 @@ public class EventEditCommand extends Command {
                     .add("name", name)
                     .add("date", date)
                     .add("address", address)
+                    .add("status", status)
                     .add("tags", tags)
                     .toString();
         }

@@ -171,6 +171,9 @@ public class AppParser {
         case EventAddCommand.COMMAND_WORD:
             return new EventAddCommandParser().parse(arguments);
 
+        case EventEditCommand.COMMAND_WORD:
+            return new EventEditCommandParser().parse(arguments);
+
         case EventListCommand.COMMAND_WORD:
             return new EventListCommandParser().parse(arguments);
 
@@ -185,9 +188,6 @@ public class AppParser {
 
         case EventDeleteCommand.COMMAND_WORD:
             return new EventDeleteCommandParser().parse(arguments);
-
-        case EventEditCommand.COMMAND_WORD:
-            return new EventEditCommandParser().parse(arguments);
 
         case EventRsvpCommand.COMMAND_WORD:
             return new EventRsvpCommandParser().parse(arguments);

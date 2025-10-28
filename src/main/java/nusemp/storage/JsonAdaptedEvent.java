@@ -15,6 +15,7 @@ import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.EventStatus;
 import nusemp.model.event.Participant;
 import nusemp.model.event.ParticipantStatus;
 import nusemp.model.fields.Address;
@@ -40,6 +41,9 @@ class JsonAdaptedEvent {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String address;
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private final String status;
+
     private final List<JsonAdaptedParticipant> participants = new ArrayList<>();
 
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
@@ -49,11 +53,13 @@ class JsonAdaptedEvent {
      */
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("name") String name, @JsonProperty("date") String date,
-            @JsonProperty("address") String address, @JsonProperty("tags") List<JsonAdaptedTag> tags,
+            @JsonProperty("address") String address, @JsonProperty("status") String status,
+            @JsonProperty("tags") List<JsonAdaptedTag> tags,
             @JsonProperty("participants") List<JsonAdaptedParticipant> participants) {
         this.name = name;
         this.date = date;
         this.address = address;
+        this.status = status;
         if (participants != null) {
             this.participants.addAll(participants);
         }
@@ -69,9 +75,10 @@ class JsonAdaptedEvent {
         name = source.getName().value;
         date = source.getDate().toString();
         address = source.getAddress().value;
+        status = source.getStatus().toString();
         participants.addAll(source.getParticipants().stream()
-                .map(status -> new JsonAdaptedParticipant(
-                        status.getContact().getEmail().value, status.getStatus().toString()))
+                .map(participant -> new JsonAdaptedParticipant(
+                        participant.getContact().getEmail().value, participant.getStatus().toString()))
                 .collect(Collectors.toList()));
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
@@ -116,27 +123,36 @@ class JsonAdaptedEvent {
             modelAddress = new Address(address);
         }
 
+        // Default to STARTING if status is not provided (backward compatibility)
+        EventStatus modelStatus = EventStatus.STARTING;
+        if (status != null) {
+            if (!EventStatus.isValidEventStatus(status)) {
+                throw new IllegalValueException(EventStatus.MESSAGE_CONSTRAINTS);
+            }
+            modelStatus = EventStatus.fromString(status);
+        }
+
         final List<Participant> modelParticipants = new ArrayList<>();
         for (JsonAdaptedParticipant participant : participants) {
             String email = participant.getEmail();
-            String statusStr = participant.getStatus();
+            String participantStatusStr = participant.getStatus();
             if (!Email.isValidEmail(email)) {
                 throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
             }
             Contact contact = findContactByEmail(appData, email).orElseThrow(() ->
                     new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
 
-            if (!ParticipantStatus.isValidStatus(statusStr)) {
+            if (!ParticipantStatus.isValidStatus(participantStatusStr)) {
                 throw new IllegalValueException(String.format(INVALID_PARTICIPANT_STATUS_MESSAGE, email));
             }
 
-            ParticipantStatus status = ParticipantStatus.fromString(statusStr);
+            ParticipantStatus status = ParticipantStatus.fromString(participantStatusStr);
             modelParticipants.add(new Participant(contact, status));
         }
 
         final Set<Tag> modelTags = new HashSet<>(eventTags);
 
-        return new Event(modelName, modelDate, modelAddress, modelTags, modelParticipants);
+        return new Event(modelName, modelDate, modelAddress, modelStatus, modelTags, modelParticipants);
     }
 
     /**
