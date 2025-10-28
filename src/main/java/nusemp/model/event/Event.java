@@ -160,13 +160,13 @@ public class Event {
 
 
     /**
-     * Returns a new Event with the given participant removed.
+     * Returns a new Event with the given contact removed by finding contact with the same email.
      * This maintains immutability by returning a new Event instance.
      */
     public Event withoutContact(Contact contact) {
         requireAllNonNull(contact);
         List<Participant> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.removeIf(p -> p.equalsContact(contact));
+        updatedParticipants.removeIf(p -> p.getContact().isSameContact(contact));
         return new Event(name, date, address, tags, updatedParticipants);
     }
 
