@@ -292,9 +292,11 @@ Adds an event to the event list.
 ```
 event add --name Meeting --date 25-12-2025 14:30 --address Meeting Room 4
 ```
+- Adds an event with the name `Meeting`, date `25-12-2025 14:30` and address `Meeting Room 4`.
 ```
 event add --name Team Lunch --date 01-01-2026 12:00
 ```
+- Adds an event with the name `Team Lunch` and date `01-01-2026 12:00` with no address.
 
 #### Listing all events: `event list`
 
@@ -310,6 +312,8 @@ Links a contact to an event, allowing you to associate participants with specifi
 
 * `EVENT_INDEX` refers to the index number shown in the displayed event list
 * `CONTACT_INDEX` refers to the index number shown in the displayed contact list
+* `EVENT_INDEX` and `CONTACT_INDEX` should both be positive numbers
+* A contact can be linked to multiple events, and an event can have multiple contacts linked to it.
 
 **Examples**:
 ```
@@ -318,6 +322,25 @@ contact list
 event link --event 1 --contact 2
 ```
 - Links the 2nd contact to the 1st event.
+
+#### Unlinking contacts from events: `event unlink`
+
+Unlinks a contact from an event, allowing you to disassociate participants with specific events.
+
+**Format**: `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`
+
+* `EVENT_INDEX` refers to the index number shown in the displayed event list
+* `CONTACT_INDEX` refers to the index number shown in the displayed contact list
+* `EVENT_INDEX` and `CONTACT_INDEX` should both be positive numbers
+* `CONTACT_INDEX` refers to a contact that is already linked to the event specified by `EVENT_INDEX`
+
+**Examples**:
+```
+event show 1
+event unlink --event 1 --contact 2
+```
+- Unlinks the 2nd contact from the 1st event.
+
 
 #### Show contacts in event: `event show`
 
