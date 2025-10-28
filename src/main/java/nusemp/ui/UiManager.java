@@ -104,4 +104,24 @@ public class UiManager implements Ui {
         System.exit(1);
     }
 
+    /**
+     * Shows an alert dialog informing the user that their data file was corrupted.
+     * Displays the backup location and detailed error information.
+     *
+     * @param backupPath the path where the corrupted file was backed up
+     * @param errorDetails detailed error message from the JSON parser
+     */
+    public void showDataCorruptionAlert(String backupPath, String errorDetails) {
+        String title = "Data File Corrupted";
+        String header = "Your data file was corrupted and could not be loaded.";
+        String content = "The corrupted file has been backed up to:\n"
+                + backupPath + "\n\n"
+                + "Error Details:\n"
+                + errorDetails + "\n\n"
+                + "The application will start with empty data.\n"
+                + "You may try to manually fix the corrupted file and restore it.";
+
+        showAlertDialogAndWait(Alert.AlertType.ERROR, title, header, content);
+    }
+
 }

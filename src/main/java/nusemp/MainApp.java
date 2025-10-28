@@ -13,6 +13,7 @@ import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.Version;
 import nusemp.commons.exceptions.DataLoadingException;
 import nusemp.commons.util.ConfigUtil;
+import nusemp.commons.util.FileUtil;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.Logic;
 import nusemp.logic.LogicManager;
@@ -46,6 +47,10 @@ public class MainApp extends Application {
     protected Storage storage;
     protected Model model;
     protected Config config;
+
+    // Store corruption details to show alert after UI initializes
+    private String corruptionBackupPath = null;
+    private String corruptionErrorDetails = null;
 
     @Override
     public void init() throws Exception {
@@ -86,8 +91,24 @@ public class MainApp extends Application {
             }
             initialData = appDataOptional.orElseGet(SampleDataUtil::getSampleAppData);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAppDataFilePath() + " could not be loaded."
-                    + " Will be starting with an empty app data.");
+            Path dataFilePath = storage.getAppDataFilePath();
+            logger.warning("Data file at " + dataFilePath + " is corrupted and could not be loaded.");
+
+            // Create backup of corrupted file
+            try {
+                Path backupPath = FileUtil.createBackup(dataFilePath);
+                corruptionBackupPath = backupPath.toString();
+                logger.info("Corrupted data file backed up to: " + backupPath);
+            } catch (IOException backupError) {
+                logger.severe("Failed to create backup of corrupted file: " + backupError.getMessage());
+                corruptionBackupPath = "Failed to create backup: " + backupError.getMessage();
+            }
+
+            // Store detailed error message
+            corruptionErrorDetails = e.getDetailedMessage();
+            logger.warning("Corruption details: " + corruptionErrorDetails);
+
+            // Start with empty data
             initialData = new AppData();
         }
 
@@ -173,6 +194,12 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting NUS EMP " + MainApp.VERSION);
         ui.start(primaryStage);
+
+        // Show corruption alert if data was corrupted during initialization
+        if (corruptionBackupPath != null) {
+            UiManager uiManager = (UiManager) ui;
+            uiManager.showDataCorruptionAlert(corruptionBackupPath, corruptionErrorDetails);
+        }
     }
 
     @Override
