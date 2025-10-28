@@ -235,7 +235,7 @@ public class ParticipantMap {
     }
 
     /**
-     * Gets all events for the given contact.
+     * Gets all events for the given contact as an Unmodifiable Observable List.
      */
     public ObservableList<ParticipantEvent> getEventsForContact(Contact contact) {
         requireAllNonNull(contact);
@@ -252,7 +252,7 @@ public class ParticipantMap {
     }
 
     /**
-     * Gets all contacts for the given event.
+     * Gets all contacts for the given event as an Unmodifiable Observable List.
      */
     public ObservableList<ParticipantEvent> getContactsForEvent(Event event) {
         requireAllNonNull(event);
