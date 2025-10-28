@@ -8,6 +8,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
+import nusemp.model.AppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.ParticipantStatus;
 
@@ -17,6 +18,7 @@ import nusemp.model.event.ParticipantStatus;
 public class ContactCard extends UiPart<Region> {
 
     private static final String FXML = "ContactListCard.fxml";
+    private final AppData appData;
 
     public final Contact contact;
 
@@ -40,9 +42,10 @@ public class ContactCard extends UiPart<Region> {
     /**
      * Creates a {@code ContactCard} with the given {@code Contact} and index to display.
      */
-    public ContactCard(Contact contact, int displayedIndex) {
+    public ContactCard(Contact contact, int displayedIndex, AppData appData) {
         super(FXML);
         this.contact = contact;
+        this.appData = appData;
         id.setText(displayedIndex + ". ");
         name.setText(contact.getName().value);
         email.setText(contact.getEmail().value);
@@ -64,21 +67,26 @@ public class ContactCard extends UiPart<Region> {
         contact.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        contact.getEvents()
+//        contact.getEvents()
+//                .forEach(event -> {
+//                    event.getParticipants().stream()
+//                        .forEach(p -> {
+//                            String email = p.getContact().getEmail().value;
+//                            if (email.equals(contact.getEmail().value)) {
+//                                Label label = new Label(event.getName().value);
+//                                if (p.getStatus() != ParticipantStatus.AVAILABLE) {
+//                                    label.setStyle("-fx-background-color: #a8a8a8;");
+//                                }
+//                                events.getChildren().add(label);
+//
+//                            }
+//                        });
+//
+//                });
+        appData.getEventsForContact(contact)
                 .forEach(event -> {
-                    event.getParticipants().stream()
-                        .forEach(p -> {
-                            String email = p.getContact().getEmail().value;
-                            if (email.equals(contact.getEmail().value)) {
-                                Label label = new Label(event.getName().value);
-                                if (p.getStatus() != ParticipantStatus.AVAILABLE) {
-                                    label.setStyle("-fx-background-color: #a8a8a8;");
-                                }
-                                events.getChildren().add(label);
-
-                            }
-                        });
-
+                    Label label = new Label(event.getName().value);
+                    events.getChildren().add(label);
                 });
     }
 }
