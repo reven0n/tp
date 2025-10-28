@@ -10,6 +10,8 @@ import nusemp.model.AppData;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.EventStatus;
+import nusemp.model.event.Participant;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
@@ -46,14 +48,17 @@ public class SampleDataUtil {
     }
 
     public static Event[] getSampleEvents() {
+        List<Participant> participants = new ArrayList<>();
+        participants.add(new Participant(getSampleContacts()[0]));
         return new Event[] {
             new Event(new Name("Project Meeting"), new Date("01-06-2025 13:00"),
-                    new Address("NUS School of Computing"), getTagSet("work"),
-                    new ArrayList<>()),
+                    new Address("NUS School of Computing"), EventStatus.ONGOING,
+                    getTagSet("work"), participants),
             new Event(new Name("Birthday Party"), new Date("29-10-2025 12:00"),
                     new Address("123 Party Ave")),
             new Event(new Name("Conference"), new Date("30-10-2025 10:00"),
-                    new Address("Convention Center"), getTagSet("NUS"), new ArrayList<>())
+                    new Address("Convention Center"), EventStatus.CLOSED,
+                    getTagSet("NUS"), new ArrayList<>())
         };
     }
 
