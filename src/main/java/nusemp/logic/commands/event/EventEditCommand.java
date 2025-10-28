@@ -30,6 +30,9 @@ import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
 
+/**
+ * Edits the details of an existing event.
+ */
 public class EventEditCommand extends Command {
     public static final String COMMAND_WORD = "edit";
 

@@ -16,12 +16,15 @@ import java.util.List;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.commands.contact.ContactEditCommand;
+import nusemp.logic.commands.event.EventEditCommand;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AppData;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
+import nusemp.model.event.Event;
 import nusemp.testutil.EditContactDescriptorBuilder;
+import nusemp.testutil.EditEventDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
@@ -69,6 +72,18 @@ public class CommandTestUtil {
     public static final String EVENT_TAG_DESC_MUSIC = " " + PREFIX_TAG + "Music";
     public static final String EVENT_TAG_DESC_NETWORKING = " " + PREFIX_TAG + "Networking";
 
+    // Valid Event tags
+    public static final String VALID_EVENT_TAG_URGENT = "urgent";
+    public static final String VALID_EVENT_TAG_IMPORTANT = "important";
+
+    // Valid Event tag descriptions
+    public static final String EVENT_TAG_DESC_URGENT = " " + PREFIX_TAG + VALID_EVENT_TAG_URGENT;
+    public static final String EVENT_TAG_DESC_IMPORTANT = " " + PREFIX_TAG + VALID_EVENT_TAG_IMPORTANT;
+
+    // EditEventDescriptor instances
+    public static final EventEditCommand.EditEventDescriptor DESC_EVENT_MEETING;
+    public static final EventEditCommand.EditEventDescriptor DESC_EVENT_CONFERENCE;
+
 
     // invalid Contact descriptions
     public static final String INVALID_CONTACT_NAME_DESC = " " + PREFIX_NAME; // cannot be empty
@@ -83,6 +98,7 @@ public class CommandTestUtil {
     public static final String INVALID_EVENT_DATE_DESC3 = " " + PREFIX_DATE + "2024/12/01 14:00"; // wrong format
     public static final String INVALID_EVENT_DATE_DESC4 = " " + PREFIX_DATE + "2024-12-01"; // missing time
     public static final String INVALID_EVENT_TAG_DESC = " " + PREFIX_TAG + "Music&"; // '&' not allowed
+    public static final String INVALID_EVENT_ADDRESS_DESC = " " + PREFIX_ADDRESS + "   "; // cannot be blank
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
@@ -99,6 +115,18 @@ public class CommandTestUtil {
                 .withPhone(VALID_CONTACT_PHONE_BOB).withEmail(VALID_CONTACT_EMAIL_BOB)
                 .withAddress(VALID_CONTACT_ADDRESS_BOB)
                 .withTags(VALID_CONTACT_TAG_HUSBAND, VALID_CONTACT_TAG_FRIEND).build();
+        DESC_EVENT_MEETING = new EditEventDescriptorBuilder()
+                .withName(VALID_EVENT_NAME_MEETING)
+                .withDate(VALID_EVENT_DATE_MEETING)
+                .withAddress(VALID_EVENT_ADDRESS_MEETING)
+                .withTags(VALID_EVENT_TAG_IMPORTANT)
+                .build();
+        DESC_EVENT_CONFERENCE = new EditEventDescriptorBuilder()
+                .withName(VALID_EVENT_NAME_CONFERENCE)
+                .withDate(VALID_EVENT_DATE_CONFERENCE)
+                .withAddress(VALID_EVENT_ADDRESS_CONFERENCE)
+                .withTags(VALID_EVENT_TAG_URGENT)
+                .build();
     }
 
     /**
@@ -157,4 +185,17 @@ public class CommandTestUtil {
         assertEquals(1, model.getFilteredContactList().size());
     }
 
+    /**
+     * Updates {@code model}'s filtered list to show only the event at the given {@code targetIndex} in the
+     * {@code model}'s app data.
+     */
+    public static void showEventAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredEventList().size());
+
+        Event event = model.getFilteredEventList().get(targetIndex.getZeroBased());
+        final String[] splitName = event.getName().value.split("\\s+");
+        model.updateFilteredEventList(e -> e.getName().value.contains(splitName[0]));
+
+        assertEquals(1, model.getFilteredEventList().size());
+    }
 }

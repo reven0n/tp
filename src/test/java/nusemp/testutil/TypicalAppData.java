@@ -12,6 +12,13 @@ import nusemp.model.event.Event;
  */
 public class TypicalAppData {
     /**
+     * Returns an {@code AppData} with all the typical contacts and events.
+     */
+    public static AppData getTypicalAppData() {
+        return getTypicalAppDataWithEvents();
+    }
+
+    /**
      * Returns an {@code AppData} with all the typical contacts without events.
      */
     public static AppData getTypicalAppDataWithoutEvent() {
