@@ -143,7 +143,7 @@ class EventTest {
     public void withContact_preservesTags() {
         Set<Tag> tags = new HashSet<>();
         tags.add(new Tag("Music"));
-        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.STARTING, EventStatus.STARTING, tags,
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.STARTING, tags,
                 EMPTY_PARTICIPANT_LIST);
 
         Event eventWithParticipant = event.withContact(BOB);
