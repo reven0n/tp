@@ -226,29 +226,8 @@
     -fx-border-width: 0;
 }
 
-#commandTypeLabel {
-    -fx-font-size: 11px;
-    -fx-text-fill: #dc3545;
-}
-
-#commandTextField {
-    -fx-background-color: transparent #ffffff transparent #ffffff;
-    -fx-background-insets: 0;
-    -fx-border-color: lightgray lightgray lightgray lightgray;
-    -fx-border-insets: 0;
-    -fx-border-width: 1;
-    -fx-font-family: "Inter Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: #000000;
-}
-
 #filterField, #contactListPanel, #contactWebpage {
     -fx-effect: innershadow(gaussian, #cccccc, 10, 0, 0, 0);
-}
-
-#resultDisplay .content {
-    -fx-background-color: transparent, #ffffff, transparent, #ffffff;
-    -fx-background-radius: 0;
 }
 
 #people, #events {
@@ -347,53 +326,57 @@
 }
 
 /* Terminal Overlay Styles */
-.terminal-overlay {
-    -fx-background-color: rgba(0, 0, 0, 0.4);
-    -fx-alignment: center;
+#terminalBackdrop {
+    -fx-background-color: linear-gradient(to top, rgba(0,0,0,.5) 0%,
+                                                  rgba(0,0,0,0) 100%);
 }
 
-.terminal-window {
+#terminalWindow {
     -fx-background-color: #ffffff;
-    -fx-background-radius: 12;
-    -fx-border-radius: 12;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 20, 0.3, 0, 5);
+    -fx-background-radius: 8 8 0 0;
+    -fx-border-radius: 8 8 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 50, 0, 0, 5);
     -fx-padding: 0;
     -fx-spacing: 0;
 }
 
-.terminal-result-display {
-    -fx-background-color: transparent;
-    -fx-background-radius: 12 12 0 0;
-}
-
-.terminal-result-display .text-area {
-    -fx-background-color: transparent;
-    -fx-background-radius: 12 12 0 0;
+.terminal-result-display, .terminal-command-box {
+    -fx-padding: 0;
+    -fx-background-color: #ffffff;
     -fx-border-width: 0;
-    -fx-focus-color: transparent;
-    -fx-text-fill: #333333;
-    -fx-font-family: "Consolas", "Monaco", "Lucida Console", monospace;
-    -fx-font-size: 12pt;
 }
 
 .terminal-command-box {
-    -fx-background-color: #f8f9fa;
-    -fx-background-radius: 0 0 12 12;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1 0 0 0;
+    -fx-background-radius: 8 8 0 0;
 }
 
 .terminal-command-box .text-field {
+    -fx-padding: 12;
     -fx-background-color: transparent;
-    -fx-background-radius: 0 0 12 12;
-    -fx-border-width: 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: rgba(0, 0, 0, 0.12);
     -fx-focus-color: transparent;
     -fx-text-fill: #333333;
-    -fx-font-family: "Consolas", "Monaco", "Lucida Console", monospace;
+    -fx-font-family: "Inter Medium";
+    -fx-font-size: 13pt;
+    -fx-prompt-text-fill: #aaaaaa;
+}
+
+.terminal-result-display .text-area {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-focus-color: transparent;
+    -fx-text-fill: #000000;
+    -fx-font-family: "Inter";
     -fx-font-size: 12pt;
-    -fx-prompt-text-fill: #6c757d;
+}
+
+.terminal-result-display .text-area .content {
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 12;
 }
 
 /* Copy button styles */

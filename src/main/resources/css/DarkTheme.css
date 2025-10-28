@@ -236,29 +236,8 @@
     -fx-border-width: 0;
 }
 
-#commandTypeLabel {
-    -fx-font-size: 11px;
-    -fx-text-fill: #F70D1A;
-}
-
-#commandTextField {
-    -fx-background-color: transparent #383838 transparent #383838;
-    -fx-background-insets: 0;
-    -fx-border-color: #383838 #383838 #ffffff #383838;
-    -fx-border-insets: 0;
-    -fx-border-width: 1;
-    -fx-font-family: "Inter Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
-}
-
 #filterField, #contactListPanel, #contactWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
-}
-
-#resultDisplay .content {
-    -fx-background-color: transparent, #383838, transparent, #383838;
-    -fx-background-radius: 0;
 }
 
 #people, #events {
@@ -355,55 +334,58 @@
     -fx-text-fill: white;
 }
 
-
 /* Terminal Overlay Styles */
-.terminal-overlay {
-    -fx-background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
-    -fx-alignment: center;
+#terminalBackdrop {
+    -fx-background-color: linear-gradient(to top, rgba(0,0,0,.8) 0%,
+                                                  rgba(0,0,0,0) 100%);
 }
 
-.terminal-window {
+#terminalWindow {
     -fx-background-color: #2D2D30;
-    -fx-background-radius: 12;
-    -fx-border-radius: 12;
-    -fx-border-color: #404040;
-    -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 20, 0.3, 0, 5);
+    -fx-background-radius: 8 8 0 0;
+    -fx-border-radius: 8 8 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 50, 0, 0, 5);
     -fx-padding: 0;
     -fx-spacing: 0;
 }
 
-.terminal-result-display {
-    -fx-background-color: transparent;
-    -fx-background-radius: 12 12 0 0;
-}
-
-.terminal-result-display .text-area {
-    -fx-background-color: transparent;
-    -fx-background-radius: 12 12 0 0;
+.terminal-result-display, .terminal-command-box {
+    -fx-padding: 0;
+    -fx-background-color: #2D2D30;
     -fx-border-width: 0;
-    -fx-focus-color: transparent;
-    -fx-text-fill: #E0E0E0;
-    -fx-font-family: "Consolas", "Monaco", "Lucida Console", monospace;
-    -fx-font-size: 12pt;
 }
 
 .terminal-command-box {
-    -fx-background-color: #1E1E1E;
-    -fx-background-radius: 0 0 12 12;
-    -fx-border-color: #404040;
-    -fx-border-width: 1 0 0 0;
+    -fx-background-radius: 8 8 0 0;
 }
 
 .terminal-command-box .text-field {
+    -fx-padding: 12;
     -fx-background-color: transparent;
-    -fx-background-radius: 0 0 12 12;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: rgba(255, 255, 255, 0.15);
+    -fx-focus-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-family: "Inter Medium";
+    -fx-font-size: 13pt;
+    -fx-prompt-text-fill: #808080;
+}
+
+.terminal-result-display .text-area {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
     -fx-border-width: 0;
     -fx-focus-color: transparent;
     -fx-text-fill: #E0E0E0;
-    -fx-font-family: "Consolas", "Monaco", "Lucida Console", monospace;
+    -fx-font-family: "Inter";
     -fx-font-size: 12pt;
-    -fx-prompt-text-fill: #808080;
+}
+
+.terminal-result-display .text-area .content {
+    -fx-background-color: #2D2D30;
+    -fx-border-radius: 0;
+    -fx-background-radius: 0;
+    -fx-padding: 12;
 }
 
 /* Copy button styles */

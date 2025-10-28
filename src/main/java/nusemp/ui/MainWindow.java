@@ -13,13 +13,16 @@ import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
 
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.LogsCenter;
 import nusemp.logic.Logic;
+import nusemp.logic.Messages;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
@@ -41,7 +44,7 @@ public class MainWindow extends UiPart<Stage> {
     private ContactListPanel contactListPanel;
     private EventListPanel eventListPanel;
 
-    // Terminal overlay components
+    // Terminal window components
     private ResultDisplay resultDisplay;
     private CommandBox commandBox;
     private boolean isTerminalVisible = false;
@@ -57,7 +60,10 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane statusbarPlaceholder;
 
     @FXML
-    private StackPane terminalOverlay;
+    private Region terminalBackdrop;
+
+    @FXML
+    private VBox terminalWindow;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -177,18 +183,15 @@ public class MainWindow extends UiPart<Stage> {
 
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
-        resultDisplay = new ResultDisplay();
-
         StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getAppDataFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(this::executeCommand);
-
         // Initialize terminal components
         resultDisplay = new ResultDisplay();
+        resultDisplay.setFeedbackToUser(Messages.MESSAGE_WELCOME);
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        this.commandBox = new CommandBox(this::executeCommand);
+        commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(this.commandBox.getRoot());
 
         setContactsActive();
@@ -275,7 +278,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Handles the terminal button click and Ctrl+T shortcut.
-     * Shows/hides the terminal overlay similar to macOS Spotlight.
+     * Shows/hides the terminal window similar to macOS Spotlight.
      */
     @FXML
     public void handleTerminal() {
@@ -287,11 +290,13 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Shows the terminal overlay.
+     * Shows the terminal window.
      */
     private void showTerminal() {
-        terminalOverlay.setVisible(true);
-        terminalOverlay.setManaged(true);
+        terminalBackdrop.setVisible(true);
+        terminalBackdrop.setManaged(true);
+        terminalWindow.setVisible(true);
+        terminalWindow.setManaged(true);
         isTerminalVisible = true;
 
         // Focus on the terminal command box
@@ -303,8 +308,10 @@ public class MainWindow extends UiPart<Stage> {
      * Hides the terminal overlay.
      */
     private void hideTerminal() {
-        terminalOverlay.setVisible(false);
-        terminalOverlay.setManaged(false);
+        terminalBackdrop.setVisible(false);
+        terminalBackdrop.setManaged(false);
+        terminalWindow.setVisible(false);
+        terminalWindow.setManaged(false);
         isTerminalVisible = false;
     }
 

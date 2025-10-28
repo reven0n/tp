@@ -13,6 +13,7 @@
 
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.shape.SVGPath?>
+
 <fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="NUS Event Mailer Pro" type="Stage"
          xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <scene>
@@ -79,21 +80,14 @@
         </VBox>
 
         <!-- Terminal Overlay -->
-        <StackPane fx:id="terminalOverlay" visible="false" managed="false" styleClass="terminal-overlay">
-          <VBox alignment="CENTER" maxWidth="600" maxHeight="400" styleClass="terminal-window">
-            <StackPane fx:id="resultDisplayPlaceholder" minHeight="250" styleClass="terminal-result-display"
-                       VBox.vgrow="ALWAYS">
-              <padding>
-                <Insets bottom="10" left="15" right="15" top="15"/>
-              </padding>
-            </StackPane>
-            <StackPane fx:id="commandBoxPlaceholder" styleClass="terminal-command-box" VBox.vgrow="NEVER">
-              <padding>
-                <Insets bottom="15" left="15" right="15" top="10"/>
-              </padding>
-            </StackPane>
-          </VBox>
-        </StackPane>
+        <Region fx:id="terminalBackdrop" StackPane.alignment="BOTTOM_CENTER" maxWidth="Infinity" maxHeight="350"
+                visible="false" managed="false" onMouseClicked="#handleTerminal"/>
+        <VBox fx:id="terminalWindow" StackPane.alignment="BOTTOM_CENTER" maxWidth="800" maxHeight="250"
+              visible="false" managed="false">
+          <StackPane fx:id="commandBoxPlaceholder" styleClass="terminal-command-box" VBox.vgrow="NEVER" />
+          <StackPane fx:id="resultDisplayPlaceholder" minHeight="200" styleClass="terminal-result-display"
+                     VBox.vgrow="ALWAYS" />
+        </VBox>
       </StackPane>
     </Scene>
   </scene>
