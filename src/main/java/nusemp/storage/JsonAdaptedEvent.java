@@ -142,11 +142,11 @@ class JsonAdaptedEvent {
             Contact contact = findContactByEmail(appData, email).orElseThrow(() ->
                     new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
 
-            if (!ParticipantStatus.isValidStatus(statusStr)) {
+            if (!ParticipantStatus.isValidStatus(participantStatusStr)) {
                 throw new IllegalValueException(String.format(INVALID_PARTICIPANT_STATUS_MESSAGE, email));
             }
 
-            ParticipantStatus status = ParticipantStatus.fromString(statusStr);
+            ParticipantStatus status = ParticipantStatus.fromString(participantStatusStr);
             modelParticipants.add(new Participant(contact, status));
         }
 

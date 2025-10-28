@@ -9,6 +9,7 @@ import java.util.Set;
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
+import nusemp.model.event.EventStatus;
 import nusemp.model.event.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;

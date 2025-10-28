@@ -112,7 +112,7 @@ class EventTest {
     @Test
     public void withUpdatedParticipant_updateParticipantStatus_returnsEventWithUpdatedParticipant() {
         Participant updatedParticipant = new Participant(BOB, ParticipantStatus.UNAVAILABLE);
-        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.STARTING,
                 EMPTY_TAG_SET, createParticipantList(BOB, ALICE));
         Event updatedEvent = event.withUpdatedParticipant(updatedParticipant);
         assertFalse(checkForSameParticipant(event, updatedEvent)); //check that other participants are unchanged
