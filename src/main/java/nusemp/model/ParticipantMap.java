@@ -13,22 +13,11 @@ import nusemp.model.event.ParticipantStatus;
  * Maps Participants to Events and vise versa.
  * Maintains two maps for efficient lookups
  *
- * Assumes Contact and Event expose a stable String id via getId().
  */
 public class ParticipantMap {
 
     private final Map<Contact, Map<Event, ParticipantEvent>> byContact = new HashMap<>();
     private final Map<Event, Map<Contact, ParticipantEvent>> byEvent = new HashMap<>();
-    // Change AppData -> store HashSet email -> Contact
-
-
-    //1: participant link Contact many-to-many Event
-    //2: edit Contact Email ->edit all instance of the Contact in the Event Map
-    //3 go to contact map to find list of participant
-    //4 Go to event map using the list of participants and replace all participant -same status
-    //5 Remove old Contact Key with old participant list
-    //6 Place all participants in new Contact Key
-
 
     /**
      * Adds a participant event link between the given contact and event with the specified status.
