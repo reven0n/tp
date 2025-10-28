@@ -109,7 +109,7 @@ class EventTest {
 
     @Test
     public void withUpdatedParticipant_updateParticipantStatus_returnsEventWithUpdatedParticipant() {
-        Participant updatedParticipant = new Participant(BOB, Status.CANCELLED);
+        Participant updatedParticipant = new Participant(BOB, ParticipantStatus.UNAVAILABLE);
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS,
                 EMPTY_TAG_SET, createParticipantList(BOB, ALICE));
         Event updatedEvent = event.withUpdatedParticipant(updatedParticipant);
@@ -290,7 +290,7 @@ class EventTest {
         assertNotEquals(event6, event7); // missing participant should not be equal
         assertEquals(event6, event8); // same email, different name should be equal
         assertNotEquals(event6, event9); // different email should not be equal
-        assertEquals(event6, event10); // different order should be equal
+        assertNotEquals(event6, event10); // different order should not be equal
     }
 
     @Test
