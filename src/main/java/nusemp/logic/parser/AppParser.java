@@ -20,6 +20,7 @@ import nusemp.logic.commands.contact.ContactListCommand;
 import nusemp.logic.commands.contact.ContactShowCommand;
 import nusemp.logic.commands.event.EventAddCommand;
 import nusemp.logic.commands.event.EventDeleteCommand;
+import nusemp.logic.commands.event.EventEditCommand;
 import nusemp.logic.commands.event.EventExportCommand;
 import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventListCommand;
@@ -34,6 +35,7 @@ import nusemp.logic.parser.contact.ContactListCommandParser;
 import nusemp.logic.parser.contact.ContactShowCommandParser;
 import nusemp.logic.parser.event.EventAddCommandParser;
 import nusemp.logic.parser.event.EventDeleteCommandParser;
+import nusemp.logic.parser.event.EventEditCommandParser;
 import nusemp.logic.parser.event.EventExportCommandParser;
 import nusemp.logic.parser.event.EventLinkCommandParser;
 import nusemp.logic.parser.event.EventListCommandParser;
@@ -168,6 +170,9 @@ public class AppParser {
         switch (commandWord) {
         case EventAddCommand.COMMAND_WORD:
             return new EventAddCommandParser().parse(arguments);
+
+        case EventEditCommand.COMMAND_WORD:
+            return new EventEditCommandParser().parse(arguments);
 
         case EventListCommand.COMMAND_WORD:
             return new EventListCommandParser().parse(arguments);
