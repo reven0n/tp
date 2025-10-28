@@ -2,10 +2,7 @@ package nusemp.logic.commands.event;
 
 import static nusemp.logic.commands.CommandTestUtil.DESC_EVENT_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.DESC_EVENT_MEETING;
-import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_ADDRESS_CONFERENCE;
-import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_DATE_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_NAME_CONFERENCE;
-import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_TAG_URGENT;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showEventAtIndex;
