@@ -101,7 +101,7 @@ public class Event {
      */
     public boolean hasContact(Contact contact) {
         requireAllNonNull(contact);
-        return participants.stream().anyMatch(p -> p.containsContact(contact));
+        return participants.stream().anyMatch(p -> p.getContact().isSameContact(contact));
     }
 
     /**
@@ -126,7 +126,7 @@ public class Event {
         List<Participant> updatedParticipants = new ArrayList<>(participants);
         for (int i = 0; i < updatedParticipants.size(); i++) {
             Participant currentParticipant = updatedParticipants.get(i);
-            if (currentParticipant.containsContact(updatedParticipant.getContact())) {
+            if (currentParticipant.hasSameContact(updatedParticipant)) {
                 updatedParticipants.set(i, updatedParticipant);
                 break;
             }
@@ -166,7 +166,7 @@ public class Event {
 
 
     /**
-     * Returns a new Event with the given participant removed.
+     * Returns a new Event with the given contact removed by finding contact with the same email.
      * This maintains immutability by returning a new Event instance.
      */
     public Event withoutContact(Contact contact) {
@@ -190,6 +190,22 @@ public class Event {
     }
 
     /**
+     * Returns true if both of the emails in the lists are the same.
+     */
+    private boolean isSameParticipantList(List<Participant> otherParticipants) {
+        if (participants.size() != otherParticipants.size()) {
+            return false;
+        }
+
+        for (Participant participant : otherParticipants) {
+            if (!hasContactWithEmail(participant.getContact().getEmail().value)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Returns true if both events have the same identity and data fields.
      * This defines a stronger notion of equality between two events.
      */
@@ -200,16 +216,15 @@ public class Event {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Event)) {
+        if (!(other instanceof Event otherEvent)) {
             return false;
         }
 
-        Event otherEvent = (Event) other;
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
                 && address.equals(otherEvent.address)
-                && status.equals(otherEvent.status)
-                && tags.equals(otherEvent.tags);
+                && tags.equals(otherEvent.tags)
+                && isSameParticipantList(otherEvent.participants);
     }
 
     @Override
