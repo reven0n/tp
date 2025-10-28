@@ -1,5 +1,6 @@
 package nusemp.model;
 
+import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_ADDRESS_BOB;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalContacts.ALICE;
@@ -15,8 +16,12 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import nusemp.commons.core.GuiSettings;
+import nusemp.model.contact.Contact;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
+import nusemp.model.event.Event;
 import nusemp.testutil.AppDataBuilder;
+import nusemp.testutil.ContactBuilder;
+import nusemp.testutil.EventBuilder;
 
 public class ModelManagerTest {
 
@@ -92,6 +97,38 @@ public class ModelManagerTest {
     public void getFilteredContactList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredContactList().remove(0));
     }
+
+    @Test
+    public void setContact_contactInFilteredList_success() {
+        modelManager.addContact(ALICE);
+        Contact editedAlice = new ContactBuilder(ALICE)
+                .withAddress(VALID_CONTACT_ADDRESS_BOB).build();
+        modelManager.setContact(ALICE, editedAlice);
+        assertTrue(modelManager.hasContact(editedAlice));
+    }
+
+    @Test
+    public void setContact_nullTargetContact_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () ->
+                modelManager.setContact(null, ALICE));
+    }
+
+    @Test
+    public void setContact_nullEditedContact_throwsNullPointerException() {
+        modelManager.addContact(ALICE);
+        assertThrows(NullPointerException.class, () ->
+                modelManager.setContact(ALICE, null));
+    }
+
+    @Test
+    public void setEvent_eventInFilteredList_success() {
+        Event event = new EventBuilder().build();
+        modelManager.addEvent(event);
+        Event editedEvent = new EventBuilder().withName("New Event Name").build();
+        modelManager.setEvent(event, editedEvent);
+        assertTrue(modelManager.hasEvent(editedEvent));
+    }
+
 
     @Test
     public void equals() {
