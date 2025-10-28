@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.AppData;
 import nusemp.model.event.Event;
-import nusemp.model.event.Status;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
@@ -45,7 +45,7 @@ class JsonAdaptedEventTest {
 
     private static final List<JsonAdaptedParticipant> VALID_PARTICIPANT_STATUS =
             TypicalContacts.getTypicalContacts().stream().map(c -> new JsonAdaptedParticipant(
-                    c.getEmail().value, Status.ATTENDING.toString())).toList();
+                    c.getEmail().value, ParticipantStatus.AVAILABLE.toString())).toList();
 
     @Test
     public void toModelType_validEventDetails_returnsEvent() throws Exception {
