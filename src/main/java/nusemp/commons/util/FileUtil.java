@@ -5,6 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Writes and reads files
@@ -78,6 +81,31 @@ public class FileUtil {
      */
     public static void writeToFile(Path file, String content) throws IOException {
         Files.write(file, content.getBytes(CHARSET));
+    }
+
+    /**
+     * Creates a backup of the given file with a timestamp suffix.
+     * The backup file will be named {originalName}.corrupt.{timestamp}
+     *
+     * @param originalFile the file to backup
+     * @return the path to the backup file
+     * @throws IOException if the backup cannot be created
+     */
+    public static Path createBackup(Path originalFile) throws IOException {
+        if (!isFileExists(originalFile)) {
+            throw new IOException("Cannot backup non-existent file: " + originalFile);
+        }
+
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        String fileName = originalFile.getFileName().toString();
+        String backupFileName = fileName + ".corrupt." + timestamp;
+
+        Path backupPath = originalFile.getParent() != null
+                ? originalFile.getParent().resolve(backupFileName)
+                : Paths.get(backupFileName);
+
+        Files.copy(originalFile, backupPath, StandardCopyOption.REPLACE_EXISTING);
+        return backupPath;
     }
 
 }
