@@ -10,7 +10,6 @@ import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.ParticipantStatus;
