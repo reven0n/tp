@@ -3,6 +3,7 @@ package nusemp.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
+import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import java.util.List;
 
@@ -78,11 +79,13 @@ public class EventLinkCommand extends Command {
 
         try {
             model.addParticipantEvent(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
+            model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+            return new CommandResult(MESSAGE_SUCCESS);
         } catch (Exception e) {
             throw new CommandException("Error linking participant to event.");
         }
 
-        return new CommandResult(MESSAGE_SUCCESS);
+
 
 //        // Check for duplicate participant
 //        if (eventToUpdate.hasContactWithEmail(contactToLink.getEmail().value)) {
