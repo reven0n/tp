@@ -24,7 +24,6 @@ import nusemp.model.contact.Contact;
 import nusemp.model.contact.exceptions.DuplicateContactException;
 import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
-import nusemp.model.event.Status;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.EventBuilder;
 
