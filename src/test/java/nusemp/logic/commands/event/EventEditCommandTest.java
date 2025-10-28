@@ -1,12 +1,22 @@
 package nusemp.logic.commands.event;
 
+/**
+ * Contains tests for EventEditCommand.
+ * Original tests (execute_allFieldsSpecifiedUnfilteredList_success through toStringMethod)
+ * authored by @reven0n (PR #179).
+ * EventStatus-related tests (execute_statusFieldSpecified_success, execute_statusWithOtherFields_success)
+ * added subsequently for additional coverage.
+ */
+
 import static nusemp.logic.commands.CommandTestUtil.DESC_EVENT_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.DESC_EVENT_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_NAME_CONFERENCE;
+import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_CLOSED;
+import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_ONGOING;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showEventAtIndex;
-import static nusemp.testutil.TypicalAppData.getTypicalAppData;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +38,7 @@ import nusemp.testutil.EventBuilder;
 
 public class EventEditCommandTest {
 
-    private Model model = new ModelManager(getTypicalAppData(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAppDataWithEvents(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
@@ -135,5 +145,45 @@ public class EventEditCommandTest {
         String expected = EventEditCommand.class.getCanonicalName() + "{index=" + index
                 + ", editEventDescriptor=" + editEventDescriptor + "}";
         assertEquals(expected, eventEditCommand.toString());
+    }
+
+    @Test
+    public void execute_statusFieldSpecified_success() {
+        Event eventToEdit = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withStatus(VALID_EVENT_STATUS_CLOSED).build();
+        EventEditCommand eventEditCommand = new EventEditCommand(INDEX_FIRST_EVENT, descriptor);
+
+        Event editedEvent = new EventBuilder(eventToEdit).withStatus(VALID_EVENT_STATUS_CLOSED).build();
+
+        String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
+                Messages.format(editedEvent));
+
+        Model expectedModel = new ModelManager(new AppData(model.getAppData()), new UserPrefs());
+        expectedModel.setEvent(eventToEdit, editedEvent);
+
+        assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_statusWithOtherFields_success() {
+        Event eventToEdit = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder()
+                .withAddress("New Conference Hall")
+                .withStatus(VALID_EVENT_STATUS_ONGOING)
+                .build();
+        EventEditCommand eventEditCommand = new EventEditCommand(INDEX_FIRST_EVENT, descriptor);
+
+        Event editedEvent = new EventBuilder(eventToEdit)
+                .withAddress("New Conference Hall")
+                .withStatus(VALID_EVENT_STATUS_ONGOING)
+                .build();
+
+        String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
+                Messages.format(editedEvent));
+
+        Model expectedModel = new ModelManager(new AppData(model.getAppData()), new UserPrefs());
+        expectedModel.setEvent(eventToEdit, editedEvent);
+
+        assertCommandSuccess(eventEditCommand, model, expectedMessage, expectedModel);
     }
 }

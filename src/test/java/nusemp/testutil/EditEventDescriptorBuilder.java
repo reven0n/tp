@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 import nusemp.logic.commands.event.EventEditCommand.EditEventDescriptor;
 import nusemp.model.event.Event;
+import nusemp.model.event.EventStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
@@ -13,6 +14,8 @@ import nusemp.model.fields.Tag;
 
 /**
  * A utility class to help with building EditEventDescriptor objects.
+ * Original implementation (withName, withDate, withAddress, withTags methods) by @reven0n (PR #179).
+ * withStatus method added subsequently for EventStatus support.
  */
 public class EditEventDescriptorBuilder {
 
@@ -58,6 +61,14 @@ public class EditEventDescriptorBuilder {
      */
     public EditEventDescriptorBuilder withAddress(String address) {
         descriptor.setAddress(new Address(address));
+        return this;
+    }
+
+    /**
+     * Sets the {@code EventStatus} of the {@code EditEventDescriptor} that we are building.
+     */
+    public EditEventDescriptorBuilder withStatus(String status) {
+        descriptor.setStatus(EventStatus.fromString(status));
         return this;
     }
 
