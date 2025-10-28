@@ -16,7 +16,7 @@ import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
-import nusemp.model.event.Status;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
@@ -126,11 +126,11 @@ class JsonAdaptedEvent {
             Contact contact = findContactByEmail(appData, email).orElseThrow(() ->
                     new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
 
-            if (!Status.isValidStatus(statusStr)) {
+            if (!ParticipantStatus.isValidStatus(statusStr)) {
                 throw new IllegalValueException(String.format(INVALID_PARTICIPANT_STATUS_MESSAGE, email));
             }
 
-            Status status = Status.fromString(statusStr);
+            ParticipantStatus status = ParticipantStatus.fromString(statusStr);
             modelParticipants.add(new Participant(contact, status));
         }
 
