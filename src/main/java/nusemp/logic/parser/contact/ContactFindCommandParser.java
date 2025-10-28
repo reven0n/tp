@@ -104,8 +104,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
         }
 
         if (predicates.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactFindCommand.MESSAGE_USAGE));
+            throw new ParseException(ContactFindCommand.MESSAGE_EMPTY_KEYWORD);
         }
 
         // If only one predicate, return it directly; otherwise combine with OR logic
