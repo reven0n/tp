@@ -27,6 +27,8 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
@@ -117,9 +119,16 @@ public class ContactEditCommand extends Command {
     private void updateEventWithEditedContact(Model model, Contact contact, Contact editedContact) {
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         List<Event> allEvents = model.getFilteredEventList();
+        model.setContact(editedContact, contact);
         for (Event event : allEvents) {
             if (model.hasEvent(event) && event.hasContactWithEmail(contact.getEmail().value)) {
-                Event updatedEvent = event.withoutContact(contact).withContact(editedContact);
+                ParticipantStatus status = event.getParticipants().stream()
+                        .filter(p -> p.getContact().isSameContact(contact))
+                        .findFirst()
+                        .get()
+                        .getStatus();
+                Participant updatedParticipant = new Participant(editedContact, status);
+                Event updatedEvent = event.withUpdatedParticipant(updatedParticipant);
                 model.setEvent(event, updatedEvent);
             }
         }

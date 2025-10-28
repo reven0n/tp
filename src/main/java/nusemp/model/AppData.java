@@ -12,6 +12,7 @@ import nusemp.model.contact.Contact;
 import nusemp.model.contact.UniqueContactList;
 import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.model.event.UniqueEventList;
 
 /**
@@ -129,7 +130,13 @@ public class AppData implements ReadOnlyAppData {
      * @return the updated event with the edited contact as participant
      */
     private Event createUpdatedEvent(Event event, Contact target, Contact editedContact) {
-        return event.withoutContact(target).withContact(editedContact);
+        ParticipantStatus status = event.getParticipants().stream()
+                .filter(p -> p.getContact().isSameContact(target))
+                .findFirst()
+                .get()
+                .getStatus();
+        Participant updatedParticipant = new Participant(editedContact, status);
+        return event.withUpdatedParticipant(updatedParticipant);
     }
 
     /**
