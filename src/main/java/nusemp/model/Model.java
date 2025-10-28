@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
@@ -121,6 +122,8 @@ public interface Model {
 
     /** Returns an unmodifiable view of the filtered event list */
     ObservableList<Event> getFilteredEventList();
+
+    ObservableMap<Contact, List<ParticipantEvent>> getContactEventMap();
 
     /**
      * Updates the filter of the filtered event list to filter by the given {@code predicate}.

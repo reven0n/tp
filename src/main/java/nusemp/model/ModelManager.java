@@ -9,6 +9,7 @@ import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.collections.transformation.FilteredList;
 
 import nusemp.commons.core.GuiSettings;
@@ -213,6 +214,11 @@ public class ModelManager implements Model {
     @Override
     public ObservableList<Event> getFilteredEventList() {
         return filteredEvents;
+    }
+
+    @Override
+    public ObservableMap<Contact, List<ParticipantEvent>> getContactEventMap() {
+        return appData.getContactEventMap();
     }
 
     @Override

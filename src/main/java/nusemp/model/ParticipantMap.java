@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.ParticipantStatus;
@@ -19,6 +23,13 @@ public class ParticipantMap {
 
     private final Map<Contact, Map<Event, ParticipantEvent>> byContact = new HashMap<>();
     private final Map<Event, Map<Contact, ParticipantEvent>> byEvent = new HashMap<>();
+    private final ObservableMap<Contact, List<ParticipantEvent>> observableContactEventMap;
+
+    //private final ObservableMap<Event, Map<Contact, ParticipantEvent>> unmodifiableMap = FXCollections.observableMap(byEvent);
+
+    public ParticipantMap() {
+        observableContactEventMap = FXCollections.observableHashMap();
+    }
 
     /**
      * Adds a participant event link between the given contact and event with the specified status.
@@ -35,6 +46,8 @@ public class ParticipantMap {
             byEvent.put(event, new HashMap<>());
         }
         byEvent.get(event).put(contact, participantEvent);
+
+        updateObservableMap(contact);
     }
 
     /**
@@ -50,6 +63,8 @@ public class ParticipantMap {
         for (Event event : events.keySet()) {
             removeContactFromEvent(contact, event);
         }
+
+        updateObservableMap(contact);
     }
 
     private void removeContactFromEvent(Contact contact, Event event) {
@@ -114,6 +129,8 @@ public class ParticipantMap {
         if (contacts.isEmpty()) {
             byEvent.remove(event);
         }
+
+        updateObservableMap(contact);
     }
 
     /**
@@ -134,6 +151,8 @@ public class ParticipantMap {
         if (contacts != null) {
             contacts.put(contact, updatedParticipantEvent);
         }
+
+        updateObservableMap(contact);
     }
 
     /**
@@ -247,6 +266,26 @@ public class ParticipantMap {
     }
 
     /**
+     * Gets all events for the all contacts as a ObservableMap.
+     */
+    public ObservableMap<Contact, List<ParticipantEvent>> getEventsForAllContacts() {
+        Map<Contact, List<ParticipantEvent>> map = new HashMap<>();
+        for (Contact contact : byContact.keySet()) {
+            List<ParticipantEvent> events = new ArrayList<>(byContact.get(contact).values());
+            map.put(contact, events);
+        }
+        return FXCollections.observableMap(map);
+    }
+
+
+    /**
+     * Gets all events for all contacts as an ObservableMap.
+     */
+//    public ObservableMap<Contact, List<ParticipantEvent>> getEventsForAllContacts() {
+//        return FXCollections.unmodifiableObservableMap(observableContactEventMap);
+//    }
+
+    /**
      * Gets all contacts for the given event as a List.
      */
     public List<Contact> getContactsForEvent(Event event) {
@@ -260,5 +299,18 @@ public class ParticipantMap {
         participantEvents.addAll(contacts.values());
         return participantEvents.stream()
                 .map(ParticipantEvent::getContact).toList();
+    }
+
+    private void updateObservableMap(Contact contact) {
+        List<ParticipantEvent> events = new ArrayList<>();
+        Map<Event, ParticipantEvent> eventMap = byContact.get(contact);
+        if (eventMap != null) {
+            events.addAll(eventMap.values());
+        }
+        if (events.isEmpty()) {
+            observableContactEventMap.remove(contact);
+        } else {
+            observableContactEventMap.put(contact, events);
+        }
     }
 }

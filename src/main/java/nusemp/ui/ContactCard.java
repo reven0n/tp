@@ -1,7 +1,9 @@
 package nusemp.ui;
 
 import java.util.Comparator;
+import java.util.List;
 
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -9,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 
 import nusemp.model.AppData;
+import nusemp.model.ParticipantEvent;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.ParticipantStatus;
 
@@ -18,7 +21,7 @@ import nusemp.model.event.ParticipantStatus;
 public class ContactCard extends UiPart<Region> {
 
     private static final String FXML = "ContactListCard.fxml";
-    private final AppData appData;
+    //private final AppData appData;
 
     public final Contact contact;
 
@@ -42,10 +45,9 @@ public class ContactCard extends UiPart<Region> {
     /**
      * Creates a {@code ContactCard} with the given {@code Contact} and index to display.
      */
-    public ContactCard(Contact contact, int displayedIndex, AppData appData) {
+    public ContactCard(Contact contact, int displayedIndex, List<ParticipantEvent> contactEvent) {
         super(FXML);
         this.contact = contact;
-        this.appData = appData;
         id.setText(displayedIndex + ". ");
         name.setText(contact.getName().value);
         email.setText(contact.getEmail().value);
@@ -83,10 +85,24 @@ public class ContactCard extends UiPart<Region> {
 //                        });
 //
 //                });
-        appData.getEventsForContact(contact)
-                .forEach(event -> {
-                    Label label = new Label(event.getName().value);
-                    events.getChildren().add(label);
-                });
+//        appData.getEventsForContact(contact)
+//                .forEach(event -> {
+//                    Label label = new Label(event.getName().value);
+//                    events.getChildren().add(label);
+//                });
+//        contactEventMap.get(contact)
+//                .forEach(participantEvent -> {
+//                    Label label = new Label(participantEvent.getEvent().getName().value);
+//                    if (participantEvent.getStatus() != ParticipantStatus.AVAILABLE) {
+//                        label.setStyle("-fx-background-color: #a8a8a8;");
+//                    }
+//                    events.getChildren().add(label);
+//                });
+
+        contactEvent.forEach(participantEvent -> {
+            Label eventLabel = new Label(participantEvent.getEvent().getName().value
+                    + " (" + participantEvent.getStatus() + ")");
+            events.getChildren().add(eventLabel);
+        });
     }
 }

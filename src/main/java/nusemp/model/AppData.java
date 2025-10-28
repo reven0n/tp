@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.contact.Contact;
@@ -104,6 +105,7 @@ public class AppData implements ReadOnlyAppData {
 
         contacts.setContact(target, editedContact);
         participantMap.updateContactInParticipantMap(target, editedContact);
+        System.out.println(participantMap.getEventsForContact(editedContact).toString());
     }
 
     /**
@@ -227,6 +229,10 @@ public class AppData implements ReadOnlyAppData {
     @Override
     public ObservableList<Event> getEventList() {
         return events.asUnmodifiableObservableList();
+    }
+
+    public ObservableMap<Contact, List<ParticipantEvent>> getContactEventMap() {
+        return participantMap.getEventsForAllContacts();
     }
 
     public ParticipantMap getParticipantMap() {

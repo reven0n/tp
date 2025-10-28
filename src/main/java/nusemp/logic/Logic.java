@@ -1,17 +1,21 @@
 package nusemp.logic;
 
 import java.nio.file.Path;
+import java.util.List;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 import nusemp.commons.core.GuiSettings;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.Model;
+import nusemp.model.ParticipantEvent;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.Participant;
 
 /**
  * API of the Logic component
@@ -38,6 +42,8 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of events */
     ObservableList<Event> getFilteredEventList();
+
+    ObservableMap<Contact, List<ParticipantEvent>> getContactEventMap();
 
     /**
      * Returns the user prefs' app data file path.
