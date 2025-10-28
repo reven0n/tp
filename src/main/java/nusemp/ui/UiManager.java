@@ -43,9 +43,9 @@ public class UiManager implements Ui {
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
 
-        //Set the application icon.
+        // Set the application icon.
         primaryStage.getIcons().add(getImage(ICON_APPLICATION));
-        //Set icon on the taskbar/dock
+        // Set icon on the taskbar/dock
         if (Taskbar.isTaskbarSupported()) {
             var taskbar = Taskbar.getTaskbar();
 
@@ -56,7 +56,6 @@ public class UiManager implements Ui {
             }
 
         }
-
 
         try {
             mainWindow = new MainWindow(primaryStage, logic);

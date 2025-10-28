@@ -36,64 +36,6 @@
     -fx-opacity: 1;
 }
 
-.tab-pane {
-    -fx-padding: 0 0 0 1;
-}
-
-.tab-pane .tab-header-area {
-    -fx-padding: 0 0 0 0;
-    -fx-min-height: 0;
-    -fx-max-height: 0;
-}
-
-.table-view {
-    -fx-base: #ffffff;
-    -fx-control-inner-background: #ffffff;
-    -fx-background-color: #ffffff;
-    -fx-table-cell-border-color: transparent;
-    -fx-table-header-border-color: transparent;
-    -fx-padding: 5;
-}
-
-.table-view .column-header-background {
-    -fx-background-color: transparent;
-}
-
-.table-view .column-header, .table-view .filler {
-    -fx-size: 35;
-    -fx-border-width: 0 0 1 0;
-    -fx-background-color: transparent;
-    -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, -20%)
-        transparent;
-    -fx-border-insets: 0 10 1 0;
-}
-
-.table-view .column-header .label {
-    -fx-font-size: 20pt;
-    -fx-font-family: "Inter Light";
-    -fx-text-fill: #000000;
-    -fx-alignment: center-left;
-    -fx-opacity: 1;
-}
-
-.table-view:focused .table-row-cell:filled:focused:selected {
-    -fx-background-color: -fx-focus-color;
-}
-
-.split-pane:horizontal .split-pane-divider {
-    -fx-background-color: derive(#f8f9fa, 20%);
-    -fx-border-color: transparent transparent transparent #cccccc;
-}
-
-.split-pane {
-    -fx-border-radius: 1;
-    -fx-border-width: 1;
-    -fx-background-color: derive(#f8f9fa, 20%);
-}
-
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
@@ -170,16 +112,6 @@
     -fx-text-fill: #000000;
     -fx-padding: 4px;
     -fx-pref-height: 30px;
-}
-
-.status-bar-with-border {
-    -fx-background-color: derive(#f8f9fa, -10%);
-    -fx-border-color: derive(#f8f9fa, -15%);
-    -fx-border-width: 1px;
-}
-
-.status-bar-with-border .label {
-    -fx-text-fill: #000000;
 }
 
 .grid-pane {
@@ -389,6 +321,10 @@
 
 .sidebar-button:focused {
     -fx-border-color: transparent;
+}
+
+.sidebar-button .icon {
+    -fx-fill: #6c757d;
 }
 
 .toggle-active {

@@ -40,11 +40,10 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private ContactListPanel contactListPanel;
     private EventListPanel eventListPanel;
-    private ResultDisplay resultDisplay;
 
     // Terminal overlay components
-    private ResultDisplay terminalResultDisplay;
-    private CommandBox terminalCommandBox;
+    private ResultDisplay resultDisplay;
+    private CommandBox commandBox;
     private boolean isTerminalVisible = false;
 
     // Theme management
@@ -52,13 +51,7 @@ public class MainWindow extends UiPart<Stage> {
     private Scene scene;
 
     @FXML
-    private StackPane commandBoxPlaceholder;
-
-    @FXML
     private StackPane contactListPanelPlaceholder;
-
-    @FXML
-    private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
@@ -67,10 +60,10 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane terminalOverlay;
 
     @FXML
-    private StackPane terminalResultDisplayPlaceholder;
+    private StackPane resultDisplayPlaceholder;
 
     @FXML
-    private StackPane terminalCommandBoxPlaceholder;
+    private StackPane commandBoxPlaceholder;
 
     @FXML
     private Button contactsToggle;
@@ -192,11 +185,11 @@ public class MainWindow extends UiPart<Stage> {
         CommandBox commandBox = new CommandBox(this::executeCommand);
 
         // Initialize terminal components
-        terminalResultDisplay = new ResultDisplay();
-        terminalResultDisplayPlaceholder.getChildren().add(terminalResultDisplay.getRoot());
+        resultDisplay = new ResultDisplay();
+        resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        terminalCommandBox = new CommandBox(this::executeTerminalCommand);
-        terminalCommandBoxPlaceholder.getChildren().add(terminalCommandBox.getRoot());
+        this.commandBox = new CommandBox(this::executeCommand);
+        commandBoxPlaceholder.getChildren().add(this.commandBox.getRoot());
 
         setContactsActive();
     }
@@ -302,7 +295,7 @@ public class MainWindow extends UiPart<Stage> {
         isTerminalVisible = true;
 
         // Focus on the terminal command box
-        terminalCommandBox.requestFocus();
+        commandBox.requestFocus();
 
     }
 
@@ -337,9 +330,10 @@ public class MainWindow extends UiPart<Stage> {
             getClass().getResource("/css/Extensions.css").toExternalForm()
         );
         SVGPath svgPath = new SVGPath();
-        svgPath.setContent("M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.7"
-                + "48-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z");
-        svgPath.setStyle("-fx-fill: gray;");
+        svgPath.setContent("M11 19.25q-3.438 0-5.844-2.406T2.75 11t2.406-5.844T11 2.75a8.5 8.5 0 0 1 1.238.092 4.85 4.8"
+                + "5 0 0 0-1.501 1.73 4.87 4.87 0 0 0-.562 2.303q0 2.063 1.444 3.506 1.443 1.444 3.506 1.444 1.26 0 2.3"
+                + "15-.561a4.9 4.9 0 0 0 1.718-1.501A8 8 0 0 1 19.25 11q0 3.438-2.406 5.844T11 19.25");
+        svgPath.getStyleClass().add("icon");
         themeToggle.setGraphic(svgPath);
         isDarkTheme = false;
     }
@@ -354,10 +348,12 @@ public class MainWindow extends UiPart<Stage> {
             getClass().getResource("/css/Extensions.css").toExternalForm()
         );
         SVGPath svgPath = new SVGPath();
-        svgPath.setContent("M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773"
-                + "-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 "
-                + "1 7.5 0Z");
-        svgPath.setStyle("-fx-fill: lightgray; -fx-stroke: lightgray; -fx-stroke-width: 1");
+        svgPath.setContent("M11 15.583q-1.902 0-3.243-1.34T6.417 11t1.34-3.243T11 6.417t3.243 1.34T15.583 11t-1.34 3.24"
+                + "3T11 15.583m-6.417-3.666H.917v-1.834h3.666zm16.5 0h-3.666v-1.834h3.666zm-11-7.334V.917h1.834v3.666zm"
+                + "0 16.5v-3.666h1.834v3.666zM5.867 7.104 3.552 4.881 4.858 3.53l2.2 2.292zm11.275 11.367-2.223-2.315 1"
+                + ".214-1.26 2.315 2.223zM14.896 5.867l2.223-2.315 1.352 1.306-2.292 2.2zM3.529 17.142l2.315-2.223 1.26"
+                + " 1.214-2.223 2.315z");
+        svgPath.getStyleClass().add("icon");
         themeToggle.setGraphic(svgPath);
         isDarkTheme = true;
     }
@@ -387,8 +383,6 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Executes the command and returns the result.
-     *
-     * @see Logic#execute(String)
      */
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
@@ -408,31 +402,6 @@ public class MainWindow extends UiPart<Stage> {
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
-            throw e;
-        }
-    }
-
-    /**
-     * Executes the terminal command and returns the result.
-     */
-    private CommandResult executeTerminalCommand(String commandText) throws CommandException, ParseException {
-        try {
-            CommandResult commandResult = logic.execute(commandText);
-            logger.info("Terminal Result: " + commandResult.getFeedbackToUser());
-            terminalResultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-
-            if (commandResult.isShowHelp()) {
-                handleHelp();
-            }
-
-            if (commandResult.isExit()) {
-                handleExit();
-            }
-
-            return commandResult;
-        } catch (CommandException | ParseException e) {
-            logger.info("An error occurred while executing terminal command: " + commandText);
-            terminalResultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
         }
     }
