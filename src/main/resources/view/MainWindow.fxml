@@ -80,7 +80,7 @@
         </VBox>
 
         <!-- Terminal Overlay -->
-        <Region fx:id="terminalBackdrop" StackPane.alignment="BOTTOM_CENTER" maxWidth="Infinity" maxHeight="350"
+        <Region fx:id="terminalBackdrop" StackPane.alignment="BOTTOM_CENTER" maxWidth="Infinity" maxHeight="400"
                 visible="false" managed="false" onMouseClicked="#handleTerminal"/>
         <VBox fx:id="terminalWindow" StackPane.alignment="BOTTOM_CENTER" maxWidth="800" maxHeight="250"
               visible="false" managed="false">
