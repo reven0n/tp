@@ -1,14 +1,5 @@
 package nusemp.logic.parser.event;
 
-/**
- * Contains tests for EventEditCommandParser.
- * Original tests (parse_missingParts_failure through parse_resetTags_success)
- * authored by @reven0n (PR #179).
- * EventStatus-related tests (parse_statusFieldSpecified_success, parse_invalidStatus_failure,
- * parse_statusWithOtherFields_success, parse_duplicateStatusPrefix_failure)
- * added subsequently for additional coverage.
- */
-
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_ADDRESS_DESC_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_ADDRESS_DESC_MEETING;
@@ -57,6 +48,12 @@ import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
 import nusemp.testutil.EditEventDescriptorBuilder;
 
+/**
+ * Contains tests for EventEditCommandParser.
+ * Tests from parse_missingParts_failure through parse_resetTags_success
+ * authored by @reven0n (PR #179).
+ * EventStatus-related tests added subsequently for additional coverage.
+ */
 public class EventEditCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_TAG;
@@ -65,6 +62,8 @@ public class EventEditCommandParserTest {
             String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventEditCommand.MESSAGE_USAGE);
 
     private EventEditCommandParser parser = new EventEditCommandParser();
+
+    // Tests below (parse_missingParts_failure through parse_resetTags_success) by @reven0n (PR #179)
 
     @Test
     public void parse_missingParts_failure() {
@@ -227,6 +226,8 @@ public class EventEditCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
+
+    // EventStatus-related tests below (parse_statusFieldSpecified_success through parse_duplicateStatusPrefix_failure)
 
     @Test
     public void parse_statusFieldSpecified_success() {

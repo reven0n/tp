@@ -1,13 +1,5 @@
 package nusemp.logic.commands.event;
 
-/**
- * Contains tests for EventEditCommand.
- * Original tests (execute_allFieldsSpecifiedUnfilteredList_success through toStringMethod)
- * authored by @reven0n (PR #179).
- * EventStatus-related tests (execute_statusFieldSpecified_success, execute_statusWithOtherFields_success)
- * added subsequently for additional coverage.
- */
-
 import static nusemp.logic.commands.CommandTestUtil.DESC_EVENT_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.DESC_EVENT_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_NAME_CONFERENCE;
@@ -36,9 +28,17 @@ import nusemp.model.event.Event;
 import nusemp.testutil.EditEventDescriptorBuilder;
 import nusemp.testutil.EventBuilder;
 
+/**
+ * Contains tests for EventEditCommand.
+ * Tests from execute_allFieldsSpecifiedUnfilteredList_success through toStringMethod
+ * authored by @reven0n (PR #179).
+ * EventStatus-related tests added subsequently for additional coverage.
+ */
 public class EventEditCommandTest {
 
     private Model model = new ModelManager(getTypicalAppDataWithEvents(), new UserPrefs());
+
+    // Tests below (execute_allFieldsSpecifiedUnfilteredList_success through toStringMethod) by @reven0n (PR #179)
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
@@ -146,6 +146,8 @@ public class EventEditCommandTest {
                 + ", editEventDescriptor=" + editEventDescriptor + "}";
         assertEquals(expected, eventEditCommand.toString());
     }
+
+    // EventStatus-related tests below (execute_statusFieldSpecified_success and execute_statusWithOtherFields_success)
 
     @Test
     public void execute_statusFieldSpecified_success() {
