@@ -10,6 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
+import nusemp.model.AppData;
 import nusemp.model.event.Event;
 import nusemp.model.event.exceptions.DuplicateEventException;
 import nusemp.model.fields.Address;

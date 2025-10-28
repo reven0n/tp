@@ -15,6 +15,7 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.model.event.exceptions.DuplicateParticipantException;
 
 /**
@@ -67,27 +68,40 @@ public class EventLinkCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
         }
 
-        Event eventToUpdate = lastShownEventList.get(eventIndex.getZeroBased());
+        Event eventToLink = lastShownEventList.get(eventIndex.getZeroBased());
         Contact contactToLink = lastShownContactList.get(contactIndex.getZeroBased());
 
-        // Check for duplicate participant
-        if (eventToUpdate.hasContactWithEmail(contactToLink.getEmail().value)) {
+        if (model.hasParticipantEvent(contactToLink, eventToLink)) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
                     contactToLink.getEmail()));
         }
 
-        // Link both sides
         try {
-            Event updatedEvent = eventToUpdate.withContact(contactToLink);
-            Contact updatedContact = contactToLink.addEvent(updatedEvent);
-
-            model.setEvent(eventToUpdate, updatedEvent);
-            model.setContact(contactToLink, updatedContact);
-
-            return new CommandResult(MESSAGE_SUCCESS);
-        } catch (DuplicateParticipantException e) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, contactToLink.getEmail()));
+            model.addParticipantEvent(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
+        } catch (Exception e) {
+            throw new CommandException("Error linking participant to event.");
         }
+
+        return new CommandResult(MESSAGE_SUCCESS);
+
+//        // Check for duplicate participant
+//        if (eventToUpdate.hasContactWithEmail(contactToLink.getEmail().value)) {
+//            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
+//                    contactToLink.getEmail()));
+//        }
+//
+//        // Link both sides
+//        try {
+//            Event updatedEvent = eventToUpdate.withContact(contactToLink);
+//            Contact updatedContact = contactToLink.addEvent(updatedEvent);
+//
+//            model.setEvent(eventToUpdate, updatedEvent);
+//            model.setContact(contactToLink, updatedContact);
+//
+//            return new CommandResult(MESSAGE_SUCCESS);
+//        } catch (DuplicateParticipantException e) {
+//            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, contactToLink.getEmail()));
+//        }
     }
 
 

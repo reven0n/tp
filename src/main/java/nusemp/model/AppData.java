@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
 
@@ -11,6 +12,7 @@ import nusemp.commons.util.ToStringBuilder;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.UniqueContactList;
 import nusemp.model.event.Event;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.model.event.UniqueEventList;
 
 /**
@@ -21,6 +23,7 @@ public class AppData implements ReadOnlyAppData {
 
     private final UniqueContactList contacts;
     private final UniqueEventList events;
+    private final ParticipantMap participantMap;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -32,6 +35,7 @@ public class AppData implements ReadOnlyAppData {
     {
         contacts = new UniqueContactList();
         events = new UniqueEventList();
+        participantMap = new ParticipantMap();
     }
 
     public AppData() {}
@@ -99,6 +103,7 @@ public class AppData implements ReadOnlyAppData {
         requireNonNull(editedContact);
 
         contacts.setContact(target, editedContact);
+        participantMap.updateContactInParticipantMap(target, editedContact);
     }
 
     /**
@@ -108,7 +113,8 @@ public class AppData implements ReadOnlyAppData {
      */
     public void removeContact(Contact contact) {
         contacts.remove(contact);
-        removeContactFromEvents(contact);
+        participantMap.removeContact(contact);
+        //removeContactFromEvents(contact);
     }
 
     /**
@@ -151,6 +157,7 @@ public class AppData implements ReadOnlyAppData {
         requireNonNull(editedEvent);
 
         events.setEvent(target, editedEvent);
+        participantMap.updateEventInParticipantMap(target, editedEvent);
     }
 
     /**
@@ -158,8 +165,49 @@ public class AppData implements ReadOnlyAppData {
      * {@code event} must exist in the event list.
      */
     public void removeEvent(Event event) {
+        participantMap.removeEvent(event);
         events.remove(event);
     }
+
+    //// participant map operations
+
+    public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+        requireNonNull(contact);
+        requireNonNull(event);
+        requireNonNull(status);
+        participantMap.addParticipantEvent(contact, event, status);
+        Logger logger = Logger.getLogger(AppData.class.getName());
+        logger.log(java.util.logging.Level.INFO, participantMap.getEventsForContact(contact).toString());
+    }
+
+    public void removeParticipantEvent(Contact contact, Event event) {
+        requireNonNull(contact);
+        requireNonNull(event);
+        participantMap.removeParticipantEvent(contact, event);
+    }
+
+    public boolean hasParticipantEvent(Contact contact, Event event) {
+        requireNonNull(contact);
+        requireNonNull(event);
+        return participantMap.hasParticipantEvent(contact, event);
+    }
+
+    public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
+        requireNonNull(contact);
+        requireNonNull(event);
+        return participantMap.getParticipantStatus(contact, event);
+    }
+
+    public List<Event> getEventsForContact(Contact contact) {
+        requireNonNull(contact);
+        return participantMap.getEventsForContact(contact);
+    }
+
+    public List<Contact> getContactsForEvent(Event event) {
+        requireNonNull(event);
+        return participantMap.getContactsForEvent(event);
+    }
+
 
     //// util methods
 
@@ -179,6 +227,10 @@ public class AppData implements ReadOnlyAppData {
     @Override
     public ObservableList<Event> getEventList() {
         return events.asUnmodifiableObservableList();
+    }
+
+    public ParticipantMap getParticipantMap() {
+        return participantMap;
     }
 
     @Override
