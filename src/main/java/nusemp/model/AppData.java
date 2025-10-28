@@ -1,6 +1,7 @@
 package nusemp.model;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.List;
 import java.util.Objects;
@@ -171,38 +172,80 @@ public class AppData implements ReadOnlyAppData {
 
     //// participant map operations
 
+    /**
+     * Adds a participant (contact) to an event with a specified participation status.
+     *
+     * @param contact the contact to associate with the event
+     * @param event the event to which the contact is being added
+     * @param status the participation status of the contact in the event
+     * @throws NullPointerException if {@code contact}, {@code event}, or {@code status} is {@code null}
+     */
     public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
-        requireNonNull(contact);
-        requireNonNull(event);
-        requireNonNull(status);
+        requireAllNonNull(contact, event, status);
         participantMap.addParticipantEvent(contact, event, status);
         Logger logger = Logger.getLogger(AppData.class.getName());
         logger.log(java.util.logging.Level.INFO, participantMap.getEventsForContact(contact).toString());
     }
 
+    /**
+     * Removes the association between a contact and an event.
+     *
+     * @param contact the contact to remove from the event
+     * @param event the event from which the contact is being removed
+     * @throws NullPointerException if {@code contact} or {@code event} is {@code null}
+     */
     public void removeParticipantEvent(Contact contact, Event event) {
-        requireNonNull(contact);
-        requireNonNull(event);
+        requireAllNonNull(contact, event);
         participantMap.removeParticipantEvent(contact, event);
     }
 
+    /**
+     * Checks whether a contact is linked as a participant in a given event.
+     *
+     * @param contact the contact to check for
+     * @param event the event to check within
+     * @return {@code true} if the contact is a participant in the event; {@code false} otherwise
+     * @throws NullPointerException if {@code contact} or {@code event} is {@code null}
+     */
     public boolean hasParticipantEvent(Contact contact, Event event) {
-        requireNonNull(contact);
-        requireNonNull(event);
+        requireAllNonNull(contact, event);
         return participantMap.hasParticipantEvent(contact, event);
     }
 
+    /**
+     * Retrieves the participation status of a contact in a specific event.
+     *
+     * @param contact the contact whose status is to be retrieved
+     * @param event the event in which the contact's status is to be checked
+     * @return the {@code ParticipantStatus} of the contact in the event
+     * @throws NullPointerException if {@code contact} or {@code event} is {@code null}
+     */
     public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
-        requireNonNull(contact);
-        requireNonNull(event);
+        requireAllNonNull(contact, event);
         return participantMap.getParticipantStatus(contact, event);
     }
 
+    /**
+     * Returns a list of events that the specified contact is participating in.
+     *
+     * @param contact the contact whose associated events are to be retrieved
+     * @return a list of {@link Event} objects the contact is participating in;
+     *         an empty list if the contact is not associated with any events
+     * @throws NullPointerException if {@code contact} is {@code null}
+     */
     public List<Event> getEventsForContact(Contact contact) {
         requireNonNull(contact);
         return participantMap.getEventsForContact(contact);
     }
 
+    /**
+     * Returns a list of contacts participating in a given event.
+     *
+     * @param event the event whose participants are to be retrieved
+     * @return a list of {@link Contact} objects participating in the event;
+     *         an empty list if no participants are associated with the event
+     * @throws NullPointerException if {@code event} is {@code null}
+     */
     public List<Contact> getContactsForEvent(Event event) {
         requireNonNull(event);
         return participantMap.getContactsForEvent(event);

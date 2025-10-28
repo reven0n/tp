@@ -16,7 +16,6 @@ import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
 import nusemp.model.event.ParticipantStatus;
 
 /**
@@ -103,13 +102,6 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteContact(Contact target) {
-//        // Remove contact from all linked events
-//        for (Event event : target.getEvents()) {
-//            if (hasEvent(event)) {
-//                Event updatedEvent = event.withoutContact(target);
-//                appData.setEvent(event, updatedEvent);
-//            }
-//        }
         appData.removeContact(target);
     }
 
@@ -123,11 +115,6 @@ public class ModelManager implements Model {
     public void setContact(Contact target, Contact editedContact) {
         requireAllNonNull(target, editedContact);
         appData.setContact(target, editedContact);
-
-//        // Update all events that had the old contact as participant
-//        if (!target.getEmail().equals(editedContact.getEmail())) {
-//            updateEventsForEmailChange(target, editedContact);
-//        }
     }
 
     /**
@@ -182,13 +169,6 @@ public class ModelManager implements Model {
     @Override
     public void deleteEvent(Event target) {
         // Remove event from all linked contacts
-//        for (Participant participant : target.getParticipants()) {
-//            Contact contact = participant.getContact();
-//            if (hasContact(contact)) {
-//                Contact updatedContact = contact.removeEvent(target);
-//                appData.setContact(contact, updatedContact);
-//            }
-//        }
         appData.removeEvent(target);
     }
 

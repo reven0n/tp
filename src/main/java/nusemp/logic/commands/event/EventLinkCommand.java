@@ -17,7 +17,6 @@ import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.ParticipantStatus;
-import nusemp.model.event.exceptions.DuplicateParticipantException;
 
 /**
  * Links a contact to an event in the event book.
@@ -84,27 +83,6 @@ public class EventLinkCommand extends Command {
         } catch (Exception e) {
             throw new CommandException("Error linking participant to event.");
         }
-
-
-
-//        // Check for duplicate participant
-//        if (eventToUpdate.hasContactWithEmail(contactToLink.getEmail().value)) {
-//            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
-//                    contactToLink.getEmail()));
-//        }
-//
-//        // Link both sides
-//        try {
-//            Event updatedEvent = eventToUpdate.withContact(contactToLink);
-//            Contact updatedContact = contactToLink.addEvent(updatedEvent);
-//
-//            model.setEvent(eventToUpdate, updatedEvent);
-//            model.setContact(contactToLink, updatedContact);
-//
-//            return new CommandResult(MESSAGE_SUCCESS);
-//        } catch (DuplicateParticipantException e) {
-//            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, contactToLink.getEmail()));
-//        }
     }
 
 
