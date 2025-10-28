@@ -13,7 +13,7 @@
   <padding>
     <Insets top="10" right="15" bottom="10" left="15"/>
   </padding>
-  <HBox spacing="0.5" alignment="CENTER_LEFT">
+  <HBox fx:id="nameBox" spacing="0.5">
     <Label fx:id="id" styleClass="cell_big_label">
       <minWidth>
         <!-- Ensures that the label text is never truncated -->
@@ -22,12 +22,12 @@
     </Label>
     <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true"/>
   </HBox>
-  <FlowPane fx:id="tags"/>
-  <FlowPane hgap="10" vgap="3" maxWidth="Infinity">
+  <FlowPane fx:id="tags" minWidth="0"/>
+  <FlowPane minWidth="0" hgap="10" vgap="3">
     <padding>
       <Insets top="3" bottom="3"/>
     </padding>
-    <HBox spacing="3" alignment="CENTER_LEFT">
+    <HBox fx:id="emailBox" spacing="3" alignment="CENTER_LEFT">
       <SVGPath styleClass="icon_small"
                content="M4 20C3.45 20 2.97917 19.8042 2.5875 19.4125C2.19583 19.0208 2 18.55 2 18V6C2 5.45 2.19583 4.97917 2.5875 4.5875C2.97917 4.19583 3.45 4 4 4H20C20.55 4 21.0208 4.19583 21.4125 4.5875C21.8042 4.97917 22 5.45 22 6V18C22 18.55 21.8042 19.0208 21.4125 19.4125C21.0208 19.8042 20.55 20 20 20H4ZM12 13L4 8V18H20V8L12 13ZM12 11L20 6H4L12 11ZM4 8V6V18V8Z"/>
       <Label fx:id="email" styleClass="cell_small_label" wrapText="true" text="\$email"/>
@@ -43,5 +43,5 @@
       <Label fx:id="address" styleClass="cell_small_label" wrapText="true" text="\$address"/>
     </HBox>
   </FlowPane>
-  <FlowPane fx:id="events"/>
+  <FlowPane fx:id="events" minWidth="0"/>
 </VBox>

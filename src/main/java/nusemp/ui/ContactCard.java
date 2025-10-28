@@ -5,12 +5,14 @@ import java.util.List;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 import nusemp.model.contact.Contact;
+import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
 import nusemp.model.event.Status;
 
@@ -21,7 +23,12 @@ public class ContactCard extends UiPart<Region> {
 
     private static final String FXML = "ContactListCard.fxml";
 
+    /* Width offset accounts for padding and scrollbar, used for binding widths. */
+    private static final int WIDTH_OFFSET = 40;
+
     public final Contact contact;
+    private final int displayedIndex;
+    private final ListView<Contact> parentListView;
 
     @FXML
     private VBox cardPane;
@@ -32,7 +39,11 @@ public class ContactCard extends UiPart<Region> {
     @FXML
     private Label name;
     @FXML
+    private HBox nameBox;
+    @FXML
     private Label email;
+    @FXML
+    private HBox emailBox;
     @FXML
     private Label phone;
     @FXML
@@ -46,10 +57,19 @@ public class ContactCard extends UiPart<Region> {
 
     /**
      * Creates a {@code ContactCard} with the given {@code Contact} and index to display.
+     * The parent list view is also needed for width binding.
      */
-    public ContactCard(Contact contact, int displayedIndex) {
+    public ContactCard(Contact contact, int displayedIndex, ListView<Contact> parentListView) {
         super(FXML);
         this.contact = contact;
+        this.displayedIndex = displayedIndex;
+        this.parentListView = parentListView;
+
+        initializeContactInfo();
+        bindWidths();
+    }
+
+    private void initializeContactInfo() {
         id.setText(displayedIndex + ". ");
         name.setText(contact.getName().value);
         email.setText(contact.getEmail().value);
@@ -71,7 +91,7 @@ public class ContactCard extends UiPart<Region> {
         if (contact.hasTags()) {
             contact.getTags().stream()
                     .sorted(Comparator.comparing(tag -> tag.tagName))
-                    .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                    .forEach(tag -> tags.getChildren().add(createLabel(tag.tagName)));
         } else {
             tags.setManaged(false);
             tags.setVisible(false);
@@ -85,17 +105,31 @@ public class ContactCard extends UiPart<Region> {
         }
     }
 
+    private void bindWidths() {
+        List<HBox> allHBoxes = List.of(nameBox, emailBox, phoneBox, addressBox);
+        for (HBox box : allHBoxes) {
+            box.maxWidthProperty().bind(parentListView.widthProperty().subtract(WIDTH_OFFSET));
+        }
+    }
+
     private void addEvents() {
-        contact.getEvents().forEach(event -> {
+        for (Event event : contact.getEvents()) {
             List<Participant> matchingParticipants = event.getParticipants().stream()
                     .filter(p -> p.getContact().isSameContact(contact)).toList();
             assert matchingParticipants.size() == 1;
-            Label label = new Label(event.getName().value);
+            Label label = createLabel(event.getName().value);
             Participant participant = matchingParticipants.get(0);
             if (participant.getStatus() != Status.ATTENDING) {
                 label.setStyle("-fx-background-color: #a8a8a8;");
             }
             events.getChildren().add(label);
-        });
+        }
+    }
+
+    private Label createLabel(String text) {
+        Label label = new Label(text);
+        label.setWrapText(true);
+        label.maxWidthProperty().bind(parentListView.widthProperty().subtract(WIDTH_OFFSET));
+        return label;
     }
 }

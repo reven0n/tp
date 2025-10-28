@@ -12,8 +12,11 @@ import nusemp.model.contact.Contact;
  * Panel containing the list of contacts.
  */
 public class ContactListPanel extends UiPart<Region> {
+
     private static final String FXML = "ContactListPanel.fxml";
 
+    /* Width offset accounts for scrollbar, used for binding widths. */
+    private static final int WIDTH_OFFSET = 12;
     @FXML
     private ListView<Contact> contactListView;
 
@@ -25,7 +28,7 @@ public class ContactListPanel extends UiPart<Region> {
         contactListView.setItems(contactList);
         contactListView.setCellFactory(listView -> {
             ContactListViewCell cell = new ContactListViewCell();
-            cell.prefWidthProperty().bind(listView.widthProperty().subtract(12));
+            cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));
             return cell;
         });
     }
@@ -42,7 +45,7 @@ public class ContactListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new ContactCard(contact, getIndex() + 1).getRoot());
+                setGraphic(new ContactCard(contact, getIndex() + 1, contactListView).getRoot());
             }
         }
     }

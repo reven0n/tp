@@ -16,7 +16,7 @@
     <padding>
       <Insets top="10" right="15" bottom="10" left="15"/>
     </padding>
-    <HBox spacing="0.5" alignment="CENTER_LEFT">
+    <HBox fx:id="nameBox" spacing="0.5">
       <Label fx:id="id" styleClass="cell_big_label">
         <minWidth>
           <!-- Ensures that the label text is never truncated -->
@@ -25,12 +25,12 @@
       </Label>
       <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true"/>
     </HBox>
-    <FlowPane fx:id="tags"/>
-    <FlowPane hgap="10" vgap="3" maxWidth="Infinity">
+    <FlowPane fx:id="tags" minWidth="0"/>
+    <FlowPane minWidth="0" hgap="10" vgap="3">
       <padding>
         <Insets top="3" bottom="3"/>
       </padding>
-      <HBox spacing="3" alignment="CENTER_LEFT">
+      <HBox fx:id="dateBox" spacing="3" alignment="CENTER_LEFT">
         <SVGPath styleClass="icon_small"
                  content="M5 22C4.45 22 3.97917 21.8042 3.5875 21.4125C3.19583 21.0208 3 20.55 3 20V6C3 5.45 3.19583 4.97917 3.5875 4.5875C3.97917 4.19583 4.45 4 5 4H6V2H8V4H16V2H18V4H19C19.55 4 20.0208 4.19583 20.4125 4.5875C20.8042 4.97917 21 5.45 21 6V20C21 20.55 20.8042 21.0208 20.4125 21.4125C20.0208 21.8042 19.55 22 19 22H5ZM5 20H19V10H5V20ZM5 8H19V6H5V8Z"/>
         <Label fx:id="date" styleClass="cell_small_label" wrapText="true" text="\$date"/>
@@ -41,8 +41,12 @@
         <Label fx:id="address" styleClass="cell_small_label" wrapText="true" text="\$address"/>
       </HBox>
     </FlowPane>
-    <FlowPane fx:id="people" HBox.hgrow="ALWAYS"/>
+    <FlowPane fx:id="people" minWidth="0"/>
   </VBox>
-  <Button fx:id="copyButton" onAction="#handleCopyEmails" styleClass="copy-button"/>
+  <Button fx:id="copyButton" onAction="#handleCopyEmails" styleClass="copy-button">
+    <StackPane.margin>
+      <Insets top="6" right="3"/>
+    </StackPane.margin>
+  </Button>
   <Label fx:id="exportContent" visible="false"/>
 </StackPane>
