@@ -31,6 +31,7 @@ import nusemp.logic.commands.event.EventDeleteCommand;
 import nusemp.logic.commands.event.EventLinkCommand;
 import nusemp.logic.commands.event.EventListCommand;
 import nusemp.logic.commands.event.EventShowCommand;
+import nusemp.logic.commands.event.EventUnlinkCommand;
 import nusemp.logic.parser.event.EventDeleteCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.Contact;
@@ -145,6 +146,13 @@ public class AppParserTest {
         String command = CommandType.EVENT + " " + EventLinkCommand.COMMAND_WORD + " "
                 + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 1";
         assertTrue(parser.parseCommand(command) instanceof EventLinkCommand);
+    }
+
+    @Test
+    public void parseCommand_eventUnlink() throws Exception {
+        String command = CommandType.EVENT + " " + EventUnlinkCommand.COMMAND_WORD + " "
+                + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 1";
+        assertTrue(parser.parseCommand(command) instanceof EventUnlinkCommand);
     }
 
     @Test
