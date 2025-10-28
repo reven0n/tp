@@ -42,10 +42,10 @@
     "address" : "Conference Room",
     "participants": [ {
       "email": "alexyeoh@example.com",
-      "status": "attending"
+      "status": "available"
     }, {
       "email": "berniceyu@example.com",
-      "status": "attending"
+      "status": "available"
     } ]
     }, {
     "name" : "Marathon",
@@ -53,10 +53,10 @@
     "address" : "Suntec City",
     "participants": [ {
       "email": "berniceyu@example.com",
-      "status": "attending"
+      "status": "available"
     }, {
       "email": "alexyeoh@example.com",
-      "status": "attending"
+      "status": "available"
     } ]
   } ]
 }

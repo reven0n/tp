@@ -9,7 +9,7 @@ import java.util.Set;
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.event.Status;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
@@ -155,13 +155,13 @@ public class ParserUtil {
      * @return the parsed Status object
      * @throws ParseException if the given {@code status} is invalid.
      */
-    public static Status parseStatus(String status) throws ParseException {
+    public static ParticipantStatus parseStatus(String status) throws ParseException {
         requireNonNull(status);
         String trimmedStatus = status.trim();
-        if (!Status.isValidStatus(trimmedStatus)) {
-            throw new ParseException(Status.MESSAGE_CONSTRAINTS);
+        if (!ParticipantStatus.isValidStatus(trimmedStatus)) {
+            throw new ParseException(ParticipantStatus.MESSAGE_CONSTRAINTS);
         }
 
-        return Status.fromString(trimmedStatus);
+        return ParticipantStatus.fromString(trimmedStatus);
     }
 }
