@@ -21,20 +21,17 @@ public class ContactFindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
-            + ": Finds all contacts whose fields contain the specified keywords (case-insensitive) "
-            + "and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]... OR --name KEYWORD [MORE_KEYWORDS]... "
-            + "[--email KEYWORD [MORE_KEYWORDS]...] [--tag KEYWORD [MORE_KEYWORDS]...]\n"
-            + "Search logic:\n"
-            + "  - Within each field: OR logic (matches any keyword)\n"
-            + "  - Between fields: AND logic (must match all specified fields)\n"
+            + ": Finds contacts by searching their fields (case-insensitive).\n"
+            + "Parameters: KEYWORD [MORE_KEYWORDS]... OR --FIELD KEYWORD [MORE_KEYWORDS]...\n"
+            + "Available fields: name, email, phone, address, tag\n"
             + "Examples:\n"
-            + "  " + CommandType.CONTACT + " " + COMMAND_WORD + " alice bob charlie\n"
-            + "  " + CommandType.CONTACT + " " + COMMAND_WORD + " --name alice\n"
-            + "  " + CommandType.CONTACT + " " + COMMAND_WORD + " --email gmail\n"
-            + "  " + CommandType.CONTACT + " " + COMMAND_WORD + " --tag friend\n"
-            + "  " + CommandType.CONTACT + " " + COMMAND_WORD + " --name alice bob --email gmail yahoo\n"
-            + "  (matches contacts where name contains 'alice' OR 'bob' AND email contains 'gmail' OR 'yahoo')";
+            + "  " + CommandType.CONTACT + " " + COMMAND_WORD + " alice\n"
+            + "  " + CommandType.CONTACT + " " + COMMAND_WORD + " --name alice bob\n"
+            + "  " + CommandType.CONTACT + " " + COMMAND_WORD + " --email gmail --tag friend";
+
+    public static final String MESSAGE_EMPTY_KEYWORD = "Search keywords cannot be empty.\n"
+            + "Please provide at least one keyword after the field prefix.\n"
+            + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " --name alice";
 
     private final Predicate<Contact> predicate;
 

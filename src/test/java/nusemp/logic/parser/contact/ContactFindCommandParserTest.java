@@ -69,8 +69,7 @@ public class ContactFindCommandParserTest {
 
     @Test
     public void parse_emptyFlagValue_throwsParseException() {
-        assertParseFailure(parser, " --email ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                ContactFindCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, " --email ", ContactFindCommand.MESSAGE_EMPTY_KEYWORD);
     }
 
 }
