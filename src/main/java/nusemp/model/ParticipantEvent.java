@@ -1,5 +1,7 @@
 package nusemp.model;
 
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.ParticipantStatus;
@@ -19,6 +21,7 @@ public class ParticipantEvent {
      * @param status The participation status of the contact in the event.
      */
     public ParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+        requireAllNonNull(contact, event, status);
         this.contact = contact;
         this.event = event;
         this.status = status;

@@ -10,11 +10,10 @@ import java.util.Map;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.ParticipantStatus;
+import nusemp.model.event.exceptions.ParticipantNotFoundException;
 
 /**
  * Maps Participants to Events and vise versa.
- * Maintains two maps for efficient lookups
- *
  */
 public class ParticipantMap {
 
@@ -211,12 +210,12 @@ public class ParticipantMap {
         requireAllNonNull(contact, event);
         Map<Event, ParticipantEvent> events = byContact.get(contact);
         if (events == null) {
-            return null;
+            throw new ParticipantNotFoundException();
         }
 
         ParticipantEvent participantEvent = events.get(event);
         if (participantEvent == null) {
-            return null;
+            throw new ParticipantNotFoundException();
         }
 
         return participantEvent.getStatus();
