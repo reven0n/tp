@@ -16,6 +16,8 @@ import nusemp.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new EventLinkCommand object.
  */
 public class EventLinkCommandParser implements Parser<EventLinkCommand> {
+    private static final String LINK_ALL_KEYWORD = "all";
+
     /**
      * Parses the given {@code String} of arguments in the context of the EventLinkCommand
      * and returns an EventLinkCommand object for execution.
@@ -39,17 +41,40 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT, PREFIX_CONTACT);
 
         Index eventIndex;
-        Index contactIndex;
-
-        // parse the indices
         try {
             eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
-            contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EventLinkCommand.MESSAGE_USAGE), pe);
+        }
+
+        String contactValue = argMultimap.getValue(PREFIX_CONTACT).get().trim();
+
+        if (LINK_ALL_KEYWORD.equalsIgnoreCase(contactValue)) {
+            return new EventLinkCommand(eventIndex);
+        }
+
+        Index contactIndex;
+        try {
+            contactIndex = ParserUtil.parseIndex(contactValue);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EventLinkCommand.MESSAGE_USAGE), pe);
         }
 
         return new EventLinkCommand(eventIndex, contactIndex);
+
+//        Index contactIndex;
+//
+//        // parse the indices
+//        try {
+//            eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
+//            contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
+//        } catch (ParseException pe) {
+//            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+//                    EventLinkCommand.MESSAGE_USAGE), pe);
+//        }
+//
+//        return new EventLinkCommand(eventIndex, contactIndex);
     }
 }
