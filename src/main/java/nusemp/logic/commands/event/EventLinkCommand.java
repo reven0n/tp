@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nusemp.commons.core.index.Index;
+import nusemp.commons.util.ToStringBuilder;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.Command;
 import nusemp.logic.commands.CommandResult;
@@ -171,5 +172,14 @@ public class EventLinkCommand extends Command {
 
         return eventIndex.equals(otherCommand.eventIndex)
                 && contactIndex.equals(otherCommand.contactIndex);
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("eventIndex", eventIndex)
+                .add("contactIndex", contactIndex)
+                .add("unlinkAll", linkAll)
+                .toString();
     }
 }

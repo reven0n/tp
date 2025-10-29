@@ -1,10 +1,12 @@
 package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.logic.commands.event.EventLinkCommand.MESSAGE_DUPLICATE_PARTICIPANT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import nusemp.commons.core.index.Index;
@@ -34,10 +36,13 @@ public class EventUnlinkCommand extends Command {
             + PREFIX_CONTACT + " 2";
 
     public static final String MESSAGE_SUCCESS = "Successfully unlinked contact from event:\n%1$s";
+    public static final String MESSAGE_SUCCESS_ALL = "Successfully unlinked %1$d contact(s) from event";
     public static final String MESSAGE_CONTACT_NOT_FOUND = "Error unlinking contact: contact not found in event";
+    public static final String MESSAGE_NO_CONTACTS_TO_UNLINK = "No contacts available to unlink";
 
     private final Index eventIndex;
     private final Index contactIndex;
+    private final boolean unlinkAll;
 
     /**
      * Creates an EventUnlinkCommand to unlink the specified contacts from an event
@@ -47,6 +52,14 @@ public class EventUnlinkCommand extends Command {
         requireNonNull(contactIndexes);
         this.eventIndex = eventIndex;
         this.contactIndex = contactIndexes;
+        this.unlinkAll = false;
+    }
+
+    public EventUnlinkCommand(Index eventIndex) {
+        requireNonNull(eventIndex);
+        this.eventIndex = eventIndex;
+        this.contactIndex = null;
+        this.unlinkAll = true;
     }
 
     @Override
@@ -60,28 +73,77 @@ public class EventUnlinkCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
 
+        Event eventToEdit = lastShownEventList.get(eventIndex.getZeroBased());
+
+        if (unlinkAll) {
+            return executeUnlinkAll(model, eventToEdit);
+        } else {
+            return executeUnlinkSingle(model, eventToEdit);
+        }
+
+
+    }
+
+    private CommandResult executeUnlinkSingle(Model model, Event eventToUnlink) throws CommandException {
+        List<Contact> lastShownContactList = model.getFilteredContactList();
+
         if (contactIndex.getZeroBased() >= lastShownContactList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
         }
 
-        Event eventToEdit = lastShownEventList.get(eventIndex.getZeroBased());
         Contact contactToUnlink = lastShownContactList.get(contactIndex.getZeroBased());
 
-        // Check if participant event exists
-        if (!model.hasParticipant(contactToUnlink, eventToEdit)) {
-            throw new CommandException(MESSAGE_CONTACT_NOT_FOUND);
+        if (!model.hasParticipant(contactToUnlink, eventToUnlink)) {
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
+                    contactToUnlink.getEmail()));
         }
 
-        // unlink both sides
         try {
-            model.removeParticipant(contactToUnlink, eventToEdit);
+            model.removeParticipant(contactToUnlink, eventToUnlink);
             model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
             return new CommandResult(String.format(MESSAGE_SUCCESS, contactToUnlink.getName().toString()));
         } catch (Exception e) {
-            throw new CommandException("An error occurred while unlinking the contact from the event.");
+            throw new CommandException("Error unlinking participant from event.");
+        }
+    }
+
+    private CommandResult executeUnlinkAll(Model model, Event eventToUnlink) throws CommandException {
+        List<Contact> filteredContactList = model.getFilteredContactList();
+
+        if (filteredContactList.isEmpty()) {
+            throw new CommandException(MESSAGE_NO_CONTACTS_TO_UNLINK);
         }
 
+        int unlinkedCount = 0;
+        List<String> notLinkedContacts = new ArrayList<>();
+
+        for (Contact contact : filteredContactList) {
+            if (model.hasParticipant(contact, eventToUnlink)) {
+                try {
+                    model.removeParticipant(contact, eventToUnlink);
+                    unlinkedCount++;
+                } catch (Exception e) {
+                    // Continue with next contact if one fails
+                }
+            } else {
+                notLinkedContacts.add(contact.getEmail().toString());
+            }
+        }
+
+        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+
+        if (unlinkedCount == 0) {
+            throw new CommandException("No contacts were unlinked from the event");
+        }
+
+        String resultMessage = String.format(MESSAGE_SUCCESS_ALL, unlinkedCount);
+        if (!notLinkedContacts.isEmpty()) {
+            resultMessage += "\nSkipped contacts not linked: " + String.join(", ", notLinkedContacts);
+        }
+
+        return new CommandResult(resultMessage);
     }
+
 
     @Override
     public boolean equals(Object other) {
@@ -94,6 +156,15 @@ public class EventUnlinkCommand extends Command {
         }
 
         EventUnlinkCommand otherCommand = (EventUnlinkCommand) other;
+
+        if (unlinkAll != otherCommand.unlinkAll) {
+            return false;
+        }
+
+        if (unlinkAll) {
+            return eventIndex.equals(otherCommand.eventIndex);
+        }
+
         return eventIndex.equals(otherCommand.eventIndex)
                 && contactIndex.equals(otherCommand.contactIndex);
     }
@@ -103,6 +174,7 @@ public class EventUnlinkCommand extends Command {
         return new ToStringBuilder(this)
                 .add("eventIndex", eventIndex)
                 .add("contactIndex", contactIndex)
+                .add("unlinkAll", unlinkAll)
                 .toString();
     }
 }

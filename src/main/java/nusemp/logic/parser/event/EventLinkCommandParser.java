@@ -1,6 +1,7 @@
 package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.parser.CliSyntax.LINK_ALL_KEYWORD;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 
@@ -16,8 +17,6 @@ import nusemp.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new EventLinkCommand object.
  */
 public class EventLinkCommandParser implements Parser<EventLinkCommand> {
-    private static final String LINK_ALL_KEYWORD = "all";
-
     /**
      * Parses the given {@code String} of arguments in the context of the EventLinkCommand
      * and returns an EventLinkCommand object for execution.
