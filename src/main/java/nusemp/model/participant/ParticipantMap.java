@@ -11,6 +11,8 @@ import nusemp.model.contact.Contact;
 import nusemp.model.contact.ContactKey;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventKey;
+import nusemp.model.participant.exceptions.DuplicateParticipantException;
+import nusemp.model.participant.exceptions.ParticipantNotFoundException;
 
 /**
  * Maps contacts and event to their respective Participant links.
@@ -52,6 +54,10 @@ public class ParticipantMap implements ReadOnlyParticipantMap {
         ContactKey c = contact.getPrimaryKey();
         EventKey e = event.getPrimaryKey();
         Participant participant = new Participant(contact, event, status);
+
+        if (hasParticipant(contact, event)) {
+            throw new DuplicateParticipantException();
+        }
 
         if (!byContact.containsKey(c)) {
             byContact.put(c, new HashMap<>());

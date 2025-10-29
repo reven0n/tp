@@ -17,7 +17,7 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.participant.ParticipantNotFoundException;
+import nusemp.model.participant.exceptions.ParticipantNotFoundException;
 import nusemp.model.participant.ParticipantStatus;
 
 /**
