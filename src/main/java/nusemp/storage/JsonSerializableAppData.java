@@ -12,7 +12,6 @@ import nusemp.model.AppData;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
 import nusemp.model.event.ParticipantStatus;
 
 /**
@@ -102,28 +101,33 @@ class JsonSerializableAppData {
      * Populates the event lists in contacts based on event participants.
      * For each event, adds the event to all its participants' event lists.
      */
-    private void populateContactEventLists(AppData appData) {
+    private void populateContactEventLists(AppData appData) throws IllegalValueException {
         // Reconstruct participant mappings
         for (JsonAdaptedParticipantMapping mapping : participantMappings) {
-            Contact contact = findContactByEmail(appData, mapping.getContactEmail());
-            Event event = findEventByName(appData, mapping.getEventName());
-            ParticipantStatus status = ParticipantStatus.fromString(mapping.getStatus());
+            String contactEmail = mapping.getContactEmail();
+            String eventName = mapping.getEventName();
+            String statusStr = mapping.getStatus();
 
-            if (contact != null && event != null) {
-                appData.addParticipantEvent(contact, event, status);
-            }
+            Contact contact = findContactByEmail(appData, contactEmail);
+            Event event = findEventByName(appData, eventName);
+            ParticipantStatus status = ParticipantStatus.fromString(statusStr);
+
+            // Add the participant mapping
+            appData.addParticipantEvent(contact, event, status);
         }
     }
 
     private Contact findContactByEmail(AppData appData, String email) {
-        return appData.getContactList().stream()
+        return appData.getContactList()
+                .stream()
                 .filter(c -> c.getEmail().value.equals(email))
                 .findFirst()
                 .orElse(null);
     }
 
     private Event findEventByName(AppData appData, String name) {
-        return appData.getEventList().stream()
+        return appData.getEventList()
+                .stream()
                 .filter(e -> e.getName().value.equals(name))
                 .findFirst()
                 .orElse(null);

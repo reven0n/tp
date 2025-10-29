@@ -68,6 +68,21 @@ public class AppData implements ReadOnlyAppData {
     }
 
     /**
+     * Populates the participant map from the given data.
+     * This should be called after contacts and events are loaded.
+     */
+    public void setParticipantMaps(ParticipantMap participantMap) {
+        for (Contact contact : contacts) {
+            List<Event> contactEvents = participantMap.getEventsForContact(contact);
+            for (Event event : contactEvents) {
+                ParticipantStatus status = participantMap.getParticipantStatus(contact, event);
+                this.participantMap.addParticipantEvent(contact, event, status);
+            }
+        }
+    }
+
+
+    /**
      * Resets the existing data of this {@code AppData} with {@code newData}.
      */
     public void resetData(ReadOnlyAppData newData) {
@@ -75,6 +90,8 @@ public class AppData implements ReadOnlyAppData {
 
         setContacts(newData.getContactList());
         setEvents(newData.getEventList());
+        setParticipantMaps(newData.getParticipantMap());
+
     }
 
     //// contact-level operations

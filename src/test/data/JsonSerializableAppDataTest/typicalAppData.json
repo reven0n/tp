@@ -58,5 +58,22 @@
       "email": "alexyeoh@example.com",
       "status": "available"
     } ]
+  } ],
+  "participantMappings" : [ {
+    "contactEmail" : "alexyeoh@example.com",
+    "eventName" : "Team Meeting",
+    "status" : "available"
+  }, {
+    "contactEmail" : "berniceyu@example.com",
+    "eventName" : "Team Meeting",
+    "status" : "available"
+  }, {
+    "contactEmail" : "berniceyu@example.com",
+    "eventName" : "Marathon",
+    "status" : "available"
+  }, {
+    "contactEmail" : "alexyeoh@example.com",
+    "eventName" : "Marathon",
+    "status" : "available"
   } ]
 }

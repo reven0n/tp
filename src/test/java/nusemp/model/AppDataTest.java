@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -22,6 +23,7 @@ import javafx.collections.ObservableList;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.exceptions.DuplicateContactException;
 import nusemp.model.event.Event;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.testutil.ContactBuilder;
 
 public class AppDataTest {
@@ -113,6 +115,26 @@ public class AppDataTest {
         @Override
         public ObservableList<Event> getEventList() {
             return events;
+        }
+
+        @Override
+        public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
+            return null;
+        }
+
+        @Override
+        public List<Event> getEventsForContact(Contact contact) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public List<Contact> getContactsForEvent(Event event) {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public ParticipantMap getParticipantMap() {
+            return new ParticipantMap();
         }
     }
 

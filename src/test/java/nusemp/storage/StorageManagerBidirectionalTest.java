@@ -43,24 +43,19 @@ public class StorageManagerBidirectionalTest {
         ReadOnlyAppData retrieved = storageManager.readAppData(appdataPath).get();
         AppData appData = new AppData(retrieved);
 
-        // Verify Alex Yeoh has events
         Contact alex = appData.getContactList().stream()
                 .filter(c -> c.getEmail().value.equals("alexyeoh@example.com"))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow();
 
-        assertEquals(2, alex.getEvents().size());
-        assertTrue(alex.hasEventWithName("Team Meeting"));
-        assertTrue(alex.hasEventWithName("Marathon"));
-
-        // Verify events have participants
         Event teamMeeting = appData.getEventList().stream()
                 .filter(e -> e.getName().value.equals("Team Meeting"))
                 .findFirst()
-                .orElse(null);
+                .orElseThrow();
 
-        assertEquals(2, teamMeeting.getParticipants().size());
-        assertTrue(teamMeeting.hasContactWithEmail("alexyeoh@example.com"));
+        // Verify bidirectional linking through ParticipantMap
+        assertTrue(appData.getEventsForContact(alex).contains(teamMeeting));
+        assertTrue(appData.getContactsForEvent(teamMeeting).contains(alex));
     }
 
     @Test

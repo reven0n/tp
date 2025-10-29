@@ -49,6 +49,9 @@ public class Event {
         this.participants.addAll(participants);
     }
 
+    /**
+     * Convenience constructor without participants
+     */
     public Event(Name name, Date date, Address address, EventStatus status, Set<Tag> tags) {
         requireAllNonNull(name, date, address, status);
         this.name = name;

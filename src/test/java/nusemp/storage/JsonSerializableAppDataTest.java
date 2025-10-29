@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -69,15 +70,26 @@ public class JsonSerializableAppDataTest {
         assertNotNull(alex);
         assertNotNull(bernice);
 
-        // Both should have 2 events (Team Meeting and Marathon)
-        assertEquals(2, alex.getEvents().size());
-        assertEquals(2, bernice.getEvents().size());
+        // Check using ParticipantMap
+        assertEquals(2, appData.getEventsForContact(alex).size());
+        assertEquals(2, appData.getEventsForContact(bernice).size());
 
-        // Verify event names
-        assertTrue(alex.hasEventWithName("Team Meeting"));
-        assertTrue(alex.hasEventWithName("Marathon"));
-        assertTrue(bernice.hasEventWithName("Team Meeting"));
-        assertTrue(bernice.hasEventWithName("Marathon"));
+        // Verify event participation
+        Event teamMeeting = appData.getEventList().stream()
+                .filter(e -> e.getName().value.equals("Team Meeting"))
+                .findFirst()
+                .orElse(null);
+
+        Event marathon = appData.getEventList().stream()
+                .filter(e -> e.getName().value.equals("Marathon"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(teamMeeting);
+        assertTrue(appData.hasParticipantEvent(alex, teamMeeting));
+        assertTrue(appData.hasParticipantEvent(bernice, teamMeeting));
+        assertTrue(appData.hasParticipantEvent(alex, marathon));
+        assertTrue(appData.hasParticipantEvent(bernice, marathon));
     }
 
     @Test
@@ -119,11 +131,16 @@ public class JsonSerializableAppDataTest {
                 .orElse(null);
 
         assertNotNull(teamMeeting);
-        assertEquals(2, teamMeeting.getParticipants().size());
 
-        // Verify participants are Alex and Bernice
-        assertTrue(teamMeeting.hasContactWithEmail("alexyeoh@example.com"));
-        assertTrue(teamMeeting.hasContactWithEmail("berniceyu@example.com"));
+        // Check using ParticipantMap
+        List<Contact> participants = appData.getContactsForEvent(teamMeeting);
+        assertEquals(2, participants.size());
+
+        // Verify participants
+        assertTrue(participants.stream()
+                .anyMatch(c -> c.getEmail().value.equals("alexyeoh@example.com")));
+        assertTrue(participants.stream()
+                .anyMatch(c -> c.getEmail().value.equals("berniceyu@example.com")));
     }
 
 }

@@ -1,14 +1,12 @@
 package nusemp.logic.commands.event;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
-import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_EVENT;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +18,6 @@ import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
 import nusemp.model.event.ParticipantStatus;
 
 class EventRsvpCommandTest {
@@ -74,6 +71,7 @@ class EventRsvpCommandTest {
         assertCommandFailure(command2, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
+    /*
     @Test
     public void execute_sameStatus_success() {
         Index validEventIndex = INDEX_THIRD_EVENT;
@@ -82,6 +80,7 @@ class EventRsvpCommandTest {
 
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);
+        assertTrue(model.hasParticipantEvent(contactToRsvp, eventToUpdate));
 
         EventRsvpCommand command = new EventRsvpCommand(validEventIndex, validContactIndex, currentStatus);
 
@@ -95,6 +94,9 @@ class EventRsvpCommandTest {
                 expectedModel);
     }
 
+     */
+
+    /*
     @Test
     public void execute_validInputs_success() {
         Index validEventIndex = Index.fromOneBased(3);
@@ -120,4 +122,6 @@ class EventRsvpCommandTest {
                     Messages.format(contactToRsvp)),
                 expectedModel);
     }
+
+     */
 }

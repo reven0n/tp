@@ -1,13 +1,10 @@
 package nusemp.storage;
 
-import static nusemp.model.util.SampleDataUtil.EMPTY_EVENT_LIST;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -18,11 +15,8 @@ import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventStatus;
-import nusemp.model.event.Participant;
-import nusemp.model.event.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
-import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
 
@@ -54,8 +48,7 @@ class JsonAdaptedEvent {
     @JsonCreator
     public JsonAdaptedEvent(@JsonProperty("name") String name, @JsonProperty("date") String date,
             @JsonProperty("address") String address, @JsonProperty("status") String status,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags,
-            @JsonProperty("participants") List<JsonAdaptedParticipant> participants) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.date = date;
         this.address = address;
