@@ -3,9 +3,6 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Scene?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
@@ -14,96 +11,84 @@
 <?import javafx.stage.Stage?>
 <?import javafx.scene.control.Button?>
 
-<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="NUS Event Mailer Pro" type="Stage" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <icons>
-        <Image url="@/images/address_book_32.png" />
-    </icons>
-    <scene>
-        <Scene>
-            <stylesheets>
-                <URL value="@DarkTheme.css" />
-                <URL value="@Extensions.css" />
-            </stylesheets>
-            <StackPane>
-                <VBox>
-                    <HBox VBox.vgrow="ALWAYS">
-                        <children>
-                            <VBox fx:id="sidebar" prefWidth="80" alignment="CENTER" spacing="15">
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.shape.SVGPath?>
 
-                                <children>
+<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="NUS Event Mailer Pro" type="Stage"
+         xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <scene>
+    <Scene>
+      <stylesheets>
+        <URL value="@../css/DarkTheme.css"/>
+        <URL value="@../css/Extensions.css"/>
+      </stylesheets>
+      <StackPane>
+        <VBox>
+          <HBox VBox.vgrow="ALWAYS">
+            <VBox fx:id="sidebar" prefWidth="64" alignment="CENTER" spacing="15">
 
-                                    <VBox spacing="15" alignment="CENTER" VBox.vgrow="NEVER">
-                                        <VBox.margin>
-                                            <Insets top="15" />
-                                        </VBox.margin>
-                                        <children>
-                                            <Button text="⌘" onAction="#handleTerminal" styleClass="sidebar-button"/>
-                                            <Button text="?" onAction="#handleHelp" styleClass="sidebar-button"/>
-                                            <Button text="×" onAction="#handleExit" styleClass="sidebar-button"/>
-                                        </children>
-                                    </VBox>
+              <Button fx:id="contactsToggle" onAction="#handleContactViewToggle" styleClass="sidebar-button">
+                <VBox.margin>
+                  <Insets top="15"/>
+                </VBox.margin>
+                <tooltip>
+                  <Tooltip text="View Contacts"/>
+                </tooltip>
+              </Button>
+              <Button fx:id="eventsToggle" onAction="#handleEventViewToggle" styleClass="sidebar-button">
+                <tooltip>
+                  <Tooltip text="View Events"/>
+                </tooltip>
+              </Button>
 
-                                    <!-- Spacer to push theme button to bottom -->
-                                    <Region VBox.vgrow="ALWAYS"/>
+              <!-- Spacer to push theme button to bottom -->
+              <Region VBox.vgrow="ALWAYS"/>
 
-                                    <!-- Theme toggle button anchored to bottom -->
-                                    <Button fx:id="themeToggle" onAction="#handleThemeToggle" styleClass="sidebar-button">
-                                        <VBox.margin>
-                                            <Insets bottom="15" />
-                                        </VBox.margin>
-                                    </Button>
-                                </children>
-                            </VBox>
-                            <MenuBar fx:id="menuBar" visible="false" managed="false">
-                                <Menu mnemonicParsing="false" text="File">
-                                    <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-                                </Menu>
-                                <Menu mnemonicParsing="false" text="Help">
-                                    <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-                                </Menu>
-                            </MenuBar>
+              <!-- Theme toggle button anchored to bottom -->
+              <Button onAction="#handleHelp" styleClass="sidebar-button">
+                <graphic>
+                  <SVGPath styleClass="icon"
+                           content="M18 9C18 4.02978 13.9702 0 9 0C4.02978 0 0 4.02978 0 9C0 13.9702 4.02978 18 9 18C13.9702 18 18 13.9702 18 9ZM10.0767 10.9248H7.51465V10.6685C7.51465 10.2334 7.56152 9.87891 7.66113 9.60645C7.76074 9.33252 7.90723 9.08643 8.10205 8.85937C8.29834 8.63379 8.73926 8.23975 9.42187 7.67139C9.78516 7.37402 9.96826 7.10303 9.96826 6.85693C9.96826 6.60645 9.89356 6.41602 9.74854 6.27832C9.60205 6.14209 9.38086 6.07324 9.0835 6.07324C8.7627 6.07324 8.50049 6.18018 8.29248 6.38965C8.08301 6.60059 7.94971 6.97119 7.89111 7.49707L5.27197 7.17187C5.36133 6.20947 5.71143 5.43457 6.31934 4.8501C6.93018 4.26123 7.86475 3.96973 9.12305 3.96973C10.1045 3.96973 10.8955 4.1748 11.4976 4.5835C12.3179 5.13721 12.7251 5.87549 12.7251 6.79541C12.7251 7.1792 12.6182 7.54834 12.4087 7.90283C12.1978 8.26025 11.7656 8.69238 11.1123 9.20361C10.6597 9.56689 10.3726 9.854 10.2539 10.0723C10.1353 10.2891 10.0767 10.5747 10.0767 10.9248ZM7.42383 11.6089H10.1719V14.0303H7.42383V11.6089Z"/>
+                </graphic>
+                <tooltip>
+                  <Tooltip text="Open User Guide"/>
+                </tooltip>
+              </Button>
+              <Button fx:id="themeToggle" onAction="#handleThemeToggle" styleClass="sidebar-button">
+                <tooltip>
+                  <Tooltip text="Change Theme"/>
+                </tooltip>
+              </Button>
+              <Button onAction="#handleTerminal" styleClass="sidebar-button">
+                <graphic>
+                  <SVGPath styleClass="icon"
+                           content="M15.1978 13.5822H16.7984C17.6762 13.5822 18.4325 13.8994 19.0594 14.5303C19.6866 15.1647 20 15.9169 20 16.7913C20 17.6653 19.6866 18.4178 19.0594 19.0522C18.4325 19.6828 17.68 20 16.8022 20C15.9319 20 15.1794 19.6866 14.5487 19.0594C13.9178 18.4325 13.6044 17.6762 13.6044 16.7984V15.1978H10.3956V16.7984C10.3956 17.6653 10.0822 18.4141 9.455 19.0484C8.82812 19.6828 8.07563 20 7.19781 20C6.33469 20 5.58594 19.6866 4.95156 19.0631C4.31719 18.4362 4 17.68 4 16.7913C4 15.9097 4.31719 15.1534 4.94781 14.5266C5.57875 13.8959 6.3275 13.5822 7.20156 13.5822H8.80219V10.4178H7.20156C6.3275 10.4178 5.57875 10.1041 4.94781 9.47344C4.31719 8.84656 4 8.09031 4 7.20875C4 6.3275 4.31344 5.57125 4.94406 4.94406C5.575 4.31344 6.3275 4 7.19781 4C8.06813 4 8.82063 4.31344 9.45125 4.94063C10.0822 5.5675 10.3956 6.32375 10.3956 7.20156V8.80219H13.6044V7.20156C13.6044 6.32375 13.9178 5.5675 14.5487 4.94063C15.1794 4.31344 15.9319 4 16.8022 4C17.6725 4 18.425 4.31344 19.0559 4.94406C19.6866 5.57125 20 6.3275 20 7.20875C20 8.08312 19.6866 8.83531 19.0594 9.46969C18.4325 10.1006 17.6762 10.4178 16.7984 10.4178H15.1978V13.5822ZM15.1978 8.80219H16.8022C17.245 8.80219 17.6209 8.64375 17.9344 8.33C18.2481 8.01281 18.4066 7.64031 18.4066 7.20875C18.4066 6.77719 18.2481 6.40469 17.9344 6.0875C17.6209 5.77406 17.245 5.61563 16.8022 5.61563C16.3634 5.61563 15.9834 5.77031 15.67 6.08406C15.3563 6.3975 15.1978 6.77 15.1978 7.20875V8.80219ZM8.80219 15.1978H7.19781C6.75875 15.1978 6.37906 15.3563 6.06562 15.67C5.75187 15.9872 5.59344 16.3597 5.59344 16.7913C5.59344 17.2228 5.75187 17.5953 6.06562 17.9125C6.37906 18.2259 6.75875 18.3847 7.19781 18.3847C7.64031 18.3847 8.01656 18.2259 8.33 17.9125C8.64344 17.5953 8.80219 17.2228 8.80219 16.7913V15.1978ZM8.80219 8.80219V7.20875C8.80219 6.77719 8.64344 6.40469 8.32656 6.0875C8.00562 5.77406 7.63313 5.61563 7.19781 5.61563C6.77 5.61563 6.3975 5.77031 6.07656 6.08031C5.75562 6.38625 5.59344 6.7625 5.59344 7.20875C5.59344 7.64781 5.75187 8.02031 6.06562 8.33375C6.37906 8.64719 6.75875 8.80219 7.19781 8.80219H8.80219ZM15.1978 15.1978V16.7913C15.1978 17.23 15.3562 17.6025 15.6734 17.9159C15.9944 18.2297 16.3669 18.3847 16.8022 18.3847C17.2375 18.3847 17.61 18.2297 17.9309 17.9159C18.2481 17.6025 18.4066 17.23 18.4066 16.7913C18.4066 16.3522 18.2481 15.9797 17.9344 15.6663C17.6209 15.3528 17.245 15.1978 16.8022 15.1978H15.1978ZM13.6044 13.5822V10.4178H10.3956V13.5822H13.6044Z"/>
+                </graphic>
+                <VBox.margin>
+                  <Insets bottom="15"/>
+                </VBox.margin>
+                <tooltip>
+                  <Tooltip text="Open Command Terminal"/>
+                </tooltip>
+              </Button>
+            </VBox>
+            <VBox fx:id="contactList" styleClass="pane-with-border" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+              <StackPane fx:id="contactListPanelPlaceholder" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
+            </VBox>
+          </HBox>
+          <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER"/>
+        </VBox>
 
-                            <StackPane HBox.hgrow="ALWAYS">
-                                <VBox fx:id="contactList" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
-                                    <padding>
-                                        <Insets bottom="10" left="10" right="10" top="10" />
-                                    </padding>
-                                    <StackPane fx:id="contactListPanelPlaceholder" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"/>
-                                </VBox>
-
-                                <HBox fx:id="toggleSlider" styleClass="toggle-slider"
-                                      StackPane.alignment="TOP_CENTER" maxWidth="160" maxHeight="40" spacing="0">
-                                    <StackPane.margin>
-                                        <Insets top="15" />
-                                    </StackPane.margin>
-
-                                    <Button fx:id="contactsToggle"  styleClass="toggle-button, toggle-active"
-                                            maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleContactViewToggle"/>
-                                    <Button fx:id="eventsToggle"  styleClass="toggle-button, toggle-inactive"
-                                            maxWidth="80" maxHeight="40" HBox.hgrow="ALWAYS" onAction="#handleEventViewToggle"/>
-                                </HBox>
-                            </StackPane>
-                        </children>
-                    </HBox>
-                    <StackPane fx:id="statusbarPlaceholder" alignment="BOTTOM_CENTER" VBox.vgrow="NEVER" />
-                </VBox>
-
-                <!-- Terminal Overlay -->
-                <StackPane fx:id="terminalOverlay" visible="false" managed="false" styleClass="terminal-overlay">
-                    <VBox alignment="CENTER" maxWidth="600" maxHeight="400" styleClass="terminal-window">
-                        <StackPane fx:id="terminalResultDisplayPlaceholder" minHeight="250" styleClass="terminal-result-display" VBox.vgrow="ALWAYS">
-                            <padding>
-                                <Insets bottom="10" left="15" right="15" top="15" />
-                            </padding>
-                        </StackPane>
-                        <StackPane fx:id="terminalCommandBoxPlaceholder" styleClass="terminal-command-box" VBox.vgrow="NEVER">
-                            <padding>
-                                <Insets bottom="15" left="15" right="15" top="10" />
-                            </padding>
-                        </StackPane>
-                    </VBox>
-                </StackPane>
-            </StackPane>
-        </Scene>
-    </scene>
+        <!-- Terminal Overlay -->
+        <Region fx:id="terminalBackdrop" StackPane.alignment="BOTTOM_CENTER" maxWidth="Infinity" maxHeight="400"
+                visible="false" managed="false" onMouseClicked="#handleTerminal"/>
+        <VBox fx:id="terminalWindow" StackPane.alignment="BOTTOM_CENTER" maxWidth="800" maxHeight="250"
+              visible="false" managed="false">
+          <StackPane fx:id="commandBoxPlaceholder" styleClass="terminal-command-box" VBox.vgrow="NEVER" />
+          <StackPane fx:id="resultDisplayPlaceholder" minHeight="200" styleClass="terminal-result-display"
+                     VBox.vgrow="ALWAYS" />
+        </VBox>
+      </StackPane>
+    </Scene>
+  </scene>
 </fx:root>
