@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -15,7 +16,7 @@ import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
+import nusemp.model.event.ParticipantStatus;
 
 /**
  * Represents the in-memory model of the app data.
@@ -101,13 +102,6 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteContact(Contact target) {
-        // Remove contact from all linked events
-        for (Event event : target.getEvents()) {
-            if (hasEvent(event)) {
-                Event updatedEvent = event.withoutContact(target);
-                appData.setEvent(event, updatedEvent);
-            }
-        }
         appData.removeContact(target);
     }
 
@@ -121,11 +115,6 @@ public class ModelManager implements Model {
     public void setContact(Contact target, Contact editedContact) {
         requireAllNonNull(target, editedContact);
         appData.setContact(target, editedContact);
-
-        // Update all events that had the old contact as participant
-        if (!target.getEmail().equals(editedContact.getEmail())) {
-            updateEventsForEmailChange(target, editedContact);
-        }
     }
 
     /**
@@ -180,13 +169,6 @@ public class ModelManager implements Model {
     @Override
     public void deleteEvent(Event target) {
         // Remove event from all linked contacts
-        for (Participant participant : target.getParticipants()) {
-            Contact contact = participant.getContact();
-            if (hasContact(contact)) {
-                Contact updatedContact = contact.removeEvent(target);
-                appData.setContact(contact, updatedContact);
-            }
-        }
         appData.removeEvent(target);
     }
 
@@ -218,6 +200,45 @@ public class ModelManager implements Model {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
+
+    //=========== Participant Map Operations ===========================================================
+    @Override
+    public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+        requireAllNonNull(contact, event, status);
+        appData.addParticipantEvent(contact, event, status);
+        updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+    }
+
+    @Override
+    public void removeParticipantEvent(Contact contact, Event event) {
+        requireAllNonNull(contact, event);
+        appData.removeParticipantEvent(contact, event);
+    }
+
+    @Override
+    public boolean hasParticipantEvent(Contact contact, Event event) {
+        requireAllNonNull(contact, event);
+        return appData.hasParticipantEvent(contact, event);
+    }
+
+    @Override
+    public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
+        requireAllNonNull(contact, event);
+        return appData.getParticipantStatus(contact, event);
+    }
+
+    @Override
+    public List<Event> getEventsForContact(Contact contact) {
+        requireNonNull(contact);
+        return appData.getEventsForContact(contact);
+    }
+
+    @Override
+    public List<Contact> getContactsForEvent(Event event) {
+        requireNonNull(event);
+        return appData.getContactsForEvent(event);
+    }
+
 
     //=========== Lookup Helper Methods ========================================================
 

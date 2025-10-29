@@ -3,45 +3,50 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-  <GridPane HBox.hgrow="ALWAYS">
-    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" />
-    </columnConstraints>
-    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
-      <padding>
-        <Insets top="5" right="5" bottom="5" left="15" />
-      </padding>
-      <HBox spacing="0.5" alignment="CENTER_LEFT">
-        <Label fx:id="id" styleClass="cell_big_label">
-          <minWidth>
-            <!-- Ensures that the label text is never truncated -->
-            <Region fx:constant="USE_PREF_SIZE" />
-          </minWidth>
-        </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true" />
-      </HBox>
-      <FlowPane fx:id="tags" />
-      <Label fx:id="date" styleClass="cell_small_label" wrapText="true" text="\$date" />
-      <Label fx:id="address" styleClass="cell_small_label" wrapText="true" text="\$address" />
-      <FlowPane fx:id="people" HBox.hgrow="ALWAYS"/>
-      <Label fx:id="exportContent" visible="false"/>
-    </VBox>
-  </GridPane>
-
-  <!-- Copy Button positioned at top right -->
-  <StackPane alignment="TOP_RIGHT" HBox.hgrow="NEVER">
+<?import javafx.scene.shape.SVGPath?>
+<StackPane id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+           alignment="TOP_RIGHT">
+  <VBox alignment="CENTER_LEFT" spacing="3">
     <padding>
-      <Insets top="10" right="10" />
+      <Insets top="10" right="15" bottom="10" left="15"/>
     </padding>
-    <Button fx:id="copyButton" onAction="#handleCopyEmails" styleClass="copy-button" />
-  </StackPane>
-</HBox>
+    <HBox fx:id="nameBox" spacing="0.5">
+      <Label fx:id="id" styleClass="cell_big_label">
+        <minWidth>
+          <!-- Ensures that the label text is never truncated -->
+          <Region fx:constant="USE_PREF_SIZE"/>
+        </minWidth>
+      </Label>
+      <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true"/>
+    </HBox>
+    <FlowPane fx:id="tags" minWidth="0"/>
+    <FlowPane minWidth="0" hgap="10" vgap="3">
+      <padding>
+        <Insets top="3" bottom="3"/>
+      </padding>
+      <HBox fx:id="dateBox" spacing="3" alignment="CENTER_LEFT">
+        <SVGPath styleClass="icon_small"
+                 content="M5 22C4.45 22 3.97917 21.8042 3.5875 21.4125C3.19583 21.0208 3 20.55 3 20V6C3 5.45 3.19583 4.97917 3.5875 4.5875C3.97917 4.19583 4.45 4 5 4H6V2H8V4H16V2H18V4H19C19.55 4 20.0208 4.19583 20.4125 4.5875C20.8042 4.97917 21 5.45 21 6V20C21 20.55 20.8042 21.0208 20.4125 21.4125C20.0208 21.8042 19.55 22 19 22H5ZM5 20H19V10H5V20ZM5 8H19V6H5V8Z"/>
+        <Label fx:id="date" styleClass="cell_small_label" wrapText="true" text="\$date"/>
+      </HBox>
+      <HBox fx:id="addressBox" spacing="3" alignment="CENTER_LEFT">
+        <SVGPath styleClass="icon_small"
+                 content="M12 12C12.55 12 13.0208 11.8042 13.4125 11.4125C13.8042 11.0208 14 10.55 14 10C14 9.45 13.8042 8.97917 13.4125 8.5875C13.0208 8.19583 12.55 8 12 8C11.45 8 10.9792 8.19583 10.5875 8.5875C10.1958 8.97917 10 9.45 10 10C10 10.55 10.1958 11.0208 10.5875 11.4125C10.9792 11.8042 11.45 12 12 12ZM12 19.35C14.0333 17.4833 15.5417 15.7875 16.525 14.2625C17.5083 12.7375 18 11.3833 18 10.2C18 8.38333 17.4208 6.89583 16.2625 5.7375C15.1042 4.57917 13.6833 4 12 4C10.3167 4 8.89583 4.57917 7.7375 5.7375C6.57917 6.89583 6 8.38333 6 10.2C6 11.3833 6.49167 12.7375 7.475 14.2625C8.45833 15.7875 9.96667 17.4833 12 19.35ZM12 22C9.31667 19.7167 7.3125 17.5958 5.9875 15.6375C4.6625 13.6792 4 11.8667 4 10.2C4 7.7 4.80417 5.70833 6.4125 4.225C8.02083 2.74167 9.88333 2 12 2C14.1167 2 15.9792 2.74167 17.5875 4.225C19.1958 5.70833 20 7.7 20 10.2C20 11.8667 19.3375 13.6792 18.0125 15.6375C16.6875 17.5958 14.6833 19.7167 12 22Z"/>
+        <Label fx:id="address" styleClass="cell_small_label" wrapText="true" text="\$address"/>
+      </HBox>
+    </FlowPane>
+    <FlowPane fx:id="people" minWidth="0"/>
+  </VBox>
+  <Button fx:id="copyButton" onAction="#handleCopyEmails" styleClass="copy-button">
+    <StackPane.margin>
+      <Insets top="6" right="3"/>
+    </StackPane.margin>
+  </Button>
+  <Label fx:id="exportContent" visible="false"/>
+</StackPane>

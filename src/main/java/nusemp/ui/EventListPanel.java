@@ -16,7 +16,11 @@ import nusemp.model.event.Event;
  * Panel containing the list of events.
  */
 public class EventListPanel extends UiPart<Region> {
+
     private static final String FXML = "EventListPanel.fxml";
+
+    /* Width offset accounts for scrollbar, used for binding widths. */
+    private static final int WIDTH_OFFSET = 12;
     private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
 
     @FXML
@@ -28,7 +32,11 @@ public class EventListPanel extends UiPart<Region> {
     public EventListPanel(ObservableList<Event> eventList) {
         super(FXML);
         eventListView.setItems(eventList);
-        eventListView.setCellFactory(listView -> new EventListViewCell());
+        eventListView.setCellFactory(listView -> {
+            EventListViewCell cell = new EventListViewCell();
+            cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));
+            return cell;
+        });
     }
 
     /**
@@ -43,7 +51,7 @@ public class EventListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new EventCard(event, getIndex() + 1).getRoot());
+                setGraphic(new EventCard(event, getIndex() + 1, eventListView).getRoot());
             }
         }
     }

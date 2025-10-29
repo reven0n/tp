@@ -96,6 +96,10 @@ public class Event {
         return Collections.unmodifiableList(participants);
     }
 
+    public boolean hasParticipants() {
+        return !participants.isEmpty();
+    }
+
     /**
      * Returns true if the event has the given contact.
      */
