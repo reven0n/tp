@@ -105,6 +105,10 @@ public class Contact {
         return Collections.unmodifiableList(events);
     }
 
+    public boolean hasEvents() {
+        return !events.isEmpty();
+    }
+
     /**
      * Returns true if the contact has the given event.
      */
@@ -226,5 +230,4 @@ public class Contact {
                 .add("events", events)
                 .toString();
     }
-
 }

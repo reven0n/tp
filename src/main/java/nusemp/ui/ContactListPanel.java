@@ -1,14 +1,11 @@
 package nusemp.ui;
 
-import java.util.logging.Logger;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
-import nusemp.commons.core.LogsCenter;
 import nusemp.model.AppData;
 import nusemp.model.contact.Contact;
 
@@ -17,7 +14,10 @@ import nusemp.model.contact.Contact;
  */
 public class ContactListPanel extends UiPart<Region> {
     private static final String FXML = "ContactListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(ContactListPanel.class);
+
+    /* Width offset accounts for scrollbar, used for binding widths. */
+    private static final int WIDTH_OFFSET = 12;
+
     private final AppData appData;
 
     @FXML
@@ -30,7 +30,11 @@ public class ContactListPanel extends UiPart<Region> {
         super(FXML);
         this.appData = appData;
         contactListView.setItems(contactList);
-        contactListView.setCellFactory(listView -> new ContactListViewCell());
+        contactListView.setCellFactory(listView -> {
+            ContactListViewCell cell = new ContactListViewCell();
+            cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));
+            return cell;
+        });
     }
 
     /**
@@ -45,7 +49,7 @@ public class ContactListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new ContactCard(contact, getIndex() + 1, appData).getRoot());
+                setGraphic(new ContactCard(contact, getIndex() + 1, appData, contactListView).getRoot());
             }
         }
     }
