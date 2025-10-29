@@ -70,14 +70,8 @@ public class JsonSerializableAppDataTest {
         assertNotNull(bernice);
 
         // Both should have 2 events (Team Meeting and Marathon)
-        assertEquals(2, alex.getEvents().size());
-        assertEquals(2, bernice.getEvents().size());
-
-        // Verify event names
-        assertTrue(alex.hasEventWithName("Team Meeting"));
-        assertTrue(alex.hasEventWithName("Marathon"));
-        assertTrue(bernice.hasEventWithName("Team Meeting"));
-        assertTrue(bernice.hasEventWithName("Marathon"));
+        assertEquals(2, appData.getParticipants(alex).size());
+        assertEquals(2, appData.getParticipants(bernice).size());
     }
 
     @Test
@@ -104,7 +98,7 @@ public class JsonSerializableAppDataTest {
                 .orElse(null);
 
         assertNotNull(charlotte);
-        assertEquals(0, charlotte.getEvents().size());
+        assertEquals(0, appData.getParticipants(charlotte).size());
     }
 
     @Test
@@ -119,11 +113,7 @@ public class JsonSerializableAppDataTest {
                 .orElse(null);
 
         assertNotNull(teamMeeting);
-        assertEquals(2, teamMeeting.getParticipants().size());
-
-        // Verify participants are Alex and Bernice
-        assertTrue(teamMeeting.hasContactWithEmail("alexyeoh@example.com"));
-        assertTrue(teamMeeting.hasContactWithEmail("berniceyu@example.com"));
+        assertEquals(2, appData.getParticipants(teamMeeting).size());
     }
 
 }

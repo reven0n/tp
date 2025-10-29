@@ -47,8 +47,8 @@ public class Participant {
             return false;
         }
         Participant otherParticipant = (Participant) other;
-        return this.contact.equals(otherParticipant.contact)
-                && this.event.equals(otherParticipant.event)
+        return this.contact.hasSameFields(otherParticipant.contact)
+                && this.event.hasSameFields(otherParticipant.event)
                 && this.status == otherParticipant.status;
     }
 }

@@ -87,9 +87,11 @@ public class UniqueEventList implements Iterable<Event> {
      */
     public void remove(Event toRemove) {
         requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
+        int index = findEventIndex(toRemove);
+        if (index == -1) {
             throw new EventNotFoundException();
         }
+        internalList.remove(index);
     }
 
     public void setEvents(UniqueEventList replacement) {
@@ -134,7 +136,15 @@ public class UniqueEventList implements Iterable<Event> {
         }
 
         UniqueEventList otherUniqueEventList = (UniqueEventList) other;
-        return internalList.equals(otherUniqueEventList.internalList);
+        if (internalList.size() != otherUniqueEventList.internalList.size()) {
+            return false;
+        }
+        for (int i = 0; i < internalList.size(); i++) {
+            if (!internalList.get(i).hasSameFields(otherUniqueEventList.internalList.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

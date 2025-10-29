@@ -2,7 +2,7 @@ package nusemp.logic.commands.event;
 
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
+import static nusemp.testutil.TypicalAppData.getTypicalAppData;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_THIRD_EVENT;
@@ -20,11 +20,10 @@ import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
 import nusemp.model.participant.ParticipantStatus;
 
 class EventRsvpCommandTest {
-    private Model model = new ModelManager(getTypicalAppDataWithEvents(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAppData(), new UserPrefs());
     @Test
     public void constructor_nullArguments_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new EventRsvpCommand(
@@ -50,8 +49,9 @@ class EventRsvpCommandTest {
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
         ParticipantStatus validStatus = ParticipantStatus.UNAVAILABLE;
-        // Confirm contact is not a participant
-        assertFalse(eventToUpdate.hasContactWithEmail(contactToRsvp.getEmail().value));
+
+        // Confirm contact is not a participant of the event
+        assertFalse(model.hasParticipant(contactToRsvp, eventToUpdate));
 
         Command eventRsvpCommand = new EventRsvpCommand(validEventIndex, validContactIndex, validStatus);
 
@@ -87,12 +87,10 @@ class EventRsvpCommandTest {
 
         // Create a new model with same data for comparison
         Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
+        String expectedMessage = String.format(EventRsvpCommand.MESSAGE_SUCCESS,
+                Messages.format(eventToUpdate), Messages.format(contactToRsvp));
 
-        assertCommandSuccess(command, model,
-                String.format(EventRsvpCommand.MESSAGE_SUCCESS,
-                    Messages.format(eventToUpdate),
-                    Messages.format(contactToRsvp)),
-                expectedModel);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -103,16 +101,13 @@ class EventRsvpCommandTest {
 
         Event eventToUpdate = model.getEventByIndex(validEventIndex);
         Contact contactToRsvp = model.getContactByIndex(validContactIndex);
-        assertTrue(eventToUpdate.hasContactWithEmail(contactToRsvp.getEmail().value)); // Confirm participant exists
 
-        // Create updated event with new participant status
-        Participant updatedParticipant = new Participant(contactToRsvp, newStatus);
-        Event updatedEvent = eventToUpdate.withUpdatedParticipant(updatedParticipant);
+        assertTrue(model.hasParticipant(contactToRsvp, eventToUpdate)); // Confirm participant exists
 
         EventRsvpCommand command = new EventRsvpCommand(validEventIndex, validContactIndex, newStatus);
 
         Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.setEvent(eventToUpdate, updatedEvent);
+        expectedModel.setParticipant(contactToRsvp, eventToUpdate, newStatus);
 
         assertCommandSuccess(command, model,
                 String.format(EventRsvpCommand.MESSAGE_SUCCESS,

@@ -136,7 +136,18 @@ public class Event {
 
     /**
      * Returns true if both events have the same identity and data fields.
-     * This defines a stronger notion of equality between two events.
+     */
+    public boolean hasSameFields(Event other) {
+        return name.equals(other.name)
+                && date.equals(other.date)
+                && address.equals(other.address)
+                && status.equals(other.status)
+                && tags.equals(other.tags);
+    }
+
+    /**
+     * Returns true if both events have the same identity, data fields and invalidation toggle.
+     * This defines the strongest notion of equality between two events.
      */
     @Override
     public boolean equals(Object other) {

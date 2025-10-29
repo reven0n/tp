@@ -5,6 +5,7 @@ import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.ContactKey;
@@ -97,7 +98,9 @@ public class ParticipantMap implements ReadOnlyParticipantMap {
     public void removeContact(Contact contact) {
         requireAllNonNull(contact);
         ContactKey c = contact.getPrimaryKey();
-        assert byContact.containsKey(c) : ASSERTION_MISSING_CONTACT;
+        if (!byContact.containsKey(c)) {
+            return;
+        }
 
         Map<EventKey, Participant> eventMap = byContact.remove(c);
         if (eventMap != null) {
@@ -141,7 +144,9 @@ public class ParticipantMap implements ReadOnlyParticipantMap {
     public void removeEvent(Event event) {
         requireAllNonNull(event);
         EventKey e = event.getPrimaryKey();
-        assert byEvent.containsKey(e) : ASSERTION_MISSING_EVENT;
+        if (!byEvent.containsKey(e)) {
+            return;
+        }
 
         Map<ContactKey, Participant> contactMap = byEvent.remove(e);
         if (contactMap != null) {
@@ -230,5 +235,23 @@ public class ParticipantMap implements ReadOnlyParticipantMap {
             this.addParticipant(participant.getContact(),
                     participant.getEvent(), participant.getStatus());
         }
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof ParticipantMap)) {
+            return false;
+        }
+        ParticipantMap otherMap = (ParticipantMap) other;
+        return this.byContact.equals(otherMap.byContact)
+                && this.byEvent.equals(otherMap.byEvent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(byContact, byEvent);
     }
 }

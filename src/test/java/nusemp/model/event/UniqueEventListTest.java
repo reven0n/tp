@@ -118,9 +118,11 @@ class UniqueEventListTest {
     }
 
     @Test
-    public void remove_eventWithSameIdentityFields_throwsEventNotFoundException() {
+    public void remove_eventWithSameIdentityFields_removesEvent() {
         uniqueEventList.add(MEETING_EMPTY);
-        assertThrows(EventNotFoundException.class, () -> uniqueEventList.remove(MEETING_FILLED));
+        uniqueEventList.remove(MEETING_FILLED);
+        UniqueEventList expectedUniqueEventList = new UniqueEventList();
+        assertEquals(expectedUniqueEventList, uniqueEventList);
     }
 
     @Test

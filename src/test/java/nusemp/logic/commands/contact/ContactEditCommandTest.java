@@ -2,6 +2,7 @@ package nusemp.logic.commands.contact;
 
 import static nusemp.logic.commands.CommandTestUtil.DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.DESC_BOB;
+import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_EMAIL_BOB;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_NAME_BOB;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_PHONE_BOB;
 import static nusemp.logic.commands.CommandTestUtil.VALID_CONTACT_TAG_HUSBAND;
@@ -9,6 +10,7 @@ import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static nusemp.logic.commands.CommandTestUtil.showContactAtIndex;
 import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
+import static nusemp.testutil.TypicalEvents.MEETING_FILLED;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -25,6 +27,7 @@ import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.contact.Contact;
+import nusemp.model.participant.ParticipantStatus;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.EditContactDescriptorBuilder;
 
@@ -152,6 +155,27 @@ public class ContactEditCommandTest {
                 new EditContactDescriptorBuilder().withName(VALID_CONTACT_NAME_BOB).build());
 
         assertCommandFailure(contactEditCommand, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void execute_contactLinkedToEvent_participantLinkRemains() {
+        Model model = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
+        model.addEvent(MEETING_FILLED);
+        model.addParticipant(model.getContactByIndex(INDEX_FIRST_CONTACT), MEETING_FILLED, ParticipantStatus.AVAILABLE);
+
+        ContactEditCommand contactEditCommand = new ContactEditCommand(INDEX_FIRST_CONTACT,
+                new EditContactDescriptorBuilder().withEmail(VALID_CONTACT_EMAIL_BOB).build());
+
+        Model expectedModel = new ModelManager(getTypicalAppDataWithoutEvent(), new UserPrefs());
+        expectedModel.addEvent(MEETING_FILLED);
+        Contact expectedContact = new ContactBuilder(expectedModel.getContactByIndex(INDEX_FIRST_CONTACT))
+                .withEmail(VALID_CONTACT_EMAIL_BOB).build();
+        expectedModel.setContact(model.getContactByIndex(INDEX_FIRST_CONTACT), expectedContact);
+        expectedModel.addParticipant(expectedContact, MEETING_FILLED, ParticipantStatus.AVAILABLE);
+        String expectedMessage = String.format(ContactEditCommand.MESSAGE_EDIT_CONTACT_SUCCESS,
+                Messages.format(expectedContact));
+
+        assertCommandSuccess(contactEditCommand, model, expectedMessage, expectedModel);
     }
 
     @Test

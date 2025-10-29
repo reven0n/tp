@@ -58,8 +58,6 @@ public class TypicalContacts {
             .withTags(VALID_CONTACT_TAG_HUSBAND, VALID_CONTACT_TAG_FRIEND)
             .build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
-
     private TypicalContacts() {} // prevents instantiation
 
     public static List<Contact> getTypicalContacts() {

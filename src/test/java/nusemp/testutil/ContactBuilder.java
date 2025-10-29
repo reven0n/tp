@@ -1,12 +1,9 @@
 package nusemp.testutil;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import nusemp.model.contact.Contact;
-import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
@@ -29,7 +26,6 @@ public class ContactBuilder {
     private Email email;
     private Address address;
     private Set<Tag> tags;
-    private List<Event> events;
 
     /**
      * Creates a {@code ContactBuilder} with the default details.
@@ -40,7 +36,6 @@ public class ContactBuilder {
         phone = new Phone(DEFAULT_PHONE);
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
-        events = new ArrayList<>();
     }
 
     /**
@@ -52,7 +47,6 @@ public class ContactBuilder {
         phone = contactToCopy.getPhone();
         address = contactToCopy.getAddress();
         tags = new HashSet<>(contactToCopy.getTags());
-        events = new ArrayList<>(contactToCopy.getEvents());
     }
 
     /**
@@ -111,32 +105,8 @@ public class ContactBuilder {
         return this;
     }
 
-    /**
-     * Sets the {@code List<Event>} of the {@code Contact} that we are building.
-     */
-    public ContactBuilder withEvents(List<Event> events) {
-        this.events = events;
-        return this;
-    }
-
-    /**
-     * Adds an {@code Event} to the {@code Contact} that we are building.
-     */
-    public ContactBuilder addEvent(Event event) {
-        this.events.add(event);
-        return this;
-    }
-
-    /**
-     * Clears the {@code List<Event>} of the {@code Contact} that we are building.
-     */
-    public ContactBuilder clearEvents() {
-        this.events.clear();
-        return this;
-    }
-
     public Contact build() {
-        return new Contact(name, email, phone, address, tags, events);
+        return new Contact(name, email, phone, address, tags);
     }
 
 }

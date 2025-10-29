@@ -32,11 +32,10 @@ public class EventShowCommandTest {
         Event eventToShow = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
         EventShowCommand eventShowCommand = new EventShowCommand(INDEX_FIRST_EVENT);
 
-        String expectedMessage = String.format(EventShowCommand.MESSAGE_EVENT_SHOW_SUCCESS,
-                eventToShow.getParticipants().size(), Messages.format(eventToShow));
-
         ModelManager expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.updateFilteredContactList(eventToShow::hasContact);
+        expectedModel.updateFilteredContactList(contact -> model.hasParticipant(contact, eventToShow));
+        String expectedMessage = String.format(EventShowCommand.MESSAGE_EVENT_SHOW_SUCCESS,
+                expectedModel.getFilteredContactList().size(), Messages.format(eventToShow));
 
         assertCommandSuccess(eventShowCommand, model, expectedMessage, expectedModel);
     }
@@ -57,11 +56,10 @@ public class EventShowCommandTest {
 
         EventShowCommand eventShowCommand = new EventShowCommand(INDEX_FIRST_EVENT);
 
+        ModelManager expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
+        expectedModel.updateFilteredContactList(contact -> model.hasParticipant(contact, eventToShow));
         String expectedMessage = String.format(EventShowCommand.MESSAGE_EVENT_SHOW_SUCCESS,
-                eventToShow.getParticipants().size(), Messages.format(eventToShow));
-
-        Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.updateFilteredContactList(eventToShow::hasContact);
+                expectedModel.getFilteredContactList().size(), Messages.format(eventToShow));
         showEventAtIndex(expectedModel, INDEX_THIRD_EVENT);
 
         assertCommandSuccess(eventShowCommand, model, expectedMessage, expectedModel);

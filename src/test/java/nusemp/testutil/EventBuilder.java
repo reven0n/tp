@@ -1,17 +1,16 @@
 package nusemp.testutil;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import nusemp.model.event.Event;
 import nusemp.model.event.EventStatus;
-import nusemp.model.event.Participant;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
+import nusemp.model.participant.Participant;
 import nusemp.model.util.SampleDataUtil;
 
 /**
@@ -39,7 +38,6 @@ public class EventBuilder {
         date = new Date(DEFAULT_DATE);
         address = new Address(DEFAULT_ADDRESS);
         status = DEFAULT_STATUS;
-        participants = new ArrayList<>();
         tags = new HashSet<>();
     }
 
@@ -51,7 +49,6 @@ public class EventBuilder {
         date = eventToCopy.getDate();
         address = eventToCopy.getAddress();
         status = eventToCopy.getStatus();
-        participants = new ArrayList<>(eventToCopy.getParticipants());
         tags = new HashSet<>(eventToCopy.getTags());
     }
 
@@ -111,23 +108,7 @@ public class EventBuilder {
         return this;
     }
 
-    /**
-     * Replaces the participants of the {@code Event} that we are building.
-     */
-    public EventBuilder withParticipants(Participant... participants) {
-        this.participants = new ArrayList<>(List.of(participants));
-        return this;
-    }
-
-    /**
-     * Replaces the participants of the {@code Event} that we are building.
-     */
-    public EventBuilder withParticipants(List<Participant> participants) {
-        this.participants = new ArrayList<>(participants);
-        return this;
-    }
-
     public Event build() {
-        return new Event(name, date, address, status, tags, participants);
+        return new Event(name, date, address, status, tags);
     }
 }

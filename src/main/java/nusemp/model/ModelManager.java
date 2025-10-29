@@ -241,8 +241,32 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return appData.equals(otherModelManager.appData)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredContacts.equals(otherModelManager.filteredContacts)
-                && filteredEvents.equals(otherModelManager.filteredEvents);
+                && filteredContactsHaveSameFields(otherModelManager)
+                && filteredEventsHaveSameFields(otherModelManager);
+    }
+
+    private boolean filteredContactsHaveSameFields(ModelManager other) {
+        if (filteredContacts.size() != other.filteredContacts.size()) {
+            return false;
+        }
+        for (int i = 0; i < filteredContacts.size(); i++) {
+            if (!filteredContacts.get(i).hasSameFields(other.filteredContacts.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean filteredEventsHaveSameFields(ModelManager other) {
+        if (filteredEvents.size() != other.filteredEvents.size()) {
+            return false;
+        }
+        for (int i = 0; i < filteredEvents.size(); i++) {
+            if (!filteredEvents.get(i).hasSameFields(other.filteredEvents.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

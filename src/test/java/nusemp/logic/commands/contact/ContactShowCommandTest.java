@@ -32,11 +32,11 @@ public class ContactShowCommandTest {
         Contact contactToShow = model.getFilteredContactList().get(INDEX_FIRST_CONTACT.getZeroBased());
         ContactShowCommand contactShowCommand = new ContactShowCommand(INDEX_FIRST_CONTACT);
 
-        String expectedMessage = String.format(ContactShowCommand.MESSAGE_CONTACT_SHOW_SUCCESS,
-                contactToShow.getEvents().size(), Messages.format(contactToShow));
-
         ModelManager expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.updateFilteredEventList(contactToShow::hasEvent);
+        expectedModel.updateFilteredEventList(event -> model.hasParticipant(contactToShow, event));
+
+        String expectedMessage = String.format(ContactShowCommand.MESSAGE_CONTACT_SHOW_SUCCESS,
+                expectedModel.getFilteredEventList().size(), Messages.format(contactToShow));
 
         assertCommandSuccess(contactShowCommand, model, expectedMessage, expectedModel);
     }
@@ -57,11 +57,10 @@ public class ContactShowCommandTest {
 
         ContactShowCommand contactShowCommand = new ContactShowCommand(INDEX_FIRST_CONTACT);
 
+        ModelManager expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
+        expectedModel.updateFilteredEventList(event -> model.hasParticipant(contactToShow, event));
         String expectedMessage = String.format(ContactShowCommand.MESSAGE_CONTACT_SHOW_SUCCESS,
-                contactToShow.getEvents().size(), Messages.format(contactToShow));
-
-        Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
-        expectedModel.updateFilteredEventList(contactToShow::hasEvent);
+                expectedModel.getFilteredEventList().size(), Messages.format(contactToShow));
         showContactAtIndex(expectedModel, INDEX_THIRD_CONTACT);
 
         assertCommandSuccess(contactShowCommand, model, expectedMessage, expectedModel);

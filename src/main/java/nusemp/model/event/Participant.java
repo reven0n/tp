@@ -38,7 +38,8 @@ public class Participant {
     }
 
     public Contact getContact() {
-        return contact;    }
+        return contact;
+    }
 
     public boolean equalsContact(Contact otherContact) {
         return this.contact.equals(otherContact);

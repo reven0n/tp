@@ -30,6 +30,7 @@ import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.participant.Participant;
 import nusemp.model.participant.ParticipantStatus;
 
 class EventAddCommandTest {
@@ -113,7 +114,7 @@ class EventAddCommandTest {
     /**
      * A default model stub that have all the methods failing.
      */
-    private class ModelStub implements Model {
+    private static class ModelStub implements Model {
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -230,6 +231,11 @@ class EventAddCommandTest {
         }
 
         @Override
+        public void setParticipant(Contact contact, Event event, ParticipantStatus status) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void removeParticipant(Contact contact, Event event) {
             throw new AssertionError("This method should not be called.");
         }
@@ -240,17 +246,12 @@ class EventAddCommandTest {
         }
 
         @Override
-        public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
+        public List<Participant> getParticipants(Contact contact) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public List<Event> getParticipants(Contact contact) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public List<Contact> getParticipants(Event event) {
+        public List<Participant> getParticipants(Event event) {
             throw new AssertionError("This method should not be called.");
         }
     }
@@ -283,11 +284,6 @@ class EventAddCommandTest {
         public void addEvent(Event event) {
             requireNonNull(event);
             eventsAdded.add(event);
-        }
-
-        @Override
-        public ReadOnlyAppData getAppData() {
-            return new AppData();
         }
     }
 }

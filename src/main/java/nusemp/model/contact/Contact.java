@@ -135,7 +135,18 @@ public class Contact {
 
     /**
      * Returns true if both contacts have the same identity and data fields.
-     * This defines a stronger notion of equality between two contacts.
+     */
+    public boolean hasSameFields(Contact other) {
+        return name.equals(other.name)
+                && email.equals(other.email)
+                && phone.equals(other.phone)
+                && address.equals(other.address)
+                && tags.equals(other.tags);
+    }
+
+    /**
+     * Returns true if both contacts have the same identity, data fields, and invalidation toggle.
+     * This defines the strongest notion of equality between two contacts.
      */
     @Override
     public boolean equals(Object other) {

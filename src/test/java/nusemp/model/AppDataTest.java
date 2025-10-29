@@ -22,6 +22,9 @@ import javafx.collections.ObservableList;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.exceptions.DuplicateContactException;
 import nusemp.model.event.Event;
+import nusemp.model.participant.Participant;
+import nusemp.model.participant.ParticipantMap;
+import nusemp.model.participant.ReadOnlyParticipantMap;
 import nusemp.testutil.ContactBuilder;
 
 public class AppDataTest {
@@ -100,6 +103,7 @@ public class AppDataTest {
     private static class AppDataStub implements ReadOnlyAppData {
         private final ObservableList<Contact> contacts = FXCollections.observableArrayList();
         private final ObservableList<Event> events = FXCollections.observableArrayList();
+        private final ParticipantMap participantMap = new ParticipantMap();
 
         AppDataStub(Collection<Contact> contacts) {
             this.contacts.setAll(contacts);
@@ -113,6 +117,21 @@ public class AppDataTest {
         @Override
         public ObservableList<Event> getEventList() {
             return events;
+        }
+
+        @Override
+        public ReadOnlyParticipantMap getParticipantMap() {
+            return participantMap;
+        }
+
+        @Override
+        public List<Participant> getParticipants(Event event) {
+            return List.of();
+        }
+
+        @Override
+        public List<Participant> getParticipants(Contact contact) {
+            return List.of();
         }
     }
 

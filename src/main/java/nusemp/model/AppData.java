@@ -322,7 +322,8 @@ public class AppData implements ReadOnlyAppData {
 
         AppData otherAppData = (AppData) other;
         return contacts.equals(otherAppData.contacts)
-                && events.equals(otherAppData.events);
+                && events.equals(otherAppData.events)
+                && participantMap.equals(otherAppData.participantMap);
     }
 
     @Override
