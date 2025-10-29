@@ -18,7 +18,7 @@ import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
-import nusemp.model.event.Status;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.model.event.exceptions.ParticipantNotFoundException;
 
 /**
@@ -32,7 +32,7 @@ public class EventRsvpCommand extends Command {
             + PREFIX_EVENT + " EVENT_INDEX " + PREFIX_CONTACT + " CONTACT_INDEX " + PREFIX_STATUS + " STATUS\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 2" + " " + PREFIX_STATUS + " "
-            + Status.ATTENDING;
+            + ParticipantStatus.AVAILABLE;
 
     public static final String MESSAGE_SUCCESS = "Successfully RSVPed to event: %1$s for contact: %2$s";
 
@@ -40,7 +40,7 @@ public class EventRsvpCommand extends Command {
 
     private final Index eventIndex;
     private final Index contactIndex;
-    private final Status status;
+    private final ParticipantStatus status;
 
     /**
      * Creates an EventRsvpCommand to change the specified {@code Contact} status
@@ -48,7 +48,7 @@ public class EventRsvpCommand extends Command {
      * @param eventIndex
      * @param contactIndex
      */
-    public EventRsvpCommand(Index eventIndex, Index contactIndex, Status status) {
+    public EventRsvpCommand(Index eventIndex, Index contactIndex, ParticipantStatus status) {
         requireAllNonNull(eventIndex, contactIndex, status);
         this.eventIndex = eventIndex;
         this.contactIndex = contactIndex;
@@ -96,5 +96,22 @@ public class EventRsvpCommand extends Command {
         }
 
         return lastShownContactList.get(contactIndex.getZeroBased());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EventRsvpCommand)) {
+            return false;
+        }
+
+        EventRsvpCommand otherEventRsvpCommand = (EventRsvpCommand) other;
+        return eventIndex.equals(otherEventRsvpCommand.eventIndex)
+                && contactIndex.equals(otherEventRsvpCommand.contactIndex)
+                && status == otherEventRsvpCommand.status;
     }
 }

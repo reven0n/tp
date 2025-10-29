@@ -11,16 +11,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
+import nusemp.model.AppData;
 import nusemp.model.contact.Contact;
-import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
-import nusemp.model.event.Status;
 
 /**
  * A UI component that displays information of a {@code Contact}.
  */
 public class ContactCard extends UiPart<Region> {
-
     private static final String FXML = "ContactListCard.fxml";
 
     /* Width offset accounts for padding and scrollbar, used for binding widths. */
@@ -28,6 +25,7 @@ public class ContactCard extends UiPart<Region> {
 
     public final Contact contact;
     private final int displayedIndex;
+    private final AppData appData;
     private final ListView<Contact> parentListView;
 
     @FXML
@@ -59,9 +57,10 @@ public class ContactCard extends UiPart<Region> {
      * Creates a {@code ContactCard} with the given {@code Contact} and index to display.
      * The parent list view is also needed for width binding.
      */
-    public ContactCard(Contact contact, int displayedIndex, ListView<Contact> parentListView) {
+    public ContactCard(Contact contact, int displayedIndex, AppData appData, ListView<Contact> parentListView) {
         super(FXML);
         this.contact = contact;
+        this.appData = appData;
         this.displayedIndex = displayedIndex;
         this.parentListView = parentListView;
 
@@ -113,17 +112,9 @@ public class ContactCard extends UiPart<Region> {
     }
 
     private void addEvents() {
-        for (Event event : contact.getEvents()) {
-            List<Participant> matchingParticipants = event.getParticipants().stream()
-                    .filter(p -> p.getContact().isSameContact(contact)).toList();
-            assert matchingParticipants.size() == 1;
-            Label label = createLabel(event.getName().value);
-            Participant participant = matchingParticipants.get(0);
-            if (participant.getStatus() != Status.ATTENDING) {
-                label.setStyle("-fx-background-color: #a8a8a8;");
-            }
-            events.getChildren().add(label);
-        }
+        // TODO: implement adding events using new participant map
+        events.setManaged(false);
+        events.setVisible(false);
     }
 
     private Label createLabel(String text) {

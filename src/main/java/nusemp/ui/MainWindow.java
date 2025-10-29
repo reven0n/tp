@@ -26,6 +26,7 @@ import nusemp.logic.Messages;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
+import nusemp.model.AppData;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -179,7 +180,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        contactListPanel = new ContactListPanel(logic.getFilteredContactList());
+        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), (AppData) logic.getAppData());
 
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
@@ -203,7 +204,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleContactViewToggle() {
         // Update UI logic
-        contactListPanel = new ContactListPanel(logic.getFilteredContactList());
+        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), (AppData) logic.getAppData());
         contactListPanelPlaceholder.getChildren().clear();
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 

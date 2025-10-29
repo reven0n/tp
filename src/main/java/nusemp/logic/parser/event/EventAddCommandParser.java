@@ -16,6 +16,7 @@ import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.ParserUtil;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.Event;
+import nusemp.model.event.EventStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
@@ -57,6 +58,6 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        return new Event(name, date, address, tagList, new ArrayList<>());
+        return new Event(name, date, address, EventStatus.STARTING, tagList, new ArrayList<>());
     }
 }

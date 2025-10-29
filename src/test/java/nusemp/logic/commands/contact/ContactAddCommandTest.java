@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.ParticipantStatus;
 import nusemp.testutil.ContactBuilder;
 
 public class ContactAddCommandTest {
@@ -200,6 +202,36 @@ public class ContactAddCommandTest {
 
         @Override
         public Event getEventByIndex(Index index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void removeParticipantEvent(Contact contact, Event event) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasParticipantEvent(Contact contact, Event event) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Event> getEventsForContact(Contact contact) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public List<Contact> getContactsForEvent(Event event) {
             throw new AssertionError("This method should not be called.");
         }
     }

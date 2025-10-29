@@ -1,12 +1,14 @@
 package nusemp.model.event;
 
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+
 import nusemp.model.contact.Contact;
 
 /**
  * Represents the contact and their participation status in an event.
  */
 public class Participant {
-    private final Status status;
+    private final ParticipantStatus status;
     private final Contact contact;
 
     /**
@@ -14,7 +16,8 @@ public class Participant {
      * @param contact Contact associated with the status.
      * @param status Status of the contact.
      */
-    public Participant(Contact contact, Status status) {
+    public Participant(Contact contact, ParticipantStatus status) {
+        requireAllNonNull(contact, status);
         this.status = status;
         this.contact = contact;
     }
@@ -24,11 +27,12 @@ public class Participant {
      * @param contact Contact associated with the status.
      */
     public Participant(Contact contact) {
-        this.status = Status.ATTENDING;
+        requireAllNonNull(contact);
+        this.status = ParticipantStatus.AVAILABLE;
         this.contact = contact;
     }
 
-    public Status getStatus() {
+    public ParticipantStatus getStatus() {
         return status;
     }
 
@@ -36,8 +40,15 @@ public class Participant {
         return contact;
     }
 
-    public boolean containsContact(Contact otherContact) {
+    public boolean equalsContact(Contact otherContact) {
         return this.contact.equals(otherContact);
+    }
+
+    /**
+     * Checks if this participant has the same contact as another participant using less strict comparison.
+     */
+    public boolean hasSameContact(Participant otherParticipant) {
+        return this.contact.isSameContact(otherParticipant.getContact());
     }
 
     @Override

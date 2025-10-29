@@ -3,6 +3,7 @@ package nusemp.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
+import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.exceptions.DuplicateParticipantException;
+import nusemp.model.event.ParticipantStatus;
 
 /**
  * Links a contact to an event in the event book.
@@ -67,26 +68,20 @@ public class EventLinkCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
         }
 
-        Event eventToUpdate = lastShownEventList.get(eventIndex.getZeroBased());
+        Event eventToLink = lastShownEventList.get(eventIndex.getZeroBased());
         Contact contactToLink = lastShownContactList.get(contactIndex.getZeroBased());
 
-        // Check for duplicate participant
-        if (eventToUpdate.hasContactWithEmail(contactToLink.getEmail().value)) {
+        if (model.hasParticipantEvent(contactToLink, eventToLink)) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
                     contactToLink.getEmail()));
         }
 
-        // Link both sides
         try {
-            Event updatedEvent = eventToUpdate.withContact(contactToLink);
-            Contact updatedContact = contactToLink.addEvent(updatedEvent);
-
-            model.setEvent(eventToUpdate, updatedEvent);
-            model.setContact(contactToLink, updatedContact);
-
+            model.addParticipantEvent(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
+            model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
             return new CommandResult(MESSAGE_SUCCESS);
-        } catch (DuplicateParticipantException e) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT, contactToLink.getEmail()));
+        } catch (Exception e) {
+            throw new CommandException("Error linking participant to event.");
         }
     }
 

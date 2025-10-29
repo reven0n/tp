@@ -30,27 +30,30 @@ public class Event {
 
     // Data fields
     private final Address address;
+    private final EventStatus status;
     private final List<Participant> participants = new ArrayList<>();
     private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null. {@code Address.empty()} can be used to represent absence of an address.
      */
-    public Event(Name name, Date date, Address address, Set<Tag> tags, List<Participant> participants) {
-        requireAllNonNull(name, date, address, participants);
+    public Event(Name name, Date date, Address address, EventStatus status, Set<Tag> tags,
+            List<Participant> participants) {
+        requireAllNonNull(name, date, address, status, participants);
         checkForDuplicateParticipant(participants);
         this.name = name;
         this.date = date;
         this.address = address;
+        this.status = status;
         this.tags.addAll(tags);
         this.participants.addAll(participants);
     }
 
     /**
-     * Convenience constructor without participants or tags.
+     * Convenience constructor without participants or tags, with default status STARTING.
      */
     public Event(Name name, Date date, Address address) {
-        this(name, date, address, new HashSet<>(), new ArrayList<>());
+        this(name, date, address, EventStatus.STARTING, new HashSet<>(), new ArrayList<>());
     }
 
     public Name getName() {
@@ -63,6 +66,10 @@ public class Event {
 
     public Address getAddress() {
         return address;
+    }
+
+    public EventStatus getStatus() {
+        return status;
     }
 
     /**
@@ -98,7 +105,7 @@ public class Event {
      */
     public boolean hasContact(Contact contact) {
         requireAllNonNull(contact);
-        return participants.stream().anyMatch(p -> p.containsContact(contact));
+        return participants.stream().anyMatch(p -> p.getContact().isSameContact(contact));
     }
 
     /**
@@ -123,12 +130,12 @@ public class Event {
         List<Participant> updatedParticipants = new ArrayList<>(participants);
         for (int i = 0; i < updatedParticipants.size(); i++) {
             Participant currentParticipant = updatedParticipants.get(i);
-            if (currentParticipant.containsContact(updatedParticipant.getContact())) {
+            if (currentParticipant.hasSameContact(updatedParticipant)) {
                 updatedParticipants.set(i, updatedParticipant);
                 break;
             }
         }
-        return new Event(name, date, address, tags, updatedParticipants);
+        return new Event(name, date, address, status, tags, updatedParticipants);
     }
 
     /**
@@ -158,19 +165,19 @@ public class Event {
         }
         List<Participant> updatedParticipants = new ArrayList<>(participants);
         updatedParticipants.add(new Participant(contact));
-        return new Event(name, date, address, tags, updatedParticipants);
+        return new Event(name, date, address, status, tags, updatedParticipants);
     }
 
 
     /**
-     * Returns a new Event with the given participant removed.
+     * Returns a new Event with the given contact removed by finding contact with the same email.
      * This maintains immutability by returning a new Event instance.
      */
     public Event withoutContact(Contact contact) {
         requireAllNonNull(contact);
         List<Participant> updatedParticipants = new ArrayList<>(participants);
-        updatedParticipants.removeIf(p -> p.containsContact(contact));
-        return new Event(name, date, address, tags, updatedParticipants);
+        updatedParticipants.removeIf(p -> p.equalsContact(contact));
+        return new Event(name, date, address, status, tags, updatedParticipants);
     }
 
     /**
@@ -187,6 +194,25 @@ public class Event {
     }
 
     /**
+     * Returns true if both of the emails in the lists are the same.
+     */
+    private boolean isSameParticipantList(List<Participant> otherParticipants) {
+        if (participants.size() != otherParticipants.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < participants.size(); i++) {
+            String email1 = participants.get(i).getContact().getEmail().value;
+            String email2 = otherParticipants.get(i).getContact().getEmail().value;
+            if (!email1.equals(email2)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Returns true if both events have the same identity and data fields.
      * This defines a stronger notion of equality between two events.
      */
@@ -197,21 +223,22 @@ public class Event {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Event)) {
+        if (!(other instanceof Event otherEvent)) {
             return false;
         }
 
-        Event otherEvent = (Event) other;
         return name.equals(otherEvent.name)
                 && date.equals(otherEvent.date)
                 && address.equals(otherEvent.address)
-                && tags.equals(otherEvent.tags);
+                && status.equals(otherEvent.status)
+                && tags.equals(otherEvent.tags)
+                && isSameParticipantList(otherEvent.participants);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, date, address, tags, participants);
+        return Objects.hash(name, date, address, status, tags, participants);
     }
 
     @Override
@@ -220,6 +247,7 @@ public class Event {
                 .add("name", name)
                 .add("date", date)
                 .add("address", address)
+                .add("status", status)
                 .add("tags", tags)
                 .add("participants", participants)
                 .toString();

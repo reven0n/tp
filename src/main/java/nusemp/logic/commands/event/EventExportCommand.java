@@ -16,7 +16,7 @@ import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.event.Event;
-import nusemp.model.event.Status;
+import nusemp.model.event.ParticipantStatus;
 
 /**
  * Exports all contacts linked to an event.
@@ -61,7 +61,7 @@ public class EventExportCommand extends Command {
                 .forEach(p -> {
                     String email = p.getContact().getEmail().value;
 
-                    if (p.getStatus() == Status.ATTENDING) {
+                    if (p.getStatus() == ParticipantStatus.AVAILABLE) {
                         exportContentData = exportContentData + email + ",";
                     }
                 });

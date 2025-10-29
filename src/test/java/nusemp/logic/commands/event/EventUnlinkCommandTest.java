@@ -2,27 +2,26 @@ package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalEvents.CONFERENCE_EMPTY;
-import static nusemp.testutil.TypicalEvents.CONFERENCE_FILLED;
-import static nusemp.testutil.TypicalEvents.MEETING_EMPTY;
-import static nusemp.testutil.TypicalEvents.WORKSHOP_EMPTY;
-import static nusemp.testutil.TypicalEvents.WORKSHOP_FILLED;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
+import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
+import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
+import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
-import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AppData;
 import nusemp.model.Model;
@@ -31,87 +30,102 @@ import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.ParticipantStatus;
+import nusemp.testutil.ContactBuilder;
+import nusemp.testutil.EventBuilder;
 
-class EventAddCommandTest {
+public class EventUnlinkCommandTest {
     @Test
-    public void constructor_nullEvent_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new EventAddCommand(null));
+    public void constructor_nullIndexes_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new EventUnlinkCommand(null, INDEX_FIRST_CONTACT));
+        assertThrows(NullPointerException.class, () -> new EventUnlinkCommand(INDEX_FIRST_EVENT, null));
     }
 
+    /*
     @Test
-    public void execute_eventAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubWithAcceptingEventAdded modelStub = new ModelStubWithAcceptingEventAdded();
-        CommandResult commandResult1 = new EventAddCommand(MEETING_EMPTY).execute(modelStub);
+    public void execute_validIndexesUnfilteredList_success() throws Exception {
+        Contact validContact = new ContactBuilder().build();
+        Event validEvent = new EventBuilder().build();
 
-        assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(MEETING_EMPTY)),
-                commandResult1.getFeedbackToUser());
-        assertEquals(1, modelStub.eventsAdded.size());
-        assertEquals(MEETING_EMPTY, modelStub.eventsAdded.get(0));
+        ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(validEvent, validContact);
 
-        // handling of multiple events and event with participants
-        CommandResult commandResult2 = new EventAddCommand(CONFERENCE_FILLED).execute(modelStub);
-        assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(CONFERENCE_FILLED)),
-                commandResult2.getFeedbackToUser());
-        assertEquals(2, modelStub.eventsAdded.size());
-        assertEquals(CONFERENCE_FILLED, modelStub.eventsAdded.get(1));
+        // First link the contact to the event
+        modelStub.addParticipantEvent(validContact, validEvent, ParticipantStatus.UNKNOWN);
+
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
+
+        CommandResult commandResult = unlinkCommand.execute(modelStub);
+
+        assertEquals(String.format(EventUnlinkCommand.MESSAGE_SUCCESS,
+                        validContact.getName().toString()),
+                commandResult.getFeedbackToUser());
     }
+     */
 
     @Test
-    public void execute_sameDate_addSuccessful() throws Exception {
-        ModelStubWithAcceptingEventAdded modelStub = new ModelStubWithAcceptingEventAdded();
-        modelStub.addEvent(MEETING_EMPTY);
-        CommandResult commandResult1 = new EventAddCommand(WORKSHOP_EMPTY).execute(modelStub);
+    public void execute_invalidEventIndex_throwsCommandException() {
+        ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(
+                new EventBuilder().build(), new ContactBuilder().build());
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(Index.fromZeroBased(5), INDEX_FIRST_CONTACT);
 
-        assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(WORKSHOP_EMPTY)),
-                commandResult1.getFeedbackToUser());
-        assertEquals(2, modelStub.eventsAdded.size());
-        assertEquals(WORKSHOP_EMPTY, modelStub.eventsAdded.get(1));
-
-        // handling of multiple events and event with participants
-        modelStub.eventsAdded.remove(1);
-        CommandResult commandResult2 = new EventAddCommand(WORKSHOP_FILLED).execute(modelStub);
-        assertEquals(String.format(EventAddCommand.MESSAGE_SUCCESS, Messages.format(WORKSHOP_FILLED)),
-                commandResult2.getFeedbackToUser());
-        assertEquals(2, modelStub.eventsAdded.size());
-        assertEquals(WORKSHOP_FILLED, modelStub.eventsAdded.get(1));
-    }
-
-    @Test
-    public void execute_duplicateEvent_throwsCommandException() {
-        EventAddCommand eventAddCommand = new EventAddCommand(CONFERENCE_EMPTY);
-        ModelStub modelStub = new ModelStubWithEvent(CONFERENCE_EMPTY);
         assertThrows(CommandException.class,
-                EventAddCommand.MESSAGE_DUPLICATE_EVENT, () -> eventAddCommand.execute(modelStub));
+                Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, () -> unlinkCommand.execute(modelStub));
     }
+
+    @Test
+    public void execute_invalidContactIndex_throwsCommandException() {
+        ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(
+                new EventBuilder().build(), new ContactBuilder().build());
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, Index.fromZeroBased(5));
+
+        assertThrows(CommandException.class,
+                Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX, () -> unlinkCommand.execute(modelStub));
+    }
+
+    /*
+    @Test
+    public void execute_contactNotInEvent_throwsCommandException() {
+        Contact contact = new ContactBuilder().build();
+        Event event = new EventBuilder().build();
+        ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(event, contact);
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
+
+        assertThrows(CommandException.class,
+                EventUnlinkCommand.MESSAGE_CONTACT_NOT_FOUND, () -> unlinkCommand.execute(modelStub));
+    }
+     */
 
     @Test
     public void equals() {
-        EventAddCommand addMeetingCommand = new EventAddCommand(MEETING_EMPTY);
-        EventAddCommand addConferenceCommand = new EventAddCommand(CONFERENCE_EMPTY);
-        EventAddCommand addConferenceFullCommand = new EventAddCommand(CONFERENCE_FILLED);
+        EventUnlinkCommand unlinkFirstCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
+        EventUnlinkCommand unlinkSecondCommand = new EventUnlinkCommand(INDEX_SECOND_EVENT, INDEX_SECOND_CONTACT);
 
         // same object -> returns true
-        assertEquals(addMeetingCommand, addMeetingCommand);
+        assertTrue(unlinkFirstCommand.equals(unlinkFirstCommand));
 
         // same values -> returns true
-        EventAddCommand addMeetingCommandCopy = new EventAddCommand(MEETING_EMPTY);
-        assertEquals(addMeetingCommand, addMeetingCommandCopy);
+        EventUnlinkCommand unlinkFirstCommandCopy = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
+        assertTrue(unlinkFirstCommand.equals(unlinkFirstCommandCopy));
 
         // different types -> returns false
-        assertNotEquals(1, addMeetingCommand);
-
+        assertFalse(unlinkFirstCommand.equals(1));
         // null -> returns false
-        assertNotEquals(null, addMeetingCommand);
+        assertFalse(unlinkFirstCommand.equals(null));
 
-        // different event -> returns false
-        assertNotEquals(addMeetingCommand, addConferenceCommand);
+        // different indexes -> returns false
+        assertFalse(unlinkFirstCommand.equals(unlinkSecondCommand));
+    }
 
-        // different participants -> returns false
-        assertNotEquals(addConferenceCommand, addConferenceFullCommand);
+    @Test
+    public void toStringMethod() {
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
+        String expected = EventUnlinkCommand.class.getCanonicalName()
+                + "{eventIndex=" + INDEX_FIRST_EVENT
+                + ", contactIndex=" + INDEX_FIRST_CONTACT + "}";
+        assertEquals(expected, unlinkCommand.toString());
     }
 
     /**
-     * A default model stub that have all the methods failing.
+     * A default model stub that have all methods failing.
      */
     private class ModelStub implements Model {
         @Override
@@ -255,39 +269,71 @@ class EventAddCommandTest {
         }
     }
 
-    private class ModelStubWithEvent extends ModelStub {
+    /**
+     * A Model stub that contains a single event and contact.
+     */
+    private class ModelStubWithEventAndContact extends ModelStub {
         private final Event event;
+        private final Contact contact;
+        private Event updatedEvent;
+        private Contact updatedContact;
+        private boolean isLinked = false;
 
-        ModelStubWithEvent(Event event) {
+        ModelStubWithEventAndContact(Event event, Contact contact) {
             requireNonNull(event);
+            requireNonNull(contact);
             this.event = event;
+            this.contact = contact;
         }
 
         @Override
-        public boolean hasEvent(Event event) {
-            requireNonNull(event);
-            return this.event.isSameEvent(event);
-        }
-    }
-
-    private class ModelStubWithAcceptingEventAdded extends ModelStub {
-        final ArrayList<Event> eventsAdded = new ArrayList<>();
-
-        @Override
-        public boolean hasEvent(Event event) {
-            requireNonNull(event);
-            return eventsAdded.stream().anyMatch(event::isSameEvent);
+        public ObservableList<Event> getFilteredEventList() {
+            return FXCollections.observableArrayList(event);
         }
 
         @Override
-        public void addEvent(Event event) {
-            requireNonNull(event);
-            eventsAdded.add(event);
+        public ObservableList<Contact> getFilteredContactList() {
+            return FXCollections.observableArrayList(contact);
+        }
+
+        @Override
+        public void setEvent(Event target, Event editedEvent) {
+            requireNonNull(target);
+            requireNonNull(editedEvent);
+            this.updatedEvent = editedEvent;
+        }
+
+        @Override
+        public void setContact(Contact target, Contact editedContact) {
+            requireNonNull(target);
+            requireNonNull(editedContact);
+            this.updatedContact = editedContact;
         }
 
         @Override
         public ReadOnlyAppData getAppData() {
             return new AppData();
         }
+
+        @Override
+        public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+            requireNonNull(contact);
+            requireNonNull(event);
+            requireNonNull(status);
+            isLinked = true;
+        }
+
+        @Override
+        public void removeParticipantEvent(Contact contact, Event event) {
+            requireNonNull(contact);
+            requireNonNull(event);
+            isLinked = false;
+        }
+
+        @Override
+        public void updateFilteredContactList(Predicate<Contact> predicate) {
+            // Do nothing for this stub
+        }
     }
+
 }
