@@ -121,6 +121,7 @@ public class ParticipantMap implements ReadOnlyParticipantMap {
             return;
         }
 
+        // Replace old contact with new contact in all linked participants
         Map<EventKey, Participant> newEventMap = new HashMap<>();
         for (Map.Entry<EventKey, Participant> entry : oldEventMap.entrySet()) {
             EventKey e = entry.getKey();
@@ -128,7 +129,10 @@ public class ParticipantMap implements ReadOnlyParticipantMap {
             Participant newParticipant = new Participant(newContact,
                     oldParticipant.getEvent(), oldParticipant.getStatus());
 
+            // Add to new event map which is to be added to byContact
             newEventMap.put(e, newParticipant);
+
+            // Replace old contact with new contact in byEvent map
             Map<ContactKey, Participant> contactMap = byEvent.get(e);
             assert contactMap != null && contactMap.containsKey(c1) : ASSERTION_MISMATCH_MAPS;
             contactMap.remove(c1);
@@ -167,6 +171,7 @@ public class ParticipantMap implements ReadOnlyParticipantMap {
             return;
         }
 
+        // Replace old event with new event in all linked participants
         Map<ContactKey, Participant> newContactMap = new HashMap<>();
         for (Map.Entry<ContactKey, Participant> entry : oldContactMap.entrySet()) {
             ContactKey c = entry.getKey();
@@ -174,7 +179,10 @@ public class ParticipantMap implements ReadOnlyParticipantMap {
             Participant newParticipant = new Participant(oldParticipant.getContact(), newEvent,
                     oldParticipant.getStatus());
 
+            // Add to new contact map which is to be added to byEvent
             newContactMap.put(c, newParticipant);
+
+            // Replace old event with new event in byContact map
             Map<EventKey, Participant> eventMap = byContact.get(c);
             assert eventMap != null && eventMap.containsKey(e1) : ASSERTION_MISMATCH_MAPS;
             eventMap.remove(e1);
