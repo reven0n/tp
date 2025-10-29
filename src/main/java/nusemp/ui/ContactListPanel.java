@@ -6,8 +6,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
-import nusemp.model.AppData;
 import nusemp.model.contact.Contact;
+import nusemp.model.participant.ContactToParticipantsFunction;
 
 /**
  * Panel containing the list of contacts.
@@ -18,7 +18,7 @@ public class ContactListPanel extends UiPart<Region> {
     /* Width offset accounts for scrollbar, used for binding widths. */
     private static final int WIDTH_OFFSET = 12;
 
-    private final AppData appData;
+    private final ContactToParticipantsFunction participantsFn;
 
     @FXML
     private ListView<Contact> contactListView;
@@ -26,9 +26,9 @@ public class ContactListPanel extends UiPart<Region> {
     /**
      * Creates a {@code ContactListPanel} with the given {@code ObservableList}.
      */
-    public ContactListPanel(ObservableList<Contact> contactList, AppData appData) {
+    public ContactListPanel(ObservableList<Contact> contactList, ContactToParticipantsFunction participantsFn) {
         super(FXML);
-        this.appData = appData;
+        this.participantsFn = participantsFn;
         contactListView.setItems(contactList);
         contactListView.setCellFactory(listView -> {
             ContactListViewCell cell = new ContactListViewCell();
@@ -49,7 +49,8 @@ public class ContactListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new ContactCard(contact, getIndex() + 1, appData, contactListView).getRoot());
+                setGraphic(new ContactCard(contact, getIndex() + 1, participantsFn.apply(contact), contactListView)
+                        .getRoot());
             }
         }
     }

@@ -3,6 +3,7 @@ package nusemp.model.event;
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 import nusemp.model.contact.Contact;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * Represents the contact and their participation status in an event.
@@ -37,8 +38,7 @@ public class Participant {
     }
 
     public Contact getContact() {
-        return contact;
-    }
+        return contact;    }
 
     public boolean equalsContact(Contact otherContact) {
         return this.contact.equals(otherContact);

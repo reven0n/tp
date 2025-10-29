@@ -20,8 +20,8 @@ import javafx.stage.Popup;
 import javafx.util.Duration;
 
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.Participant;
+import nusemp.model.participant.ParticipantStatus;
 
 
 /**
@@ -39,6 +39,7 @@ public class EventCard extends UiPart<Region> {
 
     public final Event event;
     private final int displayedIndex;
+    private final List<Participant> participants;
     private final ListView<Event> parentListView;
 
     private String exportContentData = "";
@@ -71,10 +72,11 @@ public class EventCard extends UiPart<Region> {
     /**
      * Creates an {@code EventCard} with the given {@code Event} and index to display.
      */
-    public EventCard(Event event, int displayedIndex, ListView<Event> parentListView) {
+    public EventCard(Event event, int displayedIndex, List<Participant> participants, ListView<Event> parentListView) {
         super(FXML);
         this.event = event;
         this.displayedIndex = displayedIndex;
+        this.participants = participants;
         this.parentListView = parentListView;
 
         initializeEventInfo();
@@ -103,16 +105,16 @@ public class EventCard extends UiPart<Region> {
             tags.setVisible(false);
         }
 
-        if (event.hasParticipants()) {
-            addPeople();
-        } else {
-            people.setManaged(false);
-            people.setVisible(false);
-        }
+        addPeople();
     }
 
     private void addPeople() {
-        List<Participant> sortedParticipants = event.getParticipants().stream()
+        if (participants.isEmpty()) {
+            people.setManaged(false);
+            people.setVisible(false);
+            return;
+        }
+        List<Participant> sortedParticipants = participants.stream()
                 .sorted(Comparator.comparing(p -> p.getContact().getName().value.toLowerCase()))
                 .toList();
         for (Participant p : sortedParticipants) {

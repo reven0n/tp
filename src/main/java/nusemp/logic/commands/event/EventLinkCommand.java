@@ -16,7 +16,7 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * Links a contact to an event in the event book.
@@ -71,13 +71,13 @@ public class EventLinkCommand extends Command {
         Event eventToLink = lastShownEventList.get(eventIndex.getZeroBased());
         Contact contactToLink = lastShownContactList.get(contactIndex.getZeroBased());
 
-        if (model.hasParticipantEvent(contactToLink, eventToLink)) {
+        if (model.hasParticipant(contactToLink, eventToLink)) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
                     contactToLink.getEmail()));
         }
 
         try {
-            model.addParticipantEvent(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
+            model.addParticipant(contactToLink, eventToLink, ParticipantStatus.AVAILABLE);
             model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (Exception e) {

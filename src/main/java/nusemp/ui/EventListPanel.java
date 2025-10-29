@@ -1,15 +1,13 @@
 package nusemp.ui;
 
-import java.util.logging.Logger;
-
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
-import nusemp.commons.core.LogsCenter;
 import nusemp.model.event.Event;
+import nusemp.model.participant.EventToParticipantsFunction;
 
 
 /**
@@ -21,7 +19,8 @@ public class EventListPanel extends UiPart<Region> {
 
     /* Width offset accounts for scrollbar, used for binding widths. */
     private static final int WIDTH_OFFSET = 12;
-    private final Logger logger = LogsCenter.getLogger(EventListPanel.class);
+
+    private final EventToParticipantsFunction participantsFn;
 
     @FXML
     private ListView<Event> eventListView;
@@ -29,8 +28,9 @@ public class EventListPanel extends UiPart<Region> {
     /**
      * Creates a {@code EventListPanel} with the given {@code ObservableList}.
      */
-    public EventListPanel(ObservableList<Event> eventList) {
+    public EventListPanel(ObservableList<Event> eventList, EventToParticipantsFunction participantsFn) {
         super(FXML);
+        this.participantsFn = participantsFn;
         eventListView.setItems(eventList);
         eventListView.setCellFactory(listView -> {
             EventListViewCell cell = new EventListViewCell();
@@ -51,7 +51,7 @@ public class EventListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new EventCard(event, getIndex() + 1, eventListView).getRoot());
+                setGraphic(new EventCard(event, getIndex() + 1, participantsFn.apply(event), eventListView).getRoot());
             }
         }
     }

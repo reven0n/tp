@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.event.EventRsvpCommand;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.ParticipantStatus;
 
 class EventRsvpCommandParserTest {
     private static final String AVAILABLE = " " + ParticipantStatus.AVAILABLE.toString();

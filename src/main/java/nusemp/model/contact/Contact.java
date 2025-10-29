@@ -2,7 +2,6 @@ package nusemp.model.contact;
 
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -10,13 +9,13 @@ import java.util.Objects;
 import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
-import nusemp.model.event.Event;
-import nusemp.model.event.exceptions.DuplicateEventException;
+import nusemp.model.ReadOnlyAppData;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Phone;
 import nusemp.model.fields.Tag;
+import nusemp.model.participant.Participant;
 
 /**
  * Represents a Contact.
@@ -32,33 +31,32 @@ public class Contact {
     private final Phone phone;
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final List<Event> events = new ArrayList<>();
+
+    /**
+     * This value is used to invalidate the contact,
+     * i.e. force an update to the observable contact list for this contact.
+     * <p>
+     * Note: This is a workaround for event changes not being reflected in the contact list.
+     */
+    private final boolean invalidationToggle;
 
     /**
      * Every field must be present and not null.
      * {@code Phone.empty()} or {@code Address.empty()} can be used to represent absence of a phone number or address
      * respectively.
      */
-    public Contact(Name name, Email email, Phone phone, Address address, Set<Tag> tags, List<Event> events) {
-        requireAllNonNull(name, email, phone, address, tags, events);
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.tags.addAll(tags);
-        this.events.addAll(events);
+    public Contact(Name name, Email email, Phone phone, Address address, Set<Tag> tags) {
+        this(name, email, phone, address, tags, false);
     }
 
-    /**
-     * Convenience constructor without linked events.
-     */
-    public Contact(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, email, phone, address, tags, events);
+    private Contact(Name name, Email email, Phone phone, Address address, Set<Tag> tags, boolean invalidationToggle) {
+        requireAllNonNull(name, email, phone, address, tags, invalidationToggle);
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.address = address;
         this.tags.addAll(tags);
+        this.invalidationToggle = invalidationToggle;
     }
 
     public Name getName() {
@@ -101,69 +99,19 @@ public class Contact {
      * Returns an immutable event list, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public List<Event> getEvents() {
-        return Collections.unmodifiableList(events);
-    }
-
-    public boolean hasEvents() {
-        return !events.isEmpty();
+    public List<Participant> getParticipants(ReadOnlyAppData appData) {
+        return List.of();
     }
 
     /**
-     * Returns true if the contact has the given event.
+     * Returns a ContactKey uniquely identifies this contact.
      */
-    public boolean hasEvent(Event event) {
-        requireAllNonNull(event);
-        return events.contains(event);
+    public ContactKey getPrimaryKey() {
+        return new ContactKey(email.value.toLowerCase());
     }
 
     /**
-     * Returns true if the contact has an event with the given name.
-     */
-    public boolean hasEventWithName(String eventName) {
-        requireAllNonNull(eventName);
-        return events.stream()
-                .anyMatch(event -> event.getName().value.equals(eventName));
-    }
-
-    private static void checkForDuplicateEvents(List<Event> events)
-            throws DuplicateEventException {
-        Set<String> eventNames = new HashSet<>();
-        for (Event event : events) {
-            String eventName = event.getName().value;
-            if (!eventNames.add(eventName)) {
-                throw new DuplicateEventException();
-            }
-        }
-    }
-
-    /**
-     * Returns a new Contact with the given event added.
-     * This maintains immutability by returning a new Contact instance.
-     */
-    public Contact addEvent(Event event) throws DuplicateEventException {
-        requireAllNonNull(event);
-        if (hasEventWithName(event.getName().value)) {
-            throw new DuplicateEventException();
-        }
-        List<Event> updatedEvents = new ArrayList<>(events);
-        updatedEvents.add(event);
-        return new Contact(name, email, phone, address, tags, updatedEvents);
-    }
-
-    /**
-     * Returns a new Contact with the given event removed.
-     * This maintains immutability by returning a new Contact instance.
-     */
-    public Contact removeEvent(Event event) {
-        requireAllNonNull(event);
-        List<Event> updatedEvents = new ArrayList<>(events);
-        updatedEvents.remove(event);
-        return new Contact(name, email, phone, address, tags, updatedEvents);
-    }
-
-    /**
-     * Returns true if both contacts have the same email.
+     * Returns true if both contacts have the same primary key.
      * This defines a weaker notion of equality between two contacts.
      */
     public boolean isSameContact(Contact otherContact) {
@@ -172,21 +120,17 @@ public class Contact {
         }
 
         return otherContact != null
-                && otherContact.getEmail().isSameEmail(getEmail());
+                && otherContact.getPrimaryKey().equals(this.getPrimaryKey());
     }
 
-    private boolean hasSameEvents(Contact otherContact) {
-        if (otherContact.events.size() != this.events.size()) {
-            return false;
-        }
-
-        for (Event event : otherContact.events) {
-            if (!this.hasEventWithName(event.getName().value)) {
-                return false;
-            }
-        }
-
-        return true;
+    /**
+     * Returns a new contact with the exact same fields.
+     * However, the new contact would not be considered `equal` to the original contact.
+     * <p>
+     * Note: This is a workaround for event changes not being reflected in the contact list.
+     */
+    public Contact getInvalidatedContact() {
+        return new Contact(name, email, phone, address, tags, !invalidationToggle);
     }
 
     /**
@@ -200,23 +144,21 @@ public class Contact {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Contact)) {
+        if (!(other instanceof Contact otherContact)) {
             return false;
         }
 
-        Contact otherContact = (Contact) other;
         return name.equals(otherContact.name)
                 && email.equals(otherContact.email)
                 && phone.equals(otherContact.phone)
                 && address.equals(otherContact.address)
                 && tags.equals(otherContact.tags)
-                && hasSameEvents(otherContact);
+                && invalidationToggle == otherContact.invalidationToggle;
     }
 
     @Override
     public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, email, phone, address, tags, events);
+        return Objects.hash(name, email, phone, address, tags, invalidationToggle);
     }
 
     @Override
@@ -227,7 +169,6 @@ public class Contact {
                 .add("phone", phone)
                 .add("address", address)
                 .add("tags", tags)
-                .add("events", events)
                 .toString();
     }
 }

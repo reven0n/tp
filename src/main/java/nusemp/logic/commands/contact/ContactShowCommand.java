@@ -47,7 +47,7 @@ public class ContactShowCommand extends Command {
         }
 
         Contact targetContact = lastShownList.get(targetIndex.getZeroBased());
-        model.updateFilteredEventList(targetContact::hasEvent);
+        model.updateFilteredEventList(event -> model.hasParticipant(targetContact, event));
         return new CommandResult(String.format(MESSAGE_CONTACT_SHOW_SUCCESS,
                 model.getFilteredEventList().size(), Messages.format(targetContact)));
     }

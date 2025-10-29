@@ -28,6 +28,7 @@ import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
+import nusemp.model.participant.ParticipantStatus;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.EventBuilder;
 

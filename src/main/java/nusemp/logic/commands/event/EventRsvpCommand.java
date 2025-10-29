@@ -18,7 +18,7 @@ import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.ParticipantStatus;
 import nusemp.model.event.exceptions.ParticipantNotFoundException;
 
 /**
@@ -60,11 +60,9 @@ public class EventRsvpCommand extends Command {
         requireNonNull(model);
         Contact contactToRsvp = getContactFromModel(model);
         Event eventToRsvp = getEventFromModel(model);
-        Participant updatedParticipant = new Participant(contactToRsvp, status);
 
         try {
-            Event rsvpedEvent = eventToRsvp.withUpdatedParticipant(updatedParticipant);
-            model.setEvent(eventToRsvp, rsvpedEvent);
+            model.setParticipant(contactToRsvp, eventToRsvp, status);
             return new CommandResult(String.format(MESSAGE_SUCCESS,
                     Messages.format(eventToRsvp), Messages.format(contactToRsvp)));
         } catch (ParticipantNotFoundException e) {

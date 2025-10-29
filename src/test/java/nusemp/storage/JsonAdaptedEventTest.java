@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.AppData;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
