@@ -1,6 +1,7 @@
 package nusemp.model;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -9,6 +10,7 @@ import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.event.ParticipantStatus;
 
 /**
  * The API of the Model component.
@@ -143,4 +145,35 @@ public interface Model {
      * @throws IndexOutOfBoundsException if the index is out of range.
      */
     Event getEventByIndex(Index index);
+
+    /**
+     * Adds a participant event link between the given contact and event.
+     */
+    void addParticipantEvent(Contact contact, Event event, ParticipantStatus status);
+
+    /**
+     * Removes the participant event link between the given contact and event.
+     */
+    void removeParticipantEvent(Contact contact, Event event);
+
+    /**
+     * Returns true if the given contact is linked to the given event.
+     */
+    boolean hasParticipantEvent(Contact contact, Event event);
+
+    /**
+     * Gets the participant status for the given contact and event.
+     */
+    ParticipantStatus getParticipantStatus(Contact contact, Event event);
+
+    /**
+     * Gets all events for the given contact.
+     */
+    List<Event> getEventsForContact(Contact contact);
+
+    /**
+     * Gets all contacts for the given event.
+     */
+    List<Contact> getContactsForEvent(Event event);
+
 }

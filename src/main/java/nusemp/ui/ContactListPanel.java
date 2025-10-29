@@ -9,6 +9,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 
 import nusemp.commons.core.LogsCenter;
+import nusemp.model.AppData;
 import nusemp.model.contact.Contact;
 
 /**
@@ -17,6 +18,7 @@ import nusemp.model.contact.Contact;
 public class ContactListPanel extends UiPart<Region> {
     private static final String FXML = "ContactListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(ContactListPanel.class);
+    private final AppData appData;
 
     @FXML
     private ListView<Contact> contactListView;
@@ -24,8 +26,9 @@ public class ContactListPanel extends UiPart<Region> {
     /**
      * Creates a {@code ContactListPanel} with the given {@code ObservableList}.
      */
-    public ContactListPanel(ObservableList<Contact> contactList) {
+    public ContactListPanel(ObservableList<Contact> contactList, AppData appData) {
         super(FXML);
+        this.appData = appData;
         contactListView.setItems(contactList);
         contactListView.setCellFactory(listView -> new ContactListViewCell());
     }
@@ -42,7 +45,7 @@ public class ContactListPanel extends UiPart<Region> {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new ContactCard(contact, getIndex() + 1).getRoot());
+                setGraphic(new ContactCard(contact, getIndex() + 1, appData).getRoot());
             }
         }
     }
