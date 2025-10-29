@@ -17,7 +17,6 @@ import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Phone;
 import nusemp.model.fields.Tag;
-import nusemp.model.participant.Participant;
 import nusemp.model.participant.ParticipantStatus;
 
 /**

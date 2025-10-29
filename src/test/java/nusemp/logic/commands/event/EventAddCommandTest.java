@@ -24,7 +24,6 @@ import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
-import nusemp.model.AppData;
 import nusemp.model.Model;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;

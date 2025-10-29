@@ -10,13 +10,13 @@ import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.EventStatus;
-import nusemp.model.participant.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Phone;
 import nusemp.model.fields.Tag;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.

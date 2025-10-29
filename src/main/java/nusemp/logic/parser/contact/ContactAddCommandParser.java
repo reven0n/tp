@@ -6,7 +6,6 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
-import static nusemp.model.util.SampleDataUtil.EMPTY_EVENT_LIST;
 
 import java.util.Set;
 

@@ -11,7 +11,6 @@ import nusemp.model.contact.Contact;
 import nusemp.model.contact.ContactKey;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventKey;
-import nusemp.model.event.exceptions.ParticipantNotFoundException;
 
 /**
  * Maps contacts and event to their respective Participant links.

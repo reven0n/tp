@@ -17,7 +17,6 @@ import nusemp.commons.exceptions.IllegalValueException;
 import nusemp.model.event.Event;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
-import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.participant.ParticipantStatus;
 import nusemp.testutil.EventBuilder;

@@ -17,9 +17,8 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
+import nusemp.model.participant.ParticipantNotFoundException;
 import nusemp.model.participant.ParticipantStatus;
-import nusemp.model.event.exceptions.ParticipantNotFoundException;
 
 /**
  * Handles RSVP actions for events.

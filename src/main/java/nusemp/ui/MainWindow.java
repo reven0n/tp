@@ -26,7 +26,6 @@ import nusemp.logic.Messages;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.AppData;
 
 /**
  * The Main Window. Provides the basic application layout containing

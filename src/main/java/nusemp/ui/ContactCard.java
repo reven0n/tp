@@ -11,7 +11,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-import nusemp.model.AppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.participant.Participant;
 import nusemp.model.participant.ParticipantStatus;
