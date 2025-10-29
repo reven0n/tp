@@ -180,7 +180,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), (AppData) logic.getAppData());
+        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), logic::getParticipants);
 
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
@@ -204,7 +204,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleContactViewToggle() {
         // Update UI logic
-        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), (AppData) logic.getAppData());
+        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), logic::getParticipants);
         contactListPanelPlaceholder.getChildren().clear();
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
@@ -218,7 +218,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleEventViewToggle() {
         // Update UI logic
-        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanel = new EventListPanel(logic.getFilteredEventList(), logic::getParticipants);
         contactListPanelPlaceholder.getChildren().clear();
         contactListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 

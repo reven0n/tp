@@ -1,7 +1,5 @@
 package nusemp.storage;
 
-import static nusemp.model.util.SampleDataUtil.EMPTY_EVENT_LIST;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -109,6 +107,6 @@ class JsonAdaptedContact {
 
         final Set<Tag> modelTags = new HashSet<>(contactTags);
 
-        return new Contact(modelName, modelEmail, modelPhone, modelAddress, modelTags, EMPTY_EVENT_LIST);
+        return new Contact(modelName, modelEmail, modelPhone, modelAddress, modelTags);
     }
 }

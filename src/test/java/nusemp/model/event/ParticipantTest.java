@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import nusemp.model.participant.ParticipantStatus;
+
 class ParticipantTest {
     @Test
     public void constructor_withoutStatus_success() {

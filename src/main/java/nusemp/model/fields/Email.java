@@ -56,14 +56,6 @@ public class Email {
         return value;
     }
 
-    /**
-     * Returns true if both emails refer to the same email.
-     * Compared to {@code equals}, this is case-insensitive.
-     */
-    public boolean isSameEmail(Email email) {
-        return this.value.equalsIgnoreCase(email.value);
-    }
-
     @Override
     public boolean equals(Object other) {
         if (other == this) {

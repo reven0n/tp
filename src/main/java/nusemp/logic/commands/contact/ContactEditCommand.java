@@ -108,9 +108,8 @@ public class ContactEditCommand extends Command {
         Email updatedEmail = editContactDescriptor.getEmail().orElse(contactToEdit.getEmail());
         Address updatedAddress = editContactDescriptor.getAddress().orElse(contactToEdit.getAddress());
         Set<Tag> updatedTags = editContactDescriptor.getTags().orElse(contactToEdit.getTags());
-        List<Event> events = contactToEdit.getEvents();
 
-        return new Contact(updatedName, updatedEmail, updatedPhone, updatedAddress, updatedTags, events);
+        return new Contact(updatedName, updatedEmail, updatedPhone, updatedAddress, updatedTags);
     }
 
     @Override

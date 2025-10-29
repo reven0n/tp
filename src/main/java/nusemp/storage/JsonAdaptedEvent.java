@@ -5,24 +5,25 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import nusemp.commons.exceptions.IllegalValueException;
+import nusemp.model.AppData;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventStatus;
-import nusemp.model.event.Participant;
-import nusemp.model.event.ParticipantStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
+import nusemp.model.participant.EventToParticipantsFunction;
+import nusemp.model.participant.Participant;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * Jackson-friendly version of {@link Event}.
@@ -71,15 +72,12 @@ class JsonAdaptedEvent {
     /**
      * Converts a given {@code Event} into this class for Jackson use.
      */
-    public JsonAdaptedEvent(Event source) {
+    public JsonAdaptedEvent(Event source, EventToParticipantsFunction participantsFn) {
         name = source.getName().value;
         date = source.getDate().toString();
         address = source.getAddress().value;
         status = source.getStatus().toString();
-        participants.addAll(source.getParticipants().stream()
-                .map(participant -> new JsonAdaptedParticipant(
-                        participant.getContact().getEmail().value, participant.getStatus().toString()))
-                .collect(Collectors.toList()));
+        participants.addAll(participantsFn.apply(source).stream().map(JsonAdaptedParticipant::new).toList());
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .toList());
@@ -88,10 +86,9 @@ class JsonAdaptedEvent {
     /**
      * Converts this Jackson-friendly adapted event object into the model's {@code Event} object.
      *
-     * @param appData The app data to resolve participant emails from.
      * @throws IllegalValueException if there were any data constraints violated in the adapted event.
      */
-    public Event toModelType(ReadOnlyAppData appData) throws IllegalValueException {
+    public Event toModelType() throws IllegalValueException {
         final List<Tag> eventTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tags) {
             eventTags.add(tag.toModelType());
@@ -132,27 +129,38 @@ class JsonAdaptedEvent {
             modelStatus = EventStatus.fromString(status);
         }
 
-        final List<Participant> modelParticipants = new ArrayList<>();
-        for (JsonAdaptedParticipant participant : participants) {
-            String email = participant.getEmail();
-            String participantStatusStr = participant.getStatus();
+        final Set<Tag> modelTags = new HashSet<>(eventTags);
+
+        return new Event(modelName, modelDate, modelAddress, modelStatus, modelTags);
+    }
+
+    /**
+     * Get the participants from this adapted event.
+     *
+     * @param appData The app data to get contacts from.
+     * @param event The event that contains the participants.
+     * @throws IllegalValueException if a participant email is not found in the contact list
+     *                               or if the participant status is invalid.
+     */
+    public List<Participant> getParticipants(ReadOnlyAppData appData, Event event) throws IllegalValueException {
+        List<Participant> participantList = new ArrayList<>();
+        for (JsonAdaptedParticipant jsonAdaptedParticipant : participants) {
+            String email = jsonAdaptedParticipant.getEmail();
             if (!Email.isValidEmail(email)) {
                 throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
             }
             Contact contact = findContactByEmail(appData, email).orElseThrow(() ->
                     new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
 
+            String participantStatusStr = jsonAdaptedParticipant.getStatus();
             if (!ParticipantStatus.isValidStatus(participantStatusStr)) {
                 throw new IllegalValueException(String.format(INVALID_PARTICIPANT_STATUS_MESSAGE, email));
             }
-
             ParticipantStatus status = ParticipantStatus.fromString(participantStatusStr);
-            modelParticipants.add(new Participant(contact, status));
+
+            participantList.add(new Participant(contact, event, status));
         }
-
-        final Set<Tag> modelTags = new HashSet<>(eventTags);
-
-        return new Event(modelName, modelDate, modelAddress, modelStatus, modelTags, modelParticipants);
+        return participantList;
     }
 
     /**

@@ -54,7 +54,7 @@ public class ContactAddCommandParser implements Parser<ContactAddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        return new Contact(name, email, phone, address, tagList, EMPTY_EVENT_LIST);
+        return new Contact(name, email, phone, address, tagList);
     }
 
 }

@@ -16,11 +16,9 @@ import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
-import nusemp.model.contact.exceptions.DuplicateContactException;
 import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
-import nusemp.model.event.ParticipantStatus;
-import nusemp.model.event.exceptions.DuplicateEventException;
+import nusemp.model.participant.ParticipantStatus;
 import nusemp.model.event.exceptions.ParticipantNotFoundException;
 
 /**
@@ -62,23 +60,9 @@ public class EventRsvpCommand extends Command {
         requireNonNull(model);
         Contact contactToRsvp = getContactFromModel(model);
         Event eventToRsvp = getEventFromModel(model);
-        Participant updatedParticipant = new Participant(contactToRsvp, status);
-
 
         try {
-            Event rsvpedEvent = eventToRsvp.withUpdatedParticipant(updatedParticipant);
-            model.setEvent(eventToRsvp, rsvpedEvent);
-            List<Contact> contacts = model.getFilteredContactList();
-            for (Contact contact : contacts) {
-                if (contact.hasEvent(eventToRsvp) || contact.hasEventWithName(eventToRsvp.getName().value)) {
-                    try {
-                        Contact updatedContact = contact.removeEvent(eventToRsvp).addEvent(rsvpedEvent);
-                        model.setContact(contact, updatedContact);
-                    } catch (DuplicateEventException | DuplicateContactException e) {
-                        throw new CommandException("Failed to update contact events after RSVP: " + e.getMessage());
-                    }
-                }
-            }
+            model.setParticipant(contactToRsvp, eventToRsvp, status);
             return new CommandResult(String.format(MESSAGE_SUCCESS,
                     Messages.format(eventToRsvp), Messages.format(contactToRsvp)));
         } catch (ParticipantNotFoundException e) {

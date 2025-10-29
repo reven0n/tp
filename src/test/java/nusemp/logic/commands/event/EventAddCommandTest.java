@@ -30,7 +30,7 @@ import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.ParticipantStatus;
 
 class EventAddCommandTest {
     @Test
@@ -225,17 +225,17 @@ class EventAddCommandTest {
         }
 
         @Override
-        public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+        public void addParticipant(Contact contact, Event event, ParticipantStatus status) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void removeParticipantEvent(Contact contact, Event event) {
+        public void removeParticipant(Contact contact, Event event) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasParticipantEvent(Contact contact, Event event) {
+        public boolean hasParticipant(Contact contact, Event event) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -245,12 +245,12 @@ class EventAddCommandTest {
         }
 
         @Override
-        public List<Event> getEventsForContact(Contact contact) {
+        public List<Event> getParticipants(Contact contact) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public List<Contact> getContactsForEvent(Event event) {
+        public List<Contact> getParticipants(Event event) {
             throw new AssertionError("This method should not be called.");
         }
     }

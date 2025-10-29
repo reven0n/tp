@@ -21,7 +21,7 @@ import nusemp.model.UserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.ParticipantStatus;
 
 class EventRsvpCommandTest {
     private Model model = new ModelManager(getTypicalAppDataWithEvents(), new UserPrefs());

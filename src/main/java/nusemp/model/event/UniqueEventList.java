@@ -9,6 +9,7 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import nusemp.model.contact.Contact;
 import nusemp.model.event.exceptions.DuplicateEventException;
 import nusemp.model.event.exceptions.EventNotFoundException;
 
@@ -51,6 +52,15 @@ public class UniqueEventList implements Iterable<Event> {
         internalList.add(toAdd);
     }
 
+    private int findEventIndex(Event toFind) {
+        for (int i = 0; i < internalList.size(); i++) {
+            if (internalList.get(i).isSameEvent(toFind)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     /**
      * Replaces the event {@code target} in the list with {@code editedEvent}.
      * {@code target} must exist in the list.
@@ -59,7 +69,7 @@ public class UniqueEventList implements Iterable<Event> {
     public void setEvent(Event target, Event editedEvent) {
         requireAllNonNull(target, editedEvent);
 
-        int index = internalList.indexOf(target);
+        int index = findEventIndex(target);
         if (index == -1) {
             throw new EventNotFoundException();
         }
