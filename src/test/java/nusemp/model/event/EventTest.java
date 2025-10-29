@@ -81,6 +81,32 @@ class EventTest {
     }
 
     @Test
+    public void hasSameFields() {
+        // same values -> returns true
+        Event event = new EventBuilder(MEETING_FILLED).build();
+        assertTrue(MEETING_FILLED.equals(event));
+
+        // different name -> returns false
+        Event editedEvent = new EventBuilder(MEETING_FILLED).withName("Conference").build();
+        assertFalse(MEETING_FILLED.hasSameFields(editedEvent));
+
+        // different date -> returns false
+        editedEvent = new EventBuilder(MEETING_FILLED).withDate("02-10-2025 14:00").build();
+        assertFalse(MEETING_FILLED.hasSameFields(editedEvent));
+
+        // different address -> returns false
+        editedEvent = new EventBuilder(MEETING_FILLED).withAddress("456 Another St").build();
+        assertFalse(MEETING_FILLED.hasSameFields(editedEvent));
+
+        // different tags -> returns false
+        editedEvent = new EventBuilder(MEETING_FILLED).withTags("Music").build();
+        assertFalse(MEETING_FILLED.hasSameFields(editedEvent));
+
+        // invalidated event -> returns true
+        assertTrue(MEETING_FILLED.hasSameFields(MEETING_FILLED.getInvalidatedEvent()));
+    }
+
+    @Test
     public void equals() {
         // same values -> returns true
         Event event = new Event(MEETING_FILLED.getName(), MEETING_FILLED.getDate(),
@@ -124,6 +150,9 @@ class EventTest {
         Event event5 = new EventBuilder(MEETING_FILLED).withTags("Music", "Networking").build();
 
         assertTrue(event4.equals(event5));
+
+        // invalidated event -> returns false
+        assertFalse(MEETING_FILLED.equals(MEETING_FILLED.getInvalidatedEvent()));
     }
 
     @Test

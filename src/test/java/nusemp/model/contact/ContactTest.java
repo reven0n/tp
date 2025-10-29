@@ -48,6 +48,36 @@ public class ContactTest {
     }
 
     @Test
+    public void hasSameFields() {
+        // same values -> returns true
+        Contact aliceCopy = new ContactBuilder(ALICE).build();
+        assertTrue(ALICE.equals(aliceCopy));
+
+        // different name -> returns false
+        Contact editedAlice = new ContactBuilder(ALICE).withName(VALID_CONTACT_NAME_BOB).build();
+        assertFalse(ALICE.hasSameFields(editedAlice));
+
+        // different phone -> returns false
+        editedAlice = new ContactBuilder(ALICE).withPhone(VALID_CONTACT_PHONE_BOB).build();
+        assertFalse(ALICE.hasSameFields(editedAlice));
+
+        // different email -> returns false
+        editedAlice = new ContactBuilder(ALICE).withEmail(VALID_CONTACT_EMAIL_BOB).build();
+        assertFalse(ALICE.hasSameFields(editedAlice));
+
+        // different address -> returns false
+        editedAlice = new ContactBuilder(ALICE).withAddress(VALID_CONTACT_ADDRESS_BOB).build();
+        assertFalse(ALICE.hasSameFields(editedAlice));
+
+        // different tags -> returns false
+        editedAlice = new ContactBuilder(ALICE).withTags(VALID_CONTACT_TAG_HUSBAND).build();
+        assertFalse(ALICE.hasSameFields(editedAlice));
+
+        // invalidated contact -> returns true
+        assertTrue(ALICE.hasSameFields(ALICE.getInvalidatedContact()));
+    }
+
+    @Test
     public void equals() {
         // same values -> returns true
         Contact aliceCopy = new ContactBuilder(ALICE).build();
@@ -84,6 +114,9 @@ public class ContactTest {
         // different tags -> returns false
         editedAlice = new ContactBuilder(ALICE).withTags(VALID_CONTACT_TAG_HUSBAND).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // invalidated contact -> returns false
+        assertFalse(ALICE.equals(ALICE.getInvalidatedContact()));
     }
 
     @Test
