@@ -63,6 +63,10 @@ public class EventCard extends UiPart<Region> {
     @FXML
     private HBox addressBox;
     @FXML
+    private Label status;
+    @FXML
+    private HBox statusBox;
+    @FXML
     private FlowPane people;
     @FXML
     private Label exportContent;
@@ -95,6 +99,8 @@ public class EventCard extends UiPart<Region> {
             addressBox.setManaged(false);
             addressBox.setVisible(false);
         }
+
+        status.setText(capitalize(event.getStatus().toString()));
 
         if (event.hasTags()) {
             event.getTags().stream()
@@ -155,6 +161,7 @@ public class EventCard extends UiPart<Region> {
                 parentListView.widthProperty().subtract(WIDTH_OFFSET + CLIPBOARD_BUTTON_OFFSET));
         dateBox.maxWidthProperty().bind(parentListView.widthProperty().subtract(WIDTH_OFFSET));
         addressBox.maxWidthProperty().bind(parentListView.widthProperty().subtract(WIDTH_OFFSET));
+        statusBox.maxWidthProperty().bind(parentListView.widthProperty().subtract(WIDTH_OFFSET));
     }
 
     /**
@@ -218,5 +225,12 @@ public class EventCard extends UiPart<Region> {
         label.setWrapText(true);
         label.maxWidthProperty().bind(parentListView.widthProperty().subtract(WIDTH_OFFSET));
         return label;
+    }
+
+    private String capitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
     }
 }
