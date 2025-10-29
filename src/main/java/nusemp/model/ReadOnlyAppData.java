@@ -47,4 +47,6 @@ public interface ReadOnlyAppData {
      */
     List<Contact> getContactsForEvent(Event event);
 
+    ParticipantMap getParticipantMap();
+
 }

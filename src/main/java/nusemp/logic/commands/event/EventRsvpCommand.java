@@ -58,19 +58,36 @@ public class EventRsvpCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+
         Contact contactToRsvp = getContactFromModel(model);
         Event eventToRsvp = getEventFromModel(model);
-        Participant updatedParticipant = new Participant(contactToRsvp, status);
 
-        try {
-            Event rsvpedEvent = eventToRsvp.withUpdatedParticipant(updatedParticipant);
-            model.setEvent(eventToRsvp, rsvpedEvent);
-            return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    Messages.format(eventToRsvp), Messages.format(contactToRsvp)));
-        } catch (ParticipantNotFoundException e) {
+        // Check if participant exists in the event
+        if (!model.hasParticipantEvent(contactToRsvp, eventToRsvp)) {
             throw new CommandException(String.format(MESSAGE_CONTACT_NOT_PARTICIPANT,
                     Messages.format(contactToRsvp), Messages.format(eventToRsvp)));
         }
+
+        // Update the participant status in ParticipantMap
+        model.getAppData().getParticipantMap().editParticipantEventStatus(
+                contactToRsvp, eventToRsvp, status);
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS,
+                contactToRsvp.getName().toString(), status.toString()));
+
+//        Contact contactToRsvp = getContactFromModel(model);
+//        Event eventToRsvp = getEventFromModel(model);
+//        Participant updatedParticipant = new Participant(contactToRsvp, status);
+//
+//        try {
+//            Event rsvpedEvent = eventToRsvp.withUpdatedParticipant(updatedParticipant);
+//            model.setEvent(eventToRsvp, rsvpedEvent);
+//            return new CommandResult(String.format(MESSAGE_SUCCESS,
+//                    Messages.format(eventToRsvp), Messages.format(contactToRsvp)));
+//        } catch (ParticipantNotFoundException e) {
+//            throw new CommandException(String.format(MESSAGE_CONTACT_NOT_PARTICIPANT,
+//                    Messages.format(contactToRsvp), Messages.format(eventToRsvp)));
+//        }
     }
 
     /**
