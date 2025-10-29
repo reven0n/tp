@@ -49,6 +49,15 @@ public class Event {
         this.participants.addAll(participants);
     }
 
+    public Event(Name name, Date date, Address address, EventStatus status, Set<Tag> tags) {
+        requireAllNonNull(name, date, address, status);
+        this.name = name;
+        this.date = date;
+        this.address = address;
+        this.status = status;
+        this.tags.addAll(tags);
+    }
+
     /**
      * Convenience constructor without participants or tags, with default status STARTING.
      */

@@ -13,6 +13,7 @@ import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
 import nusemp.model.event.Participant;
+import nusemp.model.event.ParticipantStatus;
 
 /**
  * An Immutable AppData that is serializable to JSON format.
@@ -25,16 +26,21 @@ class JsonSerializableAppData {
 
     private final List<JsonAdaptedContact> contacts = new ArrayList<>();
     private final List<JsonAdaptedEvent> events = new ArrayList<>();
+    private final List<JsonAdaptedParticipantMapping> participantMappings = new ArrayList<>();
 
     /**
      * Constructs a {@code JsonSerializableAppData} with the given contacts and events.
      */
     @JsonCreator
     public JsonSerializableAppData(@JsonProperty("contacts") List<JsonAdaptedContact> contacts,
-            @JsonProperty("events") List<JsonAdaptedEvent> events) {
+            @JsonProperty("events") List<JsonAdaptedEvent> events,
+            @JsonProperty("participantMappings") List<JsonAdaptedParticipantMapping> participantMappings) {
         this.contacts.addAll(contacts);
         if (events != null) {
             this.events.addAll(events);
+        }
+        if (participantMappings != null) {
+            this.participantMappings.addAll(participantMappings);
         }
     }
 
@@ -46,6 +52,18 @@ class JsonSerializableAppData {
     public JsonSerializableAppData(ReadOnlyAppData source) {
         contacts.addAll(source.getContactList().stream().map(JsonAdaptedContact::new).toList());
         events.addAll(source.getEventList().stream().map(JsonAdaptedEvent::new).toList());
+
+        // Serialize participant mappings
+        for (Contact contact : source.getContactList()) {
+            List<Event> contactEvents = source.getEventsForContact(contact);
+            for (Event event : contactEvents) {
+                ParticipantStatus status = source.getParticipantStatus(contact, event);
+                participantMappings.add(new JsonAdaptedParticipantMapping(
+                        contact.getEmail().value,
+                        event.getName().value,
+                        status.toString()));
+            }
+        }
     }
 
     /**
@@ -85,21 +103,30 @@ class JsonSerializableAppData {
      * For each event, adds the event to all its participants' event lists.
      */
     private void populateContactEventLists(AppData appData) {
-        for (Event event : appData.getEventList()) {
-            for (Participant participant : event.getParticipants()) {
-                Contact contact = participant.getContact();
-                // Find the contact in appData and update it
-                Contact existingContact = appData.getContactList().stream()
-                        .filter(c -> c.getEmail().equals(contact.getEmail()))
-                        .findFirst()
-                        .orElse(null);
+        // Reconstruct participant mappings
+        for (JsonAdaptedParticipantMapping mapping : participantMappings) {
+            Contact contact = findContactByEmail(appData, mapping.getContactEmail());
+            Event event = findEventByName(appData, mapping.getEventName());
+            ParticipantStatus status = ParticipantStatus.fromString(mapping.getStatus());
 
-                if (existingContact != null && !existingContact.hasEventWithName(event.getName().value)) {
-                    Contact updatedContact = existingContact.addEvent(event);
-                    appData.setContact(existingContact, updatedContact);
-                }
+            if (contact != null && event != null) {
+                appData.addParticipantEvent(contact, event, status);
             }
         }
+    }
+
+    private Contact findContactByEmail(AppData appData, String email) {
+        return appData.getContactList().stream()
+                .filter(c -> c.getEmail().value.equals(email))
+                .findFirst()
+                .orElse(null);
+    }
+
+    private Event findEventByName(AppData appData, String name) {
+        return appData.getEventList().stream()
+                .filter(e -> e.getName().value.equals(name))
+                .findFirst()
+                .orElse(null);
     }
 
 }

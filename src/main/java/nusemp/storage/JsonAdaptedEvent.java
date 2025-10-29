@@ -1,5 +1,7 @@
 package nusemp.storage;
 
+import static nusemp.model.util.SampleDataUtil.EMPTY_EVENT_LIST;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -44,8 +46,6 @@ class JsonAdaptedEvent {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final String status;
 
-    private final List<JsonAdaptedParticipant> participants = new ArrayList<>();
-
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -60,9 +60,6 @@ class JsonAdaptedEvent {
         this.date = date;
         this.address = address;
         this.status = status;
-        if (participants != null) {
-            this.participants.addAll(participants);
-        }
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -76,10 +73,6 @@ class JsonAdaptedEvent {
         date = source.getDate().toString();
         address = source.getAddress().value;
         status = source.getStatus().toString();
-        participants.addAll(source.getParticipants().stream()
-                .map(participant -> new JsonAdaptedParticipant(
-                        participant.getContact().getEmail().value, participant.getStatus().toString()))
-                .collect(Collectors.toList()));
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .toList());
@@ -132,27 +125,9 @@ class JsonAdaptedEvent {
             modelStatus = EventStatus.fromString(status);
         }
 
-        final List<Participant> modelParticipants = new ArrayList<>();
-        for (JsonAdaptedParticipant participant : participants) {
-            String email = participant.getEmail();
-            String participantStatusStr = participant.getStatus();
-            if (!Email.isValidEmail(email)) {
-                throw new IllegalValueException(Email.MESSAGE_CONSTRAINTS);
-            }
-            Contact contact = findContactByEmail(appData, email).orElseThrow(() ->
-                    new IllegalValueException(String.format(MISSING_PARTICIPANT_EMAIL_MESSAGE, email)));
-
-            if (!ParticipantStatus.isValidStatus(participantStatusStr)) {
-                throw new IllegalValueException(String.format(INVALID_PARTICIPANT_STATUS_MESSAGE, email));
-            }
-
-            ParticipantStatus status = ParticipantStatus.fromString(participantStatusStr);
-            modelParticipants.add(new Participant(contact, status));
-        }
-
         final Set<Tag> modelTags = new HashSet<>(eventTags);
 
-        return new Event(modelName, modelDate, modelAddress, modelStatus, modelTags, modelParticipants);
+        return new Event(modelName, modelDate, modelAddress, modelStatus, modelTags);
     }
 
     /**

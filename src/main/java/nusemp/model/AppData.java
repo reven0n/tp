@@ -212,40 +212,19 @@ public class AppData implements ReadOnlyAppData {
         return participantMap.hasParticipantEvent(contact, event);
     }
 
-    /**
-     * Retrieves the participation status of a contact in a specific event.
-     *
-     * @param contact the contact whose status is to be retrieved
-     * @param event the event in which the contact's status is to be checked
-     * @return the {@code ParticipantStatus} of the contact in the event
-     * @throws NullPointerException if {@code contact} or {@code event} is {@code null}
-     */
+    @Override
     public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
         requireAllNonNull(contact, event);
         return participantMap.getParticipantStatus(contact, event);
     }
 
-    /**
-     * Returns a list of events that the specified contact is participating in.
-     *
-     * @param contact the contact whose associated events are to be retrieved
-     * @return a list of {@link Event} objects the contact is participating in;
-     *         an empty list if the contact is not associated with any events
-     * @throws NullPointerException if {@code contact} is {@code null}
-     */
+    @Override
     public List<Event> getEventsForContact(Contact contact) {
         requireNonNull(contact);
         return participantMap.getEventsForContact(contact);
     }
 
-    /**
-     * Returns a list of contacts participating in a given event.
-     *
-     * @param event the event whose participants are to be retrieved
-     * @return a list of {@link Contact} objects participating in the event;
-     *         an empty list if no participants are associated with the event
-     * @throws NullPointerException if {@code event} is {@code null}
-     */
+    @Override
     public List<Contact> getContactsForEvent(Event event) {
         requireNonNull(event);
         return participantMap.getContactsForEvent(event);
