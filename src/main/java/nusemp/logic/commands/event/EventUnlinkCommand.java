@@ -1,7 +1,6 @@
 package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
-import static nusemp.logic.commands.event.EventLinkCommand.MESSAGE_DUPLICATE_PARTICIPANT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
@@ -35,10 +34,11 @@ public class EventUnlinkCommand extends Command {
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " 2";
 
-    public static final String MESSAGE_SUCCESS = "Successfully unlinked contact: %1$s from event:%2$s";
+    public static final String MESSAGE_SUCCESS = "Successfully unlinked contact: %1$s from event %2$s";
     public static final String MESSAGE_SUCCESS_ALL = "Successfully unlinked %1$d contact(s) from event %2$s. "
             + "\nContacts unlinked: ";
-    public static final String MESSAGE_CONTACT_NOT_FOUND = "Error unlinking contact: contact not found in event";
+    public static final String MESSAGE_CONTACT_NOT_FOUND = "Error unlinking contact: contact %1$s not found "
+            + "in event %2$s";
     public static final String MESSAGE_NO_CONTACTS_TO_UNLINK = "No contacts available to unlink";
 
     private final Index eventIndex;
@@ -98,8 +98,8 @@ public class EventUnlinkCommand extends Command {
         Contact contactToUnlink = lastShownContactList.get(contactIndex.getZeroBased());
 
         if (!model.hasParticipant(contactToUnlink, eventToUnlink)) {
-            throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
-                    contactToUnlink.getEmail()));
+            throw new CommandException(String.format(MESSAGE_CONTACT_NOT_FOUND,
+                    contactToUnlink.getName(), eventToUnlink.getName()));
         }
 
         try {
@@ -131,7 +131,7 @@ public class EventUnlinkCommand extends Command {
                     // Continue with next contact if one fails
                 }
             } else {
-                notLinkedContacts.add(contact.getEmail().toString());
+                notLinkedContacts.add(contact.getName().toString());
             }
         }
 
