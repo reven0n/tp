@@ -1,0 +1,86 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+title Error Handling Sequence Diagram
+
+actor User as user USER_COLOR
+participant ":UI\n(MainWindow)" as ui UI_COLOR
+participant ":ResultDisplay" as display UI_COLOR
+participant ":Logic" as logic LOGIC_COLOR
+participant ":Parser" as parser LOGIC_COLOR
+participant ":FindParser" as findParser LOGIC_COLOR
+participant ":Command" as command LOGIC_COLOR
+participant ":Model" as model MODEL_COLOR
+participant ":Storage" as storage STORAGE_COLOR
+
+user -[USER_COLOR]> ui : "contact find --name"
+activate ui UI_COLOR
+
+ui -[UI_COLOR]> ui : executeCommand(command)
+ui -[UI_COLOR]> logic : execute(command)
+activate logic LOGIC_COLOR
+
+logic -[LOGIC_COLOR]> parser : parseCommand(command)
+activate parser LOGIC_COLOR
+
+parser -[LOGIC_COLOR]> findParser : parse("--name")
+activate findParser LOGIC_COLOR
+
+alt Invalid Command
+    findParser -[LOGIC_COLOR]> parser : ParseException
+    parser -[LOGIC_COLOR]> logic : ParseException
+    logic -[LOGIC_COLOR]> ui : ParseException
+    ui -[UI_COLOR]> display : setFeedbackToUser(error)
+    ui -[USER_COLOR]> user : Show error
+else Valid Command
+    findParser -[LOGIC_COLOR]> parser : ContactFindCommand
+    deactivate findParser
+    parser -[LOGIC_COLOR]> logic : ContactFindCommand
+    deactivate parser
+
+    logic -[LOGIC_COLOR]> command : execute(model)
+    activate command LOGIC_COLOR
+
+    alt Command Exception
+        command -[LOGIC_COLOR]> logic : CommandException
+        logic -[LOGIC_COLOR]> ui : CommandException
+        ui -[UI_COLOR]> display : setFeedbackToUser(error)
+        ui -[USER_COLOR]> user : Show error
+    else Success
+        command -[LOGIC_COLOR]> model : updateFilteredContactList(predicate)
+        activate model MODEL_COLOR
+        model -[MODEL_COLOR]> command
+        deactivate model
+
+        command -[LOGIC_COLOR]> logic : "N contacts listed"
+        deactivate command
+
+        logic -[LOGIC_COLOR]> storage : saveAppData(data)
+        activate storage STORAGE_COLOR
+
+        alt Access Denied Error
+            storage -[STORAGE_COLOR]> logic : AccessDeniedException
+            logic -[LOGIC_COLOR]> ui : CommandException(Permission error)
+            ui -[UI_COLOR]> display : setFeedbackToUser(error)
+            ui -[USER_COLOR]> user : Show permission error
+        else IO Error
+            storage -[STORAGE_COLOR]> logic : IOException
+            logic -[LOGIC_COLOR]> ui : CommandException(File error)
+            ui -[UI_COLOR]> display : setFeedbackToUser(error)
+            ui -[USER_COLOR]> user : Show file error
+        else Success
+            storage -[STORAGE_COLOR]> logic : Success
+            logic -[LOGIC_COLOR]> ui : "N contacts listed"
+            ui -[UI_COLOR]> display : setFeedbackToUser(result)
+            ui -[USER_COLOR]> user : Show results
+        end
+        deactivate storage
+    end
+end
+
+deactivate logic
+ui -[UI_COLOR]> display : handleCommandResult(result)
+deactivate ui
+
+@enduml

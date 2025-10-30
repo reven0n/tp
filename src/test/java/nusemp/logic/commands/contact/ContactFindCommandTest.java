@@ -21,10 +21,10 @@ import org.junit.jupiter.api.Test;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
+import nusemp.model.contact.ContactEmailContainsKeywordsPredicate;
 import nusemp.model.contact.ContactMatchesAllPredicates;
-import nusemp.model.contact.EmailContainsKeywordsPredicate;
-import nusemp.model.contact.NameContainsKeywordsPredicate;
-import nusemp.model.contact.TagContainsKeywordsPredicate;
+import nusemp.model.contact.ContactNameContainsKeywordsPredicate;
+import nusemp.model.contact.ContactTagContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code ContactFindCommand}.
@@ -35,10 +35,10 @@ public class ContactFindCommandTest {
 
     @Test
     public void equals() {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
+        ContactNameContainsKeywordsPredicate firstPredicate =
+                new ContactNameContainsKeywordsPredicate(Collections.singletonList("first"));
+        ContactNameContainsKeywordsPredicate secondPredicate =
+                new ContactNameContainsKeywordsPredicate(Collections.singletonList("second"));
 
         ContactFindCommand findFirstCommand = new ContactFindCommand(firstPredicate);
         ContactFindCommand findSecondCommand = new ContactFindCommand(secondPredicate);
@@ -63,7 +63,7 @@ public class ContactFindCommandTest {
     @Test
     public void execute_zeroKeywords_noContactFound() {
         String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 0);
-        NameContainsKeywordsPredicate predicate = preparePredicate(" ");
+        ContactNameContainsKeywordsPredicate predicate = preparePredicate(" ");
         ContactFindCommand command = new ContactFindCommand(predicate);
         expectedModel.updateFilteredContactList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -73,7 +73,7 @@ public class ContactFindCommandTest {
     @Test
     public void execute_multipleKeywords_multipleContactsFound() {
         String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 3);
-        NameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
+        ContactNameContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         ContactFindCommand command = new ContactFindCommand(predicate);
         expectedModel.updateFilteredContactList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -83,8 +83,8 @@ public class ContactFindCommandTest {
     @Test
     public void execute_emailKeyword_contactsFound() {
         String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 1);
-        EmailContainsKeywordsPredicate predicate =
-                new EmailContainsKeywordsPredicate(Collections.singletonList("alice"));
+        ContactEmailContainsKeywordsPredicate predicate =
+                new ContactEmailContainsKeywordsPredicate(Collections.singletonList("alice"));
         ContactFindCommand command = new ContactFindCommand(predicate);
         expectedModel.updateFilteredContactList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -94,8 +94,8 @@ public class ContactFindCommandTest {
     @Test
     public void execute_tagKeyword_contactsFound() {
         String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 3);
-        TagContainsKeywordsPredicate predicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("friends"));
+        ContactTagContainsKeywordsPredicate predicate =
+                new ContactTagContainsKeywordsPredicate(Collections.singletonList("friends"));
         ContactFindCommand command = new ContactFindCommand(predicate);
         expectedModel.updateFilteredContactList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -106,10 +106,10 @@ public class ContactFindCommandTest {
     public void execute_multiplePredicatesAnd_contactsFound() {
         String expectedMessage = String.format(MESSAGE_CONTACTS_LISTED_OVERVIEW, 1);
         // BENSON has name "Benson Meier", email "johnd@example.com", tags ["owesMoney", "friends"]
-        NameContainsKeywordsPredicate namePredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("Benson"));
-        TagContainsKeywordsPredicate tagPredicate =
-                new TagContainsKeywordsPredicate(Collections.singletonList("owesMoney"));
+        ContactNameContainsKeywordsPredicate namePredicate =
+                new ContactNameContainsKeywordsPredicate(Collections.singletonList("Benson"));
+        ContactTagContainsKeywordsPredicate tagPredicate =
+                new ContactTagContainsKeywordsPredicate(Collections.singletonList("owesMoney"));
         ContactMatchesAllPredicates combinedPredicate =
                 new ContactMatchesAllPredicates(Arrays.asList(namePredicate, tagPredicate));
         ContactFindCommand command = new ContactFindCommand(combinedPredicate);
@@ -120,16 +120,17 @@ public class ContactFindCommandTest {
 
     @Test
     public void toStringMethod() {
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Arrays.asList("keyword"));
+        ContactNameContainsKeywordsPredicate predicate =
+            new ContactNameContainsKeywordsPredicate(Arrays.asList("keyword"));
         ContactFindCommand contactFindCommand = new ContactFindCommand(predicate);
         String expected = ContactFindCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, contactFindCommand.toString());
     }
 
     /**
-     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
+     * Parses {@code userInput} into a {@code ContactNameContainsKeywordsPredicate}.
      */
-    private NameContainsKeywordsPredicate preparePredicate(String userInput) {
-        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private ContactNameContainsKeywordsPredicate preparePredicate(String userInput) {
+        return new ContactNameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
     }
 }
