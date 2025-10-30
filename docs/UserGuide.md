@@ -223,7 +223,7 @@ contact edit 1 --phone 98765432 --email newemail@gmail.com
 
 This changes contact #1's phone and email.
 
-**Important:** You can find the index of the contact in the displayed contact list. The index should be a positive integer.
+**Important:** You can find the index of the contact in the displayed contact list. The index should be a positive number.
 
 <box type="warning" seamless>
 
@@ -336,7 +336,7 @@ contact delete 3
 
 This removes contact #3.
 
-**Important:** You can find the index of the contact in the displayed contact list. The index should be a positive integer.
+**Important:** You can find the index of the contact in the displayed contact list. The index should be a positive number .
 
 <box type="warning" seamless>
 
@@ -369,7 +369,7 @@ contact show 2
 
 Shows all events for contact #2.
 
-**Important:** You can find the index of the contact in the displayed contact list. The index should be a positive integer.
+**Important:** You can find the index of the contact in the displayed contact list. The index should be a positive number.
 
 <box type="tip" seamless>
 
@@ -399,12 +399,12 @@ Screenshot Example:
 _In the example screenshot, we want to show all events for the contact at index 2 (highlighted under A), so we execute `contact show 2`, bringing us to the events page._
 
 ---
-
+<!-- @@author reven0n-->>
 ## 3. Managing Your Events
 
 ### 3.1 `event add`
 
-**Plan a new event** and save all the details.
+**Plans a new event** and save all the details.
 
 **Basic event:**
 
@@ -412,7 +412,7 @@ _In the example screenshot, we want to show all events for the contact at index 
 event add --name Team Meeting --date 25-12-2025 14:30
 ```
 
-**Add location too:**
+**You can add locations too:**
 
 ```
 event add --name Company Party --date 31-12-2025 19:00 --address Office Lounge
@@ -424,7 +424,7 @@ event add --name Company Party --date 31-12-2025 19:00 --address Office Lounge
 
 - **Date format:** DD-MM-YYYY HH:MM (24-hour time)
 - **Address is optional** but helpful for location
-- Events automatically sort by date!
+- Events **do not** sort by date!
 
 </box>
 
@@ -450,9 +450,8 @@ event list
 
 **👀 What You'll See:**
 
-- Events with date, time, and location
+- Events with date, time, and location (if present)
 - Each event has a **number** (save this for later!)
-- Events shown in chronological order
 - Perfect for planning your schedule!
 
 </box>
@@ -506,6 +505,7 @@ event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATU
 
 Screenshot Example:
 ![Event Edit Example](images/EventEditExample.png)
+<!--@@author-->
 
 ### 3.4 `event find`
 
@@ -559,6 +559,7 @@ event find KEYWORD [MORE_KEYWORDS]... or event find [--FIELD KEYWORD [MORE_KEYWO
 Screenshot Example:
 ![Event Find Example](images/EventFindExample.png)
 
+<!--@@author reven0n-->>
 ### 3.5 `event delete`
 
 **Remove an event completely:**
@@ -569,7 +570,7 @@ event delete 2
 
 This deletes event #2 and removes all contact connections.
 
-**Important:** You can find the index of the event in the displayed event list. The index should be a positive integer.
+**Important:** You can find the index of the event in the displayed event list. The index should be a positive number.
 
 <box type="warning" seamless>
 
@@ -602,10 +603,22 @@ event link --event 1 --contact 2
 
 This adds contact #2 to event #1.
 
+**Add all contacts to an event**
+
+You can also quickly invite everyone in your contact list to an event:
+```
+event link --event 1 --contact all
+```
+
+This adds **all contacts** from your contact list to event #1 — 
+perfect for bulk invites or large gatherings.
+
 **Important:**
 
-- You can find the event index in the displayed event list. The index should be a positive integer.
-- You can find the contact index in the displayed contact list. The index should be a positive integer.
+- You can find the event index in the displayed event list
+- You can find the contact index in the displayed contact list
+- Both indexes should be a **positive** number, , unless you use `all` for `CONTACT_INDEX`
+- Using --contact all will link **every contact** currently listed to the specified event
 
 <box type="tip" seamless>
 
@@ -639,10 +652,23 @@ event unlink --event 1 --contact 2
 
 Removes contact #2 from event #1.
 
+**Remove all contacts from an event**
+
+You can also quickly clear your guest list for an event:
+
+```
+event unlink --event 1 --contact all
+```
+
+This removes **all contacts** currently linked to event #1 — 
+perfect for resetting or rebuilding your guest list.
+
 **Important:**
 
-- You can find the event index in the displayed event list. The index should be a positive integer.
-- You can find the contact index in the displayed contact list. The index should be a positive integer.
+- You can find the event index in the displayed event list
+- You can find the contact index in the displayed contact list
+- Both indexes should be a **positive** number, unless you use `all` for `CONTACT_INDEX`
+- Using `--contact all` will unlink **every contact** from the specified event
 
 <box type="tip" seamless>
 
@@ -676,7 +702,7 @@ event show 1
 
 Shows everyone invited to event #1.
 
-**Important:** You can find the index of the event in the displayed event list. The index should be a positive integer.
+**Important:** You can find the index of the event in the displayed event list. The index should be a positive number.
 
 <box type="warning" seamless>
 
@@ -718,7 +744,7 @@ event export 1
 
 Copies all contacts who are available from event #1.
 
-**Important:** You can find the index of the event in the displayed event list. The index should be a positive integer.
+**Important:** You can find the index of the event in the displayed event list. The index should be a positive number.
 
 <box type="tip" seamless>
 
@@ -754,8 +780,9 @@ Marks contact #2 as available for event #1.
 
 **Important:**
 
-- You can find the event index in the displayed event list. The index should be a positive integer.
-- You can find the contact index in the displayed contact list. The index should be a positive integer.
+- You can find the event index in the displayed event list
+- You can find the contact index in the displayed contact list
+- Both indexes should be a **positive** number
 
 **Possible responses:**
 
@@ -802,6 +829,8 @@ Your information is saved in a file called `appdata.json` in the data folder. Yo
 
 - **Make a backup** before editing!
 - If the format becomes invalid, the app will start with empty data
+  - A file with the invalid format will be saved as `appdata.json.corrupt.<timestamp>` in the data folder
+  - To view the contents this file, open the file with any editor file (e.g. Notepad, VSCode)
 - Some edits might cause the app to behave strangely
 - **Only edit if you're confident** you can do it correctly
 
@@ -852,18 +881,20 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 
 ### 7.3 Event Commands
 
-| Action                        | Format, Examples                                                                                                                            |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add Event**                 | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Room 4`         |
-| **Delete Event**              | `event delete INDEX`<br>e.g. `event delete 2`                                                                                               |
-| **Edit Event**                | `event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…`<br>e.g. `event edit 1 --name New Meeting` |
-| **Find Event**                | `event find KEYWORDS [MORE_KEYWORDS]...` or <br>e.g. `event find --name Conference` <br> `event find --status pending` <br/>                |
-| **List Events**               | `event list`                                                                                                                                |
-| **Link Contact to Event**     | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
-| **Unlink Contact from Event** | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
-| **Show Event's Contacts**     | `event show INDEX`<br>e.g. `event show 1`                                                                                                   |
-| **Export Event Contacts**     | `event export INDEX [--status STATUS]`<br>e.g. `event export 1`<br> `event export 1 --status available`<br/>                                |
-| **RSVP to Event**             | `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS`<br>e.g. `event rsvp --event 1 --contact 2 --status available`      |
+| Action                             | Format, Examples                                                                                                                            |
+|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Event**                      | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date "25-12-2025 14:30" --address Room 4`       |
+| **Delete Event**                   | `event delete INDEX`<br>e.g. `event delete 2`                                                                                               |
+| **Edit Event**                     | `event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…`<br>e.g. `event edit 1 --name New Meeting` |
+| **Find Event**                     | `event find KEYWORDS [MORE_KEYWORDS]...` or <br>e.g. `event find --name Conference` <br> `event find --status pending` <br/>                |
+| **List Events**                    | `event list`                                                                                                                                |
+| **Link Contact to Event**          | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
+| **Link All Contacts to Event**     | `event link --event EVENT_INDEX --contact all`<br>e.g. `event link --event 1 --contact all`                                                 |
+| **Unlink Contact from Event**      | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
+| **Unlink All Contacts from Event** | `event unlink --event EVENT_INDEX --contact all`<br>e.g. `event unlink --event 1 --contact all`                                              |
+| **Show Event's Contacts**          | `event show INDEX`<br>e.g. `event show 1`                                                                                                   |
+| **Export Event Contacts**          | `event export INDEX [--status STATUS]`<br>e.g. `event export 1`<br> `event export 1 --status available`<br/>                                |
+| **RSVP to Event**                  | `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS`<br>e.g. `event rsvp --event 1 --contact 2 --status available`      |
 
 ---
 

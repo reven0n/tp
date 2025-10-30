@@ -37,6 +37,7 @@ skinparam Package {
     BackgroundColor #FFFFFF
     BorderThickness 1
     FontSize 16
+    FontName Arial
 }
 
 skinparam Class {
@@ -65,6 +66,7 @@ skinparam Sequence {
 skinparam Participant {
     FontColor #FFFFFFF
     Padding 20
+    FontName Arial
 }
 
 skinparam ArrowFontStyle bold
