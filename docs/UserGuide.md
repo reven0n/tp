@@ -664,7 +664,7 @@ Marks contact #2 as available for event #1.
 
 - `available` - They can make it!
 - `unavailable` - They can't come
-- `pending` - Haven't decided yet
+- `unknown` - Haven't decided yet
 
 <box type="tip" seamless>
 
