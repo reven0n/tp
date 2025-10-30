@@ -21,7 +21,7 @@ public class EventBuilder {
     public static final String DEFAULT_NAME = "Default Event";
     public static final String DEFAULT_DATE = "01-01-2025 10:00";
     public static final String DEFAULT_ADDRESS = "123 Default St";
-    public static final EventStatus DEFAULT_STATUS = EventStatus.STARTING;
+    public static final EventStatus DEFAULT_STATUS = EventStatus.PENDING;
 
     private Name name;
     private Date date;

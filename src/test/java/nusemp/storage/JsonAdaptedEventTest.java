@@ -130,7 +130,7 @@ class JsonAdaptedEventTest {
         JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_NAME, VALID_DATE, VALID_ADDRESS, null, VALID_TAGS,
                 VALID_PARTICIPANTS);
         Event result = event.toModelType();
-        assertEquals(nusemp.model.event.EventStatus.STARTING, result.getStatus());
+        assertEquals(nusemp.model.event.EventStatus.PENDING, result.getStatus());
     }
 
     @Test

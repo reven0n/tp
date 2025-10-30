@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import nusemp.commons.core.GuiSettings;
@@ -271,6 +272,11 @@ public class ContactAddCommandTest {
         public void addContact(Contact contact) {
             requireNonNull(contact);
             contactsAdded.add(contact);
+        }
+
+        @Override
+        public ObservableList<Contact> getFilteredContactList() {
+            return FXCollections.observableList(contactsAdded);
         }
 
         @Override

@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import nusemp.commons.core.GuiSettings;
@@ -80,8 +81,8 @@ class EventAddCommandTest {
     public void execute_duplicateEvent_throwsCommandException() {
         EventAddCommand eventAddCommand = new EventAddCommand(CONFERENCE_EMPTY);
         ModelStub modelStub = new ModelStubWithEvent(CONFERENCE_EMPTY);
-        assertThrows(CommandException.class,
-                EventAddCommand.MESSAGE_DUPLICATE_EVENT, () -> eventAddCommand.execute(modelStub));
+        assertThrows(CommandException.class, String.format(EventAddCommand.MESSAGE_DUPLICATE_EVENT,
+                CONFERENCE_EMPTY.getName()), () -> eventAddCommand.execute(modelStub));
     }
 
     @Test
@@ -283,6 +284,11 @@ class EventAddCommandTest {
         public void addEvent(Event event) {
             requireNonNull(event);
             eventsAdded.add(event);
+        }
+
+        @Override
+        public ObservableList<Event> getFilteredEventList() {
+            return FXCollections.observableList(eventsAdded);
         }
     }
 }

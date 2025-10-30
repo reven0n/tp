@@ -56,7 +56,7 @@ class EventRsvpCommandTest {
         Command eventRsvpCommand = new EventRsvpCommand(validEventIndex, validContactIndex, validStatus);
 
         assertCommandFailure(eventRsvpCommand, model, String.format(EventRsvpCommand.MESSAGE_CONTACT_NOT_PARTICIPANT,
-                Messages.format(contactToRsvp), Messages.format(eventToUpdate)));
+                contactToRsvp.getName(), eventToUpdate.getName()));
     }
 
     @Test
@@ -88,7 +88,7 @@ class EventRsvpCommandTest {
         // Create a new model with same data for comparison
         Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
         String expectedMessage = String.format(EventRsvpCommand.MESSAGE_SUCCESS,
-                Messages.format(eventToUpdate), Messages.format(contactToRsvp));
+                eventToUpdate.getName(), contactToRsvp.getName(), currentStatus);
 
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
     }
@@ -111,8 +111,6 @@ class EventRsvpCommandTest {
 
         assertCommandSuccess(command, model,
                 String.format(EventRsvpCommand.MESSAGE_SUCCESS,
-                    Messages.format(eventToUpdate),
-                    Messages.format(contactToRsvp)),
-                expectedModel);
+                        eventToUpdate.getName(), contactToRsvp.getName(), newStatus), expectedModel);
     }
 }

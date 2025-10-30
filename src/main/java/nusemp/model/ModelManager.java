@@ -144,7 +144,6 @@ public class ModelManager implements Model {
 
     @Override
     public void deleteEvent(Event target) {
-        // Remove event from all linked contacts
         appData.removeEvent(target);
     }
 

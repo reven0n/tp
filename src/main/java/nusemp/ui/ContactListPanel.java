@@ -20,21 +20,29 @@ public class ContactListPanel extends UiPart<Region> {
 
     private final ContactToParticipantsFunction participantsFn;
 
+    private final PrefixedList<Contact, String> prefixedList;
+
     @FXML
     private ListView<Contact> contactListView;
 
     /**
      * Creates a {@code ContactListPanel} with the given {@code ObservableList}.
      */
-    public ContactListPanel(ObservableList<Contact> contactList, ContactToParticipantsFunction participantsFn) {
+    public ContactListPanel(String heading, ObservableList<Contact> contactList,
+            ContactToParticipantsFunction participantsFn) {
         super(FXML);
         this.participantsFn = participantsFn;
-        contactListView.setItems(contactList);
+        prefixedList = new PrefixedList<>(contactList, heading);
+        contactListView.setItems(prefixedList);
         contactListView.setCellFactory(listView -> {
             ContactListViewCell cell = new ContactListViewCell();
             cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));
             return cell;
         });
+    }
+
+    public void updateHeading(String newHeading) {
+        prefixedList.setPrefix(newHeading);
     }
 
     /**
@@ -45,11 +53,13 @@ public class ContactListPanel extends UiPart<Region> {
         protected void updateItem(Contact contact, boolean empty) {
             super.updateItem(contact, empty);
 
-            if (empty || contact == null) {
+            if (getIndex() == 0) {
+                setGraphic(new ListHeading(prefixedList.getPrefix()).getRoot());
+            } else if (empty || contact == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new ContactCard(contact, getIndex() + 1, participantsFn.apply(contact), contactListView)
+                setGraphic(new ContactCard(contact, getIndex(), participantsFn.apply(contact), contactListView)
                         .getRoot());
             }
         }

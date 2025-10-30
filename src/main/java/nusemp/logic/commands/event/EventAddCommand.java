@@ -22,11 +22,11 @@ public class EventAddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Adds an event. "
+            + ": Adds an event.\n\n"
             + "Parameters: "
             + PREFIX_NAME + " NAME "
             + PREFIX_DATE + " DATE "
-            + "[" + PREFIX_ADDRESS + " ADDRESS]"
+            + "[" + PREFIX_ADDRESS + " ADDRESS] "
             + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_NAME + " Team Meeting "
@@ -36,7 +36,7 @@ public class EventAddCommand extends Command {
             + PREFIX_TAG + " Networking";
 
     public static final String MESSAGE_SUCCESS = "Successfully added event:\n%1$s";
-    public static final String MESSAGE_DUPLICATE_EVENT = "Error adding event: event already exists";
+    public static final String MESSAGE_DUPLICATE_EVENT = "Error adding event: event name \"%1$s\" already exists";
 
     private final Event toAdd;
 
@@ -53,11 +53,15 @@ public class EventAddCommand extends Command {
         requireNonNull(model);
 
         if (model.hasEvent(toAdd)) {
-            throw new CommandException(MESSAGE_DUPLICATE_EVENT);
+            throw new CommandException(String.format(MESSAGE_DUPLICATE_EVENT, toAdd.getName()));
         }
 
         model.addEvent(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        String feedbackToUser = String.format(MESSAGE_SUCCESS, Messages.format(toAdd));
+        String heading = model.getFilteredEventList().isEmpty()
+                ? Messages.HEADING_EVENTS_NONE
+                : Messages.HEADING_EVENTS;
+        return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 
     @Override
