@@ -31,16 +31,16 @@ class MessagesTest {
     @Test
     void format_contactWithRequiredFields_returnsFormattedContact() {
         String result = Messages.format(GEORGE);
-        String expected = String.format("%s; Email: %s", GEORGE.getName(), GEORGE.getEmail());
+        String expected = String.format("⌜\n  Name: %s\n  Email: %s\n⌞", GEORGE.getName(), GEORGE.getEmail());
         assertEquals(expected, result);
     }
 
     @Test
     void format_contactWithAllFields_returnsFormattedContact() {
         String result = Messages.format(ALICE);
-        String expected = String.format("%s; Email: %s; Phone: %s; Address: %s; Tags: %s",
+        String expected = String.format("⌜\n  Name: %s\n  Email: %s\n  Phone: %s\n  Address: %s\n  Tags: %s\n⌞",
                 ALICE.getName(), ALICE.getEmail(), ALICE.getPhone(), ALICE.getAddress(),
-                ALICE.getTags().stream().map(Tag::toString).reduce("", (a, b) -> a + b));
+                ALICE.getTags().stream().map(Tag::toString).reduce("", (a, b) -> a + b + " "));
         assertEquals(expected, result);
     }
 
@@ -50,7 +50,8 @@ class MessagesTest {
         Date date = new Date("01-10-2025 14:00");
         Event event = new Event(name, date, Address.empty());
         String result = Messages.format(event);
-        String expected = String.format("%s; Date: %s", event.getName(), event.getDate());
+        String expected = String.format("⌜\n  Name: %s\n  Status: %s\n  Date: %s\n⌞",
+                event.getName(), event.getStatus().toCapitalizedString(), event.getDate());
         assertEquals(expected, result);
     }
 
@@ -62,9 +63,9 @@ class MessagesTest {
         Set<Tag> tags = Set.of(new Tag("Work"), new Tag("Important"));
         Event event = new Event(name, date, address, EventStatus.PENDING, tags);
         String result = Messages.format(event);
-        String expected = String.format("%s; Date: %s; Address: %s; Tags: %s",
-                event.getName(), event.getDate(), event.getAddress(),
-                event.getTags().stream().map(Tag::toString).reduce("", (a, b) -> a + b));
+        String expected = String.format("⌜\n  Name: %s\n  Status: %s\n  Date: %s\n  Address: %s\n  Tags: %s\n⌞",
+                event.getName(), event.getStatus().toCapitalizedString(), event.getDate(), event.getAddress(),
+                event.getTags().stream().map(Tag::toString).reduce("", (a, b) -> a + b + " "));
         assertEquals(expected, result);
     }
 }

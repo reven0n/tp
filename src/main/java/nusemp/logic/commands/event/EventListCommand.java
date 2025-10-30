@@ -19,7 +19,7 @@ public class EventListCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Successfully listed all %1$s event(s)";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Lists all events.\n"
+            + ": Lists all events.\n\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD;
 
 
