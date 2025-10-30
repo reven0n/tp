@@ -46,7 +46,7 @@ public class EventExportCommandParserTest {
         assertParseFailure(parser, "   ", INVALID_COMMAND_MESSAGE);
 
         // invalid status
-        assertParseFailure(parser, "1 --status unknown", INVALID_COMMAND_MESSAGE);
+        assertParseFailure(parser, "1 --status going", INVALID_COMMAND_MESSAGE);
     }
 
     @Test

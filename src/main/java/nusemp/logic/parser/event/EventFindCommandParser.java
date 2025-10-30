@@ -100,10 +100,11 @@ public class EventFindCommandParser implements Parser<EventFindCommand> {
         }
 
         if (hasStatusPrefix) {
-            String statusArg = argumentMultimap.getValue(PREFIX_STATUS).get();
-            if (!statusArg.isEmpty()) {
+            String statusArgs = argumentMultimap.getValue(PREFIX_STATUS).get();
+            if (!statusArgs.isEmpty()) {
+                String[] statusKeywords = argumentMultimap.getValue(PREFIX_STATUS).get().split("\\s+");
                 try {
-                    predicates.add(new EventStatusPredicate(statusArg));
+                    predicates.add(new EventStatusPredicate(Arrays.asList(statusKeywords)));
                 } catch (IllegalArgumentException e) {
                     throw new ParseException(e.getMessage());
                 }

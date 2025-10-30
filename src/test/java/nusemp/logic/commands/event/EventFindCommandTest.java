@@ -61,7 +61,7 @@ class EventFindCommandTest {
     @Test
     public void execute_statusKeyword_eventFound() {
         String expectedMessage = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 1);
-        EventStatusPredicate predicate = new EventStatusPredicate("Done");
+        EventStatusPredicate predicate = new EventStatusPredicate(Arrays.asList("donE"));
         EventFindCommand command = new EventFindCommand(predicate);
         expectedModel.updateFilteredEventList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
