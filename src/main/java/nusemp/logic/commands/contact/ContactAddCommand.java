@@ -24,7 +24,7 @@ public class ContactAddCommand extends Command {
     public static final String COMMAND_WORD = "add";
 
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
-            + ": Adds a contact. "
+            + ": Adds a contact.\n\n"
             + "Parameters: "
             + PREFIX_NAME + " NAME "
             + PREFIX_EMAIL + " EMAIL "
@@ -41,7 +41,7 @@ public class ContactAddCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Successfully added contact:\n%1$s";
     public static final String MESSAGE_DUPLICATE_CONTACT =
-            "Error adding contact: contact with email \"%1$s\" already exists";
+            "Error adding contact: contact email \"%1$s\" already exists";
 
     private final Contact toAdd;
 

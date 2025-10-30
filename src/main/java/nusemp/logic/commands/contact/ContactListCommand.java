@@ -19,7 +19,7 @@ public class ContactListCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Successfully listed all %1$s contact(s)";
 
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
-            + ": Lists all contacts.\n"
+            + ": Lists all contacts.\n\n"
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD;
 
 

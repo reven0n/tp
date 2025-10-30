@@ -22,6 +22,17 @@ public enum EventStatus {
     }
 
     /**
+     * Returns the capitalized string representation of the status,
+     * i.e. Pending, Ongoing, Done
+     *
+     * @return Capitalized string of the status.
+     */
+    public String toCapitalizedString() {
+        String lower = name().toLowerCase();
+        return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
+    }
+
+    /**
      * Converts a string to an EventStatus enum value.
      *
      * @param statusString The string to convert.

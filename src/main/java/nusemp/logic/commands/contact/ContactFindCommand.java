@@ -21,7 +21,7 @@ public class ContactFindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
-            + ": Finds contacts by searching their fields (case-insensitive).\n"
+            + ": Finds contacts by searching their fields (case-insensitive).\n\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]... OR --FIELD KEYWORD [MORE_KEYWORDS]...\n"
             + "Available fields: name, email, phone, address, tag\n"
             + "Examples:\n"
