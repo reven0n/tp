@@ -770,3 +770,4 @@ Streamlines event communication workflow by integrating contact management with 
 6. **Invalid Event/Contact Combination**
    - Command: `event link --event 999 --contact 1`
    - Expected: Error message about non-existent event
+  
