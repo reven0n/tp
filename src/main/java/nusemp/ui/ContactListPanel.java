@@ -34,6 +34,15 @@ public class ContactListPanel extends UiPart<Region> {
         this.participantsFn = participantsFn;
         prefixedList = new PrefixedList<>(contactList, heading);
         contactListView.setItems(prefixedList);
+
+        // Add a listener to clear the selection when the ListView loses focus
+        contactListView.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) {
+                // If the ListView is no longer focused, clear the selection
+                contactListView.getSelectionModel().clearSelection();
+            }
+        });
+
         contactListView.setCellFactory(listView -> {
             ContactListViewCell cell = new ContactListViewCell();
             cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));
