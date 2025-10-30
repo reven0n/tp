@@ -22,21 +22,28 @@ public class EventListPanel extends UiPart<Region> {
 
     private final EventToParticipantsFunction participantsFn;
 
+    private final DisplayedList<Event, String> displayedList;
+
     @FXML
     private ListView<Event> eventListView;
 
     /**
      * Creates a {@code EventListPanel} with the given {@code ObservableList}.
      */
-    public EventListPanel(ObservableList<Event> eventList, EventToParticipantsFunction participantsFn) {
+    public EventListPanel(String heading, ObservableList<Event> eventList, EventToParticipantsFunction participantsFn) {
         super(FXML);
         this.participantsFn = participantsFn;
-        eventListView.setItems(eventList);
+        displayedList = new DisplayedList<>(eventList, heading);
+        eventListView.setItems(displayedList);
         eventListView.setCellFactory(listView -> {
             EventListViewCell cell = new EventListViewCell();
             cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));
             return cell;
         });
+    }
+
+    public void updateHeading(String newHeading) {
+        displayedList.updateExtraValue(newHeading);
     }
 
     /**
@@ -47,11 +54,13 @@ public class EventListPanel extends UiPart<Region> {
         protected void updateItem(Event event, boolean empty) {
             super.updateItem(event, empty);
 
-            if (empty || event == null) {
+            if (getIndex() == 0) {
+                setGraphic(new ListHeading(displayedList.getExtraValue()).getRoot());
+            } else if (empty || event == null) {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(new EventCard(event, getIndex() + 1, participantsFn.apply(event), eventListView).getRoot());
+                setGraphic(new EventCard(event, getIndex(), participantsFn.apply(event), eventListView).getRoot());
             }
         }
     }

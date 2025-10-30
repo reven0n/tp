@@ -1,5 +1,6 @@
 package nusemp.logic.commands;
 
+import nusemp.logic.Messages;
 import nusemp.model.Model;
 
 /**
@@ -15,6 +16,6 @@ public class HelpCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        return new CommandResult(SHOWING_HELP_MESSAGE, true, false);
+        return new CommandResult(SHOWING_HELP_MESSAGE, Messages.HEADING_PREVIOUS, null, true, false);
     }
 }

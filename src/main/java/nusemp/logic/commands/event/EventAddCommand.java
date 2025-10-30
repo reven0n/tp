@@ -57,7 +57,11 @@ public class EventAddCommand extends Command {
         }
 
         model.addEvent(toAdd);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(toAdd)));
+        String feedbackToUser = String.format(MESSAGE_SUCCESS, Messages.format(toAdd));
+        String heading = model.getFilteredEventList().isEmpty()
+                ? Messages.HEADING_EVENTS_NONE
+                : Messages.HEADING_EVENTS;
+        return new CommandResult(feedbackToUser, heading, true);
     }
 
     @Override

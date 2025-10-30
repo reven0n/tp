@@ -1,5 +1,6 @@
 package nusemp.logic.commands;
 
+import nusemp.logic.Messages;
 import nusemp.model.Model;
 
 /**
@@ -13,7 +14,7 @@ public class ExitCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT, false, true);
+        return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT, Messages.HEADING_PREVIOUS, null, false, true);
     }
 
 }

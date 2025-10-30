@@ -47,8 +47,11 @@ public class EventShowCommand extends Command {
 
         Event targetEvent = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredContactList(contact -> model.hasParticipant(contact, targetEvent));
-        return new CommandResult(String.format(MESSAGE_EVENT_SHOW_SUCCESS,
-                model.getFilteredContactList().size(), Messages.format(targetEvent)));
+        int size = model.getFilteredContactList().size();
+        String feedbackToUser = String.format(MESSAGE_EVENT_SHOW_SUCCESS, size, Messages.format(targetEvent));
+        String heading = String.format(size == 0 ? Messages.HEADING_CONTACTS_FROM_EVENT_NONE
+                : Messages.HEADING_CONTACTS_FROM_EVENT, targetEvent.getName().value);
+        return new CommandResult(feedbackToUser, heading, false);
     }
 
     @Override

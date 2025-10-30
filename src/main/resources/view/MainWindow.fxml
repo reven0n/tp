@@ -71,7 +71,7 @@
                 </tooltip>
               </Button>
             </VBox>
-            <VBox fx:id="contactList" styleClass="pane-with-border" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
+            <VBox fx:id="contactList" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS">
               <StackPane fx:id="contactListPanelPlaceholder" HBox.hgrow="ALWAYS" VBox.vgrow="ALWAYS"/>
             </VBox>
           </HBox>

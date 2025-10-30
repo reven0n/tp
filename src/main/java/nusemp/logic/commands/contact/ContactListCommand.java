@@ -3,6 +3,7 @@ package nusemp.logic.commands.contact;
 import static java.util.Objects.requireNonNull;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
+import nusemp.logic.Messages;
 import nusemp.logic.commands.Command;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
@@ -26,7 +27,9 @@ public class ContactListCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getFilteredContactList().size()));
+        int size = model.getFilteredContactList().size();
+        String heading = size == 0 ? Messages.HEADING_CONTACTS_NONE : Messages.HEADING_CONTACTS;
+        return new CommandResult(String.format(MESSAGE_SUCCESS, size), heading, false);
     }
 
     @Override

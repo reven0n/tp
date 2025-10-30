@@ -79,7 +79,7 @@ public class EventLinkCommand extends Command {
         try {
             model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
             model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(MESSAGE_SUCCESS, Messages.HEADING_PREVIOUS, null);
         } catch (Exception e) {
             throw new CommandException("Error linking participant to event.");
         }

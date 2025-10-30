@@ -1,5 +1,9 @@
 package nusemp.ui;
 
+import static nusemp.logic.Messages.HEADING_CONTACTS;
+import static nusemp.logic.Messages.HEADING_EVENTS;
+import static nusemp.logic.Messages.HEADING_PREVIOUS;
+
 import java.awt.Desktop;
 import java.net.URI;
 import java.util.logging.Logger;
@@ -79,6 +83,10 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private Button themeToggle;
+
+    private boolean isEventsViewActive = false;
+    private String contactsHeading = HEADING_CONTACTS;
+    private String eventsHeading = HEADING_EVENTS;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -179,7 +187,9 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), logic::getParticipants);
+        contactListPanel = new ContactListPanel(contactsHeading, logic.getFilteredContactList(),
+                logic::getParticipants);
+        eventListPanel = new EventListPanel(eventsHeading, logic.getFilteredEventList(), logic::getParticipants);
 
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
@@ -203,7 +213,6 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleContactViewToggle() {
         // Update UI logic
-        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), logic::getParticipants);
         contactListPanelPlaceholder.getChildren().clear();
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
@@ -217,7 +226,6 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleEventViewToggle() {
         // Update UI logic
-        eventListPanel = new EventListPanel(logic.getFilteredEventList(), logic::getParticipants);
         contactListPanelPlaceholder.getChildren().clear();
         contactListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
@@ -229,6 +237,8 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the contacts button as active and events as inactive.
      */
     private void setContactsActive() {
+        isEventsViewActive = false;
+
         contactsToggle.getStyleClass().removeAll("toggle-inactive");
         contactsToggle.getStyleClass().add("toggle-active");
 
@@ -240,6 +250,8 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the events button as active and contacts as inactive.
      */
     private void setEventsActive() {
+        isEventsViewActive = true;
+
         eventsToggle.getStyleClass().removeAll("toggle-inactive");
         eventsToggle.getStyleClass().add("toggle-active");
 
@@ -394,22 +406,43 @@ public class MainWindow extends UiPart<Stage> {
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             CommandResult commandResult = logic.execute(commandText);
-            logger.info("Result: " + commandResult.getFeedbackToUser());
-            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-
-            if (commandResult.isShowHelp()) {
-                handleHelp();
-            }
-
-            if (commandResult.isExit()) {
-                handleExit();
-            }
-
+            handleCommandResult(commandResult);
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
+        }
+    }
+
+    private void handleCommandResult(CommandResult commandResult) {
+        logger.info("Result: " + commandResult.getFeedbackToUser());
+        resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+        if (commandResult.isShowHelp()) {
+            handleHelp();
+        }
+
+        if (commandResult.isExit()) {
+            handleExit();
+        }
+
+        if (commandResult.isShowEventList() == null) {
+            return;
+        }
+
+        if (commandResult.isShowEventList()) {
+            if (!commandResult.getDisplayedListHeading().equals(HEADING_PREVIOUS)) {
+                eventsHeading = commandResult.getDisplayedListHeading();
+                eventListPanel.updateHeading(eventsHeading);
+            }
+            handleEventViewToggle();
+        } else {
+            if (!commandResult.getDisplayedListHeading().equals(HEADING_PREVIOUS)) {
+                contactsHeading = commandResult.getDisplayedListHeading();
+                contactListPanel.updateHeading(contactsHeading);
+            }
+            handleContactViewToggle();
         }
     }
 }

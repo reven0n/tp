@@ -76,7 +76,8 @@ public class EventUnlinkCommand extends Command {
         try {
             model.removeParticipant(contactToUnlink, eventToEdit);
             model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, contactToUnlink.getName().toString()));
+            return new CommandResult(String.format(MESSAGE_SUCCESS, contactToUnlink.getName().toString()),
+                    Messages.HEADING_PREVIOUS, null);
         } catch (Exception e) {
             throw new CommandException("An error occurred while unlinking the contact from the event.");
         }

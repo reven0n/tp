@@ -43,8 +43,10 @@ public class ContactFindCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredContactList(predicate);
-        return new CommandResult(
-                String.format(Messages.MESSAGE_CONTACTS_LISTED_OVERVIEW, model.getFilteredContactList().size()));
+        int size = model.getFilteredContactList().size();
+        String feedbackToUser = String.format(Messages.MESSAGE_CONTACTS_LISTED_OVERVIEW, size);
+        String heading = size == 0 ? Messages.HEADING_CONTACT_FIND_NONE : Messages.HEADING_CONTACT_FIND;
+        return new CommandResult(feedbackToUser, heading, false);
     }
 
     @Override
