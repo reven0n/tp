@@ -11,8 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-import nusemp.model.AppData;
 import nusemp.model.contact.Contact;
+import nusemp.model.participant.Participant;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * A UI component that displays information of a {@code Contact}.
@@ -25,7 +26,7 @@ public class ContactCard extends UiPart<Region> {
 
     public final Contact contact;
     private final int displayedIndex;
-    private final AppData appData;
+    private final List<Participant> participants;
     private final ListView<Contact> parentListView;
 
     @FXML
@@ -57,10 +58,11 @@ public class ContactCard extends UiPart<Region> {
      * Creates a {@code ContactCard} with the given {@code Contact} and index to display.
      * The parent list view is also needed for width binding.
      */
-    public ContactCard(Contact contact, int displayedIndex, AppData appData, ListView<Contact> parentListView) {
+    public ContactCard(Contact contact, int displayedIndex, List<Participant> participants,
+            ListView<Contact> parentListView) {
         super(FXML);
         this.contact = contact;
-        this.appData = appData;
+        this.participants = participants;
         this.displayedIndex = displayedIndex;
         this.parentListView = parentListView;
 
@@ -96,12 +98,7 @@ public class ContactCard extends UiPart<Region> {
             tags.setVisible(false);
         }
 
-        if (contact.hasEvents()) {
-            addEvents();
-        } else {
-            events.setManaged(false);
-            events.setVisible(false);
-        }
+        addEvents();
     }
 
     private void bindWidths() {
@@ -112,9 +109,23 @@ public class ContactCard extends UiPart<Region> {
     }
 
     private void addEvents() {
-        // TODO: implement adding events using new participant map
-        events.setManaged(false);
-        events.setVisible(false);
+        if (participants.isEmpty()) {
+            events.setManaged(false);
+            events.setVisible(false);
+            return;
+        }
+        List<Participant> sortedParticipants = participants.stream()
+                .sorted(Comparator.comparing(p -> p.getContact().getName().value.toLowerCase())).toList();
+        for (Participant p : sortedParticipants) {
+            String name = p.getEvent().getName().value;
+
+            Label label = createLabel(name);
+            if (p.getStatus() != ParticipantStatus.AVAILABLE) {
+                label.setStyle("-fx-background-color: #a8a8a8;");
+            }
+            events.getChildren().add(label);
+
+        }
     }
 
     private Label createLabel(String text) {

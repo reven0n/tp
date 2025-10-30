@@ -1,7 +1,7 @@
 package nusemp.storage;
 
 import static nusemp.testutil.Assert.assertThrows;
-import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithoutEvent;
+import static nusemp.testutil.TypicalAppData.getTypicalAppData;
 import static nusemp.testutil.TypicalContacts.ALICE;
 import static nusemp.testutil.TypicalContacts.HOON;
 import static nusemp.testutil.TypicalContacts.IDA;
@@ -64,7 +64,7 @@ public class JsonAppDataStorageTest {
     @Test
     public void readAndSaveAppData_allInOrder_success() throws Exception {
         Path filePath = testFolder.resolve("TempAppData.json");
-        AppData original = getTypicalAppDataWithoutEvent();
+        AppData original = getTypicalAppData();
         JsonAppDataStorage jsonAppDataStorage = new JsonAppDataStorage(filePath);
 
         // Save in new file and read back

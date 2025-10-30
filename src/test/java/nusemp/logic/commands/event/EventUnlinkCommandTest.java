@@ -29,7 +29,8 @@ import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.Participant;
+import nusemp.model.participant.ParticipantStatus;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.EventBuilder;
 
@@ -49,7 +50,7 @@ public class EventUnlinkCommandTest {
         ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(validEvent, validContact);
 
         // First link the contact to the event
-        modelStub.addParticipantEvent(validContact, validEvent, ParticipantStatus.UNKNOWN);
+        modelStub.addParticipant(validContact, validEvent, ParticipantStatus.UNKNOWN);
 
         EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
 
@@ -239,32 +240,32 @@ public class EventUnlinkCommandTest {
         }
 
         @Override
-        public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+        public void addParticipant(Contact contact, Event event, ParticipantStatus status) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void removeParticipantEvent(Contact contact, Event event) {
+        public void setParticipant(Contact contact, Event event, ParticipantStatus status) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasParticipantEvent(Contact contact, Event event) {
+        public void removeParticipant(Contact contact, Event event) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
+        public boolean hasParticipant(Contact contact, Event event) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public List<Event> getEventsForContact(Contact contact) {
+        public List<Participant> getParticipants(Contact contact) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public List<Contact> getContactsForEvent(Event event) {
+        public List<Participant> getParticipants(Event event) {
             throw new AssertionError("This method should not be called.");
         }
     }
@@ -316,7 +317,7 @@ public class EventUnlinkCommandTest {
         }
 
         @Override
-        public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+        public void addParticipant(Contact contact, Event event, ParticipantStatus status) {
             requireNonNull(contact);
             requireNonNull(event);
             requireNonNull(status);
@@ -324,7 +325,7 @@ public class EventUnlinkCommandTest {
         }
 
         @Override
-        public void removeParticipantEvent(Contact contact, Event event) {
+        public void removeParticipant(Contact contact, Event event) {
             requireNonNull(contact);
             requireNonNull(event);
             isLinked = false;

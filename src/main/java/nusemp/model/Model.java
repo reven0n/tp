@@ -10,7 +10,8 @@ import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.Participant;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * The API of the Model component.
@@ -147,33 +148,33 @@ public interface Model {
     Event getEventByIndex(Index index);
 
     /**
-     * Adds a participant event link between the given contact and event.
+     * Adds a participant link between the given contact and event.
      */
-    void addParticipantEvent(Contact contact, Event event, ParticipantStatus status);
+    void addParticipant(Contact contact, Event event, ParticipantStatus status);
 
     /**
-     * Removes the participant event link between the given contact and event.
+     * Removes the participant link between the given contact and event.
      */
-    void removeParticipantEvent(Contact contact, Event event);
+    void removeParticipant(Contact contact, Event event);
+
+    /**
+     * Updates the participant link between the given contact and event with the new status.
+     */
+    void setParticipant(Contact contact, Event event, ParticipantStatus status);
 
     /**
      * Returns true if the given contact is linked to the given event.
      */
-    boolean hasParticipantEvent(Contact contact, Event event);
+    boolean hasParticipant(Contact contact, Event event);
 
     /**
-     * Gets the participant status for the given contact and event.
+     * Gets all participants that contain the given contact.
      */
-    ParticipantStatus getParticipantStatus(Contact contact, Event event);
+    List<Participant> getParticipants(Contact contact);
 
     /**
-     * Gets all events for the given contact.
+     * Gets all participants that contain the given event.
      */
-    List<Event> getEventsForContact(Contact contact);
-
-    /**
-     * Gets all contacts for the given event.
-     */
-    List<Contact> getContactsForEvent(Event event);
+    List<Participant> getParticipants(Event event);
 
 }

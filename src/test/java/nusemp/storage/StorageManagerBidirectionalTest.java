@@ -1,7 +1,6 @@
 package nusemp.storage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,9 +48,7 @@ public class StorageManagerBidirectionalTest {
                 .findFirst()
                 .orElse(null);
 
-        assertEquals(2, alex.getEvents().size());
-        assertTrue(alex.hasEventWithName("Team Meeting"));
-        assertTrue(alex.hasEventWithName("Marathon"));
+        assertEquals(2, appData.getParticipants(alex).size());
 
         // Verify events have participants
         Event teamMeeting = appData.getEventList().stream()
@@ -59,8 +56,7 @@ public class StorageManagerBidirectionalTest {
                 .findFirst()
                 .orElse(null);
 
-        assertEquals(2, teamMeeting.getParticipants().size());
-        assertTrue(teamMeeting.hasContactWithEmail("alexyeoh@example.com"));
+        assertEquals(2, appData.getParticipants(teamMeeting).size());
     }
 
     @Test

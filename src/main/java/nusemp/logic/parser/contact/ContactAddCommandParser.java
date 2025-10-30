@@ -6,7 +6,6 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CliSyntax.PREFIX_PHONE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
-import static nusemp.model.util.SampleDataUtil.EMPTY_EVENT_LIST;
 
 import java.util.Set;
 
@@ -54,7 +53,7 @@ public class ContactAddCommandParser implements Parser<ContactAddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        return new Contact(name, email, phone, address, tagList, EMPTY_EVENT_LIST);
+        return new Contact(name, email, phone, address, tagList);
     }
 
 }

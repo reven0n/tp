@@ -2,7 +2,10 @@ package nusemp.model.event;
 
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Objects;
+
 import nusemp.model.contact.Contact;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * Represents the contact and their participation status in an event.
@@ -68,5 +71,10 @@ public class Participant {
 
         Participant otherStatus = (Participant) other;
         return status == otherStatus.status && contact.equals(otherStatus.contact);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(status, contact);
     }
 }

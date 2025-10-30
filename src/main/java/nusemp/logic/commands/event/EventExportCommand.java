@@ -16,7 +16,7 @@ import nusemp.logic.commands.CommandType;
 import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * Exports all contacts linked to an event.
@@ -56,7 +56,7 @@ public class EventExportCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
         }
         Event eventToExport = lastShownEventList.get(eventIndex.getZeroBased());
-        eventToExport.getParticipants().stream()
+        model.getParticipants(eventToExport).stream()
                 .sorted(Comparator.comparing(p -> p.getContact().getName().value.toLowerCase()))
                 .forEach(p -> {
                     String email = p.getContact().getEmail().value;

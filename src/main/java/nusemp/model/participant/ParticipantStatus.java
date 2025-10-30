@@ -1,4 +1,4 @@
-package nusemp.model.event;
+package nusemp.model.participant;
 
 
 /**

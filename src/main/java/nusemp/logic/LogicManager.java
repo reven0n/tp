@@ -3,6 +3,7 @@ package nusemp.logic;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -18,6 +19,7 @@ import nusemp.model.Model;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
+import nusemp.model.participant.Participant;
 import nusemp.storage.Storage;
 
 /**
@@ -76,6 +78,16 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<Event> getFilteredEventList() {
         return model.getFilteredEventList();
+    }
+
+    @Override
+    public List<Participant> getParticipants(Event event) {
+        return model.getParticipants(event);
+    }
+
+    @Override
+    public List<Participant> getParticipants(Contact contact) {
+        return model.getParticipants(contact);
     }
 
     @Override

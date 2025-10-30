@@ -11,11 +11,11 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.logic.parser.Prefix;
 import nusemp.model.event.Event;
+import nusemp.model.event.EventStatus;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
-import nusemp.testutil.EventUtil;
 
 class MessagesTest {
 
@@ -60,8 +60,7 @@ class MessagesTest {
         Date date = new Date("15-11-2025 09:00");
         Address address = new Address("123 Main St");
         Set<Tag> tags = Set.of(new Tag("Work"), new Tag("Important"));
-        Event event = new Event(name, date, address, nusemp.model.event.EventStatus.STARTING, tags,
-                EventUtil.convertToParticipantList(ALICE, GEORGE));
+        Event event = new Event(name, date, address, EventStatus.STARTING, tags);
         String result = Messages.format(event);
         String expected = String.format("%s; Date: %s; Address: %s; Tags: %s",
                 event.getName(), event.getDate(), event.getAddress(),

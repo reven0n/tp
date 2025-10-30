@@ -1,26 +1,25 @@
-package nusemp.model;
+package nusemp.model.participant;
 
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
 
 /**
  * Represents the link between a Contact and an Event along with the ParticipantStatus.
  */
-public class ParticipantEvent {
+public class Participant {
     private final Contact contact;
     private final Event event;
     private final ParticipantStatus status;
 
     /**
-     * Creates a ParticipantEvent with the specified contact, event, and status.
+     * Creates a Participant with the specified contact, event, and status.
      * @param contact The contact involved in the event.
      * @param event The event the contact is participating in.
      * @param status The participation status of the contact in the event.
      */
-    public ParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+    public Participant(Contact contact, Event event, ParticipantStatus status) {
         requireAllNonNull(contact, event, status);
         this.contact = contact;
         this.event = event;
@@ -44,12 +43,12 @@ public class ParticipantEvent {
         if (this == other) {
             return true;
         }
-        if (!(other instanceof ParticipantEvent)) {
+        if (!(other instanceof Participant)) {
             return false;
         }
-        ParticipantEvent otherParticipantEvent = (ParticipantEvent) other;
-        return this.contact.equals(otherParticipantEvent.contact)
-                && this.event.equals(otherParticipantEvent.event)
-                && this.status == otherParticipantEvent.status;
+        Participant otherParticipant = (Participant) other;
+        return this.contact.hasSameFields(otherParticipant.contact)
+                && this.event.hasSameFields(otherParticipant.event)
+                && this.status == otherParticipant.status;
     }
 }

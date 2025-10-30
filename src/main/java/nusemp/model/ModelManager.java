@@ -16,7 +16,8 @@ import nusemp.commons.core.LogsCenter;
 import nusemp.commons.core.index.Index;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.Participant;
+import nusemp.model.participant.ParticipantStatus;
 
 /**
  * Represents the in-memory model of the app data.
@@ -117,31 +118,6 @@ public class ModelManager implements Model {
         appData.setContact(target, editedContact);
     }
 
-    /**
-     * Updates all events that had the old contact as participant when the contact's email is changed.
-     * @param target the original contact before edit
-     * @param editedContact the edited contact with updated email
-     */
-    private void updateEventsForEmailChange(Contact target, Contact editedContact) {
-        for (Event event : target.getEvents()) {
-            if (hasEvent(event) && event.hasContactWithEmail(target.getEmail().value)) {
-                Event updatedEvent = createUpdatedEvent(event, target, editedContact);
-                appData.setEvent(event, updatedEvent);
-            }
-        }
-    }
-
-    /**
-     * Creates an updated event by replacing the target contact with the edited contact.
-     * @param event the original event
-     * @param target the original contact who is being replaced
-     * @param editedContact the contact to be replaced with
-     * @return the updated event with the edited contact as participant
-     */
-    private Event createUpdatedEvent(Event event, Contact target, Contact editedContact) {
-        return event.withoutContact(target).withContact(editedContact);
-    }
-
     //=========== Filtered Contact List Accessors =============================================================
 
     /**
@@ -203,40 +179,39 @@ public class ModelManager implements Model {
 
     //=========== Participant Map Operations ===========================================================
     @Override
-    public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+    public void addParticipant(Contact contact, Event event, ParticipantStatus status) {
         requireAllNonNull(contact, event, status);
-        appData.addParticipantEvent(contact, event, status);
-        updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+        appData.addParticipant(contact, event, status);
     }
 
     @Override
-    public void removeParticipantEvent(Contact contact, Event event) {
+    public void removeParticipant(Contact contact, Event event) {
         requireAllNonNull(contact, event);
-        appData.removeParticipantEvent(contact, event);
+        appData.removeParticipant(contact, event);
     }
 
     @Override
-    public boolean hasParticipantEvent(Contact contact, Event event) {
+    public boolean hasParticipant(Contact contact, Event event) {
         requireAllNonNull(contact, event);
-        return appData.hasParticipantEvent(contact, event);
+        return appData.hasParticipant(contact, event);
     }
 
     @Override
-    public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
-        requireAllNonNull(contact, event);
-        return appData.getParticipantStatus(contact, event);
+    public void setParticipant(Contact contact, Event event, ParticipantStatus status) {
+        requireAllNonNull(contact, event, status);
+        appData.setParticipant(contact, event, status);
     }
 
     @Override
-    public List<Event> getEventsForContact(Contact contact) {
+    public List<Participant> getParticipants(Contact contact) {
         requireNonNull(contact);
-        return appData.getEventsForContact(contact);
+        return appData.getParticipants(contact);
     }
 
     @Override
-    public List<Contact> getContactsForEvent(Event event) {
+    public List<Participant> getParticipants(Event event) {
         requireNonNull(event);
-        return appData.getContactsForEvent(event);
+        return appData.getParticipants(event);
     }
 
 
@@ -266,8 +241,32 @@ public class ModelManager implements Model {
         ModelManager otherModelManager = (ModelManager) other;
         return appData.equals(otherModelManager.appData)
                 && userPrefs.equals(otherModelManager.userPrefs)
-                && filteredContacts.equals(otherModelManager.filteredContacts)
-                && filteredEvents.equals(otherModelManager.filteredEvents);
+                && filteredContactsHaveSameFields(otherModelManager)
+                && filteredEventsHaveSameFields(otherModelManager);
+    }
+
+    private boolean filteredContactsHaveSameFields(ModelManager other) {
+        if (filteredContacts.size() != other.filteredContacts.size()) {
+            return false;
+        }
+        for (int i = 0; i < filteredContacts.size(); i++) {
+            if (!filteredContacts.get(i).hasSameFields(other.filteredContacts.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean filteredEventsHaveSameFields(ModelManager other) {
+        if (filteredEvents.size() != other.filteredEvents.size()) {
+            return false;
+        }
+        for (int i = 0; i < filteredEvents.size(); i++) {
+            if (!filteredEvents.get(i).hasSameFields(other.filteredEvents.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

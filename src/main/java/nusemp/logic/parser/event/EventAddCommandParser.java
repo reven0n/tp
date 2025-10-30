@@ -6,7 +6,6 @@ import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_NAME;
 import static nusemp.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.ArrayList;
 import java.util.Set;
 
 import nusemp.logic.commands.event.EventAddCommand;
@@ -58,6 +57,6 @@ public class EventAddCommandParser implements Parser<EventAddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).orElse(""));
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        return new Event(name, date, address, EventStatus.STARTING, tagList, new ArrayList<>());
+        return new Event(name, date, address, EventStatus.STARTING, tagList);
     }
 }

@@ -12,7 +12,7 @@ import nusemp.model.AppData;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.Participant;
+import nusemp.model.participant.Participant;
 
 /**
  * An Immutable AppData that is serializable to JSON format.
@@ -45,7 +45,8 @@ class JsonSerializableAppData {
      */
     public JsonSerializableAppData(ReadOnlyAppData source) {
         contacts.addAll(source.getContactList().stream().map(JsonAdaptedContact::new).toList());
-        events.addAll(source.getEventList().stream().map(JsonAdaptedEvent::new).toList());
+        events.addAll(source.getEventList().stream()
+                .map(event -> new JsonAdaptedEvent(event, source::getParticipants)).toList());
     }
 
     /**
@@ -65,41 +66,20 @@ class JsonSerializableAppData {
             appData.addContact(contact);
         }
 
-        // Load events after contacts (needed for participant resolution)
+        // Load events and add participants
         for (JsonAdaptedEvent jsonAdaptedEvent : events) {
-            Event event = jsonAdaptedEvent.toModelType(appData);
+            Event event = jsonAdaptedEvent.toModelType();
+            List<Participant> participants = jsonAdaptedEvent.getParticipants(appData, event);
             if (appData.hasEvent(event)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_EVENT);
             }
             appData.addEvent(event);
-        }
-
-        // Populate contact event lists based on event participants
-        populateContactEventLists(appData);
-
-        return appData;
-    }
-
-    /**
-     * Populates the event lists in contacts based on event participants.
-     * For each event, adds the event to all its participants' event lists.
-     */
-    private void populateContactEventLists(AppData appData) {
-        for (Event event : appData.getEventList()) {
-            for (Participant participant : event.getParticipants()) {
-                Contact contact = participant.getContact();
-                // Find the contact in appData and update it
-                Contact existingContact = appData.getContactList().stream()
-                        .filter(c -> c.getEmail().equals(contact.getEmail()))
-                        .findFirst()
-                        .orElse(null);
-
-                if (existingContact != null && !existingContact.hasEventWithName(event.getName().value)) {
-                    Contact updatedContact = existingContact.addEvent(event);
-                    appData.setContact(existingContact, updatedContact);
-                }
+            for (Participant participant : participants) {
+                appData.addParticipant(participant.getContact(), event, participant.getStatus());
             }
         }
+
+        return appData;
     }
 
 }

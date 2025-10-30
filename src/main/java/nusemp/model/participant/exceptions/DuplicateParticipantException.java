@@ -1,4 +1,4 @@
-package nusemp.model.event.exceptions;
+package nusemp.model.participant.exceptions;
 
 /**
  * Signals that the operation will result in duplicate participants in an event.

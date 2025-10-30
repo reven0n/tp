@@ -24,13 +24,13 @@ import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.exceptions.CommandException;
-import nusemp.model.AppData;
 import nusemp.model.Model;
 import nusemp.model.ReadOnlyAppData;
 import nusemp.model.ReadOnlyUserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.event.ParticipantStatus;
+import nusemp.model.participant.Participant;
+import nusemp.model.participant.ParticipantStatus;
 
 class EventAddCommandTest {
     @Test
@@ -113,7 +113,7 @@ class EventAddCommandTest {
     /**
      * A default model stub that have all the methods failing.
      */
-    private class ModelStub implements Model {
+    private static class ModelStub implements Model {
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -225,32 +225,32 @@ class EventAddCommandTest {
         }
 
         @Override
-        public void addParticipantEvent(Contact contact, Event event, ParticipantStatus status) {
+        public void addParticipant(Contact contact, Event event, ParticipantStatus status) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void removeParticipantEvent(Contact contact, Event event) {
+        public void setParticipant(Contact contact, Event event, ParticipantStatus status) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public boolean hasParticipantEvent(Contact contact, Event event) {
+        public void removeParticipant(Contact contact, Event event) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ParticipantStatus getParticipantStatus(Contact contact, Event event) {
+        public boolean hasParticipant(Contact contact, Event event) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public List<Event> getEventsForContact(Contact contact) {
+        public List<Participant> getParticipants(Contact contact) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public List<Contact> getContactsForEvent(Event event) {
+        public List<Participant> getParticipants(Event event) {
             throw new AssertionError("This method should not be called.");
         }
     }
@@ -283,11 +283,6 @@ class EventAddCommandTest {
         public void addEvent(Event event) {
             requireNonNull(event);
             eventsAdded.add(event);
-        }
-
-        @Override
-        public ReadOnlyAppData getAppData() {
-            return new AppData();
         }
     }
 }

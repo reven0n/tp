@@ -26,7 +26,6 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.Model;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventStatus;
-import nusemp.model.event.Participant;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
@@ -107,9 +106,8 @@ public class EventEditCommand extends Command {
         Address updatedAddress = editEventDescriptor.getAddress().orElse(eventToEdit.getAddress());
         EventStatus updatedStatus = editEventDescriptor.getStatus().orElse(eventToEdit.getStatus());
         Set<Tag> updatedTags = editEventDescriptor.getTags().orElse(eventToEdit.getTags());
-        List<Participant> participants = eventToEdit.getParticipants();
 
-        return new Event(updatedName, updatedDate, updatedAddress, updatedStatus, updatedTags, participants);
+        return new Event(updatedName, updatedDate, updatedAddress, updatedStatus, updatedTags);
     }
 
     @Override

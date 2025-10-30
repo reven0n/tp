@@ -56,8 +56,9 @@ public class UniqueContactList implements Iterable<Contact> {
                 return i;
             }
         }
-        return -1; // Contact not found
+        return -1;
     }
+
     /**
      * Replaces the contact {@code target} in the list with {@code editedContact}.
      * {@code target} must exist in the list.
@@ -84,9 +85,11 @@ public class UniqueContactList implements Iterable<Contact> {
      */
     public void remove(Contact toRemove) {
         requireNonNull(toRemove);
-        if (!internalList.remove(toRemove)) {
+        int index = findContactIndex(toRemove);
+        if (index == -1) {
             throw new ContactNotFoundException();
         }
+        internalList.remove(index);
     }
 
     public void setContacts(UniqueContactList replacement) {
@@ -131,7 +134,15 @@ public class UniqueContactList implements Iterable<Contact> {
         }
 
         UniqueContactList otherUniqueContactList = (UniqueContactList) other;
-        return internalList.equals(otherUniqueContactList.internalList);
+        if (internalList.size() != otherUniqueContactList.internalList.size()) {
+            return false;
+        }
+        for (int i = 0; i < internalList.size(); i++) {
+            if (!internalList.get(i).hasSameFields(otherUniqueContactList.internalList.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

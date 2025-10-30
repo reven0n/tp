@@ -1,4 +1,4 @@
-package nusemp.model.event.exceptions;
+package nusemp.model.participant.exceptions;
 
 /**
  * Signals that the specified participant could not be found in the event.
