@@ -81,8 +81,8 @@ class EventAddCommandTest {
     public void execute_duplicateEvent_throwsCommandException() {
         EventAddCommand eventAddCommand = new EventAddCommand(CONFERENCE_EMPTY);
         ModelStub modelStub = new ModelStubWithEvent(CONFERENCE_EMPTY);
-        assertThrows(CommandException.class,
-                EventAddCommand.MESSAGE_DUPLICATE_EVENT, () -> eventAddCommand.execute(modelStub));
+        assertThrows(CommandException.class, String.format(EventAddCommand.MESSAGE_DUPLICATE_EVENT,
+                CONFERENCE_EMPTY.getName()), () -> eventAddCommand.execute(modelStub));
     }
 
     @Test
