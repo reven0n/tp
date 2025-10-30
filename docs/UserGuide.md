@@ -273,7 +273,7 @@ contact find --name alice bob --email nus.edu ntu.edu
 
 <box type="info" seamless>
 
-**How Search Works:**
+<a id="how-search-works"><strong>How Search Works:</strong></a>
 
 - **Doesn't matter** if you use capital or small letters
 - **Partial matches work** (typing `gmail` finds `@gmail.com`)
@@ -512,7 +512,58 @@ event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATU
 Screenshot Example:
 ![Event Edit Example](images/EventEditExample.png)
 
-### 3.4 `event delete`
+### 3.4 `event find`
+
+**Looking for a specific event?** You can search in different ways:
+
+**Simple name search:**
+
+```
+event find Meeting
+```
+
+**Search by specific information:**
+
+```
+event find --name Conference
+event find --status pending
+event find --date 25-12-2025 12:00
+event find --address serangoon
+event find --tag work
+```
+
+**Combine searches:**
+
+```
+event find --name meeting conference --tag work important
+```
+
+Event find works the same way as contact find (see [how search works](#how-search-works) section above for details).
+<box type="info" seamless>
+Event find specifics:
+- Date searches look for exact matches (e.g. `25-12-2025 12:00` finds only that date and time) 
+- Only one date can be specified
+- Status searches look for one of: `pending`, `ongoing`, `closed`
+</box>
+
+<box type="tip" seamless>
+
+**Note:** After using `event find`, the displayed results will have their own index numbers (starting from 1). Use 
+these index numbers when running commands on the found events.
+
+</box>
+
+**Format:**
+<br />
+
+```
+event find KEYWORD [MORE_KEYWORDS]... or event find [--FIELD KEYWORD [MORE_KEYWORDS]...]...
+```
+
+Screenshot Example:
+![Event Find Example](images/EventFindExample.png)
+
+### 3.5 `event delete`
 
 **Remove an event completely:**
 
@@ -546,7 +597,7 @@ Screenshot Example:
 ![Event Delete Example](images/EventDeleteExample.png)
 
 
-### 3.5 `event link`
+### 3.6 `event link`
 
 **Add contacts to your event guest list:**
 
@@ -583,7 +634,7 @@ Screenshot Example:
 ![Event Link Example](images/EventLinkExample.png)
 *In the example screenshot, we want to link the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event link --event 1 --contact 6`.*
 
-### 3.6 `event unlink`
+### 3.7 `event unlink`
 
 **Take someone off an event** when they can't make it:
 
@@ -620,8 +671,7 @@ Screenshot Example:
 ![Event Unlink Example](images/EventUnlinkExample.png)
 *In the example screenshot, we want to unlink the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event unlink --event 1 --contact 6`.*
 
-
-### 3.7 `event show`
+### 3.8 `event show`
 
 **Check your guest list** for any event:
 
@@ -659,17 +709,19 @@ event show INDEX
 ```
 
 Screenshot Example:
-![Event Show Example](images/EventShowExample.png)
+![Event Show Example](images/EventShowExample.png
 
-### 3.8 `event export`
+### 3.9 `event export`
 
-**Quickly copy all contacts** from an event to your clipboard:
+**Quickly copy all contacts** with available status from an event to your clipboard. Or, if status is specified, 
+only copy contacts with that status:
 
 ```
+event export 1 --status available
 event export 1
 ```
 
-Copies all contact info from event #1.
+Copies all contacts who are available from event #1.
 
 **Important:** You can find the index of the event in the displayed event list. The index should be a positive integer.
 
@@ -680,7 +732,7 @@ Copies all contact info from event #1.
 - Pasting into emails or messages
 - Sending reminders or updates
 - Sharing contact information
-- **You can also click the file icon** next to each event for quick export!
+- **You can also click the file icon** next to each event for quick export available contacts!
 - Saves tons of time when sharing contact details
 
 </box>
@@ -689,13 +741,13 @@ Copies all contact info from event #1.
 <br />
 
 ```
-event export INDEX
+event export INDEX [--status STATUS]
 ```
 
 Screenshot Example:
 ![Event Export Example](images/EventExportExample.png)
 
-### 3.9 `event rsvp`
+### 3.10 `event rsvp`
 
 **Keep track of RSVP responses** as people reply:
 
@@ -806,15 +858,16 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 ### 7.3 Event Commands
 
 | Action                        | Format, Examples                                                                                                                            |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add Event**                 | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date "25-12-2025 14:30" --address Room 4`       |
 | **Delete Event**              | `event delete INDEX`<br>e.g. `event delete 2`                                                                                               |
 | **Edit Event**                | `event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…`<br>e.g. `event edit 1 --name New Meeting` |
+| **Find Event**                | `event find KEYWORDS [MORE_KEYWORDS]...` or <br>e.g. `event find --name Conference` <br> `event find --status pending` <br/>                |
 | **List Events**               | `event list`                                                                                                                                |
 | **Link Contact to Event**     | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
 | **Unlink Contact from Event** | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
 | **Show Event's Contacts**     | `event show INDEX`<br>e.g. `event show 1`                                                                                                   |
-| **Export Event Contacts**     | `event export INDEX`<br>e.g. `event export 1`                                                                                               |
+| **Export Event Contacts**     | `event export INDEX [--status STATUS]`<br>e.g. `event export 1`<br> `event export 1 --status available`<br/>                                |
 | **RSVP to Event**             | `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS`<br>e.g. `event rsvp --event 1 --contact 2 --status available`      |
 
 ---
