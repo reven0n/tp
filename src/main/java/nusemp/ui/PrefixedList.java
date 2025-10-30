@@ -9,14 +9,14 @@ import javafx.collections.transformation.TransformationList;
  * Used in contact and event listviews to provide an additional heading item.
  * Should not be modified.
  */
-public class DisplayedList<E, V> extends TransformationList<E, E> {
+public class PrefixedList<E, P> extends TransformationList<E, E> {
 
-    private V extraValue;
+    private P prefix;
 
-    /** Creates an {@code DisplayedList} that adds {@code extraValue} at the start of {@code source}. */
-    public DisplayedList(ObservableList<? extends E> source, V extraValue) {
+    /** Creates an {@code PrefixedList} that adds {@code prefix} at the start of {@code source}. */
+    public PrefixedList(ObservableList<? extends E> source, P prefix) {
         super(source);
-        this.extraValue = extraValue;
+        this.prefix = prefix;
     }
 
     @Override
@@ -63,8 +63,8 @@ public class DisplayedList<E, V> extends TransformationList<E, E> {
 
     /**
      * {@inheritDoc}
-     *
-     * At index 0, null is returned instead. You should use {@link #getExtraValue()} to get the extra value.
+     * <p>
+     * Note: calling get on index 0 will return null. You should use {@link #getPrefix()} instead.
      */
     @Override
     public E get(int index) {
@@ -83,16 +83,16 @@ public class DisplayedList<E, V> extends TransformationList<E, E> {
         return getSource().size() + 1;
     }
 
-    public V getExtraValue() {
-        return extraValue;
+    public P getPrefix() {
+        return prefix;
     }
 
     /**
      * Updates the extra value with the new value.
      */
-    public void updateExtraValue(V newValue) {
+    public void setPrefix(P newPrefix) {
         beginChange();
-        extraValue = newValue;
+        prefix = newPrefix;
         nextUpdate(0);
         endChange();
     }

@@ -20,7 +20,7 @@ public class ContactListPanel extends UiPart<Region> {
 
     private final ContactToParticipantsFunction participantsFn;
 
-    private final DisplayedList<Contact, String> displayedList;
+    private final PrefixedList<Contact, String> prefixedList;
 
     @FXML
     private ListView<Contact> contactListView;
@@ -32,8 +32,8 @@ public class ContactListPanel extends UiPart<Region> {
             ContactToParticipantsFunction participantsFn) {
         super(FXML);
         this.participantsFn = participantsFn;
-        displayedList = new DisplayedList<>(contactList, heading);
-        contactListView.setItems(displayedList);
+        prefixedList = new PrefixedList<>(contactList, heading);
+        contactListView.setItems(prefixedList);
         contactListView.setCellFactory(listView -> {
             ContactListViewCell cell = new ContactListViewCell();
             cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));
@@ -42,7 +42,7 @@ public class ContactListPanel extends UiPart<Region> {
     }
 
     public void updateHeading(String newHeading) {
-        displayedList.updateExtraValue(newHeading);
+        prefixedList.setPrefix(newHeading);
     }
 
     /**
@@ -54,7 +54,7 @@ public class ContactListPanel extends UiPart<Region> {
             super.updateItem(contact, empty);
 
             if (getIndex() == 0) {
-                setGraphic(new ListHeading(displayedList.getExtraValue()).getRoot());
+                setGraphic(new ListHeading(prefixedList.getPrefix()).getRoot());
             } else if (empty || contact == null) {
                 setGraphic(null);
                 setText(null);

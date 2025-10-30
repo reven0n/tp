@@ -22,7 +22,7 @@ public class EventListPanel extends UiPart<Region> {
 
     private final EventToParticipantsFunction participantsFn;
 
-    private final DisplayedList<Event, String> displayedList;
+    private final PrefixedList<Event, String> prefixedList;
 
     @FXML
     private ListView<Event> eventListView;
@@ -33,8 +33,8 @@ public class EventListPanel extends UiPart<Region> {
     public EventListPanel(String heading, ObservableList<Event> eventList, EventToParticipantsFunction participantsFn) {
         super(FXML);
         this.participantsFn = participantsFn;
-        displayedList = new DisplayedList<>(eventList, heading);
-        eventListView.setItems(displayedList);
+        prefixedList = new PrefixedList<>(eventList, heading);
+        eventListView.setItems(prefixedList);
         eventListView.setCellFactory(listView -> {
             EventListViewCell cell = new EventListViewCell();
             cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));
@@ -43,7 +43,7 @@ public class EventListPanel extends UiPart<Region> {
     }
 
     public void updateHeading(String newHeading) {
-        displayedList.updateExtraValue(newHeading);
+        prefixedList.setPrefix(newHeading);
     }
 
     /**
@@ -55,7 +55,7 @@ public class EventListPanel extends UiPart<Region> {
             super.updateItem(event, empty);
 
             if (getIndex() == 0) {
-                setGraphic(new ListHeading(displayedList.getExtraValue()).getRoot());
+                setGraphic(new ListHeading(prefixedList.getPrefix()).getRoot());
             } else if (empty || event == null) {
                 setGraphic(null);
                 setText(null);
