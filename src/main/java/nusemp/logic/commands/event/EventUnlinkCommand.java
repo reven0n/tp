@@ -29,14 +29,14 @@ public class EventUnlinkCommand extends Command {
             + ": Unlinks contacts from an event identified by the event index.\n\n"
             + "Parameters: "
             + PREFIX_EVENT + " EVENT_INDEX "
-            + PREFIX_CONTACT + " CONTACT_INDEX or 'all'\n"
+            + PREFIX_CONTACT + " CONTACT_INDEX or \"all\"\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " 2\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " all\n\n"
-            + "Note: EVENT_INDEX and CONTACT_INDEX must be a positive integer within the size of the displayed "
+            + "Note: EVENT_INDEX and CONTACT_INDEX must be a positive integers within the size of the displayed "
             + "event list and contact list respectively.";;
 
     public static final String MESSAGE_SUCCESS = "Successfully unlinked contact \"%1$s\" from event \"%2$s\"";
@@ -128,12 +128,8 @@ public class EventUnlinkCommand extends Command {
 
         for (Contact contact : filteredContactList) {
             if (model.hasParticipant(contact, eventToUnlink)) {
-                try {
-                    model.removeParticipant(contact, eventToUnlink);
-                    unlinkedContacts.add(contact.getName().toString());
-                } catch (Exception e) {
-                    // Continue with next contact if one fails
-                }
+                model.removeParticipant(contact, eventToUnlink);
+                unlinkedContacts.add(contact.getName().toString());
             } else {
                 notLinkedContacts.add(contact.getName().toString());
             }
