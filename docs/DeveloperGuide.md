@@ -436,9 +436,81 @@ Error handling follows these principles:
 
 ---
 
-## **6. Development Guidelines**
+## **6. Advanced Topics**
 
-### 6.1 Adding New Commands
+### 6.1 Observable Pattern Implementation
+
+The application uses JavaFX's observable pattern for real-time UI updates:
+
+```java
+// In ModelManager
+private final ObservableList<Contact> filteredContacts = FXCollections.observableArrayList();
+
+// UI components bind to this list
+contactListPanel.setItems(model.getFilteredContactList());
+```
+
+**Key Features:**
+- **Automatic UI updates**: When Model data changes, UI updates automatically
+- **Invalidation mechanism**: Contacts and Events use invalidationToggle field with immutable pattern to force observable list refreshes through object replacement
+- **Filtered views**: Separate observable lists for filtered and all data
+- **Decoupled architecture**: UI doesn't need to know when data changes
+- **Efficient updates**: Only UI components that display changed data are updated
+
+### 6.2 Performance Considerations
+
+#### 6.2.1 Data Scaling
+- Application supports up to 10,000 contacts and 1,000 events
+- Observable lists use efficient change detection
+- JSON serialization optimized for large datasets
+- UI virtualization for large lists (if implemented)
+
+#### 6.2.2 Memory Management
+- Immutable objects prevent memory leaks
+- Weak references in event listeners
+- Proper cleanup in component disposal
+
+### 6.3 Common Debugging Scenarios
+
+#### 6.3.1 Command Not Found
+1. Check command registration in AppParser
+2. Verify parser class exists and is accessible
+3. Validate command word spelling
+
+#### 6.3.2 Data Not Persisting
+1. Check file permissions
+2. Verify JSON serialization works
+3. Check storage file paths
+4. Look for corruption handling in logs
+
+#### 6.3.3 UI Not Updating
+1. Verify observable list binding
+2. Check for invalidation toggle usage
+3. Ensure proper list change notifications
+
+### 6.4 Extension Points
+
+#### 6.4.1 Custom Commands
+- Extend `Command` base class
+- Follow existing naming conventions
+- Implement proper error handling
+
+#### 6.4.2 New Entity Types
+- Create entity classes following Contact/Event patterns
+- Add to Model component interfaces
+- Implement storage serialization
+- Create appropriate UI components
+
+#### 6.4.3 Storage Backends
+- Implement `Storage` interface
+- Handle serialization format
+- Maintain existing API contracts
+
+---
+
+## **7. Development Guidelines**
+
+### 7.1 Adding New Commands
 
 **Step-by-step process:**
 
@@ -475,7 +547,7 @@ Error handling follows these principles:
    - Add command to User Guide
    - Update Developer Guide if needed
 
-### 6.2 Adding New Data Fields
+### 7.2 Adding New Data Fields
 
 **For Contact fields:**
 1. Add field to `Contact` class
@@ -490,21 +562,21 @@ Error handling follows these principles:
 2. Follow similar steps as Contact fields
 3. Consider impact on participant relationships
 
-### 6.3 Testing Best Practices
+### 7.3 Testing Best Practices
 
-#### 6.3.1 Unit Tests
+#### 7.3.1 Unit Tests
 - Test each public method individually
 - Mock external dependencies
 - Cover both success and failure scenarios
 - Use descriptive test method names
 
-#### 6.3.2 Integration Tests
+#### 7.3.2 Integration Tests
 - Test component interactions
 - Use actual file system for storage tests
 - Validate end-to-end command flows
 - Test UI updates through observable lists
 
-#### 6.3.3 Test Structure
+#### 7.3.3 Test Structure
 ```java
 @Test
 void execute_contactAddCommand_success() {
@@ -523,7 +595,7 @@ void execute_contactAddCommand_success() {
 }
 ```
 
-### 6.4 Code Style Guidelines
+### 7.4 Code Style Guidelines
 
 - Follow [Java coding standards](https://se-education.org/guides/conventions/java/index.html)
 - Use meaningful variable and method names
@@ -531,78 +603,6 @@ void execute_contactAddCommand_success() {
 - Write self-documenting code
 - Use assertions for internal assumptions
 - Handle exceptions gracefully
-
----
-
-## **7. Advanced Topics**
-
-### 7.1 Observable Pattern Implementation
-
-The application uses JavaFX's observable pattern for real-time UI updates:
-
-```java
-// In ModelManager
-private final ObservableList<Contact> filteredContacts = FXCollections.observableArrayList();
-
-// UI components bind to this list
-contactListPanel.setItems(model.getFilteredContactList());
-```
-
-**Key Features:**
-- **Automatic UI updates**: When Model data changes, UI updates automatically
-- **Invalidation mechanism**: Contacts and Events use invalidationToggle field with immutable pattern to force observable list refreshes through object replacement
-- **Filtered views**: Separate observable lists for filtered and all data
-- **Decoupled architecture**: UI doesn't need to know when data changes
-- **Efficient updates**: Only UI components that display changed data are updated
-
-### 7.2 Performance Considerations
-
-#### 7.2.1 Data Scaling
-- Application supports up to 10,000 contacts and 1,000 events
-- Observable lists use efficient change detection
-- JSON serialization optimized for large datasets
-- UI virtualization for large lists (if implemented)
-
-#### 7.2.2 Memory Management
-- Immutable objects prevent memory leaks
-- Weak references in event listeners
-- Proper cleanup in component disposal
-
-### 7.3 Common Debugging Scenarios
-
-#### 7.3.1 Command Not Found
-1. Check command registration in AppParser
-2. Verify parser class exists and is accessible
-3. Validate command word spelling
-
-#### 7.3.2 Data Not Persisting
-1. Check file permissions
-2. Verify JSON serialization works
-3. Check storage file paths
-4. Look for corruption handling in logs
-
-#### 7.3.3 UI Not Updating
-1. Verify observable list binding
-2. Check for invalidation toggle usage
-3. Ensure proper list change notifications
-
-### 7.4 Extension Points
-
-#### 7.4.1 Custom Commands
-- Extend `Command` base class
-- Follow existing naming conventions
-- Implement proper error handling
-
-#### 7.4.2 New Entity Types
-- Create entity classes following Contact/Event patterns
-- Add to Model component interfaces
-- Implement storage serialization
-- Create appropriate UI components
-
-#### 7.4.3 Storage Backends
-- Implement `Storage` interface
-- Handle serialization format
-- Maintain existing API contracts
 
 ---
 
@@ -628,28 +628,87 @@ Event organizers at NUS who manage large contact databases, send bulk emails reg
 
 Streamlines event communication workflow by integrating contact management with intelligent mailing recommendations and bulk email capabilities in a fast, keyboard-centric CLI interface, enabling event organizers to efficiently manage contacts and execute targeted email campaigns without switching between multiple tools.
 
-### A.2 Non-Functional Requirements
+### A.2 User Stories
 
-#### A.2.1 Technical Requirements
-- **Java 17** runtime environment
-- **Cross-platform** compatibility (Windows, macOS, Linux)
-- **No installer** required - single JAR deployment
-- **Offline functionality** - no network dependencies
+Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
 
-#### A.2.2 Performance Requirements
-- **Response time**: < 2-3 seconds for typical user commands
-- **Startup time**: < 30 seconds on standard hardware
-- **Memory usage**: < 3GB with 10,000 contacts (requires appropriate JVM configuration)
-- **Storage efficiency**: < 30MB for 10,000 contacts
-- **Batch operations**: May take longer for large datasets (10,000+ records)
+| Priority | As a …         | I want to …                                                               | So that I can…                                        |
+| -------- | --------------- |---------------------------------------------------------------------------| ------------------------------------------------------ |
+| `* * *`  | event organizer | add a contact with standard fields (Name, Phone, Email, Address)          | build my core contact database                         |
+| `* * *`  | event organizer | associate a specific Role (e.g., 'Speaker', 'Attendee', 'VIP', 'Sponsor') | categorize and filter my contacts effectively          |
+| `* * *`  | event organizer | delete a contact from the address book                                    | remove outdated or irrelevant entries                  |
+| `* * *`  | event organizer | create a new event with name, date, time, and venue                       | start organizing my contacts around it                 |
+| `* * *`  | event organizer | view a list of all my events, showing key details and their status        | get an overview of upcoming, past, or cancelled events |
+| `* * *`  | event organizer | associate contacts from my address book with a specific event             | build an attendee list for the event                   |
+| `* * *`  | event organizer | get a list of contacts defined by tags, roles, or event association       | target communications and manage groups efficiently    |
+| `* *`    | event organizer | set RSVP status for a contact for a specific event                        | track attendance commitments                           |
+| `* *`    | event organizer | edit any field of an existing contact, including role and RSVP status     | keep contact information up-to-date                    |
+| `* *`    | event organizer | view all details of a contact, including tags, and associated events      | see a clean, readable summary                          |
+| `* *`    | event organizer | view all details of an event, including tags, and associated contacts     | see a clean, readable summary                          |
+| `* *`    | event organizer | find contacts by searching any field (Name, Role, Tag, Email)             | quickly locate specific individuals                    |
+| `* *`    | event organizer | add multiple tags to a contact                                            | perform complex filtering                              |
+| `* *`    | event organizer | filter contact list by tags and roles                                     | create highly specific lists                           |
+| `* *`    | event organizer | list all contacts, with option to sort by Name or Role                    | get a general overview                                 |
+| `* *`    | event organizer | remove a contact from an event without deleting from address book         | manage event participation flexibly                    |
+| `* *`    | event organizer | archive a past event                                                      | keep main view uncluttered but retain data             |
+| `* *`    | event organizer | set event status to 'Cancelled'                                           | exclude it from mailings                               |
+| `* *`    | event organizer | import contacts from a CSV file                                           | quickly populate my address book                       |
+| `* *`    | event organizer | export contacts or filtered subset to CSV                                 | backup or use in another application                   |
+| `* *`    | user            | create a complete backup of application data                              | safeguard my information                               |
+| `* *`    | user            | restore application data from a backup file                               | recover from data loss                                 |
+| `* *`    | user            | specify storage location for data and backups                             | organize my files as needed                            |
+| `*`      | user            | sort contacts by name                                                     | locate a person easily                                 |
+| `*`      | user            | manage additional entity types related to contacts (tasks, loans, grades) | extend functionality as needed                         |
 
-#### A.2.3 User Experience Requirements
-- **Keyboard-driven** interface for efficiency
-- **Consistent command syntax** across all operations
-- **Clear error messages** with actionable guidance
-- **Human-readable** data files for manual recovery
+### A.3 Use Cases
 
-### A.3 Glossary
+For all use cases below, the **System** is NUS Event Mailer Pro (NUS EMP) and the **Actor** is the user, unless specified otherwise.
+
+| Use Case ID | Description                      | Actor         | Preconditions                              | Main Success Scenario                                                                    | Extensions                                                                                                                                                                                                                                                                                                                                                                         | Postconditions                           | Priority |
+| ----------- | -------------------------------- | ------------- | ----------------------------------------- | ---------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- | --------- |
+| UC01        | Add a contact                    | User          | System is running                         | 1. User inputs contact details with name and email<br>2. System validates required fields<br>3. Contact added to the system<br>4. Success message displayed<br>Use case ends. | 1a. Required fields missing or invalid<br>   - System shows error message with missing fields<br>   - User can retry with correct input<br>   - Use case ends.<br>2a. Contact already exists<br>   - System shows error about duplicate contact<br>   - User can add with different email<br>   - Use case ends.                                                                                                                              | Contact added to system                 | High      |
+| UC02        | Delete a contact                 | User          | Contact exists in displayed list          | 1. User selects contact by index<br>2. User confirms deletion<br>3. Contact removed from system<br>4. Confirmation message displayed<br>Use case ends. | 1a. Invalid contact index<br>   - System shows error about invalid index<br>   - User can try with correct index<br>   - Use case ends.<br>2a. Contact has event associations<br>   - System warns about removal from events<br>   - User can confirm or cancel deletion<br>   - Use case ends.                                                                                                                         | Contact removed from system and all events | High      |
+| UC03        | Create an event                  | User          | System is running                         | 1. User inputs event details with name and date<br>2. System validates date format<br>3. Event created with STARTING status<br>4. Success message displayed<br>Use case ends. | 1a. Required fields missing<br>   - System shows error about missing name or date<br>   - User can provide missing information<br>   - Use case ends.<br>2a. Invalid date format<br>   - System shows specific date format error (DD-MM-YYYY HH:mm)<br>   - User can correct date format<br>   - Use case ends.                                                                                                                              | Event added to system                   | High      |
+| UC04        | Associate contacts with event    | User          | Event and contacts exist in system         | 1. User selects event and contact by indices<br>2. System links contact to event<br>3. Contact marked as AVAILABLE for event<br>4. Confirmation message displayed<br>Use case ends. | 1a. Invalid event or contact index<br>   - System shows error about non-existent event/contact<br>   - User can select valid indices<br>   - Use case ends.<br>2a. Contact already linked to event<br>   - System shows that association already exists<br>   - User can select different contact<br>   - Use case ends.                                                                                                        | Contact-event association created       | High      |
+| UC05        | List contacts                    | User          | System is running                         | 1. User requests to list contacts<br>2. System displays all contacts<br>3. Each contact shown with index and details<br>Use case ends. | 1a. No contacts exist<br>   - System shows "No contacts found"<br>   - User can add contacts using add command<br>   - Use case ends.                                                                                                                                                                                                                                                                  | Contact list displayed with indices     | Medium    |
+| UC06        | List events                      | User          | System is running                         | 1. User requests to list events<br>2. System displays all events chronologically<br>3. Each event shown with index, date, and status<br>Use case ends. | 1a. No events exist<br>   - System shows "No events found"<br>   - User can create events using add command<br>   - Use case ends.                                                                                                                                                                                                                                                                  | Event list displayed chronologically     | Medium    |
+| UC07        | Filter contacts by criteria      | User          | Contacts exist in system                  | 1. User inputs search keywords or field criteria<br>2. System filters contacts matching criteria<br>3. Filtered list displayed with new indices<br>Use case ends. | 1a. No contacts match criteria<br>   - System shows "No contacts found"<br>   - User can try different search terms<br>   - Use case ends.<br>2a. Invalid search syntax<br>   - System shows error about search format<br>   - User can correct search syntax<br>   - Use case ends.                                                                                                                              | Filtered contact list displayed         | Medium    |
+| UC08        | Update RSVP status for contact   | User          | Contact already linked to event            | 1. User selects event, contact, and RSVP status<br>2. System updates contact's status for event<br>3. Confirmation message displayed with new status<br>Use case ends. | 1a. Invalid event or contact index<br>   - System shows error about non-existent selection<br>   - User can select valid indices<br>   - Use case ends.<br>2a. Invalid RSVP status<br>   - System shows valid status options (available/unavailable/unknown)<br>   - User can select valid status<br>   - Use case ends.<br>3a. Contact not linked to event<br>   - System shows contact not in event<br>   - User can link contact first<br>   - Use case ends. | RSVP status updated for contact-event relationship | High      |
+
+### A.4 Non-Functional Requirements
+
+| NFR ID   | Category       | Description                                                                              | Metric/Target                                       | Priority |
+| -------- | -------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------- | --------- |
+| NFR-T01  | Technical      | Runtime environment compatibility                                                         | Java 17, Windows/macOS/Linux                       | High      |
+| NFR-T02  | Technical      | Deployment method                                                                         | Single JAR, no installer                           | High      |
+| NFR-T03  | Technical      | Network dependency                                                                        | Offline functionality                              | High      |
+| NFR-P01  | Performance    | Command response time                                                                     | < 500ms for typical commands                       | High      |
+| NFR-P02  | Performance    | Application startup time                                                                  | < 3 seconds on standard hardware                   | High      |
+| NFR-P03  | Performance    | Memory usage with 10,000 contacts                                                         | < 5000MB                                           | Medium    |
+| NFR-P04  | Performance    | Data storage size for 10,000 contacts                                                     | < 50MB                                             | Medium    |
+| NFR-P05  | Performance    | Supported data capacity                                                                   | 10,000 contacts, 1,000 events                      | High      |
+| NFR-UX01  | User Experience | Interface design                                                                          | Keyboard-driven, clean and simple                 | High      |
+| NFR-UX02  | User Experience | Command syntax consistency                                                                | Consistent format across all operations            | High      |
+| NFR-UX03  | User Experience | Error message quality                                                                     | Clear, actionable guidance                         | High      |
+| NFR-UX04  | User Experience | Command response usefulness                                                               | Clear success/failure indication                   | High      |
+| NFR-F01   | Features       | Data file format                                                                          | Human-editable (JSON)                             | Medium    |
+| NFR-F02   | Features       | Data corruption handling                                                                  | Recovery warnings and manual recovery options      | Medium    |
+| NFR-D01   | Development    | Code coverage requirement                                                                 | ≥ 75% code coverage                               | Medium    |
+| NFR-D02   | Development    | Testing framework                                                                         | JUnit 5, comprehensive test suite                 | Medium    |
+
+### A.5 Requirements Priority Matrix
+
+| Requirement Category | Must Have (High) | Should Have (Medium) | Could Have (Low) | Won't Have |
+| -------------------- | ---------------- | -------------------- | ---------------- | ---------- |
+| **Contact Management** | Add, edit, delete contacts | Advanced search/filtering | Custom fields | N/A |
+| **Event Management** | Create, view events | Event archiving | Recurring events | N/A |
+| **Contact-Event Linking** | Link/unlink contacts | RSVP status tracking | Bulk operations | N/A |
+| **Data Management** | Data persistence | Import/Export functionality | Custom storage locations | N/A |
+| **Performance** | < 500ms response time | < 3GB memory usage | Batch optimization | N/A |
+| **User Experience** | Keyboard interface | Consistent syntax | Advanced UI features | N/A |
+| **Technical** | Cross-platform compatibility | Human-readable files | Cloud integration | N/A |
+
+### A.6 Glossary
 
 - **Event organizer**: Target user who manages events and contacts
 - **Contact**: Person entity with contact information and event associations
@@ -657,6 +716,9 @@ Streamlines event communication workflow by integrating contact management with 
 - **Participant**: Junction entity linking contacts to events with status
 - **Command**: User instruction that modifies or queries application state
 - **Observable List**: JavaFX data structure for automatic UI updates
+- **NFR**: Non-Functional Requirement
+- **UC**: Use Case
+- **MoSCoW**: Method of prioritizing requirements (Must have, Should have, Could have, Won't have)
 
 ---
 
@@ -770,4 +832,3 @@ Streamlines event communication workflow by integrating contact management with 
 6. **Invalid Event/Contact Combination**
    - Command: `event link --event 999 --contact 1`
    - Expected: Error message about non-existent event
-  
