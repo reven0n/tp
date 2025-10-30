@@ -210,8 +210,6 @@ The application manages three core entity types:
 
 ### 3.4 Participant Entity
 
-[Participant Class Diagram placeholder]
-
 **Core Fields:**
 
 - `Contact`: Associated contact reference
@@ -309,7 +307,7 @@ The parser system uses a direct interface implementation approach:
 
 ### 4.4 Error Handling
 
-[Error Handling Flow Diagram placeholder]
+<puml src="diagrams/ErrorHandlingFlowDiagram.puml" width="600" alt="Error Handling Flow Diagram"/>
 
 Error handling follows these principles:
 
@@ -347,7 +345,7 @@ Error handling follows these principles:
 
 ### 5.2 Create Event Flow
 
-[Create Event Sequence Diagram placeholder]
+Refer to Add Contact Seuqnce Digram above.
 
 **Steps:**
 
@@ -377,7 +375,7 @@ Error handling follows these principles:
 
 ### 5.4 Search/Find Flow
 
-[Search Find Sequence Diagram placeholder]
+<puml src="diagrams/SearchFindSequenceDiagram.puml" width="600" alt="Search Find Sequence Diagram"/>
 
 **Steps:**
 
@@ -393,7 +391,7 @@ Error handling follows these principles:
 
 ### 5.5 Error Handling Flow
 
-[Error Handling Sequence Diagram placeholder]
+<puml src="diagrams/ErrorHandlingSequenceDiagram.puml" width="600" alt="Error Handling Sequence Diagram"/>
 
 **Steps:**
 
@@ -441,8 +439,6 @@ Error handling follows these principles:
 11. Success message displayed with updated entity details
 
 ### 5.8 RSVP Status Update Flow
-
-[RSVP Status Update Sequence Diagram placeholder]
 
 **Steps:**
 

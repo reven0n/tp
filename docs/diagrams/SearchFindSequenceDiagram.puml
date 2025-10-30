@@ -1,0 +1,37 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+title Search Find Sequence Diagram
+
+actor User as user USER_COLOR
+participant ":UI" as ui UI_COLOR
+participant ":Logic" as logic LOGIC_COLOR
+participant ":Command" as command LOGIC_COLOR
+participant ":Model" as model MODEL_COLOR
+
+user -[USER_COLOR]> ui : "contact find alice"
+activate ui UI_COLOR
+
+ui -[UI_COLOR]> logic : executeCommand(command)
+activate logic LOGIC_COLOR
+
+logic -[LOGIC_COLOR]> logic : parseCommand(command)
+logic -[LOGIC_COLOR]> command : ContactFindCommand(parsed keywords)
+activate command LOGIC_COLOR
+
+command -[LOGIC_COLOR]> model : updateFilteredContactList(predicate)
+activate model MODEL_COLOR
+model -[MODEL_COLOR]> command : contacts filtered
+deactivate model
+
+command -[LOGIC_COLOR]> logic : "1 contact listed"
+deactivate command
+
+logic -[LOGIC_COLOR]> ui : CommandResult
+deactivate logic
+
+ui -[UI_COLOR]> user : Display filtered contacts
+deactivate ui
+
+@enduml

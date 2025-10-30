@@ -533,7 +533,7 @@ event find --tag work
 event find --name meeting conference --tag work important
 ```
 
-Event find works the same way as contact find (see [how search works](#how-search-works) section above for details).
+Event find works the same way as contact find (see [How Search Works](#how-search-works) for details).
 <box type="info" seamless>
 Event find specifics:
 
