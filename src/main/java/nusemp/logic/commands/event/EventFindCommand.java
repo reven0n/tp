@@ -6,6 +6,7 @@ import static nusemp.logic.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
 import java.util.function.Predicate;
 
 import nusemp.commons.util.ToStringBuilder;
+import nusemp.logic.Messages;
 import nusemp.logic.commands.Command;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
@@ -20,7 +21,7 @@ public class EventFindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Finds events by searching their fields (case-insensitive).\n"
+            + ": Finds events by searching their fields (case-insensitive).\n\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]... OR --FIELD KEYWORD [MORE_KEYWORDS]...\n"
             + "Available fields: name, date, address, tag, status\n"
             + "Examples:\n"
@@ -45,8 +46,10 @@ public class EventFindCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredEventList(predicate);
-        return new CommandResult(
-                String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, model.getFilteredEventList().size()));
+        int size = model.getFilteredEventList().size();
+        String feedbackToUser = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, size);
+        String heading = size == 0 ? Messages.HEADING_EVENT_FIND_NONE : Messages.HEADING_EVENT_FIND;
+        return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 
     @Override

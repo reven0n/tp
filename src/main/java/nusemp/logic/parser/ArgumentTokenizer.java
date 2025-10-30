@@ -30,6 +30,12 @@ public class ArgumentTokenizer {
         requireAllNonNull(argsString, prefixes);
         assert hasNoConflicts(prefixes) : "There should be no conflicting prefixes!";
 
+        // Append a whitespace for when an empty prefix placed last in the argsString.
+        // This is needed because all prefixes have a space after them, but the last prefix
+        // with no argument value will not have a space after it.
+        // Example: argsString = "contact edit --tag", this will find the "--tag " prefix.
+        argsString += " ";
+
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
     }

@@ -26,18 +26,18 @@ public class ContactAddCommand extends Command {
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
             + ": Adds a contact.\n\n"
             + "Parameters: "
-            + PREFIX_NAME + " NAME "
-            + PREFIX_EMAIL + " EMAIL "
-            + "[" + PREFIX_PHONE + " PHONE] "
-            + "[" + PREFIX_ADDRESS + " ADDRESS] "
-            + "[" + PREFIX_TAG + " TAG]...\n"
+            + PREFIX_NAME + "NAME "
+            + PREFIX_EMAIL + "EMAIL "
+            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " "
-            + PREFIX_NAME + " John Doe "
-            + PREFIX_EMAIL + " johnd@example.com "
-            + PREFIX_PHONE + " 98765432 "
-            + PREFIX_ADDRESS + " 311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + " friends "
-            + PREFIX_TAG + " owesMoney";
+            + PREFIX_NAME + "John Doe "
+            + PREFIX_EMAIL + "johnd@example.com "
+            + PREFIX_PHONE + "98765432 "
+            + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
+            + PREFIX_TAG + "friends "
+            + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "Successfully added contact:\n%1$s";
     public static final String MESSAGE_DUPLICATE_CONTACT =
