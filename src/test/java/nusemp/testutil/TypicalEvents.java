@@ -21,6 +21,7 @@ public class TypicalEvents {
             .withName("MEETING")
             .withDate("01-10-2025 14:00")
             .withAddress("Meeting Room")
+            .withStatus("PENDING")
             .build();
     public static final Event CONFERENCE_EMPTY = new Event(
             new Name("CONFERENCE"), new Date("29-02-2024 09:00"), Address.empty());
@@ -35,6 +36,7 @@ public class TypicalEvents {
             .withName("WORKSHOP")
             .withDate("01-10-2025 14:00")
             .withAddress("SR2")
+            .withStatus("DONE")
             .build();
     public static final Event PARTY_EMPTY = new Event(
             new Name("PARTY"), new Date("31-12-2024 20:00"), Address.empty());
@@ -42,6 +44,7 @@ public class TypicalEvents {
             .withName("PARTY")
             .withDate("31-12-2024 20:00")
             .withAddress(ALICE.getAddress().toString())
+            .withStatus("ONGOING")
             .build();
     public static final Event MEETING_WITH_TAGS = new EventBuilder()
             .withName("MEETING")

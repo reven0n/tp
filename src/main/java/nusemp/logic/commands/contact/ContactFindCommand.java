@@ -14,7 +14,7 @@ import nusemp.model.contact.Contact;
 
 /**
  * Finds and lists all contacts whose fields contain any of the argument keywords.
- * Keyword matching is case insensitive.
+ * Keyword matching is case-insensitive.
  */
 public class ContactFindCommand extends Command {
 
