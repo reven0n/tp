@@ -1,7 +1,6 @@
 package nusemp.logic.parser;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.parser.CliSyntax.PREFIX_DATE;
 import static nusemp.logic.parser.CliSyntax.PREFIX_STATUS;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;

@@ -1,6 +1,7 @@
 package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.logic.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
 
 import java.util.function.Predicate;
 
@@ -45,7 +46,7 @@ public class EventFindCommand extends Command {
         requireNonNull(model);
         model.updateFilteredEventList(predicate);
         return new CommandResult(
-                String.format("Number of events found: %d", model.getFilteredEventList().size()));
+                String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, model.getFilteredEventList().size()));
     }
 
     @Override

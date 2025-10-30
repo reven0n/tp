@@ -5,6 +5,9 @@ import java.util.function.Predicate;
 
 import nusemp.commons.util.ToStringBuilder;
 
+/**
+ * Tests that an {@code Event} matches any of the given predicates.
+ */
 public class EventMatchesAnyPredicatePredicate implements Predicate<Event> {
     private final List<Predicate<Event>> predicates;
 

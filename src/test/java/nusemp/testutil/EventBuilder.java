@@ -1,7 +1,6 @@
 package nusemp.testutil;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import nusemp.model.event.Event;
@@ -10,7 +9,6 @@ import nusemp.model.fields.Address;
 import nusemp.model.fields.Date;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Tag;
-import nusemp.model.participant.Participant;
 import nusemp.model.util.SampleDataUtil;
 
 /**
@@ -27,7 +25,6 @@ public class EventBuilder {
     private Date date;
     private Address address;
     private EventStatus status;
-    private List<Participant> participants;
     private Set<Tag> tags;
 
     /**

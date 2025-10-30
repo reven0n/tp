@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.commands.event.EventExportCommand;
-import nusemp.logic.commands.event.EventRsvpCommand;
 import nusemp.logic.parser.ArgumentMultimap;
 import nusemp.logic.parser.ArgumentTokenizer;
 import nusemp.logic.parser.Parser;
@@ -39,7 +38,8 @@ public class EventExportCommandParser implements Parser<EventExportCommand> {
                 return new EventExportCommand(index);
             }
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventExportCommand.MESSAGE_USAGE), pe);
+            throw new ParseException(String.format(
+                    MESSAGE_INVALID_COMMAND_FORMAT, EventExportCommand.MESSAGE_USAGE), pe);
         }
     }
 }
