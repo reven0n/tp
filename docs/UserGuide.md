@@ -273,7 +273,7 @@ contact find --name alice bob --email nus.edu ntu.edu
 
 <box type="info" seamless>
 
-**How Search Works:**
+<a id="how-search-works"><strong>How Search Works:</strong></a>
 
 - **Doesn't matter** if you use capital or small letters
 - **Partial matches work** (typing `gmail` finds `@gmail.com`)
@@ -509,6 +509,9 @@ This changes event #1's name and time.
 event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…
 ```
 
+Screenshot Example:
+![Event Edit Example](images/EventEditExample.png)
+
 ### 3.4 `event find`
 
 **Looking for a specific event?** You can search in different ways:
@@ -535,42 +538,12 @@ event find --tag work
 event find --name meeting conference --tag work important
 ```
 
+Event find works the same way as contact find (see [how search works](#how-search-works) section above for details).
 <box type="info" seamless>
-
-**How Search Works:**
-
-- **Doesn't matter** if you use capital or small letters
-- **Partial matches work** (typing `gmail` finds `@gmail.com`)
-- **Multiple words** in one field use OR logic
-- **Different fields** use AND logic
-- Perfect for finding events on the same date or from the same area!
-
-**Understanding Search Logic:**
-
-**OR Logic (within one field):** Finds events matching **ANY** of the words
-
-```
-event find --name conference meeting
-```
-
-Finds events named conference **OR** meeting
-
-**AND Logic (between fields):** Finds events matching **ALL** the conditions
-
-```
-event find --name meeting --address serangoon
-```
-
-Finds events named meeting **AND** have serangoon in their address
-
-**Simple Example:**
-
-```
-event find --name conference meeting --address serangoon
-```
-
-Finds events named conference **OR** meeting **AND** who have serangoon in their address
-
+Event find specifics:
+- Date searches look for exact matches (e.g. `25-12-2025 12:00` finds only that date and time) 
+- Only one date can be specified
+- Status searches look for one of: `pending`, `ongoing`, `closed`
 </box>
 
 <box type="tip" seamless>
@@ -587,11 +560,10 @@ these index numbers when running commands on the found events.
 event find KEYWORD [MORE_KEYWORDS]... or event find [--FIELD KEYWORD [MORE_KEYWORDS]...]...
 ```
 
-### 3.5 `event delete`
 Screenshot Example:
-![Event Edit Example](images/EventEditExample.png)
+![Event Find Example](images/EventFindExample.png)
 
-### 3.4 `event delete`
+### 3.5 `event delete`
 
 **Remove an event completely:**
 
@@ -621,12 +593,11 @@ This deletes event #2 and removes all contact connections.
 event delete INDEX
 ```
 
-### 3.6 `event link`
 Screenshot Example:
 ![Event Delete Example](images/EventDeleteExample.png)
 
 
-### 3.5 `event link`
+### 3.6 `event link`
 
 **Add contacts to your event guest list:**
 
@@ -659,12 +630,11 @@ This adds contact #2 to event #1.
 event link --event EVENT_INDEX --contact CONTACT_INDEX
 ```
 
-### 3.7 `event unlink`
 Screenshot Example:
 ![Event Link Example](images/EventLinkExample.png)
 *In the example screenshot, we want to link the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event link --event 1 --contact 6`.*
 
-### 3.6 `event unlink`
+### 3.7 `event unlink`
 
 **Take someone off an event** when they can't make it:
 
@@ -697,13 +667,11 @@ Removes contact #2 from event #1.
 event unlink --event EVENT_INDEX --contact CONTACT_INDEX
 ```
 
-### 3.8 `event show`
 Screenshot Example:
 ![Event Unlink Example](images/EventUnlinkExample.png)
 *In the example screenshot, we want to unlink the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event unlink --event 1 --contact 6`.*
 
-
-### 3.7 `event show`
+### 3.8 `event show`
 
 **Check your guest list** for any event:
 
@@ -740,11 +708,10 @@ The contact indexes shown in the event display are specific to this event's part
 event show INDEX
 ```
 
-### 3.9 `event export`
 Screenshot Example:
-![Event Show Example](images/EventShowExample.png)
+![Event Show Example](images/EventShowExample.png
 
-### 3.8 `event export`
+### 3.9 `event export`
 
 **Quickly copy all contacts** with the given status from an event to your clipboard:
 
@@ -775,11 +742,10 @@ Copies all contacts who are available from event #1.
 event export INDEX [--status STATUS]
 ```
 
-### 3.10 `event rsvp`
 Screenshot Example:
 ![Event Export Example](images/EventExportExample.png)
 
-### 3.9 `event rsvp`
+### 3.10 `event rsvp`
 
 **Keep track of RSVP responses** as people reply:
 
