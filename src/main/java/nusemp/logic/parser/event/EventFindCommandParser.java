@@ -17,7 +17,7 @@ import nusemp.logic.parser.ArgumentMultimap;
 import nusemp.logic.parser.ArgumentTokenizer;
 import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.event.DateContainsKeywordsPredicate;
+import nusemp.model.event.EventDateContainsKeywordsPredicate;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventAddressContainsKeywordsPredicate;
 import nusemp.model.event.EventMatchesAnyPredicatePredicate;
@@ -76,7 +76,7 @@ public class EventFindCommandParser implements Parser<EventFindCommand> {
             if (!dateArgs.isEmpty()) {
                 try {
                     Date date = new Date(dateArgs);
-                    predicates.add(new DateContainsKeywordsPredicate(date));
+                    predicates.add(new EventDateContainsKeywordsPredicate(date));
                 } catch (IllegalArgumentException e) {
                     throw new ParseException(e.getMessage());
                 }

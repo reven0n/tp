@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
-import nusemp.model.event.DateContainsKeywordsPredicate;
+import nusemp.model.event.EventDateContainsKeywordsPredicate;
 import nusemp.model.event.EventMatchesAnyPredicatePredicate;
 import nusemp.model.event.EventNameContainsKeywordsPredicate;
 import nusemp.model.event.EventStatusPredicate;
@@ -50,7 +50,7 @@ class EventFindCommandTest {
     @Test
     public void execute_dateKeyword_eventFound() {
         String expectedMessage = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 2);
-        DateContainsKeywordsPredicate predicate = new DateContainsKeywordsPredicate(MEETING_EMPTY.getDate());
+        EventDateContainsKeywordsPredicate predicate = new EventDateContainsKeywordsPredicate(MEETING_EMPTY.getDate());
         EventFindCommand command = new EventFindCommand(predicate);
         expectedModel.updateFilteredEventList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
@@ -89,7 +89,7 @@ class EventFindCommandTest {
     public void execute_multipleFieldPredicates_eventsFound() {
         String expectedMessage = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 3);
         EventNameContainsKeywordsPredicate namePredicate = preparePredicate("conference");
-        DateContainsKeywordsPredicate datePredicate = new DateContainsKeywordsPredicate(
+        EventDateContainsKeywordsPredicate datePredicate = new EventDateContainsKeywordsPredicate(
                 MEETING_EMPTY.getDate());
         EventMatchesAnyPredicatePredicate predicate = new EventMatchesAnyPredicatePredicate(
                 Arrays.asList(namePredicate, datePredicate));

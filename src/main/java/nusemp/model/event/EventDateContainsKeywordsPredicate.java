@@ -8,10 +8,10 @@ import nusemp.model.fields.Date;
 /**
  * Tests that a {@code Event}'s {@code Date} matches any of the date given.
  */
-public class DateContainsKeywordsPredicate implements Predicate<Event> {
+public class EventDateContainsKeywordsPredicate implements Predicate<Event> {
     private final Date date;
 
-    public DateContainsKeywordsPredicate(Date dates) {
+    public EventDateContainsKeywordsPredicate(Date dates) {
         this.date = dates;
     }
 
@@ -27,13 +27,13 @@ public class DateContainsKeywordsPredicate implements Predicate<Event> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof DateContainsKeywordsPredicate)) {
+        if (!(other instanceof EventDateContainsKeywordsPredicate)) {
             return false;
         }
 
-        DateContainsKeywordsPredicate otherDateContainsKeywordsPredicate =
-                (DateContainsKeywordsPredicate) other;
-        return date.equals(otherDateContainsKeywordsPredicate.date);
+        EventDateContainsKeywordsPredicate otherEventDateContainsKeywordsPredicate =
+                (EventDateContainsKeywordsPredicate) other;
+        return date.equals(otherEventDateContainsKeywordsPredicate.date);
     }
 
     @Override
