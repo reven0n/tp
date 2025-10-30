@@ -33,7 +33,8 @@ public class ContactTagContainsKeywordsPredicate implements Predicate<Contact> {
             return false;
         }
 
-        ContactTagContainsKeywordsPredicate otherTagContainsKeywordsPredicate = (ContactTagContainsKeywordsPredicate) other;
+        ContactTagContainsKeywordsPredicate otherTagContainsKeywordsPredicate = 
+        (ContactTagContainsKeywordsPredicate) other;
         return keywords.equals(otherTagContainsKeywordsPredicate.keywords);
     }
 
