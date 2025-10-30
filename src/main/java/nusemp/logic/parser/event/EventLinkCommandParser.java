@@ -1,6 +1,7 @@
 package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.parser.CliSyntax.LINK_ALL_KEYWORD;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 
@@ -39,12 +40,22 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT, PREFIX_CONTACT);
 
         Index eventIndex;
-        Index contactIndex;
-
-        // parse the indices
         try {
             eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
-            contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
+        } catch (ParseException pe) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EventLinkCommand.MESSAGE_USAGE), pe);
+        }
+
+        String contactValue = argMultimap.getValue(PREFIX_CONTACT).get().trim();
+
+        if (LINK_ALL_KEYWORD.equalsIgnoreCase(contactValue)) {
+            return new EventLinkCommand(eventIndex);
+        }
+
+        Index contactIndex;
+        try {
+            contactIndex = ParserUtil.parseIndex(contactValue);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EventLinkCommand.MESSAGE_USAGE), pe);

@@ -1,104 +1,144 @@
 package nusemp.logic.commands.event;
 
-import static java.util.Objects.requireNonNull;
-import static nusemp.testutil.Assert.assertThrows;
+import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
+import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static nusemp.testutil.TypicalAppData.getTypicalAppDataWithEvents;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_EVENT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_CONTACT;
 import static nusemp.testutil.TypicalIndexes.INDEX_SECOND_EVENT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.nio.file.Path;
-import java.util.List;
-import java.util.function.Predicate;
-
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import nusemp.commons.core.GuiSettings;
 import nusemp.commons.core.index.Index;
 import nusemp.logic.Messages;
-import nusemp.logic.commands.exceptions.CommandException;
-import nusemp.model.AppData;
+import nusemp.logic.commands.CommandResult;
 import nusemp.model.Model;
-import nusemp.model.ReadOnlyAppData;
-import nusemp.model.ReadOnlyUserPrefs;
+import nusemp.model.ModelManager;
+import nusemp.model.UserPrefs;
 import nusemp.model.contact.Contact;
 import nusemp.model.event.Event;
-import nusemp.model.participant.Participant;
 import nusemp.model.participant.ParticipantStatus;
-import nusemp.testutil.ContactBuilder;
-import nusemp.testutil.EventBuilder;
 
 public class EventUnlinkCommandTest {
+    private Model model;
+
+    @BeforeEach
+    public void setUp() {
+        model = new ModelManager(getTypicalAppDataWithEvents(), new UserPrefs());
+    }
+
     @Test
     public void constructor_nullIndexes_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new EventUnlinkCommand(null, INDEX_FIRST_CONTACT));
         assertThrows(NullPointerException.class, () -> new EventUnlinkCommand(INDEX_FIRST_EVENT, null));
+        assertThrows(NullPointerException.class, () -> new EventUnlinkCommand(null));
     }
 
-    /*
     @Test
     public void execute_validIndexesUnfilteredList_success() throws Exception {
-        Contact validContact = new ContactBuilder().build();
-        Event validEvent = new EventBuilder().build();
+        Index validEventIndex = INDEX_FIRST_EVENT;
+        Index validContactIndex = INDEX_FIRST_CONTACT;
 
-        ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(validEvent, validContact);
+        Event eventToUnlink = model.getFilteredEventList().get(validEventIndex.getZeroBased());
+        Contact contactToUnlink = model.getFilteredContactList().get(validContactIndex.getZeroBased());
 
         // First link the contact to the event
-        modelStub.addParticipant(validContact, validEvent, ParticipantStatus.UNKNOWN);
+        model.addParticipant(contactToUnlink, eventToUnlink, ParticipantStatus.UNKNOWN);
 
-        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(validEventIndex, validContactIndex);
 
-        CommandResult commandResult = unlinkCommand.execute(modelStub);
+        String expectedMessage = String.format(EventUnlinkCommand.MESSAGE_SUCCESS,
+                contactToUnlink.getName(), eventToUnlink.getName());
 
-        assertEquals(String.format(EventUnlinkCommand.MESSAGE_SUCCESS,
-                        validContact.getName().toString()),
-                commandResult.getFeedbackToUser());
+        Model expectedModel = new ModelManager(model.getAppData(), new UserPrefs());
+        expectedModel.removeParticipant(contactToUnlink, eventToUnlink);
+
+        assertCommandSuccess(unlinkCommand, model, expectedMessage, expectedModel);
     }
-     */
 
     @Test
     public void execute_invalidEventIndex_throwsCommandException() {
-        ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(
-                new EventBuilder().build(), new ContactBuilder().build());
-        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(Index.fromZeroBased(5), INDEX_FIRST_CONTACT);
+        Index outOfBoundEventIndex = Index.fromOneBased(model.getFilteredEventList().size() + 1);
+        Index validContactIndex = INDEX_FIRST_CONTACT;
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(outOfBoundEventIndex, validContactIndex);
 
-        assertThrows(CommandException.class,
-                Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, () -> unlinkCommand.execute(modelStub));
+        assertCommandFailure(unlinkCommand, model, Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_invalidContactIndex_throwsCommandException() {
-        ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(
-                new EventBuilder().build(), new ContactBuilder().build());
-        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, Index.fromZeroBased(5));
+        Index validEventIndex = INDEX_FIRST_EVENT;
+        Index outOfBoundContactIndex = Index.fromOneBased(model.getFilteredContactList().size() + 1);
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(validEventIndex, outOfBoundContactIndex);
 
-        assertThrows(CommandException.class,
-                Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX, () -> unlinkCommand.execute(modelStub));
+        assertCommandFailure(unlinkCommand, model, Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
     }
 
-    /*
     @Test
     public void execute_contactNotInEvent_throwsCommandException() {
-        Contact contact = new ContactBuilder().build();
-        Event event = new EventBuilder().build();
-        ModelStubWithEventAndContact modelStub = new ModelStubWithEventAndContact(event, contact);
-        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
+        Index validEventIndex = INDEX_FIRST_EVENT;
+        Index validContactIndex = INDEX_FIRST_CONTACT;
 
-        assertThrows(CommandException.class,
-                EventUnlinkCommand.MESSAGE_CONTACT_NOT_FOUND, () -> unlinkCommand.execute(modelStub));
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(validEventIndex, validContactIndex);
+
+        assertCommandFailure(unlinkCommand, model, String.format(EventUnlinkCommand.MESSAGE_CONTACT_NOT_FOUND,
+                model.getFilteredContactList().get(validContactIndex.getZeroBased()).getName(),
+                model.getFilteredEventList().get(validEventIndex.getZeroBased()).getName()));
     }
-     */
+
+    @Test
+    public void execute_unlinkAll_success() throws Exception {
+        Index validEventIndex = INDEX_FIRST_EVENT;
+        Event eventToUnlink = model.getFilteredEventList().get(validEventIndex.getZeroBased());
+
+        // Link all contacts first
+        for (Contact contact : model.getFilteredContactList()) {
+            if (!model.hasParticipant(contact, eventToUnlink)) {
+                model.addParticipant(contact, eventToUnlink, ParticipantStatus.UNKNOWN);
+            }
+        }
+
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(validEventIndex);
+
+        CommandResult result = unlinkCommand.execute(model);
+
+        assertTrue(result.getFeedbackToUser().contains("Successfully unlinked"));
+        assertTrue(result.getFeedbackToUser().contains(eventToUnlink.getName().toString()));
+        assertTrue(result.getFeedbackToUser().contains("contact(s)"));
+    }
+
+    @Test
+    public void execute_unlinkAllNoContacts_throwsCommandException() {
+        model.updateFilteredContactList(contact -> false); // Filter out all contacts
+        Index validEventIndex = INDEX_FIRST_EVENT;
+
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(validEventIndex);
+
+        assertCommandFailure(unlinkCommand, model, String.format(EventUnlinkCommand.MESSAGE_NO_CONTACTS_TO_UNLINK,
+                model.getFilteredEventList().get(validEventIndex.getZeroBased()).getName()));
+    }
+
+    @Test
+    public void execute_unlinkAllNoLinkedContacts_throwsCommandException() {
+        Index validEventIndex = INDEX_FIRST_EVENT;
+
+        EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(validEventIndex);
+
+        assertCommandFailure(unlinkCommand, model, "No contacts were unlinked from the event");
+    }
 
     @Test
     public void equals() {
         EventUnlinkCommand unlinkFirstCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
         EventUnlinkCommand unlinkSecondCommand = new EventUnlinkCommand(INDEX_SECOND_EVENT, INDEX_SECOND_CONTACT);
+        EventUnlinkCommand unlinkAllFirstCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT);
+        EventUnlinkCommand unlinkAllSecondCommand = new EventUnlinkCommand(INDEX_SECOND_EVENT);
 
         // same object -> returns true
         assertTrue(unlinkFirstCommand.equals(unlinkFirstCommand));
@@ -107,13 +147,24 @@ public class EventUnlinkCommandTest {
         EventUnlinkCommand unlinkFirstCommandCopy = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
         assertTrue(unlinkFirstCommand.equals(unlinkFirstCommandCopy));
 
+        // same event index for unlinkAll -> returns true
+        EventUnlinkCommand unlinkAllFirstCommandCopy = new EventUnlinkCommand(INDEX_FIRST_EVENT);
+        assertTrue(unlinkAllFirstCommand.equals(unlinkAllFirstCommandCopy));
+
         // different types -> returns false
         assertFalse(unlinkFirstCommand.equals(1));
+
         // null -> returns false
         assertFalse(unlinkFirstCommand.equals(null));
 
         // different indexes -> returns false
         assertFalse(unlinkFirstCommand.equals(unlinkSecondCommand));
+
+        // different event indexes for unlinkAll -> returns false
+        assertFalse(unlinkAllFirstCommand.equals(unlinkAllSecondCommand));
+
+        // unlinkAll vs single unlink -> returns false
+        assertFalse(unlinkFirstCommand.equals(unlinkAllFirstCommand));
     }
 
     @Test
@@ -121,220 +172,15 @@ public class EventUnlinkCommandTest {
         EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
         String expected = EventUnlinkCommand.class.getCanonicalName()
                 + "{eventIndex=" + INDEX_FIRST_EVENT
-                + ", contactIndex=" + INDEX_FIRST_CONTACT + "}";
+                + ", contactIndex=" + INDEX_FIRST_CONTACT
+                + ", isUnlinkAll=false" + "}";
         assertEquals(expected, unlinkCommand.toString());
+
+        EventUnlinkCommand unlinkAllCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT);
+        String expectedAll = EventUnlinkCommand.class.getCanonicalName()
+                + "{eventIndex=" + INDEX_FIRST_EVENT
+                + ", contactIndex=null"
+                + ", isUnlinkAll=true" + "}";
+        assertEquals(expectedAll, unlinkAllCommand.toString());
     }
-
-    /**
-     * A default model stub that have all methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyUserPrefs getUserPrefs() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public GuiSettings getGuiSettings() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setGuiSettings(GuiSettings guiSettings) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Path getAppDataFilePath() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setAppDataFilePath(Path appDataFilePath) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addContact(Contact contact) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setAppData(ReadOnlyAppData appData) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAppData getAppData() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasContact(Contact contact) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteContact(Contact target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setContact(Contact target, Contact editedContact) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Contact> getFilteredContactList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredContactList(Predicate<Contact> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasEvent(Event event) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void deleteEvent(Event target) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addEvent(Event event) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setEvent(Event target, Event editedEvent) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Event> getFilteredEventList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredEventList(Predicate<Event> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Contact getContactByIndex(Index index) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public Event getEventByIndex(Index index) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void addParticipant(Contact contact, Event event, ParticipantStatus status) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void setParticipant(Contact contact, Event event, ParticipantStatus status) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void removeParticipant(Contact contact, Event event) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public boolean hasParticipant(Contact contact, Event event) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public List<Participant> getParticipants(Contact contact) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public List<Participant> getParticipants(Event event) {
-            throw new AssertionError("This method should not be called.");
-        }
-    }
-
-    /**
-     * A Model stub that contains a single event and contact.
-     */
-    private class ModelStubWithEventAndContact extends ModelStub {
-        private final Event event;
-        private final Contact contact;
-        private Event updatedEvent;
-        private Contact updatedContact;
-        private boolean isLinked = false;
-
-        ModelStubWithEventAndContact(Event event, Contact contact) {
-            requireNonNull(event);
-            requireNonNull(contact);
-            this.event = event;
-            this.contact = contact;
-        }
-
-        @Override
-        public ObservableList<Event> getFilteredEventList() {
-            return FXCollections.observableArrayList(event);
-        }
-
-        @Override
-        public ObservableList<Contact> getFilteredContactList() {
-            return FXCollections.observableArrayList(contact);
-        }
-
-        @Override
-        public void setEvent(Event target, Event editedEvent) {
-            requireNonNull(target);
-            requireNonNull(editedEvent);
-            this.updatedEvent = editedEvent;
-        }
-
-        @Override
-        public void setContact(Contact target, Contact editedContact) {
-            requireNonNull(target);
-            requireNonNull(editedContact);
-            this.updatedContact = editedContact;
-        }
-
-        @Override
-        public ReadOnlyAppData getAppData() {
-            return new AppData();
-        }
-
-        @Override
-        public void addParticipant(Contact contact, Event event, ParticipantStatus status) {
-            requireNonNull(contact);
-            requireNonNull(event);
-            requireNonNull(status);
-            isLinked = true;
-        }
-
-        @Override
-        public void removeParticipant(Contact contact, Event event) {
-            requireNonNull(contact);
-            requireNonNull(event);
-            isLinked = false;
-        }
-
-        @Override
-        public void updateFilteredContactList(Predicate<Contact> predicate) {
-            // Do nothing for this stub
-        }
-    }
-
 }
