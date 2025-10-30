@@ -53,7 +53,6 @@
 
 .list-heading {
     -fx-padding: 20 15 10 15;
-    -fx-background-color: derive(#1d1d1d, 15%);
 }
 
 .list-heading-text {
@@ -70,11 +69,11 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #515658;
+    -fx-background-color: #3c3e3f;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: #515658;
 }
 
 .list-cell #cardPane {
