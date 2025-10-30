@@ -6,19 +6,19 @@ import java.util.function.Predicate;
 import nusemp.commons.util.ToStringBuilder;
 
 /**
- * Tests that a {@code Contact}'s {@code Address} matches any of the keywords given.
+ * Tests that a {@code Contact}'s {@code Email} matches any of the keywords given.
  */
-public class AddressContainsKeywordsPredicate implements Predicate<Contact> {
+public class ContactEmailContainsKeywordsPredicate implements Predicate<Contact> {
     private final List<String> keywords;
 
-    public AddressContainsKeywordsPredicate(List<String> keywords) {
+    public ContactEmailContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(Contact contact) {
         return keywords.stream()
-                .anyMatch(keyword -> contact.getAddress().value.toLowerCase().contains(keyword.toLowerCase()));
+                .anyMatch(keyword -> contact.getEmail().value.toLowerCase().contains(keyword.toLowerCase()));
     }
 
     @Override
@@ -28,13 +28,13 @@ public class AddressContainsKeywordsPredicate implements Predicate<Contact> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddressContainsKeywordsPredicate)) {
+        if (!(other instanceof ContactEmailContainsKeywordsPredicate)) {
             return false;
         }
 
-        AddressContainsKeywordsPredicate otherAddressContainsKeywordsPredicate =
-                (AddressContainsKeywordsPredicate) other;
-        return keywords.equals(otherAddressContainsKeywordsPredicate.keywords);
+        ContactEmailContainsKeywordsPredicate otherEmailContainsKeywordsPredicate =
+                (ContactEmailContainsKeywordsPredicate) other;
+        return keywords.equals(otherEmailContainsKeywordsPredicate.keywords);
     }
 
     @Override
