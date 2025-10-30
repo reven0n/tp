@@ -25,7 +25,7 @@ public class EventUnlinkCommand extends Command {
     public static final String COMMAND_WORD = "unlink";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Unlinks contacts from an event identified by the event index.\n"
+            + ": Unlinks contacts from an event identified by the event index.\n\n"
             + "Parameters: "
             + PREFIX_EVENT + " EVENT_INDEX "
             + PREFIX_CONTACT + " CONTACT_INDEX \n"

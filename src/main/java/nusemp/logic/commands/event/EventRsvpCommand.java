@@ -27,15 +27,17 @@ public class EventRsvpCommand extends Command {
     public static final String COMMAND_WORD = "rsvp";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": RSVP to an event by its index.\n" + "Parameters:  "
+            + ": RSVP to an event by its index.\n\n"
+            + "Parameters:  "
             + PREFIX_EVENT + " EVENT_INDEX " + PREFIX_CONTACT + " CONTACT_INDEX " + PREFIX_STATUS + " STATUS\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 2" + " " + PREFIX_STATUS + " "
             + ParticipantStatus.AVAILABLE;
 
-    public static final String MESSAGE_SUCCESS = "Successfully RSVPed to event: %1$s for contact: %2$s";
+    public static final String MESSAGE_SUCCESS = "Successfully RSVPed to event \"%1$s\" for contact \"%2$s\"";
 
-    public static final String MESSAGE_CONTACT_NOT_PARTICIPANT = "Contact: %1$s is not a participant of event: %2$s";
+    public static final String MESSAGE_CONTACT_NOT_PARTICIPANT =
+            "Contact \"%1$s\" is not a participant of event \"%2$s\"";
 
     private final Index eventIndex;
     private final Index contactIndex;

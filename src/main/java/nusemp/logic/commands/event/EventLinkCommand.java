@@ -25,7 +25,7 @@ public class EventLinkCommand extends Command {
     public static final String COMMAND_WORD = "link";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Links a contact to an event. "
+            + ": Links a contact to an event.\n\n"
             + "Parameters: "
             + PREFIX_EVENT + " EVENT_INDEX "
             + PREFIX_CONTACT + " CONTACT_INDEX\n"
@@ -73,16 +73,12 @@ public class EventLinkCommand extends Command {
 
         if (model.hasParticipant(contactToLink, eventToLink)) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
-                    contactToLink.getEmail()));
+                    contactToLink.getEmail(), eventToLink.getName()));
         }
 
-        try {
-            model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
-            model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-            return new CommandResult(MESSAGE_SUCCESS);
-        } catch (Exception e) {
-            throw new CommandException("Error linking participant to event.");
-        }
+        model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
+        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, contactToLink.getName(), eventToLink.getName()));
     }
 
 

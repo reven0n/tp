@@ -25,11 +25,13 @@ public class EventExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1";
+            + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n\n"
+            + "Parameters: INDEX\n"
+            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1\n\n"
+            + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
-    public static final String MESSAGE_SUCCESS = "Successfully exported contacts linked to event to your clipboard.";
+    public static final String MESSAGE_SUCCESS =
+            "Successfully exported contacts linked to event \"%1$s\" to your clipboard.";
 
     private String exportContentData = "";
 
@@ -72,7 +74,7 @@ public class EventExportCommand extends Command {
         ClipboardContent content = new ClipboardContent();
         content.putString(exportContentData);
         clipboard.setContent(content);
-        return new CommandResult(MESSAGE_SUCCESS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, eventToExport.getName()));
     }
 
     @Override
