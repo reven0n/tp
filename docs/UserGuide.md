@@ -481,7 +481,85 @@ This changes event #1's name and time.
 event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…
 ```
 
-### 3.4 `event delete`
+### 3.4 `event find`
+
+**Looking for a specific event?** You can search in different ways:
+
+**Simple name search:**
+
+```
+event find Meeting
+```
+
+**Search by specific information:**
+
+```
+event find --name Conference
+event find --status pending
+event find --date 25-12-2025 12:00
+event find --address serangoon
+event find --tag work
+```
+
+**Combine searches:**
+
+```
+event find --name meeting conference --tag work important
+```
+
+<box type="info" seamless>
+
+**How Search Works:**
+
+- **Doesn't matter** if you use capital or small letters
+- **Partial matches work** (typing `gmail` finds `@gmail.com`)
+- **Multiple words** in one field use OR logic
+- **Different fields** use AND logic
+- Perfect for finding events on the same date or from the same area!
+
+**Understanding Search Logic:**
+
+**OR Logic (within one field):** Finds events matching **ANY** of the words
+
+```
+event find --name conference meeting
+```
+
+Finds events named conference **OR** meeting
+
+**AND Logic (between fields):** Finds events matching **ALL** the conditions
+
+```
+event find --name meeting --address serangoon
+```
+
+Finds events named meeting **AND** have serangoon in their address
+
+**Simple Example:**
+
+```
+event find --name conference meeting --address serangoon
+```
+
+Finds events named conference **OR** meeting **AND** who have serangoon in their address
+
+</box>
+
+<box type="tip" seamless>
+
+**Note:** After using `event find`, the displayed results will have their own index numbers (starting from 1). Use 
+these index numbers when running commands on the found events.
+
+</box>
+
+**Format:**
+<br />
+
+```
+event find KEYWORD [MORE_KEYWORDS]... or event find [--FIELD KEYWORD [MORE_KEYWORDS]...]...
+```
+
+### 3.5 `event delete`
 
 **Remove an event completely:**
 
@@ -511,7 +589,7 @@ This deletes event #2 and removes all contact connections.
 event delete INDEX
 ```
 
-### 3.5 `event link`
+### 3.6 `event link`
 
 **Add contacts to your event guest list:**
 
@@ -544,7 +622,7 @@ This adds contact #2 to event #1.
 event link --event EVENT_INDEX --contact CONTACT_INDEX
 ```
 
-### 3.6 `event unlink`
+### 3.7 `event unlink`
 
 **Take someone off an event** when they can't make it:
 
@@ -577,7 +655,7 @@ Removes contact #2 from event #1.
 event unlink --event EVENT_INDEX --contact CONTACT_INDEX
 ```
 
-### 3.7 `event show`
+### 3.8 `event show`
 
 **Check your guest list** for any event:
 
@@ -614,15 +692,15 @@ The contact indexes shown in the event display are specific to this event's part
 event show INDEX
 ```
 
-### 3.8 `event export`
+### 3.9 `event export`
 
-**Quickly copy all contacts** from an event to your clipboard:
+**Quickly copy all contacts** with the given status from an event to your clipboard:
 
 ```
-event export 1
+event export 1 --status available
 ```
 
-Copies all contact info from event #1.
+Copies all contacts who are available from event #1.
 
 **Important:** You can find the index of the event in the displayed event list. The index should be a positive integer.
 
@@ -633,7 +711,7 @@ Copies all contact info from event #1.
 - Pasting into emails or messages
 - Sending reminders or updates
 - Sharing contact information
-- **You can also click the file icon** next to each event for quick export!
+- **You can also click the file icon** next to each event for quick export available contacts!
 - Saves tons of time when sharing contact details
 
 </box>
@@ -642,10 +720,10 @@ Copies all contact info from event #1.
 <br />
 
 ```
-event export INDEX
+event export INDEX [--status STATUS]
 ```
 
-### 3.9 `event rsvp`
+### 3.10 `event rsvp`
 
 **Keep track of RSVP responses** as people reply:
 
@@ -662,8 +740,8 @@ Marks contact #2 as available for event #1.
 
 **Possible responses:**
 
-- `available` - They can make it!
-- `unavailable` - They can't come
+- `available` - They can attend
+- `unavailable` - They cannot attend
 - `pending` - Haven't decided yet
 
 <box type="tip" seamless>
@@ -753,10 +831,11 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 ### 7.3 Event Commands
 
 | Action                        | Format, Examples                                                                                                                            |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+|-------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | **Add Event**                 | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date "25-12-2025 14:30" --address Room 4`       |
 | **Delete Event**              | `event delete INDEX`<br>e.g. `event delete 2`                                                                                               |
 | **Edit Event**                | `event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…`<br>e.g. `event edit 1 --name New Meeting` |
+| **Find Event**                | `event find KEYWORDS [MORE_KEYWORDS]...` or <br>e.g. `event find --name Conference` <br> `event find --status pending` <br/>                |
 | **List Events**               | `event list`                                                                                                                                |
 | **Link Contact to Event**     | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
 | **Unlink Contact from Event** | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
