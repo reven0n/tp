@@ -30,7 +30,7 @@ public class ContactShowCommand extends Command {
             + "Note: INDEX must be a positive integer within the size of the displayed contact list.";
 
     public static final String MESSAGE_CONTACT_SHOW_SUCCESS =
-            "Successfully shown %1$s event(s) that has the following contact:\n%2$s";
+            "Successfully shown %1$s event(s) that contain the following contact:\n%2$s";
 
     private final Index targetIndex;
 

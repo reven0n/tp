@@ -35,6 +35,15 @@ public class EventListPanel extends UiPart<Region> {
         this.participantsFn = participantsFn;
         prefixedList = new PrefixedList<>(eventList, heading);
         eventListView.setItems(prefixedList);
+
+        // Add a listener to clear the selection when the ListView loses focus
+        eventListView.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (!newVal) {
+                // If the ListView is no longer focused, clear the selection
+                eventListView.getSelectionModel().clearSelection();
+            }
+        });
+
         eventListView.setCellFactory(listView -> {
             EventListViewCell cell = new EventListViewCell();
             cell.prefWidthProperty().bind(listView.widthProperty().subtract(WIDTH_OFFSET));

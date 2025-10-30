@@ -30,10 +30,9 @@ public class EventRsvpCommand extends Command {
             + ": RSVP a contact to an event by their indexes.\n"
             + "The status can be either \"available\" or \"unavailable\"\n\n"
             + "Parameters:  "
-            + PREFIX_EVENT + " EVENT_INDEX " + PREFIX_CONTACT + " CONTACT_INDEX " + PREFIX_STATUS + " STATUS\n"
+            + PREFIX_EVENT + "EVENT_INDEX " + PREFIX_CONTACT + "CONTACT_INDEX " + PREFIX_STATUS + "STATUS\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
-            + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 2" + " " + PREFIX_STATUS + " "
-            + ParticipantStatus.AVAILABLE
+            + PREFIX_EVENT + "1 " + PREFIX_CONTACT + "2 " + PREFIX_STATUS + ParticipantStatus.AVAILABLE
             + "\n\nNote: EVENT_INDEX and CONTACT_INDEX must be a positive integers within the size of the displayed "
             + "event list and contact list respectively.";
 
