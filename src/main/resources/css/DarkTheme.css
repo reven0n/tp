@@ -264,6 +264,33 @@
     -fx-font-weight: 500;
 }
 
+#status {
+    -fx-font-family: "Inter Medium";
+}
+
+.event-status-pending #status {
+    -fx-text-fill: #FFA556;
+}
+
+.event-status-pending .icon_small {
+    -fx-fill: #FFA556;
+}
+
+.event-status-ongoing #status {
+    -fx-text-fill: #ADFF60;
+}
+
+.event-status-ongoing .icon_small {
+    -fx-fill: #ADFF60;
+}
+
+.event-status-done #status {
+    -fx-text-fill: #72F1FF;
+}
+
+.event-status-done .icon_small {
+    -fx-fill: #72F1FF;
+}
 
 #tags {
     -fx-hgap: 5;
