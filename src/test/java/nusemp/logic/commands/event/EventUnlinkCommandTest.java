@@ -120,7 +120,8 @@ public class EventUnlinkCommandTest {
 
         EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(validEventIndex);
 
-        assertCommandFailure(unlinkCommand, model, EventUnlinkCommand.MESSAGE_NO_CONTACTS_TO_UNLINK);
+        assertCommandFailure(unlinkCommand, model, String.format(EventUnlinkCommand.MESSAGE_NO_CONTACTS_TO_UNLINK,
+                model.getFilteredEventList().get(validEventIndex.getZeroBased()).getName()));
     }
 
     @Test
@@ -172,14 +173,14 @@ public class EventUnlinkCommandTest {
         String expected = EventUnlinkCommand.class.getCanonicalName()
                 + "{eventIndex=" + INDEX_FIRST_EVENT
                 + ", contactIndex=" + INDEX_FIRST_CONTACT
-                + ", unlinkAll=false" + "}";
+                + ", isUnlinkAll=false" + "}";
         assertEquals(expected, unlinkCommand.toString());
 
         EventUnlinkCommand unlinkAllCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT);
         String expectedAll = EventUnlinkCommand.class.getCanonicalName()
                 + "{eventIndex=" + INDEX_FIRST_EVENT
                 + ", contactIndex=null"
-                + ", unlinkAll=true" + "}";
+                + ", isUnlinkAll=true" + "}";
         assertEquals(expectedAll, unlinkAllCommand.toString());
     }
 }

@@ -27,16 +27,18 @@ public class EventLinkCommand extends Command {
     public static final String COMMAND_WORD = "link";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Links a contact or all filtered contacts to an event. "
+            + ": Links a contact or all filtered contacts to an event. \n\n"
             + "Parameters: "
-            + PREFIX_EVENT + " EVENT_INDEX (must be a positive integer) "
-            + PREFIX_CONTACT + " CONTACT_INDEX (must be a positive integer) or 'all'\n"
+            + PREFIX_EVENT + " EVENT_INDEX "
+            + PREFIX_CONTACT + " CONTACT_INDEX or 'all'\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " 2\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 "
-            + PREFIX_CONTACT + " all";
+            + PREFIX_CONTACT + " all\n\n"
+            + "Note: EVENT_INDEX and CONTACT_INDEX must be a positive integer within the size of the displayed "
+            + "event list and contact list respectively.";
 
     public static final String MESSAGE_SUCCESS = "Successfully linked contact \"%1$s\" to event \"%2$s\"";
     public static final String MESSAGE_SUCCESS_ALL = "Successfully linked %1$d contact(s) to event \"%2$s\". "
@@ -47,7 +49,7 @@ public class EventLinkCommand extends Command {
 
     private final Index eventIndex;
     private final Index contactIndex;
-    private final boolean linkAll;
+    private final boolean isLinkAll;
 
     /**
      * Creates an EventLinkCommand to link the specified {@code Contact}
@@ -61,7 +63,7 @@ public class EventLinkCommand extends Command {
         requireNonNull(contactIndex);
         this.eventIndex = eventIndex;
         this.contactIndex = contactIndex;
-        this.linkAll = false;
+        this.isLinkAll = false;
     }
 
     /**
@@ -74,7 +76,7 @@ public class EventLinkCommand extends Command {
         requireNonNull(eventIndex);
         this.eventIndex = eventIndex;
         this.contactIndex = null;
-        this.linkAll = true;
+        this.isLinkAll = true;
     }
 
     @Override
@@ -89,7 +91,7 @@ public class EventLinkCommand extends Command {
 
         Event eventToLink = lastShownEventList.get(eventIndex.getZeroBased());
 
-        if (linkAll) {
+        if (isLinkAll) {
             return executeLinkAll(model, eventToLink);
         } else {
             return executeLinkSingle(model, eventToLink);
@@ -171,11 +173,11 @@ public class EventLinkCommand extends Command {
 
         EventLinkCommand otherCommand = (EventLinkCommand) other;
 
-        if (linkAll != otherCommand.linkAll) {
+        if (isLinkAll != otherCommand.isLinkAll) {
             return false;
         }
 
-        if (linkAll) {
+        if (isLinkAll) {
             return eventIndex.equals(otherCommand.eventIndex);
         }
 
@@ -188,7 +190,7 @@ public class EventLinkCommand extends Command {
         return new ToStringBuilder(this)
                 .add("eventIndex", eventIndex)
                 .add("contactIndex", contactIndex)
-                .add("unlinkAll", linkAll)
+                .add("unlinkAll", isLinkAll)
                 .toString();
     }
 }

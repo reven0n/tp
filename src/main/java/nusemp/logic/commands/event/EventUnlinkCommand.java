@@ -26,24 +26,28 @@ public class EventUnlinkCommand extends Command {
     public static final String COMMAND_WORD = "unlink";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Unlinks contacts from an event identified by the event index.\n"
+            + ": Unlinks contacts from an event identified by the event index.\n\n"
             + "Parameters: "
-            + PREFIX_EVENT + " EVENT_INDEX (must be a positive integer) "
-            + PREFIX_CONTACT + " CONTACT_INDEX (must be a positive integer) or 'all'\n"
+            + PREFIX_EVENT + " EVENT_INDEX "
+            + PREFIX_CONTACT + " CONTACT_INDEX or 'all'\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 "
-            + PREFIX_CONTACT + " 2";
+            + PREFIX_CONTACT + " 2\n"
+            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
+            + PREFIX_EVENT + " 1 "
+            + PREFIX_CONTACT + " all\n\n"
+            + "Note: EVENT_INDEX and CONTACT_INDEX must be a positive integer within the size of the displayed "
+            + "event list and contact list respectively.";;
 
     public static final String MESSAGE_SUCCESS = "Successfully unlinked contact \"%1$s\" from event \"%2$s\"";
     public static final String MESSAGE_SUCCESS_ALL = "Successfully unlinked %1$d contact(s) from event \"%2$s\". "
             + "\nContacts unlinked: ";
-    public static final String MESSAGE_CONTACT_NOT_FOUND = "Error unlinking contact: contact \"%1$s\" not found "
-            + "in event \"%2$s\"";
-    public static final String MESSAGE_NO_CONTACTS_TO_UNLINK = "No contacts available to unlink";
+    public static final String MESSAGE_CONTACT_NOT_FOUND = "Contact \"%1$s\" is not a participant of event \"%2$s\"";
+    public static final String MESSAGE_NO_CONTACTS_TO_UNLINK = "No contacts available to unlink from event \"%1$s\"";
 
     private final Index eventIndex;
     private final Index contactIndex;
-    private final boolean unlinkAll;
+    private final boolean isUnlinkAll;
 
     /**
      * Creates an EventUnlinkCommand to unlink the specified contacts from an event
@@ -53,7 +57,7 @@ public class EventUnlinkCommand extends Command {
         requireNonNull(contactIndexes);
         this.eventIndex = eventIndex;
         this.contactIndex = contactIndexes;
-        this.unlinkAll = false;
+        this.isUnlinkAll = false;
     }
 
     /**
@@ -63,7 +67,7 @@ public class EventUnlinkCommand extends Command {
         requireNonNull(eventIndex);
         this.eventIndex = eventIndex;
         this.contactIndex = null;
-        this.unlinkAll = true;
+        this.isUnlinkAll = true;
     }
 
     @Override
@@ -79,7 +83,7 @@ public class EventUnlinkCommand extends Command {
 
         Event eventToEdit = lastShownEventList.get(eventIndex.getZeroBased());
 
-        if (unlinkAll) {
+        if (isUnlinkAll) {
             return executeUnlinkAll(model, eventToEdit);
         } else {
             return executeUnlinkSingle(model, eventToEdit);
@@ -116,7 +120,7 @@ public class EventUnlinkCommand extends Command {
         List<Contact> filteredContactList = model.getFilteredContactList();
 
         if (filteredContactList.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_CONTACTS_TO_UNLINK);
+            throw new CommandException(String.format(MESSAGE_NO_CONTACTS_TO_UNLINK, eventToUnlink.getName()));
         }
 
         List <String> unlinkedContacts = new ArrayList<>();
@@ -163,11 +167,11 @@ public class EventUnlinkCommand extends Command {
 
         EventUnlinkCommand otherCommand = (EventUnlinkCommand) other;
 
-        if (unlinkAll != otherCommand.unlinkAll) {
+        if (isUnlinkAll != otherCommand.isUnlinkAll) {
             return false;
         }
 
-        if (unlinkAll) {
+        if (isUnlinkAll) {
             return eventIndex.equals(otherCommand.eventIndex);
         }
 
@@ -180,7 +184,7 @@ public class EventUnlinkCommand extends Command {
         return new ToStringBuilder(this)
                 .add("eventIndex", eventIndex)
                 .add("contactIndex", contactIndex)
-                .add("unlinkAll", unlinkAll)
+                .add("isUnlinkAll", isUnlinkAll)
                 .toString();
     }
 }
