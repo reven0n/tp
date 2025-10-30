@@ -29,14 +29,15 @@ public class EventUnlinkCommand extends Command {
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
             + ": Unlinks contacts from an event identified by the event index.\n"
             + "Parameters: "
-            + PREFIX_EVENT + " EVENT_INDEX "
-            + PREFIX_CONTACT + " CONTACT_INDEX \n"
+            + PREFIX_EVENT + " EVENT_INDEX (must be a positive integer) "
+            + PREFIX_CONTACT + " CONTACT_INDEX (must be a positive integer) or 'all'\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " 2";
 
-    public static final String MESSAGE_SUCCESS = "Successfully unlinked contact from event:\n%1$s";
-    public static final String MESSAGE_SUCCESS_ALL = "Successfully unlinked %1$d contact(s) from event";
+    public static final String MESSAGE_SUCCESS = "Successfully unlinked contact: %1$s from event:%2$s";
+    public static final String MESSAGE_SUCCESS_ALL = "Successfully unlinked %1$d contact(s) from event %2$s. "
+            + "\nContacts unlinked: ";
     public static final String MESSAGE_CONTACT_NOT_FOUND = "Error unlinking contact: contact not found in event";
     public static final String MESSAGE_NO_CONTACTS_TO_UNLINK = "No contacts available to unlink";
 
@@ -104,7 +105,8 @@ public class EventUnlinkCommand extends Command {
         try {
             model.removeParticipant(contactToUnlink, eventToUnlink);
             model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, contactToUnlink.getName().toString()));
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    contactToUnlink.getName().toString(), eventToUnlink.getName().toString()));
         } catch (Exception e) {
             throw new CommandException("Error unlinking participant from event.");
         }
@@ -117,14 +119,14 @@ public class EventUnlinkCommand extends Command {
             throw new CommandException(MESSAGE_NO_CONTACTS_TO_UNLINK);
         }
 
-        int unlinkedCount = 0;
+        List <String> unlinkedContacts = new ArrayList<>();
         List<String> notLinkedContacts = new ArrayList<>();
 
         for (Contact contact : filteredContactList) {
             if (model.hasParticipant(contact, eventToUnlink)) {
                 try {
                     model.removeParticipant(contact, eventToUnlink);
-                    unlinkedCount++;
+                    unlinkedContacts.add(contact.getName().toString());
                 } catch (Exception e) {
                     // Continue with next contact if one fails
                 }
@@ -135,11 +137,12 @@ public class EventUnlinkCommand extends Command {
 
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
 
-        if (unlinkedCount == 0) {
+        if (unlinkedContacts.isEmpty()) {
             throw new CommandException("No contacts were unlinked from the event");
         }
 
-        String resultMessage = String.format(MESSAGE_SUCCESS_ALL, unlinkedCount);
+        String resultMessage = String.format(MESSAGE_SUCCESS_ALL, unlinkedContacts.size(), eventToUnlink.getName());
+        resultMessage += String.join(", ", unlinkedContacts);
         if (!notLinkedContacts.isEmpty()) {
             resultMessage += "\nSkipped contacts not linked: " + String.join(", ", notLinkedContacts);
         }

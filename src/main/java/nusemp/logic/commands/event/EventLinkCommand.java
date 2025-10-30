@@ -29,8 +29,8 @@ public class EventLinkCommand extends Command {
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
             + ": Links a contact or all filtered contacts to an event. "
             + "Parameters: "
-            + PREFIX_EVENT + " EVENT_INDEX "
-            + PREFIX_CONTACT + " CONTACT_INDEX or 'all'\n"
+            + PREFIX_EVENT + " EVENT_INDEX (must be a positive integer) "
+            + PREFIX_CONTACT + " CONTACT_INDEX (must be a positive integer) or 'all'\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " 2\n"
@@ -38,8 +38,9 @@ public class EventLinkCommand extends Command {
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " all";
 
-    public static final String MESSAGE_SUCCESS = "Successfully linked contact to event";
-    public static final String MESSAGE_SUCCESS_ALL = "Successfully linked %1$d contact(s) to event";
+    public static final String MESSAGE_SUCCESS = "Successfully linked contact: %1$s to event: %2$s";
+    public static final String MESSAGE_SUCCESS_ALL = "Successfully linked %1$d contact(s) to event %2$s. "
+            + "\nContacts linked: ";
     public static final String MESSAGE_DUPLICATE_PARTICIPANT =
             "Error linking event: contact with email %1$s is already linked to the event";
     public static final String MESSAGE_NO_CONTACTS_TO_LINK = "No contacts available to link";
@@ -113,7 +114,8 @@ public class EventLinkCommand extends Command {
         try {
             model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
             model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-            return new CommandResult(MESSAGE_SUCCESS);
+            return new CommandResult(String.format(MESSAGE_SUCCESS,
+                    contactToLink.getName(), eventToLink.getName()));
         } catch (Exception e) {
             throw new CommandException("Error linking participant to event.");
         }
@@ -126,27 +128,28 @@ public class EventLinkCommand extends Command {
             throw new CommandException(MESSAGE_NO_CONTACTS_TO_LINK);
         }
 
-        int linkedCount = 0;
+        List<String> linkedContacts = new ArrayList<>();
         List<String> skippedContacts = new ArrayList<>();
 
         for (Contact contact : filteredContactList) {
             if (!model.hasParticipant(contact, eventToLink)) {
                 try {
                     model.addParticipant(contact, eventToLink, ParticipantStatus.UNKNOWN);
-                    linkedCount++;
+                    linkedContacts.add(contact.getName().toString());
                 } catch (Exception e) {
-                    skippedContacts.add(contact.getEmail().toString());
+                    skippedContacts.add(contact.getName().toString());
                 }
             }
         }
 
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
 
-        if (linkedCount == 0) {
+        if (linkedContacts.isEmpty()) {
             throw new CommandException("All contacts are already linked to the event");
         }
 
-        String resultMessage = String.format(MESSAGE_SUCCESS_ALL, linkedCount);
+        String resultMessage = String.format(MESSAGE_SUCCESS_ALL, linkedContacts.size(), eventToLink.getName());
+        resultMessage += String.join(", ", linkedContacts);
         if (!skippedContacts.isEmpty()) {
             resultMessage += "\nSkipped contacts already linked: " + String.join(", ", skippedContacts);
         }
