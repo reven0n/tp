@@ -30,10 +30,7 @@ public class EventExportCommand extends Command {
             + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_STATUS + " STATUS]\n"
-            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 " + PREFIX_STATUS + " unknown";
-            + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n\n"
-            + "Parameters: INDEX\n"
-            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1\n\n"
+            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 " + PREFIX_STATUS + " unknown\n"
             + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
     public static final String MESSAGE_SUCCESS =
