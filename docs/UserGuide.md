@@ -727,7 +727,7 @@ Copies all contacts who are available from event #1.
 
 <box type="tip" seamless>
 
-**Why This is Helpful:**
+**Perfect For:**
 
 - Pasting into emails or messages
 - Sending reminders or updates
