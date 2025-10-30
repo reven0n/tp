@@ -10,8 +10,12 @@
     src: url('../fonts/Inter-Light.ttf');
 }
 
+@font-face {
+    src: url('../fonts/Inter-SemiBold.ttf');
+}
+
 .background {
-    -fx-background-color: derive(#f8f9fa, 20%);
+    -fx-background-color: derive(#f8f9fa, -8%);
     background-color: #ffffff; /* Used in the default.html file */
 }
 
@@ -39,13 +43,24 @@
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
-    -fx-background-color: derive(#f8f9fa, 20%);
+    -fx-background-color: derive(#f8f9fa, -8%);
+}
+
+.list-heading {
+    -fx-padding: 20 15 10 15;
+}
+
+.list-heading-text {
+    -fx-font-family: "Inter Semi Bold";
+    -fx-font-size: 20px;
 }
 
 .list-cell {
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(#f8f9fa, -8%);
+    -fx-border-width: 0;
 }
 
 .list-cell:filled:even {
@@ -53,21 +68,22 @@
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #eef1f4;
+    -fx-background-color: derive(#f8f9fa, -2%);
 }
 
-.list-cell:filled:selected {
-    -fx-background-color: #d4edfc;
+.list-cell #cardPane {
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
 }
 
 .list-cell:filled:selected #cardPane {
+    -fx-background-color: #d4edfc;
     -fx-border-color: #0056b3;
-    -fx-border-width: 1;
 }
 
 .list-cell:empty {
     /* Empty cells will not have alternating colours */
-    -fx-background: #e9ecef;
+    -fx-background: derive(#f8f9fa, -8%);
 }
 
 .list-cell .label {
@@ -93,17 +109,13 @@
 }
 
 .stack-pane {
-     -fx-background-color: derive(#f8f9fa, 20%);
-}
-
-.pane-with-border {
-     -fx-background-color: derive(#f8f9fa, 20%);
-     -fx-border-color: derive(#f8f9fa, -10%);
-     -fx-border-top-width: 1px;
+     -fx-background-color: derive(#f8f9fa, -8%);
 }
 
 .status-bar {
-    -fx-background-color: derive(#f8f9fa, -5%);
+    -fx-background-color: #f5f5f5;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: rgba(0, 0, 0, .12);
 }
 
 .status-bar .label {
@@ -115,17 +127,17 @@
 }
 
 .grid-pane {
-    -fx-background-color: derive(#f8f9fa, -10%);
-    -fx-border-color: derive(#f8f9fa, -10%);
+    -fx-background-color: derive(#f8f9fa, -8%);
+    -fx-border-color: derive(#f8f9fa, -8%);
     -fx-border-width: 1px;
 }
 
 .grid-pane .stack-pane {
-    -fx-background-color: derive(#f8f9fa, -10%);
+    -fx-background-color: derive(#f8f9fa, -8%);
 }
 
 .context-menu {
-    -fx-background-color: derive(#f8f9fa, -5%);
+    -fx-background-color: derive(#f8f9fa, -8%);
 }
 
 .context-menu .label {
@@ -191,7 +203,7 @@
 }
 
 .dialog-pane:header *.header-panel {
-    -fx-background-color: derive(#f8f9fa, -5%);
+    -fx-background-color: derive(#f8f9fa, -8%);
 }
 
 .dialog-pane:header *.header-panel *.label {
@@ -226,10 +238,6 @@
     -fx-border-width: 0;
 }
 
-#filterField, #contactListPanel, #contactWebpage {
-    -fx-effect: innershadow(gaussian, #cccccc, 10, 0, 0, 0);
-}
-
 #people, #events {
     -fx-hgap: 5;
     -fx-vgap: 5;
@@ -245,7 +253,33 @@
     -fx-font-weight: 500;
 }
 
+#status {
+    -fx-font-family: "Inter Medium";
+}
 
+.event-status-pending #status {
+    -fx-text-fill: #DA6600;
+}
+
+.event-status-pending .icon_small {
+    -fx-fill: #DA6600;
+}
+
+.event-status-ongoing #status {
+    -fx-text-fill: #4EA200;
+}
+
+.event-status-ongoing .icon_small {
+    -fx-fill: #4EA200;
+}
+
+.event-status-done #status {
+    -fx-text-fill: #0095A6;
+}
+
+.event-status-done .icon_small {
+    -fx-fill: #0095A6;
+}
 
 #tags {
     -fx-hgap: 5;
@@ -256,7 +290,7 @@
     -fx-text-fill: #000000;
     -fx-background-color: #ffffff;
     -fx-background-radius: 2 10 10 10;
-    -fx-border: 0.5;
+    -fx-border-width: 0.5;
     -fx-border-color: rgba(0, 0, 0, .12);
     -fx-border-radius: 2 10 10 10;
     -fx-padding: 3 6;
@@ -266,6 +300,8 @@
 /* Sidebar background */
 #sidebar {
     -fx-background-color: #fff;
+    -fx-border-width: 0 1 0 0;
+    -fx-border-color: rgba(0, 0, 0, .12);
 }
 
 /* Sidebar buttons */
@@ -335,7 +371,7 @@
     -fx-background-color: #ffffff;
     -fx-background-radius: 8 8 0 0;
     -fx-border-radius: 8 8 0 0;
-    -fx-border: 1 1 0 1;
+    -fx-border-width: 1 1 0 1;
     -fx-border-color: rgba(0, 0, 0, 0.12);
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 50, 0, 0, 5);
     -fx-padding: 0;

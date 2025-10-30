@@ -31,7 +31,7 @@ class EventTest {
         tags.add(new Tag("Music"));
         tags.add(new Tag("Networking"));
 
-        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.STARTING, tags);
+        Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS, EventStatus.PENDING, tags);
         assertEquals(tags, event.getTags());
     }
 
@@ -174,18 +174,18 @@ class EventTest {
     @Test
     public void constructor_withoutStatus_defaultsToStarting() {
         Event event = new Event(VALID_NAME, VALID_DATE, VALID_ADDRESS);
-        assertEquals(EventStatus.STARTING, event.getStatus());
+        assertEquals(EventStatus.PENDING, event.getStatus());
     }
 
     @Test
     public void getStatus_validStatus_returnsCorrectStatus() {
-        Event startingEvent = new EventBuilder().withStatus(EventStatus.STARTING).build();
+        Event startingEvent = new EventBuilder().withStatus(EventStatus.PENDING).build();
         Event ongoingEvent = new EventBuilder().withStatus(EventStatus.ONGOING).build();
-        Event closedEvent = new EventBuilder().withStatus(EventStatus.CLOSED).build();
+        Event closedEvent = new EventBuilder().withStatus(EventStatus.DONE).build();
 
-        assertEquals(EventStatus.STARTING, startingEvent.getStatus());
+        assertEquals(EventStatus.PENDING, startingEvent.getStatus());
         assertEquals(EventStatus.ONGOING, ongoingEvent.getStatus());
-        assertEquals(EventStatus.CLOSED, closedEvent.getStatus());
+        assertEquals(EventStatus.DONE, closedEvent.getStatus());
     }
 
     @Test
@@ -198,7 +198,7 @@ class EventTest {
 
     @Test
     public void equals_differentStatus_returnsFalse() {
-        Event event1 = new EventBuilder().withStatus(EventStatus.STARTING).build();
+        Event event1 = new EventBuilder().withStatus(EventStatus.PENDING).build();
         Event event2 = new EventBuilder().withStatus(EventStatus.ONGOING).build();
 
         assertFalse(event1.equals(event2));

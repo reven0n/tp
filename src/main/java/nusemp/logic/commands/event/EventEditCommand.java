@@ -41,8 +41,8 @@ public class EventEditCommand extends Command {
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
             + ": Edits the details of the event identified "
             + "by the index number used in the displayed event list. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Existing values will be overwritten by the input values.\n\n"
+            + "Parameters: INDEX "
             + "[" + PREFIX_NAME + " NAME] "
             + "[" + PREFIX_DATE + " DATE] "
             + "[" + PREFIX_ADDRESS + " ADDRESS] "
@@ -50,13 +50,14 @@ public class EventEditCommand extends Command {
             + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 "
             + PREFIX_NAME + " Annual Meeting "
-            + PREFIX_STATUS + " ongoing";
+            + PREFIX_STATUS + " ongoing\n\n"
+            + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Successfully edited event:\n%1$s";
     public static final String MESSAGE_NOT_EDITED =
             "Error editing event: at least one field to edit must be provided";
     public static final String MESSAGE_DUPLICATE_EVENT =
-            "Error editing event: event with name \"%1$s\" already exists";
+            "Error editing event: event name \"%1$s\" already exists";
 
     private final Index index;
     private final EditEventDescriptor editEventDescriptor;

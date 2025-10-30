@@ -6,12 +6,12 @@ import java.util.Arrays;
  * Represents the status of an Event.
  */
 public enum EventStatus {
-    STARTING,
+    PENDING,
     ONGOING,
-    CLOSED;
+    DONE;
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Event status must be one of: STARTING, ONGOING, CLOSED (case-insensitive)";
+            "Event status must be one of: PENDING, ONGOING, DONE (case-insensitive)";
 
     /**
      * Returns the lowercase string representation of the status.
@@ -19,6 +19,17 @@ public enum EventStatus {
     @Override
     public String toString() {
         return name().toLowerCase();
+    }
+
+    /**
+     * Returns the capitalized string representation of the status,
+     * i.e. Pending, Ongoing, Done
+     *
+     * @return Capitalized string of the status.
+     */
+    public String toCapitalizedString() {
+        String lower = name().toLowerCase();
+        return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
     }
 
     /**

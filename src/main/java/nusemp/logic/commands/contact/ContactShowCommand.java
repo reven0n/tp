@@ -25,11 +25,12 @@ public class ContactShowCommand extends Command {
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
             + ": Shows the events that the contact is part of. "
             + "The contact is identified by the index number used in the displayed contact list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX\n"
+            + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1\n\n"
+            + "Note: INDEX must be a positive integer within the size of the displayed contact list.";
 
     public static final String MESSAGE_CONTACT_SHOW_SUCCESS =
-            "Successfully shown %1$s event(s) that has the contact:\n%2$s";
+            "Successfully shown %1$s event(s) that has the following contact:\n%2$s";
 
     private final Index targetIndex;
 
@@ -48,8 +49,11 @@ public class ContactShowCommand extends Command {
 
         Contact targetContact = lastShownList.get(targetIndex.getZeroBased());
         model.updateFilteredEventList(event -> model.hasParticipant(targetContact, event));
-        return new CommandResult(String.format(MESSAGE_CONTACT_SHOW_SUCCESS,
-                model.getFilteredEventList().size(), Messages.format(targetContact)));
+        int size = model.getFilteredEventList().size();
+        String feedbackToUser = String.format(MESSAGE_CONTACT_SHOW_SUCCESS, size, Messages.format(targetContact));
+        String heading = String.format(size == 0 ? Messages.HEADING_EVENTS_FROM_CONTACT_NONE
+                : Messages.HEADING_EVENTS_FROM_CONTACT, targetContact.getName().value);
+        return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 
     @Override

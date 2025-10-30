@@ -7,9 +7,9 @@ import static nusemp.logic.commands.CommandTestUtil.EVENT_DATE_DESC_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_DATE_DESC_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_NAME_DESC_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_NAME_DESC_MEETING;
-import static nusemp.logic.commands.CommandTestUtil.EVENT_STATUS_DESC_CLOSED;
+import static nusemp.logic.commands.CommandTestUtil.EVENT_STATUS_DESC_DONE;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_STATUS_DESC_ONGOING;
-import static nusemp.logic.commands.CommandTestUtil.EVENT_STATUS_DESC_STARTING;
+import static nusemp.logic.commands.CommandTestUtil.EVENT_STATUS_DESC_PENDING;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_TAG_DESC_IMPORTANT;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_TAG_DESC_URGENT;
 import static nusemp.logic.commands.CommandTestUtil.INVALID_EVENT_DATE_DESC1;
@@ -20,9 +20,9 @@ import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_ADDRESS_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_DATE_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_DATE_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_NAME_MEETING;
-import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_CLOSED;
+import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_DONE;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_ONGOING;
-import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_STARTING;
+import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_PENDING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_TAG_IMPORTANT;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_TAG_URGENT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_ADDRESS;
@@ -231,11 +231,11 @@ public class EventEditCommandParserTest {
 
     @Test
     public void parse_statusFieldSpecified_success() {
-        // status STARTING
+        // status PENDING
         Index targetIndex = INDEX_THIRD_EVENT;
-        String userInput = targetIndex.getOneBased() + EVENT_STATUS_DESC_STARTING;
+        String userInput = targetIndex.getOneBased() + EVENT_STATUS_DESC_PENDING;
         EditEventDescriptor descriptor = new EditEventDescriptorBuilder()
-                .withStatus(VALID_EVENT_STATUS_STARTING)
+                .withStatus(VALID_EVENT_STATUS_PENDING)
                 .build();
         EventEditCommand expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -248,10 +248,10 @@ public class EventEditCommandParserTest {
         expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
-        // status CLOSED
-        userInput = targetIndex.getOneBased() + EVENT_STATUS_DESC_CLOSED;
+        // status DONE
+        userInput = targetIndex.getOneBased() + EVENT_STATUS_DESC_DONE;
         descriptor = new EditEventDescriptorBuilder()
-                .withStatus(VALID_EVENT_STATUS_CLOSED)
+                .withStatus(VALID_EVENT_STATUS_DONE)
                 .build();
         expectedCommand = new EventEditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -281,7 +281,7 @@ public class EventEditCommandParserTest {
     @Test
     public void parse_duplicateStatusPrefix_failure() {
         Index targetIndex = INDEX_FIRST_EVENT;
-        String userInput = targetIndex.getOneBased() + EVENT_STATUS_DESC_STARTING + EVENT_STATUS_DESC_ONGOING;
+        String userInput = targetIndex.getOneBased() + EVENT_STATUS_DESC_PENDING + EVENT_STATUS_DESC_ONGOING;
 
         assertParseFailure(parser, userInput, Messages.getErrorMessageForDuplicatePrefixes(PREFIX_STATUS));
     }

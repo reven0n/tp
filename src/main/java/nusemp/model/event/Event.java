@@ -44,10 +44,10 @@ public class Event {
     }
 
     /**
-     * Convenience constructor without participants or tags, with default status STARTING.
+     * Convenience constructor without participants or tags, with default status PENDING.
      */
     public Event(Name name, Date date, Address address) {
-        this(name, date, address, EventStatus.STARTING, new HashSet<>());
+        this(name, date, address, EventStatus.PENDING, new HashSet<>());
     }
 
     private Event(Name name, Date date, Address address, EventStatus status, Set<Tag> tags,
