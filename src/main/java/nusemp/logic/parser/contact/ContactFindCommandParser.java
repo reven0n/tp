@@ -17,13 +17,13 @@ import nusemp.logic.parser.ArgumentMultimap;
 import nusemp.logic.parser.ArgumentTokenizer;
 import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.exceptions.ParseException;
-import nusemp.model.contact.AddressContainsKeywordsPredicate;
+import nusemp.model.contact.ContactAddressContainsKeywordsPredicate;
 import nusemp.model.contact.Contact;
 import nusemp.model.contact.ContactMatchesAllPredicates;
-import nusemp.model.contact.EmailContainsKeywordsPredicate;
-import nusemp.model.contact.NameContainsKeywordsPredicate;
-import nusemp.model.contact.PhoneContainsKeywordsPredicate;
-import nusemp.model.contact.TagContainsKeywordsPredicate;
+import nusemp.model.contact.ContactEmailContainsKeywordsPredicate;
+import nusemp.model.contact.ContactNameContainsKeywordsPredicate;
+import nusemp.model.contact.ContactPhoneContainsKeywordsPredicate;
+import nusemp.model.contact.ContactTagContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new ContactFindCommand object
@@ -57,7 +57,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
         if (!hasPrefixes) {
             // Backward compatibility: treat input as name keywords
             String[] nameKeywords = trimmedArgs.split("\\s+");
-            return new ContactFindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            return new ContactFindCommand(new ContactNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
         }
 
         // Build list of predicates based on which flags are present
@@ -67,7 +67,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String nameArgs = argMultimap.getValue(PREFIX_NAME).get();
             if (!nameArgs.isEmpty()) {
                 String[] nameKeywords = nameArgs.split("\\s+");
-                predicates.add(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+                predicates.add(new ContactNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
             }
         }
 
@@ -75,7 +75,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String emailArgs = argMultimap.getValue(PREFIX_EMAIL).get();
             if (!emailArgs.isEmpty()) {
                 String[] emailKeywords = emailArgs.split("\\s+");
-                predicates.add(new EmailContainsKeywordsPredicate(Arrays.asList(emailKeywords)));
+                predicates.add(new ContactEmailContainsKeywordsPredicate(Arrays.asList(emailKeywords)));
             }
         }
 
@@ -83,7 +83,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String phoneArgs = argMultimap.getValue(PREFIX_PHONE).get();
             if (!phoneArgs.isEmpty()) {
                 String[] phoneKeywords = phoneArgs.split("\\s+");
-                predicates.add(new PhoneContainsKeywordsPredicate(Arrays.asList(phoneKeywords)));
+                predicates.add(new ContactPhoneContainsKeywordsPredicate(Arrays.asList(phoneKeywords)));
             }
         }
 
@@ -91,7 +91,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String addressArgs = argMultimap.getValue(PREFIX_ADDRESS).get();
             if (!addressArgs.isEmpty()) {
                 String[] addressKeywords = addressArgs.split("\\s+");
-                predicates.add(new AddressContainsKeywordsPredicate(Arrays.asList(addressKeywords)));
+                predicates.add(new ContactAddressContainsKeywordsPredicate(Arrays.asList(addressKeywords)));
             }
         }
 
@@ -99,7 +99,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String tagArgs = argMultimap.getValue(PREFIX_TAG).get();
             if (!tagArgs.isEmpty()) {
                 String[] tagKeywords = tagArgs.split("\\s+");
-                predicates.add(new TagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
+                predicates.add(new ContactTagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
             }
         }
 

@@ -8,10 +8,10 @@ import nusemp.commons.util.ToStringBuilder;
 /**
  * Tests that a {@code Contact}'s {@code Address} matches any of the keywords given.
  */
-public class AddressContainsKeywordsPredicate implements Predicate<Contact> {
+public class ContactAddressContainsKeywordsPredicate implements Predicate<Contact> {
     private final List<String> keywords;
 
-    public AddressContainsKeywordsPredicate(List<String> keywords) {
+    public ContactAddressContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -28,12 +28,12 @@ public class AddressContainsKeywordsPredicate implements Predicate<Contact> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof AddressContainsKeywordsPredicate)) {
+        if (!(other instanceof ContactAddressContainsKeywordsPredicate)) {
             return false;
         }
 
-        AddressContainsKeywordsPredicate otherAddressContainsKeywordsPredicate =
-                (AddressContainsKeywordsPredicate) other;
+        ContactAddressContainsKeywordsPredicate otherAddressContainsKeywordsPredicate =
+                (ContactAddressContainsKeywordsPredicate) other;
         return keywords.equals(otherAddressContainsKeywordsPredicate.keywords);
     }
 

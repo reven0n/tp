@@ -35,7 +35,7 @@ import nusemp.logic.commands.event.EventUnlinkCommand;
 import nusemp.logic.parser.event.EventDeleteCommandParser;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.Contact;
-import nusemp.model.contact.NameContainsKeywordsPredicate;
+import nusemp.model.contact.ContactNameContainsKeywordsPredicate;
 import nusemp.model.event.Event;
 import nusemp.testutil.ContactBuilder;
 import nusemp.testutil.ContactUtil;
@@ -104,7 +104,7 @@ public class AppParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         ContactFindCommand command = (ContactFindCommand) parser.parseCommand(CommandType.CONTACT + " "
                 + ContactFindCommand.COMMAND_WORD + " " + String.join(" ", keywords));
-        assertEquals(new ContactFindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new ContactFindCommand(new ContactNameContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test

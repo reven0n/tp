@@ -10,9 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import nusemp.logic.commands.contact.ContactFindCommand;
 import nusemp.model.contact.ContactMatchesAllPredicates;
-import nusemp.model.contact.EmailContainsKeywordsPredicate;
-import nusemp.model.contact.NameContainsKeywordsPredicate;
-import nusemp.model.contact.TagContainsKeywordsPredicate;
+import nusemp.model.contact.ContactEmailContainsKeywordsPredicate;
+import nusemp.model.contact.ContactNameContainsKeywordsPredicate;
+import nusemp.model.contact.ContactTagContainsKeywordsPredicate;
 
 public class ContactFindCommandParserTest {
 
@@ -28,7 +28,7 @@ public class ContactFindCommandParserTest {
     public void parse_validArgs_returnsFindCommand() {
         // no leading and trailing whitespaces
         ContactFindCommand expectedContactFindCommand =
-                new ContactFindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+                new ContactFindCommand(new ContactNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
         assertParseSuccess(parser, "Alice Bob", expectedContactFindCommand);
 
         // multiple whitespaces between keywords
@@ -38,21 +38,21 @@ public class ContactFindCommandParserTest {
     @Test
     public void parse_validNameFlag_returnsFindCommand() {
         ContactFindCommand expectedContactFindCommand =
-                new ContactFindCommand(new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
+                new ContactFindCommand(new ContactNameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob")));
         assertParseSuccess(parser, " --name Alice Bob", expectedContactFindCommand);
     }
 
     @Test
     public void parse_validEmailFlag_returnsFindCommand() {
         ContactFindCommand expectedContactFindCommand =
-                new ContactFindCommand(new EmailContainsKeywordsPredicate(Arrays.asList("alice", "gmail")));
+                new ContactFindCommand(new ContactEmailContainsKeywordsPredicate(Arrays.asList("alice", "gmail")));
         assertParseSuccess(parser, " --email alice gmail", expectedContactFindCommand);
     }
 
     @Test
     public void parse_validTagFlag_returnsFindCommand() {
         ContactFindCommand expectedContactFindCommand =
-                new ContactFindCommand(new TagContainsKeywordsPredicate(Arrays.asList("friend", "colleague")));
+                new ContactFindCommand(new ContactTagContainsKeywordsPredicate(Arrays.asList("friend", "colleague")));
         assertParseSuccess(parser, " --tag friend colleague", expectedContactFindCommand);
     }
 
@@ -60,9 +60,9 @@ public class ContactFindCommandParserTest {
     public void parse_multipleFlags_returnsFindCommand() {
         ContactFindCommand expectedContactFindCommand =
                 new ContactFindCommand(new ContactMatchesAllPredicates(Arrays.asList(
-                        new NameContainsKeywordsPredicate(Arrays.asList("Alice")),
-                        new EmailContainsKeywordsPredicate(Arrays.asList("gmail")),
-                        new TagContainsKeywordsPredicate(Arrays.asList("friend"))
+                        new ContactNameContainsKeywordsPredicate(Arrays.asList("Alice")),
+                        new ContactEmailContainsKeywordsPredicate(Arrays.asList("gmail")),
+                        new ContactTagContainsKeywordsPredicate(Arrays.asList("friend"))
                 )));
         assertParseSuccess(parser, " --name Alice --email gmail --tag friend", expectedContactFindCommand);
     }
