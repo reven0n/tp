@@ -43,14 +43,14 @@ public class EventEditCommand extends Command {
             + "by the index number used in the displayed event list. "
             + "Existing values will be overwritten by the input values.\n\n"
             + "Parameters: INDEX "
-            + "[" + PREFIX_NAME + " NAME] "
-            + "[" + PREFIX_DATE + " DATE] "
-            + "[" + PREFIX_ADDRESS + " ADDRESS] "
-            + "[" + PREFIX_STATUS + " STATUS] "
-            + "[" + PREFIX_TAG + " TAG]...\n"
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_DATE + "DATE] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_STATUS + "STATUS] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + " Annual Meeting "
-            + PREFIX_STATUS + " ongoing\n\n"
+            + PREFIX_NAME + "Annual Meeting "
+            + PREFIX_STATUS + "ongoing\n\n"
             + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
     public static final String MESSAGE_EDIT_EVENT_SUCCESS = "Successfully edited event:\n%1$s";

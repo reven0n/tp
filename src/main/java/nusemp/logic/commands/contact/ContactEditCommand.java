@@ -43,14 +43,14 @@ public class ContactEditCommand extends Command {
             + "by the index number used in the displayed contact list. "
             + "Existing values will be overwritten by the input values.\n\n"
             + "Parameters: INDEX "
-            + "[" + PREFIX_NAME + " NAME] "
-            + "[" + PREFIX_EMAIL + " EMAIL] "
-            + "[" + PREFIX_PHONE + " PHONE] "
-            + "[" + PREFIX_ADDRESS + " ADDRESS] "
-            + "[" + PREFIX_TAG + " TAG]...\n"
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1 "
-            + PREFIX_EMAIL + " johndoe@example.com "
-            + PREFIX_PHONE + " 91234567\n\n"
+            + PREFIX_EMAIL + "johndoe@example.com "
+            + PREFIX_PHONE + "91234567\n\n"
             + "Note: INDEX must be a positive integer within the size of the displayed contact list.";
 
     public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Successfully edited contact:\n%1$s";
