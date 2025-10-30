@@ -139,7 +139,8 @@ The Commons component provides shared utilities:
 
 ### 2.3 Component Interactions
 
-<puml src="diagrams/ComponentInteractionSequenceDiagram.puml" width="600" alt="Component Interaction Sequence Diagram"/>
+[Component Interaction Sequence Diagram placeholder]
+
 The components interact through well-defined interfaces:
 
 - UI calls Logic to execute commands
