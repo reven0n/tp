@@ -1,0 +1,87 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":AppData" as AppData MODEL_COLOR
+participant ":ParticipantMap" as ParticipantMap MODEL_COLOR
+participant "p:Participant" as Participant MODEL_COLOR
+participant ":UniqueContactList" as UniqueContactList MODEL_COLOR
+participant ":UniqueEventList" as UniqueEventList MODEL_COLOR
+end box
+
+box Storage STORAGE_COLOR_T1
+participant ":Storage" as Storage STORAGE_COLOR
+end box
+
+[-> LogicManager : execute("event link -e 1 -c 2")
+activate LogicManager
+
+LogicManager -> Model : getFilteredEventList()
+activate Model
+Model --> LogicManager : eventList
+deactivate Model
+
+LogicManager -> Model : getFilteredContactList()
+activate Model
+Model --> LogicManager : contactList
+deactivate Model
+
+LogicManager -> Model : hasParticipant(contact, event)
+activate Model
+Model -> AppData : hasParticipant(contact, event)
+activate AppData
+AppData -> ParticipantMap : hasParticipant(contact, event)
+activate ParticipantMap
+ParticipantMap --> AppData : false
+deactivate ParticipantMap
+AppData --> Model : false
+deactivate AppData
+Model --> LogicManager : false
+deactivate Model
+
+LogicManager -> Model : addParticipant(contact, event, UNKNOWN)
+activate Model
+Model -> AppData : addParticipant(contact, event, UNKNOWN)
+activate AppData
+
+AppData -> ParticipantMap : addParticipant(contact, event, UNKNOWN)
+activate ParticipantMap
+
+create Participant
+ParticipantMap -> Participant
+activate Participant
+Participant --> ParticipantMap
+deactivate Participant
+
+ParticipantMap --> AppData : p
+deactivate ParticipantMap
+
+AppData -> UniqueContactList : setContact(contact, invalidatedContact)
+activate UniqueContactList
+UniqueContactList --> AppData
+deactivate UniqueContactList
+
+AppData -> UniqueEventList : setEvent(event, invalidatedEvent)
+activate UniqueEventList
+UniqueEventList --> AppData
+deactivate UniqueEventList
+
+AppData --> Model
+deactivate AppData
+Model --> LogicManager
+deactivate Model
+
+LogicManager -> Storage : saveAppData(appData)
+activate Storage
+Storage --> LogicManager
+deactivate Storage
+
+[<-- LogicManager : CommandResult
+deactivate LogicManager
+@enduml
