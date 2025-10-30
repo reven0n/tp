@@ -190,9 +190,9 @@ public class AppData implements ReadOnlyAppData {
     }
 
     /**
-     * Refreshes the given contact in the contact list.
+     * Refreshes the given event in the event list.
      * <p>
-     * Note: This is a workaround for event changes not being reflected in the contact list.
+     * Note: This is a workaround for contact changes not being reflected in the event list.
      */
     private void refreshEvent(Event event) {
         events.setEvent(event, event.getInvalidatedEvent());
@@ -265,6 +265,7 @@ public class AppData implements ReadOnlyAppData {
      *         an empty list if the contact is not associated with any events
      * @throws NullPointerException if {@code contact} is {@code null}
      */
+    @Override
     public List<Participant> getParticipants(Contact contact) {
         requireNonNull(contact);
         return participantMap.getParticipants(contact);
@@ -278,6 +279,7 @@ public class AppData implements ReadOnlyAppData {
      *         an empty list if no participants are associated with the event
      * @throws NullPointerException if {@code event} is {@code null}
      */
+    @Override
     public List<Participant> getParticipants(Event event) {
         requireNonNull(event);
         return participantMap.getParticipants(event);

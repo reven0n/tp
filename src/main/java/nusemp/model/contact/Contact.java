@@ -4,18 +4,15 @@ import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 import nusemp.commons.util.ToStringBuilder;
-import nusemp.model.ReadOnlyAppData;
 import nusemp.model.fields.Address;
 import nusemp.model.fields.Email;
 import nusemp.model.fields.Name;
 import nusemp.model.fields.Phone;
 import nusemp.model.fields.Tag;
-import nusemp.model.participant.Participant;
 
 /**
  * Represents a Contact.
@@ -93,14 +90,6 @@ public class Contact {
 
     public boolean hasTags() {
         return !tags.isEmpty();
-    }
-
-    /**
-     * Returns an immutable event list, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public List<Participant> getParticipants(ReadOnlyAppData appData) {
-        return List.of();
     }
 
     /**
