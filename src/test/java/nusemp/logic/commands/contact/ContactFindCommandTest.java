@@ -21,8 +21,8 @@ import org.junit.jupiter.api.Test;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
-import nusemp.model.contact.ContactMatchesAllPredicates;
 import nusemp.model.contact.ContactEmailContainsKeywordsPredicate;
+import nusemp.model.contact.ContactMatchesAllPredicates;
 import nusemp.model.contact.ContactNameContainsKeywordsPredicate;
 import nusemp.model.contact.ContactTagContainsKeywordsPredicate;
 
@@ -120,7 +120,8 @@ public class ContactFindCommandTest {
 
     @Test
     public void toStringMethod() {
-        ContactNameContainsKeywordsPredicate predicate = new ContactNameContainsKeywordsPredicate(Arrays.asList("keyword"));
+        ContactNameContainsKeywordsPredicate predicate =
+            new ContactNameContainsKeywordsPredicate(Arrays.asList("keyword"));
         ContactFindCommand contactFindCommand = new ContactFindCommand(predicate);
         String expected = ContactFindCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, contactFindCommand.toString());

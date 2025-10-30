@@ -9,8 +9,8 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.commands.contact.ContactFindCommand;
-import nusemp.model.contact.ContactMatchesAllPredicates;
 import nusemp.model.contact.ContactEmailContainsKeywordsPredicate;
+import nusemp.model.contact.ContactMatchesAllPredicates;
 import nusemp.model.contact.ContactNameContainsKeywordsPredicate;
 import nusemp.model.contact.ContactTagContainsKeywordsPredicate;
 
@@ -20,7 +20,8 @@ public class ContactFindCommandParserTest {
 
     @Test
     public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+        assertParseFailure(parser, "     ",
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                 ContactFindCommand.MESSAGE_USAGE));
     }
 
