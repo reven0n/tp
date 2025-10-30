@@ -53,7 +53,7 @@ public class SampleDataUtil {
             new Event(new Name("Birthday Party"), new Date("29-10-2025 12:00"),
                     new Address("123 Party Ave")),
             new Event(new Name("Conference"), new Date("30-10-2025 10:00"),
-                    new Address("Convention Center"), EventStatus.CLOSED,
+                    new Address("Convention Center"), EventStatus.DONE,
                     getTagSet("NUS"))
         };
     }

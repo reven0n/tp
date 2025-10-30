@@ -17,6 +17,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import nusemp.commons.core.GuiSettings;
@@ -283,6 +284,11 @@ class EventAddCommandTest {
         public void addEvent(Event event) {
             requireNonNull(event);
             eventsAdded.add(event);
+        }
+
+        @Override
+        public ObservableList<Event> getFilteredEventList() {
+            return FXCollections.observableList(eventsAdded);
         }
     }
 }

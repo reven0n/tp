@@ -50,9 +50,9 @@ public class CommandTestUtil {
     public static final String VALID_EVENT_DATE_CONFERENCE = "29-02-2024 09:00";
     public static final String VALID_EVENT_ADDRESS_MEETING = "Meeting Room A";
     public static final String VALID_EVENT_ADDRESS_CONFERENCE = "Conference Hall B";
-    public static final String VALID_EVENT_STATUS_STARTING = "STARTING";
+    public static final String VALID_EVENT_STATUS_PENDING = "PENDING";
     public static final String VALID_EVENT_STATUS_ONGOING = "ONGOING";
-    public static final String VALID_EVENT_STATUS_CLOSED = "CLOSED";
+    public static final String VALID_EVENT_STATUS_DONE = "DONE";
     public static final String VALID_EVENT_TAG_URGENT = "urgent";
     public static final String VALID_EVENT_TAG_IMPORTANT = "important";
 
@@ -75,9 +75,9 @@ public class CommandTestUtil {
     public static final String EVENT_DATE_DESC_CONFERENCE = " " + PREFIX_DATE + VALID_EVENT_DATE_CONFERENCE;
     public static final String EVENT_ADDRESS_DESC_MEETING = " " + PREFIX_ADDRESS + VALID_EVENT_ADDRESS_MEETING;
     public static final String EVENT_ADDRESS_DESC_CONFERENCE = " " + PREFIX_ADDRESS + VALID_EVENT_ADDRESS_CONFERENCE;
-    public static final String EVENT_STATUS_DESC_STARTING = " " + PREFIX_STATUS + VALID_EVENT_STATUS_STARTING;
+    public static final String EVENT_STATUS_DESC_PENDING = " " + PREFIX_STATUS + VALID_EVENT_STATUS_PENDING;
     public static final String EVENT_STATUS_DESC_ONGOING = " " + PREFIX_STATUS + VALID_EVENT_STATUS_ONGOING;
-    public static final String EVENT_STATUS_DESC_CLOSED = " " + PREFIX_STATUS + VALID_EVENT_STATUS_CLOSED;
+    public static final String EVENT_STATUS_DESC_DONE = " " + PREFIX_STATUS + VALID_EVENT_STATUS_DONE;
     public static final String EVENT_TAG_DESC_MUSIC = " " + PREFIX_TAG + "Music";
     public static final String EVENT_TAG_DESC_NETWORKING = " " + PREFIX_TAG + "Networking";
     public static final String EVENT_TAG_DESC_URGENT = " " + PREFIX_TAG + VALID_EVENT_TAG_URGENT;
@@ -121,7 +121,7 @@ public class CommandTestUtil {
                 .withName(VALID_EVENT_NAME_MEETING)
                 .withDate(VALID_EVENT_DATE_MEETING)
                 .withAddress(VALID_EVENT_ADDRESS_MEETING)
-                .withStatus(VALID_EVENT_STATUS_STARTING)
+                .withStatus(VALID_EVENT_STATUS_PENDING)
                 .withTags(VALID_EVENT_TAG_IMPORTANT)
                 .build();
         DESC_EVENT_CONFERENCE = new EditEventDescriptorBuilder()
@@ -150,13 +150,21 @@ public class CommandTestUtil {
     }
 
     /**
-     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}
-     * that takes a string {@code expectedMessage}.
+     * Executes the given {@code command}, confirms that <br>
+     * - the feedback from the returned {@link CommandResult} matches {@code expectedMessage} <br>
+     * - the {@code actualModel} matches {@code expectedModel}
+     * <p>
+     * Note that the other fields of the {@link CommandResult} are not checked by this method.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
             Model expectedModel) {
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage);
-        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
+        try {
+            CommandResult result = command.execute(actualModel);
+            assertEquals(expectedMessage, result.getFeedbackToUser());
+            assertEquals(expectedModel, actualModel);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
     }
 
     /**
