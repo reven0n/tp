@@ -109,20 +109,20 @@ The NUS Event Mailer Pro interface is designed to be intuitive and efficient for
 
 #### Main Interface Components
 
-| #     | Description                                                    |
-|-------|----------------------------------------------------------------|
-| **1** | Contact view button                                            |
-| **2** | Event view button                                              |
-| **3** | Help button, opens the user guide in your browser.             |
-| **4** | Button to switch between light and dark mode.                  |
-| **5** | Terminal window button (Alternatively, open with CTRL-T).      |
-| **6** | Contact tags                                                   |
-| **7** | Contact's linked events (Attending)                            |
-| **8** | Contact's linked events (Not Attending)                        |
-| **9** | Event's status (Pending/Ongoing/Closed)                        |
-| **10**| Event's linked contacts (Attending)                            |
-| **11**| Event's linked contacts (Not Attending)                        |
-| **12**| Quick export button (Exports emails of all attending contacts) |
+| #      | Description                                                    |
+| ------ | -------------------------------------------------------------- |
+| **1**  | Contact view button                                            |
+| **2**  | Event view button                                              |
+| **3**  | Help button, opens the user guide in your browser.             |
+| **4**  | Button to switch between light and dark mode.                  |
+| **5**  | Terminal window button (Alternatively, open with CTRL-T).      |
+| **6**  | Contact tags                                                   |
+| **7**  | Contact's linked events (Attending)                            |
+| **8**  | Contact's linked events (Not Attending)                        |
+| **9**  | Event's status (Pending/Ongoing/Closed)                        |
+| **10** | Event's linked contacts (Attending)                            |
+| **11** | Event's linked contacts (Not Attending)                        |
+| **12** | Quick export button (Exports emails of all attending contacts) |
 
 #### Key Features
 
@@ -156,7 +156,7 @@ contact add --name John Doe --email john@email.com
 **Add more details if you want:**
 
 ```
-contact add --name Jane Smith --email jane@company.com --phone 91234567 --address "123 Main Street" --tag friend --tag colleague
+contact add --name Jane Smith --email jane@company.com --phone 91234567 --address 123 Main Street --tag friend --tag colleague
 ```
 
 <box type="tip" seamless>
@@ -324,8 +324,7 @@ contact find KEYWORD [MORE_KEYWORDS]... or contact find [--FIELD KEYWORD [MORE_K
 
 Screenshot Example:
 ![Contact Find Example](images/ContactFindExample.png)
-*In the example screenshot, `contact find --name lim` was executed.*
-
+_In the example screenshot, `contact find --name lim` was executed._
 
 ### 2.5 `contact delete`
 
@@ -358,8 +357,7 @@ contact delete INDEX
 
 Screenshot Example:
 ![Contact Delete Example](images/ContactDeleteExample.png)
-*In the example screenshot, `contact find --name john` was executed, and to delete the contact at index 2 (highlighted under A), `contact delete 2` was executed.*
-
+_In the example screenshot, `contact find --name john` was executed, and to delete the contact at index 2 (highlighted under A), `contact delete 2` was executed._
 
 ### 2.6 `contact show`
 
@@ -398,8 +396,7 @@ contact show INDEX
 
 Screenshot Example:
 ![Contact Show Example](images/ContactShowExample.png)
-*In the example screenshot, we want to show all events for the contact at index 2 (highlighted under A), so we execute `contact show 2`, bringing us to the events page.*
-
+_In the example screenshot, we want to show all events for the contact at index 2 (highlighted under A), so we execute `contact show 2`, bringing us to the events page._
 
 ---
 <!-- @@author reven0n-->>
@@ -412,13 +409,13 @@ Screenshot Example:
 **Basic event:**
 
 ```
-event add --name Team Meeting --date "25-12-2025 14:30"
+event add --name Team Meeting --date 25-12-2025 14:30
 ```
 
 **You can add locations too:**
 
 ```
-event add --name Company Party --date "31-12-2025 19:00" --address Office Lounge
+event add --name Company Party --date 31-12-2025 19:00 --address Office Lounge
 ```
 
 <box type="tip" seamless>
@@ -440,7 +437,6 @@ event add --name NAME --date DATE [--address ADDRESS]
 
 Screenshot Example:
 ![Event Add Example](images/EventAddExample.png)
-
 
 ### 3.2 `event list`
 
@@ -537,17 +533,18 @@ event find --tag work
 event find --name meeting conference --tag work important
 ```
 
-Event find works the same way as contact find (see [how search works](#how-search-works) section above for details).
+Event find works the same way as contact find (see [How Search Works](#how-search-works) for details).
 <box type="info" seamless>
 Event find specifics:
-- Date searches look for exact matches (e.g. `25-12-2025 12:00` finds only that date and time) 
+
+- Date searches look for exact matches (e.g. `25-12-2025 12:00` finds only that date and time)
 - Only one date can be specified
 - Status searches look for one of: `pending`, `ongoing`, `closed`
-</box>
+  </box>
 
 <box type="tip" seamless>
 
-**Note:** After using `event find`, the displayed results will have their own index numbers (starting from 1). Use 
+**Note:** After using `event find`, the displayed results will have their own index numbers (starting from 1). Use
 these index numbers when running commands on the found events.
 
 </box>
@@ -596,7 +593,6 @@ event delete INDEX
 Screenshot Example:
 ![Event Delete Example](images/EventDeleteExample.png)
 
-
 ### 3.6 `event link`
 
 **Add contacts to your event guest list:**
@@ -644,7 +640,7 @@ event link --event EVENT_INDEX --contact CONTACT_INDEX
 
 Screenshot Example:
 ![Event Link Example](images/EventLinkExample.png)
-*In the example screenshot, we want to link the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event link --event 1 --contact 6`.*
+_In the example screenshot, we want to link the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event link --event 1 --contact 6`._
 
 ### 3.7 `event unlink`
 
@@ -694,8 +690,7 @@ event unlink --event EVENT_INDEX --contact CONTACT_INDEX
 
 Screenshot Example:
 ![Event Unlink Example](images/EventUnlinkExample.png)
-*In the example screenshot, we want to unlink the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event unlink --event 1 --contact 6`.*
-<!--@@author-->
+_In the example screenshot, we want to unlink the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event unlink --event 1 --contact 6`._
 
 ### 3.8 `event show`
 
@@ -739,7 +734,7 @@ Screenshot Example:
 
 ### 3.9 `event export`
 
-**Quickly copy all contacts** with available status from an event to your clipboard. Or, if status is specified, 
+**Quickly copy all contacts** with available status from an event to your clipboard. Or, if status is specified,
 only copy contacts with that status:
 
 ```
@@ -793,7 +788,7 @@ Marks contact #2 as available for event #1.
 
 - `available` - They can make it!
 - `unavailable` - They can't come
-- `pending` - Haven't decided yet
+- `unknown` - Haven't decided yet
 
 <box type="tip" seamless>
 
@@ -875,14 +870,14 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 
 ### 7.2 Contact Commands
 
-| Action                    | Format, Examples                                                                                                                                                                                                           |
-| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add Contact**           | `contact add --name NAME --email EMAIL [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name "James"--email james@e.com --phone 91234567 --address "123 Main Street" --tag friend --tag colleague` |
-| **Delete Contact**        | `contact delete INDEX`<br>e.g. `contact delete 3`                                                                                                                                                                          |
-| **Edit Contact**          | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact edit 2 --name "James"--email jameslee@e.com`                                                          |
-| **Find Contacts**         | `contact find KEYWORD [MORE_KEYWORDS]...` or `contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`<br>e.g. `contact find --email gmail`<br>e.g. `contact find --phone 9123`                                               |
-| **List Contacts**         | `contact list`                                                                                                                                                                                                             |
-| **Show Contact's Events** | `contact show INDEX`<br>e.g. `contact show 1`                                                                                                                                                                              |
+| Action                    | Format, Examples                                                                                                                                                                                                          |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Add Contact**           | `contact add --name NAME --email EMAIL [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name James --email james@e.com --phone 91234567 --address "123 Main Street" --tag friend --tag colleague` |
+| **Delete Contact**        | `contact delete INDEX`<br>e.g. `contact delete 3`                                                                                                                                                                         |
+| **Edit Contact**          | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact edit 2 --name James --email jameslee@e.com`                                                          |
+| **Find Contacts**         | `contact find KEYWORD [MORE_KEYWORDS]...` or `contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`<br>e.g. `contact find --email gmail`<br>e.g. `contact find --phone 9123`                                              |
+| **List Contacts**         | `contact list`                                                                                                                                                                                                            |
+| **Show Contact's Events** | `contact show INDEX`<br>e.g. `contact show 1`                                                                                                                                                                             |
 
 ### 7.3 Event Commands
 
