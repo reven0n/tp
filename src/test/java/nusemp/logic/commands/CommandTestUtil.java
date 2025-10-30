@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import nusemp.commons.core.index.Index;
-import nusemp.logic.Messages;
 import nusemp.logic.commands.contact.ContactEditCommand;
 import nusemp.logic.commands.event.EventEditCommand;
 import nusemp.logic.commands.exceptions.CommandException;
@@ -143,10 +142,7 @@ public class CommandTestUtil {
             Model expectedModel) {
         try {
             CommandResult result = command.execute(actualModel);
-            // Todo: check other fields of command result too
-            assertEquals(expectedCommandResult.getFeedbackToUser(), result.getFeedbackToUser());
-            assertEquals(expectedCommandResult.isExit(), result.isExit());
-            assertEquals(expectedCommandResult.isShowHelp(), result.isShowHelp());
+            assertEquals(expectedCommandResult, result);
             assertEquals(expectedModel, actualModel);
         } catch (CommandException ce) {
             throw new AssertionError("Execution of command should not fail.", ce);
@@ -154,13 +150,21 @@ public class CommandTestUtil {
     }
 
     /**
-     * Convenience wrapper to {@link #assertCommandSuccess(Command, Model, CommandResult, Model)}
-     * that takes a string {@code expectedMessage}.
+     * Executes the given {@code command}, confirms that <br>
+     * - the feedback from the returned {@link CommandResult} matches {@code expectedMessage} <br>
+     * - the {@code actualModel} matches {@code expectedModel}
+     * <p>
+     * Note that the other fields of the {@link CommandResult} are not checked by this method.
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
             Model expectedModel) {
-        CommandResult expectedCommandResult = new CommandResult(expectedMessage, Messages.HEADING_PREVIOUS, null);
-        assertCommandSuccess(command, actualModel, expectedCommandResult, expectedModel);
+        try {
+            CommandResult result = command.execute(actualModel);
+            assertEquals(expectedMessage, result.getFeedbackToUser());
+            assertEquals(expectedModel, actualModel);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
     }
 
     /**

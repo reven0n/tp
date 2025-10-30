@@ -72,7 +72,7 @@ public class EventExportCommand extends Command {
         ClipboardContent content = new ClipboardContent();
         content.putString(exportContentData);
         clipboard.setContent(content);
-        return new CommandResult(MESSAGE_SUCCESS, Messages.HEADING_PREVIOUS, null);
+        return new CommandResult(MESSAGE_SUCCESS);
     }
 
     @Override

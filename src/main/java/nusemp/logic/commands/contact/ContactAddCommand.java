@@ -66,7 +66,7 @@ public class ContactAddCommand extends Command {
         String heading = model.getFilteredContactList().isEmpty()
                 ? Messages.HEADING_CONTACTS_NONE
                 : Messages.HEADING_CONTACTS;
-        return new CommandResult(feedbackToUser, heading, false);
+        return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_CONTACTS, heading);
     }
 
     @Override

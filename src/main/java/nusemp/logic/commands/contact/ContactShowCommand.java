@@ -52,7 +52,7 @@ public class ContactShowCommand extends Command {
         String feedbackToUser = String.format(MESSAGE_CONTACT_SHOW_SUCCESS, size, Messages.format(targetContact));
         String heading = String.format(size == 0 ? Messages.HEADING_EVENTS_FROM_CONTACT_NONE
                 : Messages.HEADING_EVENTS_FROM_CONTACT, targetContact.getName().value);
-        return new CommandResult(feedbackToUser, heading, true);
+        return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 
     @Override

@@ -29,7 +29,7 @@ public class ContactListCommand extends Command {
         model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
         int size = model.getFilteredContactList().size();
         String heading = size == 0 ? Messages.HEADING_CONTACTS_NONE : Messages.HEADING_CONTACTS;
-        return new CommandResult(String.format(MESSAGE_SUCCESS, size), heading, false);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, size), CommandResult.UiBehavior.SHOW_CONTACTS, heading);
     }
 
     @Override

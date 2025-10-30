@@ -51,7 +51,7 @@ public class EventShowCommand extends Command {
         String feedbackToUser = String.format(MESSAGE_EVENT_SHOW_SUCCESS, size, Messages.format(targetEvent));
         String heading = String.format(size == 0 ? Messages.HEADING_CONTACTS_FROM_EVENT_NONE
                 : Messages.HEADING_CONTACTS_FROM_EVENT, targetEvent.getName().value);
-        return new CommandResult(feedbackToUser, heading, false);
+        return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_CONTACTS, heading);
     }
 
     @Override

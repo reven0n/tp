@@ -63,7 +63,7 @@ public class EventRsvpCommand extends Command {
         try {
             model.setParticipant(contactToRsvp, eventToRsvp, status);
             return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    Messages.format(eventToRsvp), Messages.format(contactToRsvp)), Messages.HEADING_PREVIOUS, null);
+                    Messages.format(eventToRsvp), Messages.format(contactToRsvp)));
         } catch (ParticipantNotFoundException e) {
             throw new CommandException(String.format(MESSAGE_CONTACT_NOT_PARTICIPANT,
                     Messages.format(contactToRsvp), Messages.format(eventToRsvp)));

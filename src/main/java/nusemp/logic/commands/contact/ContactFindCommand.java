@@ -46,7 +46,7 @@ public class ContactFindCommand extends Command {
         int size = model.getFilteredContactList().size();
         String feedbackToUser = String.format(Messages.MESSAGE_CONTACTS_LISTED_OVERVIEW, size);
         String heading = size == 0 ? Messages.HEADING_CONTACT_FIND_NONE : Messages.HEADING_CONTACT_FIND;
-        return new CommandResult(feedbackToUser, heading, false);
+        return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_CONTACTS, heading);
     }
 
     @Override

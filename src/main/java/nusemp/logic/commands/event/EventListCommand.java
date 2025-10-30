@@ -29,7 +29,7 @@ public class EventListCommand extends Command {
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
         int size = model.getFilteredEventList().size();
         String heading = size == 0 ? Messages.HEADING_EVENTS_NONE : Messages.HEADING_EVENTS;
-        return new CommandResult(String.format(MESSAGE_SUCCESS, size), heading, true);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, size), CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 
     @Override

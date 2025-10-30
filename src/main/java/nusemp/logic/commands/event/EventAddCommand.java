@@ -61,7 +61,7 @@ public class EventAddCommand extends Command {
         String heading = model.getFilteredEventList().isEmpty()
                 ? Messages.HEADING_EVENTS_NONE
                 : Messages.HEADING_EVENTS;
-        return new CommandResult(feedbackToUser, heading, true);
+        return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 
     @Override
