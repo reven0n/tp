@@ -18,7 +18,7 @@ end box
 [-> LogicManager : execute("contact add -n John -e john@example.com")
 activate LogicManager
 
-LogicManager -> AppParser : parseCommand("contact add -n John -e john@example.com")
+LogicManager -> AppParser : parseCommand("contact add ...")
 activate AppParser
 
 create ContactAddCommandParser
@@ -32,14 +32,14 @@ AppParser -> ContactAddCommandParser : parse("-n John -e john@example.com")
 activate ContactAddCommandParser
 
 create Contact
-ContactAddCommandParser -> Contact : new Contact(name, email, phone, address, tags)
+ContactAddCommandParser -> Contact
 activate Contact
 
-Contact --> ContactAddCommandParser
+Contact --> ContactAddCommandParser : john
 deactivate Contact
 
 create ContactAddCommand
-ContactAddCommandParser -> ContactAddCommand : new ContactAddCommand(contact)
+ContactAddCommandParser -> ContactAddCommand
 activate ContactAddCommand
 
 ContactAddCommand --> ContactAddCommandParser
@@ -56,7 +56,7 @@ deactivate AppParser
 LogicManager -> ContactAddCommand : execute(m)
 activate ContactAddCommand
 
-ContactAddCommand -> Model : addContact(john)
+ContactAddCommand -> Model : addContact(c)
 activate Model
 
 Model --> ContactAddCommand

@@ -65,10 +65,10 @@ deactivate EventEditCommand
 EventEditCommand -> Model : setEvent(oldEvent, editedEvent)
 activate Model
 
-Model -> AppData : setEvent(oldEvent, editedEvent)
+Model -> AppData : setEvent(...)
 activate AppData
 
-AppData -> UniqueEventList : setEvent(oldEvent, editedEvent)
+AppData -> UniqueEventList : setEvent(...)
 activate UniqueEventList
 UniqueEventList --> AppData
 deactivate UniqueEventList
