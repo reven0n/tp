@@ -14,7 +14,7 @@ import nusemp.logic.parser.exceptions.ParseException;
 public class EventShowCommandParser implements Parser<EventShowCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the EventDeleteCommand
-     * and returns a EventDeleteCommand object for execution.
+     * and returns a EventShowCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public EventShowCommand parse(String args) throws ParseException {
