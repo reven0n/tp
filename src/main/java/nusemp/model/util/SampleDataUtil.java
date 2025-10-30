@@ -1,6 +1,5 @@
 package nusemp.model.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -23,7 +22,6 @@ import nusemp.model.participant.ParticipantStatus;
  * Contains utility methods for populating {@code AppData} with sample data.
  */
 public class SampleDataUtil {
-    public static final List<Event> EMPTY_EVENT_LIST = new ArrayList<>();
     public static Contact[] getSampleContacts() {
         return new Contact[] {
             new Contact(new Name("Alex Yeoh"), new Email("alexyeoh@example.com"), new Phone("87438807"),
