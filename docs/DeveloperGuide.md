@@ -122,6 +122,8 @@ The Model component maintains application state:
 
 #### 2.2.5 Storage Component
 
+<puml src="diagrams/StorageClassDiagram.puml" alt="Storage class diagram"/>
+
 **API**: [`Storage.java`](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/src/main/java/nusemp/storage/Storage.java)
 
 The Storage component handles persistence:
@@ -443,6 +445,8 @@ Refer to Add Contact Sequence Digram above.
 
 ### 5.8 RSVP Status Update Flow
 
+Refer to Edit/Update Sequence Diagram above.
+
 **Steps:**
 
 1. User inputs `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS` command
@@ -460,7 +464,7 @@ Refer to Add Contact Sequence Digram above.
 
 ### 5.9 Data Persistence Flow
 
-[Data Persistence Sequence Diagram placeholder]
+<puml src="diagrams/StorageSequenceDiagram.puml" alt="Storage sequence diagram"/>
 
 **Steps:**
 

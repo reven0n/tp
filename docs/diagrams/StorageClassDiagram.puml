@@ -14,12 +14,14 @@ Class JsonUserPrefsStorage
 Class "<<interface>>\nStorage" as Storage
 Class StorageManager
 
-package "AddressBook Storage" #F4F6F6{
-Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
-Class JsonAddressBookStorage
-Class JsonSerializableAddressBook
-Class JsonAdaptedPerson
+package "AppData Storage" #F4F6F6{
+Class "<<interface>>\nAppDataStorage" as AppDataStorage
+Class JsonAppDataStorage
+Class JsonSerializableAppData
+Class JsonAdaptedEvent
+Class JsonAdaptedContact
 Class JsonAdaptedTag
+Class JsonAdaptedParticipant
 }
 
 }
@@ -29,15 +31,18 @@ HiddenOutside ..> Storage
 
 StorageManager .up.|> Storage
 StorageManager -up-> "1" UserPrefsStorage
-StorageManager -up-> "1" AddressBookStorage
+StorageManager -up-> "1" AppDataStorage
 
 Storage -left-|> UserPrefsStorage
-Storage -right-|> AddressBookStorage
+Storage -right-|> AppDataStorage
 
 JsonUserPrefsStorage .up.|> UserPrefsStorage
-JsonAddressBookStorage .up.|> AddressBookStorage
-JsonAddressBookStorage ..> JsonSerializableAddressBook
-JsonSerializableAddressBook --> "*" JsonAdaptedPerson
-JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonAppDataStorage .right.|> AppDataStorage
+JsonAppDataStorage ..> JsonSerializableAppData
+JsonSerializableAppData --> "*" JsonAdaptedContact
+JsonAdaptedContact --> "*" JsonAdaptedTag
+JsonAdaptedEvent --> "*" JsonAdaptedParticipant
+JsonAdaptedEvent --> "*" JsonAdaptedTag
+JsonSerializableAppData --> "*" JsonAdaptedEvent
 
 @enduml
