@@ -328,7 +328,7 @@ Error handling follows these principles:
 
 ### 5.1 Add Contact Flow
 
-[Add Contact Sequence Diagram placeholder]
+<puml src="diagrams/ContactAddSequenceDiagram.puml" alt="Contact Add Sequence Diagram"/>
 
 **Steps:**
 
@@ -344,7 +344,7 @@ Error handling follows these principles:
 
 ### 5.2 Create Event Flow
 
-Refer to Add Contact Seuqnce Digram above.
+Refer to Add Contact Sequence Digram above.
 
 **Steps:**
 
@@ -360,7 +360,7 @@ Refer to Add Contact Seuqnce Digram above.
 
 ### 5.3 Link Contact to Event Flow
 
-[Link Contact to Event Sequence Diagram placeholder]
+<puml src="diagrams/LinkSequenceDiagram.puml" alt="Event Link Sequence Diagram"/>
 
 **Steps:**
 
@@ -421,7 +421,7 @@ Refer to Add Contact Seuqnce Digram above.
 
 ### 5.7 Edit/Update Flow
 
-[Edit Update Sequence Diagram placeholder]
+<puml src="diagrams/EventEditSequenceDiagram.puml" alt="Event Edit/Update Sequence Diagram"/>
 
 **Steps:**
 
