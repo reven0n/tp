@@ -8,10 +8,10 @@ import nusemp.commons.util.ToStringBuilder;
 /**
  * Tests that a {@code Contact}'s {@code Tag} matches any of the keywords given.
  */
-public class TagContainsKeywordsPredicate implements Predicate<Contact> {
+public class ContactTagContainsKeywordsPredicate implements Predicate<Contact> {
     private final List<String> keywords;
 
-    public TagContainsKeywordsPredicate(List<String> keywords) {
+    public ContactTagContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -29,11 +29,12 @@ public class TagContainsKeywordsPredicate implements Predicate<Contact> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof TagContainsKeywordsPredicate)) {
+        if (!(other instanceof ContactTagContainsKeywordsPredicate)) {
             return false;
         }
 
-        TagContainsKeywordsPredicate otherTagContainsKeywordsPredicate = (TagContainsKeywordsPredicate) other;
+        ContactTagContainsKeywordsPredicate otherTagContainsKeywordsPredicate =
+            (ContactTagContainsKeywordsPredicate) other;
         return keywords.equals(otherTagContainsKeywordsPredicate.keywords);
     }
 
