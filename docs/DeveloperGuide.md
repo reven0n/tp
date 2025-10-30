@@ -304,9 +304,9 @@ The parser system uses a direct interface implementation approach:
 - `EVENT_COMMAND_FORMAT`: Event command parsing pattern
 - `ArgumentTokenizer`: Handles prefix-based argument parsing (--name, -n, etc.)
 
-### 4.4 Error Handling
+### 4.4 Error Handling Flow
 
-<puml src="diagrams/ErrorHandlingFlowDiagram.puml" width="600" alt="Error Handling Flow Diagram"/>
+<puml src="diagrams/ErrorHandlingFlowDiagram.puml" alt="Error Handling Flow Diagram"/>
 
 Error handling follows these principles:
 
@@ -374,7 +374,7 @@ Refer to Add Contact Seuqnce Digram above.
 
 ### 5.4 Search/Find Flow
 
-<puml src="diagrams/SearchFindSequenceDiagram.puml" width="600" alt="Search Find Sequence Diagram"/>
+<puml src="diagrams/SearchFindSequenceDiagram.puml" alt="Search Find Sequence Diagram"/>
 
 **Steps:**
 
@@ -388,9 +388,9 @@ Refer to Add Contact Seuqnce Digram above.
 8. Observable lists trigger UI updates to show filtered results
 9. Success message with result count displayed to user
 
-### 5.5 Error Handling Flow
+### 5.5 Error Handling Sequence
 
-<puml src="diagrams/ErrorHandlingSequenceDiagram.puml" width="600" alt="Error Handling Sequence Diagram"/>
+<puml src="diagrams/ErrorHandlingSequenceDiagram.puml" alt="Error Handling Sequence Diagram"/>
 
 **Steps:**
 
