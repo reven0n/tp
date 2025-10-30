@@ -16,6 +16,7 @@ import nusemp.model.participant.exceptions.ParticipantNotFoundException;
 
 /**
  * Maps contacts and events to their respective Participant links.
+ * @author rizrn, CZX
  */
 public class ParticipantMap implements ReadOnlyParticipantMap {
 

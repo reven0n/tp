@@ -1,0 +1,70 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+title Error Handling Flow Diagram
+
+start
+:User;
+:"Enter command\n(contact find --name)";
+:UI:"Execute command";
+:Logic:"Parse command";
+
+partition "Input Validation" {
+    if () then ([Invalid Input])
+        :UI:"Display error message";
+        :User:"See error";
+        stop
+    else ([else])
+        :Logic:"Create command";
+    endif
+}
+
+partition "Command Execution" {
+    :Command:"Execute command";
+
+    partition "Model Update" {
+        :Model:"Update filtered contacts";
+    }
+
+    if () then ([error])
+        :Command:"Throw CommandException";
+        :Logic:"Wrap and send to UI";
+        :UI:"Display error message";
+        :User:"See error";
+        stop
+    else ([else])
+        :Logic:"Generate CommandResult";
+    endif
+}
+
+partition "Data Persistence" {
+    :Logic:"Save data to storage";
+
+    partition "Storage Operations" {
+        if () then ([permission error])
+            :Storage:"AccessDeniedException";
+            :Logic:"Wrap in CommandException";
+            :UI:"Display permission error";
+            :User:"See permission error";
+            stop
+        else ([else])
+            if () then ([io error])
+                :Storage:"IOException";
+                :Logic:"Wrap in CommandException";
+                :UI:"Display file error";
+                :User:"See file error";
+                stop
+            else ([else])
+                :Storage:"Data saved successfully";
+                :Logic:"Generate success message";
+                :UI:"Display results";
+                :User:"See filtered contacts";
+            endif
+        endif
+    }
+}
+
+stop
+
+@enduml
