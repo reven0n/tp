@@ -109,23 +109,20 @@ The NUS Event Mailer Pro interface is designed to be intuitive and efficient for
 
 #### Main Interface Components
 
-**Main Window**
-
-- **Contact List Panel** (Left): Displays all your contacts with their details
-- **Event List Panel** (Center): Shows all your scheduled events
-- **Result Display** (Bottom): Shows command results and system messages
-
-**Sidebar Navigation**
-
-- **Help Button (?)**: Opens this user guide in your browser
-- **Command Button (⌘)**: Opens/closes the command input box
-- **Status Bar**: Shows app status and current connection info
-
-**Command Input Box**
-
-- Open with **CTRL+T** or click the **⌘ button**
-- Type your commands here and press **Enter**
-- Supports both long form (`--name`) and short form (`-n`) parameters
+| #     | Description                                                    |
+|-------|----------------------------------------------------------------|
+| **1** | Contact view button                                            |
+| **2** | Event view button                                              |
+| **3** | Help button, opens the user guide in your browser.             |
+| **4** | Button to switch between light and dark mode.                  |
+| **5** | Terminal window button (Alternatively, open with CTRL-T).      |
+| **6** | Contact tags                                                   |
+| **7** | Contact's linked events (Attending)                            |
+| **8** | Contact's linked events (Not Attending)                        |
+| **9** | Event's status (Pending/Ongoing/Closed)                        |
+| **10**| Event's linked contacts (Attending)                            |
+| **11**| Event's linked contacts (Not Attending)                        |
+| **12**| Quick export button (Exports emails of all attending contacts) |
 
 #### Key Features
 
@@ -183,6 +180,9 @@ contact add --name Jane Smith --email jane@company.com --phone 91234567 --addres
 contact add --name NAME --email EMAIL [--phone PHONE] [--address ADDRESS] [--tag TAG]…
 ```
 
+Screenshot Example:
+![Contact Add Example](images/ContactAddExample.png)
+
 ### 2.2 `contact list`
 
 **See everyone you've saved:**
@@ -196,7 +196,7 @@ contact list
 **What You'll See:**
 
 - Contacts in the order you added them
-- Each contact has a **number** (write this down - you'll need it!)
+- Each contact has a **number** (Note this down - you'll need it!)
 - Use scroll bar if you have lots of contacts
 
 </box>
@@ -207,6 +207,9 @@ contact list
 ```
 contact list
 ```
+
+Screenshot Example:
+![Contact List Example](images/ContactListExample.png)
 
 ### 2.3 `contact edit`
 
@@ -239,6 +242,9 @@ This changes contact #1's phone and email.
 ```
 contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE] [--address ADDRESS] [--tag TAG]…
 ```
+
+Screenshot Example:
+![Contact Edit Example](images/ContactEditExample.png)
 
 ### 2.4 `contact find`
 
@@ -316,6 +322,11 @@ Finds: People named alice **OR** bob **AND** who have gmail in their email
 contact find KEYWORD [MORE_KEYWORDS]... or contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...
 ```
 
+Screenshot Example:
+![Contact Find Example](images/ContactFindExample.png)
+*In the example screenshot, `contact find --name lim` was executed.*
+
+
 ### 2.5 `contact delete`
 
 **Delete someone from your contacts:**
@@ -344,6 +355,11 @@ This removes contact #3.
 ```
 contact delete INDEX
 ```
+
+Screenshot Example:
+![Contact Delete Example](images/ContactDeleteExample.png)
+*In the example screenshot, `contact find --name john` was executed, and to delete the contact at index 2 (highlighted under A), `contact delete 2` was executed.*
+
 
 ### 2.6 `contact show`
 
@@ -379,6 +395,11 @@ Shows all events for contact #2.
 ```
 contact show INDEX
 ```
+
+Screenshot Example:
+![Contact Show Example](images/ContactShowExample.png)
+*In the example screenshot, we want to show all events for the contact at index 2 (highlighted under A), so we execute `contact show 2`, bringing us to the events page.*
+
 
 ---
 
@@ -418,6 +439,10 @@ event add --name Company Party --date "31-12-2025 19:00" --address Office Lounge
 event add --name NAME --date DATE [--address ADDRESS]
 ```
 
+Screenshot Example:
+![Event Add Example](images/EventAddExample.png)
+
+
 ### 3.2 `event list`
 
 **See all your planned events:**
@@ -443,6 +468,9 @@ event list
 ```
 event list
 ```
+
+Screenshot Example:
+![Event List Example](images/EventListExample.png)
 
 ### 3.3 `event edit`
 
@@ -481,6 +509,9 @@ This changes event #1's name and time.
 event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…
 ```
 
+Screenshot Example:
+![Event Edit Example](images/EventEditExample.png)
+
 ### 3.4 `event delete`
 
 **Remove an event completely:**
@@ -510,6 +541,10 @@ This deletes event #2 and removes all contact connections.
 ```
 event delete INDEX
 ```
+
+Screenshot Example:
+![Event Delete Example](images/EventDeleteExample.png)
+
 
 ### 3.5 `event link`
 
@@ -544,6 +579,10 @@ This adds contact #2 to event #1.
 event link --event EVENT_INDEX --contact CONTACT_INDEX
 ```
 
+Screenshot Example:
+![Event Link Example](images/EventLinkExample.png)
+*In the example screenshot, we want to link the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event link --event 1 --contact 6`.*
+
 ### 3.6 `event unlink`
 
 **Take someone off an event** when they can't make it:
@@ -576,6 +615,11 @@ Removes contact #2 from event #1.
 ```
 event unlink --event EVENT_INDEX --contact CONTACT_INDEX
 ```
+
+Screenshot Example:
+![Event Unlink Example](images/EventUnlinkExample.png)
+*In the example screenshot, we want to unlink the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event unlink --event 1 --contact 6`.*
+
 
 ### 3.7 `event show`
 
@@ -614,6 +658,9 @@ The contact indexes shown in the event display are specific to this event's part
 event show INDEX
 ```
 
+Screenshot Example:
+![Event Show Example](images/EventShowExample.png)
+
 ### 3.8 `event export`
 
 **Quickly copy all contacts** from an event to your clipboard:
@@ -644,6 +691,9 @@ Copies all contact info from event #1.
 ```
 event export INDEX
 ```
+
+Screenshot Example:
+![Event Export Example](images/EventExportExample.png)
 
 ### 3.9 `event rsvp`
 
@@ -683,6 +733,9 @@ Marks contact #2 as available for event #1.
 ```
 event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS
 ```
+
+Screenshot Example:
+![Event RSVP Example](images/EventRsvpExample.png)
 
 ---
 
@@ -776,6 +829,19 @@ Congratulations! You now know everything about using NUS Event Mailer Pro.
 - Your data saves automatically
 
 **Happy event planning!**
+
+---
+
+## 9. Coming soon...
+
+In our development roadmap, we plan to implement:
+
+- Import and export options for contacts and events (CSV, Excel)
+- Automated email invitations with personalized greetings
+- Calendar integration (Google Calendar, Outlook)
+- Web application for easier access and on-the-go management
+
+**Look forward to it!**
 
 ---
 

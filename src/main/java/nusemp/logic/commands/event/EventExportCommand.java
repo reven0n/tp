@@ -1,6 +1,8 @@
 package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
+import static nusemp.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.Comparator;
 import java.util.List;
@@ -25,9 +27,10 @@ public class EventExportCommand extends Command {
     public static final String COMMAND_WORD = "export";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n\n"
-            + "Parameters: INDEX\n"
-            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1\n\n"
+            + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_STATUS + "STATUS]\n"
+            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 " + PREFIX_STATUS + "unknown\n"
             + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
     public static final String MESSAGE_SUCCESS =
@@ -36,16 +39,18 @@ public class EventExportCommand extends Command {
     private String exportContentData = "";
 
     private final Index eventIndex;
+    private final ParticipantStatus status;
 
+    public EventExportCommand(Index eventIndex) {
+        this(eventIndex, ParticipantStatus.AVAILABLE);
+    }
     /**
      * Creates an EventExportCommand to export the specified {@code Event}
-     *
-     *
-     * @param eventIndex Index of the event in the filtered event list to export
      */
-    public EventExportCommand(Index eventIndex) {
-        requireNonNull(eventIndex);
+    public EventExportCommand(Index eventIndex, ParticipantStatus status) {
+        requireAllNonNull(eventIndex, status);
         this.eventIndex = eventIndex;
+        this.status = status;
     }
 
     @Override
@@ -63,7 +68,7 @@ public class EventExportCommand extends Command {
                 .forEach(p -> {
                     String email = p.getContact().getEmail().value;
 
-                    if (p.getStatus() == ParticipantStatus.AVAILABLE) {
+                    if (p.getStatus() == status) {
                         exportContentData = exportContentData + email + ",";
                     }
                 });
