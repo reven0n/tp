@@ -21,7 +21,7 @@ import org.junit.jupiter.api.Test;
 import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
-import nusemp.model.contact.ContactMatchesAnyPredicatePredicate;
+import nusemp.model.contact.ContactMatchesAllPredicates;
 import nusemp.model.contact.EmailContainsKeywordsPredicate;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
 import nusemp.model.contact.TagContainsKeywordsPredicate;
@@ -110,8 +110,8 @@ public class ContactFindCommandTest {
                 new NameContainsKeywordsPredicate(Collections.singletonList("Benson"));
         TagContainsKeywordsPredicate tagPredicate =
                 new TagContainsKeywordsPredicate(Collections.singletonList("owesMoney"));
-        ContactMatchesAnyPredicatePredicate combinedPredicate =
-                new ContactMatchesAnyPredicatePredicate(Arrays.asList(namePredicate, tagPredicate));
+        ContactMatchesAllPredicates combinedPredicate =
+                new ContactMatchesAllPredicates(Arrays.asList(namePredicate, tagPredicate));
         ContactFindCommand command = new ContactFindCommand(combinedPredicate);
         expectedModel.updateFilteredContactList(combinedPredicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);

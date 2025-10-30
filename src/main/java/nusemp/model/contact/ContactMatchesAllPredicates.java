@@ -9,10 +9,10 @@ import nusemp.commons.util.ToStringBuilder;
  * Tests that a {@code Contact} matches all of the predicates given.
  * This combines multiple predicates with AND logic.
  */
-public class ContactMatchesAnyPredicatePredicate implements Predicate<Contact> {
+public class ContactMatchesAllPredicates implements Predicate<Contact> {
     private final List<Predicate<Contact>> predicates;
 
-    public ContactMatchesAnyPredicatePredicate(List<Predicate<Contact>> predicates) {
+    public ContactMatchesAllPredicates(List<Predicate<Contact>> predicates) {
         this.predicates = predicates;
     }
 
@@ -29,13 +29,13 @@ public class ContactMatchesAnyPredicatePredicate implements Predicate<Contact> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ContactMatchesAnyPredicatePredicate)) {
+        if (!(other instanceof ContactMatchesAllPredicates)) {
             return false;
         }
 
-        ContactMatchesAnyPredicatePredicate otherContactMatchesAnyPredicatePredicate =
-                (ContactMatchesAnyPredicatePredicate) other;
-        return predicates.equals(otherContactMatchesAnyPredicatePredicate.predicates);
+        ContactMatchesAllPredicates otherContactMatchesAllPredicates =
+                (ContactMatchesAllPredicates) other;
+        return predicates.equals(otherContactMatchesAllPredicates.predicates);
     }
 
     @Override

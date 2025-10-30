@@ -9,7 +9,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import nusemp.logic.commands.contact.ContactFindCommand;
-import nusemp.model.contact.ContactMatchesAnyPredicatePredicate;
+import nusemp.model.contact.ContactMatchesAllPredicates;
 import nusemp.model.contact.EmailContainsKeywordsPredicate;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
 import nusemp.model.contact.TagContainsKeywordsPredicate;
@@ -59,7 +59,7 @@ public class ContactFindCommandParserTest {
     @Test
     public void parse_multipleFlags_returnsFindCommand() {
         ContactFindCommand expectedContactFindCommand =
-                new ContactFindCommand(new ContactMatchesAnyPredicatePredicate(Arrays.asList(
+                new ContactFindCommand(new ContactMatchesAllPredicates(Arrays.asList(
                         new NameContainsKeywordsPredicate(Arrays.asList("Alice")),
                         new EmailContainsKeywordsPredicate(Arrays.asList("gmail")),
                         new TagContainsKeywordsPredicate(Arrays.asList("friend"))
