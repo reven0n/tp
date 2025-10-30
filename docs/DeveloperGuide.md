@@ -80,12 +80,15 @@ The `Main` class handles application lifecycle:
 
 **API**: [`Ui.java`](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/src/main/java/nusemp/ui/Ui.java)
 
+<puml src="diagrams/UiClassDiagram.puml" width="600" alt="Ui Class Diagram"/>
+
 The UI component consists of:
 
 - `MainWindow`: Primary application window
 - `CommandBox`: User input interface
 - `ResultDisplay`: Command feedback display
-- `ContactListPanel`/`EventListPanel`: Data presentation panels
+- Both of `CommandBox` and `ResultDisplay` are automatically hidden, unless the user presses the terminal button located on the sidebar or presses the keyboard shortcut (Ctrl + T) which will bring them up
+- `ContactListPanel`/`EventListPanel`: Data presentation panels that fetch their data from the `model` component
 - `StatusBarFooter`: Status information display
 
 All UI components inherit from `UiPart` abstract class and use FXML for layout definitions.
@@ -119,6 +122,8 @@ The Model component maintains application state:
 
 #### 2.2.5 Storage Component
 
+<puml src="diagrams/StorageClassDiagram.puml" alt="Storage class diagram"/>
+
 **API**: [`Storage.java`](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/src/main/java/nusemp/storage/Storage.java)
 
 The Storage component handles persistence:
@@ -140,6 +145,7 @@ The Commons component provides shared utilities:
 ### 2.3 Component Interactions
 
 <puml src="diagrams/ComponentInteractionSequenceDiagram.puml" width="600" alt="Component Interaction Sequence Diagram"/>
+
 The components interact through well-defined interfaces:
 
 - UI calls Logic to execute commands
@@ -439,6 +445,8 @@ Refer to Add Contact Sequence Digram above.
 
 ### 5.8 RSVP Status Update Flow
 
+Refer to Edit/Update Sequence Diagram above.
+
 **Steps:**
 
 1. User inputs `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS` command
@@ -456,7 +464,7 @@ Refer to Add Contact Sequence Digram above.
 
 ### 5.9 Data Persistence Flow
 
-[Data Persistence Sequence Diagram placeholder]
+<puml src="diagrams/StorageSequenceDiagram.puml" alt="Storage sequence diagram"/>
 
 **Steps:**
 
