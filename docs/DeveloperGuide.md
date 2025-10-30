@@ -56,7 +56,7 @@ Refer to the guide [_Setting up and getting started_](https://github.com/AY2526S
 
 ### 2.1 High-Level Architecture
 
-[Enhanced Architecture Diagram placeholder]
+<puml src="diagrams/ArchitectureDiagram.puml" width="600" alt="Architecture Diagram"/>
 
 The application follows a clean architecture pattern with five main components:
 
@@ -194,15 +194,11 @@ Participant links between contacts and events are handled through a `Participant
 - Keys used are `ContactKey` and `EventKey`, which are simple classes that only store the primary key fields (i.e. case-insensitive email for `ContactKey` and name for `EventKey`).
 - Lookups for contacts and their linked events are done through these keys for efficiency.
 
-[ParticipantMap Activity Diagram placeholder]
-
----
+<puml src="diagrams/ParticipantMapActivityDiagram.puml" width="600" alt="ParticipantMap Activity Diagram" />
 
 ## **4. Command System**
 
 ### 4.1 Command Processing Flow
-
-[Command Processing Sequence Diagram placeholder]
 
 The command system follows a consistent pattern:
 
@@ -242,7 +238,7 @@ The command system follows a consistent pattern:
 
 ### 4.3 Parser Architecture
 
-[Parser Architecture Diagram placeholder]
+<puml src="diagrams/ParserClasses.puml" alt="Parser Class Diagram"/>
 
 The parser system uses a direct interface implementation approach:
 
@@ -357,8 +353,6 @@ Refer to Add Contact Sequence Digram above.
 7. User can retry command with corrected input
 
 ### 5.6 Application Startup/Initialization Flow
-
-[Application Startup Sequence Diagram placeholder]
 
 **Steps:**
 
