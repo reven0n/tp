@@ -80,12 +80,15 @@ The `Main` class handles application lifecycle:
 
 **API**: [`Ui.java`](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/src/main/java/nusemp/ui/Ui.java)
 
+<puml src="diagrams/UiClassDiagram.puml" width="600" alt="Ui Class Diagram"/>
+
 The UI component consists of:
 
 - `MainWindow`: Primary application window
 - `CommandBox`: User input interface
 - `ResultDisplay`: Command feedback display
-- `ContactListPanel`/`EventListPanel`: Data presentation panels
+- Both of `CommandBox` and `ResultDisplay` are automatically hidden, unless the user presses the terminal button located on the sidebar or presses the keyboard shortcut (Ctrl + T) which will bring them up
+- `ContactListPanel`/`EventListPanel`: Data presentation panels that fetch their data from the `model` component
 - `StatusBarFooter`: Status information display
 
 All UI components inherit from `UiPart` abstract class and use FXML for layout definitions.
@@ -142,6 +145,7 @@ The Commons component provides shared utilities:
 ### 2.3 Component Interactions
 
 <puml src="diagrams/ComponentInteractionSequenceDiagram.puml" width="600" alt="Component Interaction Sequence Diagram"/>
+
 The components interact through well-defined interfaces:
 
 - UI calls Logic to execute commands
