@@ -37,11 +37,12 @@ Storage -left-|> UserPrefsStorage
 Storage -right-|> AppDataStorage
 
 JsonUserPrefsStorage .up.|> UserPrefsStorage
-JsonAppDataStorage .up.|> AppDataStorage
+JsonAppDataStorage .right.|> AppDataStorage
 JsonAppDataStorage ..> JsonSerializableAppData
 JsonSerializableAppData --> "*" JsonAdaptedContact
 JsonAdaptedContact --> "*" JsonAdaptedTag
 JsonAdaptedEvent --> "*" JsonAdaptedParticipant
-JsonSerializableAppData --> JsonAdaptedEvent
+JsonAdaptedEvent --> "*" JsonAdaptedTag
+JsonSerializableAppData --> "*" JsonAdaptedEvent
 
 @enduml
