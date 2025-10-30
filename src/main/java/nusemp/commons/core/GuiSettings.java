@@ -14,7 +14,7 @@ public class GuiSettings implements Serializable {
 
     private static final double DEFAULT_HEIGHT = 600;
     private static final double DEFAULT_WIDTH = 740;
-    private static final boolean DEFAULT_IS_DARK_MODE = true;
+    private static final boolean DEFAULT_IS_DARK_THEME = true;
 
     private final double windowWidth;
     private final double windowHeight;
@@ -28,7 +28,7 @@ public class GuiSettings implements Serializable {
         windowWidth = DEFAULT_WIDTH;
         windowHeight = DEFAULT_HEIGHT;
         windowCoordinates = null; // null represent no coordinates
-        isDarkTheme = DEFAULT_IS_DARK_MODE;
+        isDarkTheme = DEFAULT_IS_DARK_THEME;
     }
 
     /**
