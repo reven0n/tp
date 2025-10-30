@@ -1,0 +1,47 @@
+@startuml
+
+start
+:ParticipantMap receives request;
+
+if () then ([Get Participants])
+  if () then ([Contact])
+    :Retrieve events map\nusing contact key;
+    :Return list of\nparticipants;
+  else ([else])
+    if () then ([Event])
+        :Retrieve contacts map\nusing event key;
+        :Return list of\nparticipants;
+    else ([All Participants]))
+      :Return all participants\nfrom both maps;
+    endif
+  endif
+else ([Edit Participants])
+  if () then ([Add Participant])
+    if () then ([isDuplicate])
+      stop
+    else ([else])
+      :Create new Participant\nwith status;
+      :Add participant to byContact map;
+      :Add participant to byEvent map;
+    endif
+  else ([else])
+      if () then ([Remove Participant])
+        :Check if participant exists;
+        if () then ([Not Found])
+          stop
+        else ([Found])
+          :Remove participant\nfrom byContact map;
+          :Remove participant\nfrom byEvent map;
+        endif
+
+      else ([Update Status])
+        :Remove old participant;
+        :Add new participant\nwith updated status;
+      endif
+  endif
+endif
+
+:Operation complete;
+stop
+
+@enduml
