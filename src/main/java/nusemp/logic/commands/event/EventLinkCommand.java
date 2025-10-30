@@ -113,14 +113,9 @@ public class EventLinkCommand extends Command {
                     contactToLink.getEmail()));
         }
 
-        try {
-            model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
-            model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-            return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    contactToLink.getName(), eventToLink.getName()));
-        } catch (Exception e) {
-            throw new CommandException("Error linking participant to event.");
-        }
+        model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
+        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, contactToLink.getName(), eventToLink.getName()));
     }
 
     private CommandResult executeLinkAll(Model model, Event eventToLink) throws CommandException {
