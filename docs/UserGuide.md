@@ -713,10 +713,12 @@ Screenshot Example:
 
 ### 3.9 `event export`
 
-**Quickly copy all contacts** with the given status from an event to your clipboard:
+**Quickly copy all contacts** with available status from an event to your clipboard. Or, if status is specified, 
+only copy contacts with that status:
 
 ```
 event export 1 --status available
+event export 1
 ```
 
 Copies all contacts who are available from event #1.
@@ -725,7 +727,7 @@ Copies all contacts who are available from event #1.
 
 <box type="tip" seamless>
 
-**Perfect For:**
+**Why This is Helpful:**
 
 - Pasting into emails or messages
 - Sending reminders or updates
@@ -865,7 +867,7 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 | **Link Contact to Event**     | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
 | **Unlink Contact from Event** | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
 | **Show Event's Contacts**     | `event show INDEX`<br>e.g. `event show 1`                                                                                                   |
-| **Export Event Contacts**     | `event export INDEX`<br>e.g. `event export 1`                                                                                               |
+| **Export Event Contacts**     | `event export INDEX [--status STATUS]`<br>e.g. `event export 1`<br> `event export 1 --status available`<br/>                                |
 | **RSVP to Event**             | `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS`<br>e.g. `event rsvp --event 1 --contact 2 --status available`      |
 
 ---
