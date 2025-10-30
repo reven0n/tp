@@ -1,0 +1,98 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AppParser" as AppParser LOGIC_COLOR
+participant ":EventEditCommandParser" as EventEditCommandParser LOGIC_COLOR
+participant "cmd:EventEditCommand" as EventEditCommand LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":AppData" as AppData MODEL_COLOR
+participant ":UniqueEventList" as UniqueEventList MODEL_COLOR
+participant ":ParticipantMap" as ParticipantMap MODEL_COLOR
+end box
+
+box Storage STORAGE_COLOR_T1
+participant ":Storage" as Storage STORAGE_COLOR
+end box
+
+[-> LogicManager : execute("event edit 1 -n Meeting")
+activate LogicManager
+
+LogicManager -> AppParser : parseCommand(...)
+activate AppParser
+
+create EventEditCommandParser
+AppParser -> EventEditCommandParser
+activate EventEditCommandParser
+
+EventEditCommandParser --> AppParser
+deactivate EventEditCommandParser
+
+AppParser -> EventEditCommandParser : parse("1 -n Meeting")
+activate EventEditCommandParser
+
+create EventEditCommand
+EventEditCommandParser -> EventEditCommand
+activate EventEditCommand
+
+EventEditCommand --> EventEditCommandParser : cmd
+deactivate EventEditCommand
+
+EventEditCommandParser --> AppParser : cmd
+deactivate EventEditCommandParser
+
+AppParser --> LogicManager : cmd
+deactivate AppParser
+
+LogicManager -> EventEditCommand : execute(model)
+activate EventEditCommand
+
+EventEditCommand -> Model : getFilteredEventList()
+activate Model
+Model --> EventEditCommand : eventList
+deactivate Model
+
+EventEditCommand -> EventEditCommand : createEditedEvent(oldEvent, descriptor)
+activate EventEditCommand
+EventEditCommand --> EventEditCommand : editedEvent
+deactivate EventEditCommand
+
+EventEditCommand -> Model : setEvent(oldEvent, editedEvent)
+activate Model
+
+Model -> AppData : setEvent(...)
+activate AppData
+
+AppData -> UniqueEventList : setEvent(...)
+activate UniqueEventList
+UniqueEventList --> AppData
+deactivate UniqueEventList
+
+AppData -> ParticipantMap : updateEvent(oldEvent, editedEvent)
+activate ParticipantMap
+ParticipantMap --> AppData
+deactivate ParticipantMap
+
+AppData --> Model
+deactivate AppData
+
+Model --> EventEditCommand
+deactivate Model
+
+EventEditCommand --> LogicManager : CommandResult
+deactivate EventEditCommand
+
+LogicManager -> Storage : saveAppData(appData)
+activate Storage
+Storage --> LogicManager
+deactivate Storage
+
+[<-- LogicManager : CommandResult
+deactivate LogicManager
+
+@enduml

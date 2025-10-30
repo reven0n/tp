@@ -1,0 +1,77 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AppParser" as AppParser LOGIC_COLOR
+participant ":ContactAddCommandParser" as ContactAddCommandParser LOGIC_COLOR
+participant "c:ContactAddCommand" as ContactAddCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant "john:Contact" as Contact MODEL_COLOR
+participant "m:Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("contact add -n John -e john@example.com")
+activate LogicManager
+
+LogicManager -> AppParser : parseCommand("contact add ...")
+activate AppParser
+
+create ContactAddCommandParser
+AppParser -> ContactAddCommandParser
+activate ContactAddCommandParser
+
+ContactAddCommandParser --> AppParser
+deactivate ContactAddCommandParser
+
+AppParser -> ContactAddCommandParser : parse("-n John -e john@example.com")
+activate ContactAddCommandParser
+
+create Contact
+ContactAddCommandParser -> Contact
+activate Contact
+
+Contact --> ContactAddCommandParser : john
+deactivate Contact
+
+create ContactAddCommand
+ContactAddCommandParser -> ContactAddCommand
+activate ContactAddCommand
+
+ContactAddCommand --> ContactAddCommandParser
+deactivate ContactAddCommand
+
+ContactAddCommandParser --> AppParser : c
+deactivate ContactAddCommandParser
+ContactAddCommandParser -[hidden]-> AppParser
+destroy ContactAddCommandParser
+
+AppParser --> LogicManager : c
+deactivate AppParser
+
+LogicManager -> ContactAddCommand : execute(m)
+activate ContactAddCommand
+
+ContactAddCommand -> Model : addContact(c)
+activate Model
+
+Model --> ContactAddCommand
+deactivate Model
+
+create CommandResult
+ContactAddCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ContactAddCommand
+deactivate CommandResult
+
+ContactAddCommand --> LogicManager : r
+deactivate ContactAddCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
