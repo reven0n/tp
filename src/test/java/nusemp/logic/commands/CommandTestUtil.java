@@ -22,7 +22,7 @@ import nusemp.logic.commands.exceptions.CommandException;
 import nusemp.model.AppData;
 import nusemp.model.Model;
 import nusemp.model.contact.Contact;
-import nusemp.model.contact.NameContainsKeywordsPredicate;
+import nusemp.model.contact.ContactNameContainsKeywordsPredicate;
 import nusemp.model.event.Event;
 import nusemp.testutil.EditContactDescriptorBuilder;
 import nusemp.testutil.EditEventDescriptorBuilder;
@@ -192,7 +192,7 @@ public class CommandTestUtil {
 
         Contact contact = model.getFilteredContactList().get(targetIndex.getZeroBased());
         final String[] splitName = contact.getName().value.split("\\s+");
-        model.updateFilteredContactList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        model.updateFilteredContactList(new ContactNameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredContactList().size());
     }
