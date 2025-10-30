@@ -87,7 +87,7 @@ class EventLinkCommandTest {
         EventLinkCommand linkCommand = new EventLinkCommand(validEventIndex, validContactIndex);
 
         assertCommandFailure(linkCommand, model,
-                String.format(EventLinkCommand.MESSAGE_DUPLICATE_PARTICIPANT, contact.getEmail()));
+                String.format(EventLinkCommand.MESSAGE_DUPLICATE_PARTICIPANT, contact.getEmail(), event.getName()));
     }
 
     @Test
