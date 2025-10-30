@@ -121,7 +121,8 @@ public class EventUnlinkCommandTest {
         EventUnlinkCommand unlinkCommand = new EventUnlinkCommand(INDEX_FIRST_EVENT, INDEX_FIRST_CONTACT);
         String expected = EventUnlinkCommand.class.getCanonicalName()
                 + "{eventIndex=" + INDEX_FIRST_EVENT
-                + ", contactIndex=" + INDEX_FIRST_CONTACT + "}";
+                + ", contactIndex=" + INDEX_FIRST_CONTACT
+                + ", unlinkAll=false" + "}";
         assertEquals(expected, unlinkCommand.toString());
     }
 

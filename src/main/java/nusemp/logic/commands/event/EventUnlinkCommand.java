@@ -55,6 +55,9 @@ public class EventUnlinkCommand extends Command {
         this.unlinkAll = false;
     }
 
+    /**
+     * Creates an EventUnlinkCommand to unlink all contacts from an event
+     */
     public EventUnlinkCommand(Index eventIndex) {
         requireNonNull(eventIndex);
         this.eventIndex = eventIndex;

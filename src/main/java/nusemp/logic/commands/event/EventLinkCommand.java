@@ -63,6 +63,12 @@ public class EventLinkCommand extends Command {
         this.linkAll = false;
     }
 
+    /**
+     * Creates an EventLinkCommand to link all filtered {@code Contact}s
+     * to the specified {@code Event}
+     *
+     * @param eventIndex Index of the event in the filtered event list to link all contacts to
+     */
     public EventLinkCommand(Index eventIndex) {
         requireNonNull(eventIndex);
         this.eventIndex = eventIndex;
