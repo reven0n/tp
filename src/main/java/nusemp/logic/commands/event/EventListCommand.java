@@ -3,6 +3,7 @@ package nusemp.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static nusemp.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 
+import nusemp.logic.Messages;
 import nusemp.logic.commands.Command;
 import nusemp.logic.commands.CommandResult;
 import nusemp.logic.commands.CommandType;
@@ -26,7 +27,9 @@ public class EventListCommand extends Command {
     public CommandResult execute(Model model) {
         requireNonNull(model);
         model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, model.getFilteredEventList().size()));
+        int size = model.getFilteredEventList().size();
+        String heading = size == 0 ? Messages.HEADING_EVENTS_NONE : Messages.HEADING_EVENTS;
+        return new CommandResult(String.format(MESSAGE_SUCCESS, size), CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 
     @Override

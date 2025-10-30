@@ -119,8 +119,8 @@ class JsonAdaptedEvent {
             modelAddress = new Address(address);
         }
 
-        // Default to STARTING if status is not provided (backward compatibility)
-        EventStatus modelStatus = EventStatus.STARTING;
+        // Default to PENDING if status is not provided (backward compatibility)
+        EventStatus modelStatus = EventStatus.PENDING;
         if (status != null) {
             if (!EventStatus.isValidEventStatus(status)) {
                 throw new IllegalValueException(EventStatus.MESSAGE_CONSTRAINTS);

@@ -96,33 +96,9 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setWindowDefaultSize(logic.getGuiSettings());
+        setTheme(logic.getGuiSettings());
 
         setAccelerators();
-
-
-        SVGPath svgPath = new SVGPath();
-        svgPath.setContent("M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 "
-                + "0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z");
-        svgPath.setStyle("-fx-fill: lightgray; -fx-stroke: #222; -fx-stroke-width: 1;");
-        contactsToggle.setGraphic(svgPath);
-
-        SVGPath svgPath1 = new SVGPath();
-        svgPath1.setContent("M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1"
-                + " 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0"
-                + " 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.2"
-                + "5h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V"
-                + "15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h."
-                + "008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z");
-        svgPath1.setStyle("-fx-fill: lightgray; -fx-stroke: #222; -fx-stroke-width: 1;");
-        eventsToggle.setGraphic(svgPath1);
-
-        SVGPath svgPath2 = new SVGPath();
-        svgPath2.setContent("M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-"
-                + "4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7"
-                + ".5 0Z");
-        svgPath2.setStyle("-fx-fill: lightgray; -fx-stroke: lightgray; -fx-stroke-width: 1");
-        themeToggle.setGraphic(svgPath2);
-
     }
 
 
@@ -179,7 +155,13 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), logic::getParticipants);
+        String contactHeading = logic.getFilteredContactList().isEmpty()
+                ? Messages.HEADING_CONTACTS_NONE : Messages.HEADING_CONTACTS;
+        contactListPanel = new ContactListPanel(contactHeading, logic.getFilteredContactList(), logic::getParticipants);
+
+        String eventHeading = logic.getFilteredEventList().isEmpty()
+                ? Messages.HEADING_EVENTS_NONE : Messages.HEADING_EVENTS;
+        eventListPanel = new EventListPanel(eventHeading, logic.getFilteredEventList(), logic::getParticipants);
 
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
@@ -203,7 +185,6 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleContactViewToggle() {
         // Update UI logic
-        contactListPanel = new ContactListPanel(logic.getFilteredContactList(), logic::getParticipants);
         contactListPanelPlaceholder.getChildren().clear();
         contactListPanelPlaceholder.getChildren().add(contactListPanel.getRoot());
 
@@ -217,7 +198,6 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     public void handleEventViewToggle() {
         // Update UI logic
-        eventListPanel = new EventListPanel(logic.getFilteredEventList(), logic::getParticipants);
         contactListPanelPlaceholder.getChildren().clear();
         contactListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
 
@@ -256,6 +236,17 @@ public class MainWindow extends UiPart<Stage> {
         if (guiSettings.getWindowCoordinates() != null) {
             primaryStage.setX(guiSettings.getWindowCoordinates().getX());
             primaryStage.setY(guiSettings.getWindowCoordinates().getY());
+        }
+    }
+
+    /**
+     * Sets the theme based on {@code guiSettings}.
+     */
+    void setTheme(GuiSettings guiSettings) {
+        if (guiSettings.isDarkTheme()) {
+            switchToDarkTheme();
+        } else {
+            switchToLightTheme();
         }
     }
 
@@ -375,7 +366,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), isDarkTheme);
         logic.setGuiSettings(guiSettings);
         primaryStage.hide();
     }
@@ -394,22 +385,39 @@ public class MainWindow extends UiPart<Stage> {
     private CommandResult executeCommand(String commandText) throws CommandException, ParseException {
         try {
             CommandResult commandResult = logic.execute(commandText);
-            logger.info("Result: " + commandResult.getFeedbackToUser());
-            resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
-
-            if (commandResult.isShowHelp()) {
-                handleHelp();
-            }
-
-            if (commandResult.isExit()) {
-                handleExit();
-            }
-
+            handleCommandResult(commandResult);
             return commandResult;
         } catch (CommandException | ParseException e) {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
+        }
+    }
+
+    private void handleCommandResult(CommandResult commandResult) {
+        logger.info("Result: " + commandResult.getFeedbackToUser());
+        resultDisplay.setFeedbackToUser(commandResult.getFeedbackToUser());
+
+        if (commandResult.isShowHelp()) {
+            handleHelp();
+        }
+        if (commandResult.isExit()) {
+            handleExit();
+        }
+
+        switch (commandResult.getUiBehavior()) {
+        case SHOW_CONTACTS:
+            contactListPanel.updateHeading(commandResult.getHeading());
+            handleContactViewToggle();
+            break;
+        case SHOW_EVENTS:
+            eventListPanel.updateHeading(commandResult.getHeading());
+            handleEventViewToggle();
+            break;
+        case NONE:
+            // Fallthrough
+        default:
+            break;
         }
     }
 }
