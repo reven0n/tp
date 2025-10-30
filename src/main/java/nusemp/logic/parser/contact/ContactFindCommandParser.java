@@ -19,7 +19,7 @@ import nusemp.logic.parser.Parser;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.contact.AddressContainsKeywordsPredicate;
 import nusemp.model.contact.Contact;
-import nusemp.model.contact.ContactMatchesAnyPredicatePredicate;
+import nusemp.model.contact.ContactMatchesAllPredicates;
 import nusemp.model.contact.EmailContainsKeywordsPredicate;
 import nusemp.model.contact.NameContainsKeywordsPredicate;
 import nusemp.model.contact.PhoneContainsKeywordsPredicate;
@@ -111,7 +111,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
         if (predicates.size() == 1) {
             return new ContactFindCommand(predicates.get(0));
         } else {
-            return new ContactFindCommand(new ContactMatchesAnyPredicatePredicate(predicates));
+            return new ContactFindCommand(new ContactMatchesAllPredicates(predicates));
         }
     }
 
