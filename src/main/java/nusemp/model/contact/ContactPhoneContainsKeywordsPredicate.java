@@ -33,7 +33,7 @@ public class ContactPhoneContainsKeywordsPredicate implements Predicate<Contact>
         }
 
         ContactPhoneContainsKeywordsPredicate otherPhoneContainsKeywordsPredicate =
-                (ContactPhoneContainsKeywordsPredicate) other;
+            (ContactPhoneContainsKeywordsPredicate) other;
         return keywords.equals(otherPhoneContainsKeywordsPredicate.keywords);
     }
 
