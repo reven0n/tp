@@ -1,0 +1,29 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+title Storage Sequence Diagram
+
+actor User as user USER_COLOR
+
+box Storage STORAGE_COLOR_T1
+participant ":Storage" as Storage STORAGE_COLOR
+participant ":AppDataStorage" as AppDataStorage STORAGE_COLOR
+participant ":JsonSerializableAppData" as JsonSerializableAppData STORAGE_COLOR
+end box
+
+user -[USER_COLOR]> Storage : saveAppData(appData)
+activate Storage STORAGE_COLOR
+Storage -> AppDataStorage : saveAppData(appData)
+activate AppDataStorage STORAGE_COLOR
+create JsonSerializableAppData
+AppDataStorage -> JsonSerializableAppData : new JsonSerializableAppData(appData)
+activate JsonSerializableAppData STORAGE_COLOR
+JsonSerializableAppData --> AppDataStorage
+deactivate JsonSerializableAppData STORAGE_COLOR
+AppDataStorage -> AppDataStorage : saveJsonFile(jsonAppData)
+AppDataStorage --> Storage
+deactivate AppDataStorage STORAGE_COLOR
+Storage --> user
+deactivate Storage STORAGE_COLOR
+@enduml
