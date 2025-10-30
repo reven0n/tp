@@ -764,8 +764,8 @@ Marks contact #2 as available for event #1.
 
 **Possible responses:**
 
-- `available` - They can attend
-- `unavailable` - They cannot attend
+- `available` - They can make it!
+- `unavailable` - They can't come
 - `pending` - Haven't decided yet
 
 <box type="tip" seamless>
