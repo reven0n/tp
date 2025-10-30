@@ -34,11 +34,11 @@ public class EventUnlinkCommand extends Command {
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " 2";
 
-    public static final String MESSAGE_SUCCESS = "Successfully unlinked contact: %1$s from event %2$s";
-    public static final String MESSAGE_SUCCESS_ALL = "Successfully unlinked %1$d contact(s) from event %2$s. "
+    public static final String MESSAGE_SUCCESS = "Successfully unlinked contact \"%1$s\" from event \"%2$s\"";
+    public static final String MESSAGE_SUCCESS_ALL = "Successfully unlinked %1$d contact(s) from event \"%2$s\". "
             + "\nContacts unlinked: ";
-    public static final String MESSAGE_CONTACT_NOT_FOUND = "Error unlinking contact: contact %1$s not found "
-            + "in event %2$s";
+    public static final String MESSAGE_CONTACT_NOT_FOUND = "Error unlinking contact: contact \"%1$s\" not found "
+            + "in event \"%2$s\"";
     public static final String MESSAGE_NO_CONTACTS_TO_UNLINK = "No contacts available to unlink";
 
     private final Index eventIndex;

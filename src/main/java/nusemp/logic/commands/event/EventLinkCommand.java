@@ -38,11 +38,11 @@ public class EventLinkCommand extends Command {
             + PREFIX_EVENT + " 1 "
             + PREFIX_CONTACT + " all";
 
-    public static final String MESSAGE_SUCCESS = "Successfully linked contact: %1$s to event: %2$s";
-    public static final String MESSAGE_SUCCESS_ALL = "Successfully linked %1$d contact(s) to event %2$s. "
+    public static final String MESSAGE_SUCCESS = "Successfully linked contact \"%1$s\" to event \"%2$s\"";
+    public static final String MESSAGE_SUCCESS_ALL = "Successfully linked %1$d contact(s) to event \"%2$s\". "
             + "\nContacts linked: ";
     public static final String MESSAGE_DUPLICATE_PARTICIPANT =
-            "Error linking event: contact with email %1$s is already linked to the event";
+            "Error linking event: contact with email \"%1$s\" is already linked to the event";
     public static final String MESSAGE_NO_CONTACTS_TO_LINK = "No contacts available to link";
 
     private final Index eventIndex;
