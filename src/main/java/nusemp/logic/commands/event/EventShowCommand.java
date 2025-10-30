@@ -23,9 +23,10 @@ public class EventShowCommand extends Command {
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
             + ": Shows the contacts that are participating in the event, "
-            + "which is identified by the index number used in the displayed event list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1";
+            + "which is identified by the index number used in the displayed event list.\n\n"
+            + "Parameters: INDEX\n"
+            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1\n\n"
+            + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
     public static final String MESSAGE_EVENT_SHOW_SUCCESS =
             "Successfully shown %1$s contact(s) that are part of event:\n%2$s";

@@ -27,15 +27,19 @@ public class EventRsvpCommand extends Command {
     public static final String COMMAND_WORD = "rsvp";
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
-            + ": RSVP to an event by its index.\n" + "Parameters:  "
+            + ": RSVP a contact to an event by their indexes.\n"
+            + "The status can be either \"available\" or \"unavailable\"\n\n"
+            + "Parameters:  "
             + PREFIX_EVENT + " EVENT_INDEX " + PREFIX_CONTACT + " CONTACT_INDEX " + PREFIX_STATUS + " STATUS\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 2" + " " + PREFIX_STATUS + " "
             + ParticipantStatus.AVAILABLE;
 
-    public static final String MESSAGE_SUCCESS = "Successfully RSVPed to event: %1$s for contact: %2$s";
+    public static final String MESSAGE_SUCCESS =
+            "Successfully RSVPed to event \"%1$s\" for contact \"%2$s\" with status \"%3$s\"";
 
-    public static final String MESSAGE_CONTACT_NOT_PARTICIPANT = "Contact: %1$s is not a participant of event: %2$s";
+    public static final String MESSAGE_CONTACT_NOT_PARTICIPANT =
+            "Contact \"%1$s\" is not a participant of event \"%2$s\"";
 
     private final Index eventIndex;
     private final Index contactIndex;
@@ -63,10 +67,10 @@ public class EventRsvpCommand extends Command {
         try {
             model.setParticipant(contactToRsvp, eventToRsvp, status);
             return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    Messages.format(eventToRsvp), Messages.format(contactToRsvp)));
+                    eventToRsvp.getName(), contactToRsvp.getName(), status));
         } catch (ParticipantNotFoundException e) {
             throw new CommandException(String.format(MESSAGE_CONTACT_NOT_PARTICIPANT,
-                    Messages.format(contactToRsvp), Messages.format(eventToRsvp)));
+                    contactToRsvp.getName(), eventToRsvp.getName()));
         }
     }
 

@@ -25,11 +25,12 @@ public class ContactShowCommand extends Command {
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
             + ": Shows the events that the contact is part of. "
             + "The contact is identified by the index number used in the displayed contact list.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1";
+            + "Parameters: INDEX\n"
+            + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1\n\n"
+            + "Note: INDEX must be a positive integer within the size of the displayed contact list.";
 
     public static final String MESSAGE_CONTACT_SHOW_SUCCESS =
-            "Successfully shown %1$s event(s) that has the contact:\n%2$s";
+            "Successfully shown %1$s event(s) that has the following contact:\n%2$s";
 
     private final Index targetIndex;
 

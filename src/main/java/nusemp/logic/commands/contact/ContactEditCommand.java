@@ -41,8 +41,8 @@ public class ContactEditCommand extends Command {
     public static final String MESSAGE_USAGE = CommandType.CONTACT + " " + COMMAND_WORD
             + ": Edits the details of the contact identified "
             + "by the index number used in the displayed contact list. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
+            + "Existing values will be overwritten by the input values.\n\n"
+            + "Parameters: INDEX "
             + "[" + PREFIX_NAME + " NAME] "
             + "[" + PREFIX_EMAIL + " EMAIL] "
             + "[" + PREFIX_PHONE + " PHONE] "
@@ -50,13 +50,14 @@ public class ContactEditCommand extends Command {
             + "[" + PREFIX_TAG + " TAG]...\n"
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " 1 "
             + PREFIX_EMAIL + " johndoe@example.com "
-            + PREFIX_PHONE + " 91234567";
+            + PREFIX_PHONE + " 91234567\n\n"
+            + "Note: INDEX must be a positive integer within the size of the displayed contact list.";
 
     public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Successfully edited contact:\n%1$s";
     public static final String MESSAGE_NOT_EDITED =
             "Error editing contact: at least one field to edit must be provided";
     public static final String MESSAGE_DUPLICATE_CONTACT =
-            "Error editing contact: contact with email \"%1$s\" already exists";
+            "Error editing contact: contact email \"%1$s\" already exists";
 
     private final Index index;
     private final EditContactDescriptor editContactDescriptor;
