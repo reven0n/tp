@@ -20,7 +20,7 @@ import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.Event;
 import nusemp.model.event.EventAddressContainsKeywordsPredicate;
 import nusemp.model.event.EventDateContainsKeywordsPredicate;
-import nusemp.model.event.EventMatchesAnyPredicatePredicate;
+import nusemp.model.event.EventMatchesAllPredicates;
 import nusemp.model.event.EventNameContainsKeywordsPredicate;
 import nusemp.model.event.EventStatusPredicate;
 import nusemp.model.event.EventTagContainsKeywordsPredicate;
@@ -115,7 +115,7 @@ public class EventFindCommandParser implements Parser<EventFindCommand> {
         if (predicates.size() == 1) {
             return new EventFindCommand(predicates.get(0));
         } else {
-            return new EventFindCommand(new EventMatchesAnyPredicatePredicate(predicates));
+            return new EventFindCommand(new EventMatchesAllPredicates(predicates));
         }
     }
 }

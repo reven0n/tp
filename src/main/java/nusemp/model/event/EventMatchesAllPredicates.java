@@ -8,17 +8,17 @@ import nusemp.commons.util.ToStringBuilder;
 /**
  * Tests that an {@code Event} matches any of the given predicates.
  */
-public class EventMatchesAnyPredicatePredicate implements Predicate<Event> {
+public class EventMatchesAllPredicates implements Predicate<Event> {
     private final List<Predicate<Event>> predicates;
 
-    public EventMatchesAnyPredicatePredicate(List<Predicate<Event>> predicates) {
+    public EventMatchesAllPredicates(List<Predicate<Event>> predicates) {
         this.predicates = predicates;
     }
 
     @Override
     public boolean test(Event event) {
         return predicates.stream()
-                .anyMatch(predicate -> predicate.test(event));
+                .allMatch(predicate -> predicate.test(event));
     }
 
     @Override
@@ -28,12 +28,12 @@ public class EventMatchesAnyPredicatePredicate implements Predicate<Event> {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EventMatchesAnyPredicatePredicate)) {
+        if (!(other instanceof EventMatchesAllPredicates)) {
             return false;
         }
 
-        EventMatchesAnyPredicatePredicate otherEventMatchesAnyPredicatePredicate =
-                (EventMatchesAnyPredicatePredicate) other;
+        EventMatchesAllPredicates otherEventMatchesAnyPredicatePredicate =
+                (EventMatchesAllPredicates) other;
         return predicates.equals(otherEventMatchesAnyPredicatePredicate.predicates);
     }
 

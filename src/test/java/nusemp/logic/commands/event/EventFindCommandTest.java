@@ -18,7 +18,7 @@ import nusemp.model.Model;
 import nusemp.model.ModelManager;
 import nusemp.model.UserPrefs;
 import nusemp.model.event.EventDateContainsKeywordsPredicate;
-import nusemp.model.event.EventMatchesAnyPredicatePredicate;
+import nusemp.model.event.EventMatchesAllPredicates;
 import nusemp.model.event.EventNameContainsKeywordsPredicate;
 import nusemp.model.event.EventStatusPredicate;
 import nusemp.model.event.EventTagContainsKeywordsPredicate;
@@ -86,17 +86,31 @@ class EventFindCommandTest {
     }
 
     @Test
-    public void execute_multipleFieldPredicates_eventsFound() {
-        String expectedMessage = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 3);
+    public void execute_multipleFieldPredicates_noEventsFound() {
+        String expectedMessage = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 0);
         EventNameContainsKeywordsPredicate namePredicate = preparePredicate("conference");
         EventDateContainsKeywordsPredicate datePredicate = new EventDateContainsKeywordsPredicate(
                 MEETING_EMPTY.getDate());
-        EventMatchesAnyPredicatePredicate predicate = new EventMatchesAnyPredicatePredicate(
+        EventMatchesAllPredicates predicate = new EventMatchesAllPredicates(
                 Arrays.asList(namePredicate, datePredicate));
         EventFindCommand command = new EventFindCommand(predicate);
         expectedModel.updateFilteredEventList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(MEETING_EMPTY, CONFERENCE_EMPTY, WORKSHOP_FILLED), model.getFilteredEventList());
+        assertEquals(Arrays.asList(), model.getFilteredEventList());
+    }
+
+    @Test
+    public void execute_multipleFieldPredicates_eventsFound() {
+        String expectedMessage = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, 1);
+        EventNameContainsKeywordsPredicate namePredicate = preparePredicate("workshop");
+        EventDateContainsKeywordsPredicate datePredicate = new EventDateContainsKeywordsPredicate(
+                WORKSHOP_FILLED.getDate());
+        EventMatchesAllPredicates predicate = new EventMatchesAllPredicates(
+                Arrays.asList(namePredicate, datePredicate));
+        EventFindCommand command = new EventFindCommand(predicate);
+        expectedModel.updateFilteredEventList(predicate);
+        assertCommandSuccess(command, model, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(WORKSHOP_FILLED), model.getFilteredEventList());
     }
 
     @Test
