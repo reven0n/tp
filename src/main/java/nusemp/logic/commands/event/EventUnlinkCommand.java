@@ -106,14 +106,10 @@ public class EventUnlinkCommand extends Command {
                     contactToUnlink.getName(), eventToUnlink.getName()));
         }
 
-        try {
-            model.removeParticipant(contactToUnlink, eventToUnlink);
-            model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
-            return new CommandResult(String.format(MESSAGE_SUCCESS,
-                    contactToUnlink.getName().toString(), eventToUnlink.getName().toString()));
-        } catch (Exception e) {
-            throw new CommandException("Error unlinking participant from event.");
-        }
+        model.removeParticipant(contactToUnlink, eventToUnlink);
+        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+        return new CommandResult(String.format(MESSAGE_SUCCESS,
+                contactToUnlink.getName().toString(), eventToUnlink.getName().toString()));
     }
 
     private CommandResult executeUnlinkAll(Model model, Event eventToUnlink) throws CommandException {

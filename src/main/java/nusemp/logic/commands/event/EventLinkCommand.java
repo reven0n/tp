@@ -44,7 +44,7 @@ public class EventLinkCommand extends Command {
     public static final String MESSAGE_SUCCESS_ALL = "Successfully linked %1$d contact(s) to event \"%2$s\". "
             + "\nContacts linked: ";
     public static final String MESSAGE_DUPLICATE_PARTICIPANT =
-            "Error linking event: contact with email \"%1$s\" is already linked to the event";
+            "Contact with email \"%1$s\" is already linked to the event \"%2$s\"";
     public static final String MESSAGE_NO_CONTACTS_TO_LINK = "No contacts available to link";
 
     private final Index eventIndex;
@@ -110,7 +110,7 @@ public class EventLinkCommand extends Command {
 
         if (model.hasParticipant(contactToLink, eventToLink)) {
             throw new CommandException(String.format(MESSAGE_DUPLICATE_PARTICIPANT,
-                    contactToLink.getEmail()));
+                    contactToLink.getEmail(), eventToLink.getName()));
         }
 
         model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
@@ -130,12 +130,10 @@ public class EventLinkCommand extends Command {
 
         for (Contact contact : filteredContactList) {
             if (!model.hasParticipant(contact, eventToLink)) {
-                try {
-                    model.addParticipant(contact, eventToLink, ParticipantStatus.UNKNOWN);
-                    linkedContacts.add(contact.getName().toString());
-                } catch (Exception e) {
-                    skippedContacts.add(contact.getName().toString());
-                }
+                model.addParticipant(contact, eventToLink, ParticipantStatus.UNKNOWN);
+                linkedContacts.add(contact.getName().toString());
+            } else {
+                skippedContacts.add(contact.getName().toString());
             }
         }
 
