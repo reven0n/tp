@@ -159,94 +159,42 @@ The components interact through well-defined interfaces:
 
 ### 3.1 Data Model Overview
 
-[Data Model Relationships Diagram placeholder]
+<puml src="diagrams/ModelClassDiagram.puml" width="600" alt="Model Class Diagram"/>
 
-The application manages three core entity types:
+The `Model` component,
+- stores all data in NUS EMP
+- stores the currently "selected" `Contact`s and `Event`s as a filtered list, exposed to outsiders as an unmodifiable `ObservableList`, which can be observed for UI updates
+- stores a `UserPref` object that represents the user’s preferences, e.g. dark theme, window sizes
+- does not depend on the other main components, as its single responsibility is to manage the data of NUS EMP
+
+The `Model` component manages three core entity types:
 
 - **Contact**: Individuals with contact information and tags
-- **Event**: Events with dates, venues, and participant relationships managed through ParticipantMap
-- **Participant**: Many-to-many relationship between contacts and events
+- **Event**: Events with names, statuses, dates, venues and tags
+- **Participant**: A relationship that contains the RSVP status of a contact for a specific event. It is a simple data class with three fields: `Contact`, `Event` and `ParticipantStatus`.
 
-### 3.2 Contact Entity
+### 3.2 Contact and Event
 
-[Contact Class Diagram placeholder]
+<puml src="diagrams/ContactEventClassDiagram.puml" width="600" alt="Class Diagram for both Contact and Event"/>
 
-**Core Fields:**
+Both `Contact` and `Event` classes share several design characteristics:
+- Immutable data structure that contains various fields, which are in turn represented by their own classes: `Name`, `Email`, `Phone`, `Address`, `Tag`, `Date`, `EventStatus`
+- Primary key system for uniqueness: email address (case-insensitive) for `Contact`, name for `Event`
+- An internal field `invalidationToggle` to provide invalidation mechanism for observable list updates
 
-- `Name`: Person's name (required)
-- `Email`: Email address (required, unique, case-insensitive for primary key)
-- `Phone`: Phone number (optional, supports empty values)
-- `Address`: Physical address (optional, supports empty values)
-- `Tag`: Categorization labels (optional, multiple)
-- `ContactKey`: Primary key based on lowercase email
-- `invalidationToggle`: UI update mechanism (internal)
+For the field classes:
+- Each class encapsulates validation logic and formatting rules specific to its own field type.
+- Each field class must be provided during the construction of `Contact` or `Event` objects, even optional fields.
+- Optional fields (i.e. `Phone` and `Address`) are represented using empty values instead.
 
-**Key Characteristics:**
+## 3.3 Participant Handling
 
-- Immutable data structure with primary key system
-- Field validation on construction with empty value support
-- Multi-level equality: primary key equality vs. full object equality
-- Invalidation mechanism for observable list updates
-- Utility methods: hasPhone(), hasAddress(), hasTags(), hasSameFields()
-- Located in `nusemp.model.contact` package
+Participant links between contacts and events are handled through a `ParticipantMap`:
+- It internally uses two HashMaps to maintain bidirectional relationships.
+- Keys used are `ContactKey` and `EventKey`, which are simple classes that only store the primary key fields (i.e. case-insensitive email for `ContactKey` and name for `EventKey`).
+- Lookups for contacts and their linked events are done through these keys for efficiency.
 
-### 3.3 Event Entity
-
-[Event Class Diagram placeholder]
-
-**Core Fields:**
-
-- `Name`: Event title (required, primary key)
-- `Date`: Event date and time (required, format: DD-MM-YYYY HH:mm)
-- `Address`: Event venue (optional, supports empty values)
-- `EventStatus`: Current event state (STARTING, ONGOING, CLOSED)
-- `Tag`: Event categories (optional, multiple)
-- `EventKey`: Primary key based on event name
-- `invalidationToggle`: UI update mechanism (internal)
-
-**Key Characteristics:**
-
-- Immutable data structure with name-based primary key
-- Multi-level equality system (isSameEvent(), hasSameFields(), equals())
-- Status-based filtering and management
-- Invalidation mechanism for observable list updates
-- Convenience constructor with default STARTING status and empty tags
-- Located in `nusemp.model.event` package
-
-### 3.4 Participant Entity
-
-**Core Fields:**
-
-- `Contact`: Associated contact reference
-- `Event`: Associated event reference
-- `ParticipantStatus`: Attendance status (UNAVAILABLE, AVAILABLE, UNKNOWN)
-
-**Key Characteristics:**
-
-- Located in `nusemp.model.participant` package
-- Links Contact and Event entities with full context
-- Default constructor with AVAILABLE status
-- Multi-level equality methods for contact comparisons (equalsContact(), hasSameContact())
-- Used by ParticipantMap for relationship management
-- Supports status updates for RSVP functionality
-
-### 3.5 Data Relationships
-
-**Architecture:**
-
-- **Contact ↔ Event**: Many-to-many relationship through ParticipantMap with dual indexing for efficient lookups
-- **Contact → Tag**: One-to-many relationship
-- **Event → Tag**: One-to-many relationship
-- **ParticipantMap**: Central relationship manager with dual indexing
-
-**ParticipantMap Features:**
-
-- Dual indexing: byContact and byEvent HashMaps for efficient lookups in both directions
-- Automatic relationship consistency maintenance
-- Support for contact/event updates across all relationships
-- Participant status management with full CRUD operations
-- Located in AppData for centralized relationship management
-- Participants stored as email references with status during serialization
+[ParticipantMap Activity Diagram placeholder]
 
 ---
 

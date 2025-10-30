@@ -9,6 +9,7 @@ Package Model as ModelPackage <<Rectangle>>{
 Class "<<interface>>\nReadOnlyAppData" as ReadOnlyAppData
 Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
 Class "<<interface>>\nModel" as Model
+Class "<<interface>>\nReadOnlyParticipantMap" as ReadOnlyParticipantMap
 Class AppData
 Class ModelManager
 Class UserPrefs
@@ -17,19 +18,13 @@ Class UniqueContactList
 Class UniqueEventList
 Class Contact
 Class Event
-Class Email
-Class Phone
-Class Address
-Class Name
-Class Tag
-Class Date
 Class Participant
+Class ParticipantMap
 
-Class I #FFFFFF
+Class _____________ #FFFFFF
 
 }
 
-'Main model classes
 Class HiddenOutside #FFFFFF
 HiddenOutside ..> Model
 Model .right.> ReadOnlyUserPrefs
@@ -39,43 +34,21 @@ ModelManager -right-> "1" UserPrefs
 AppData .up.|> ReadOnlyAppData
 ModelManager .up.|> Model
 UserPrefs .up.|> ReadOnlyUserPrefs
+ParticipantMap .up[norank].|> ReadOnlyParticipantMap
+ReadOnlyParticipantMap -right[hidden]- AppData
 
-'Contact and Event lists
+AppData *--> "1 " ParticipantMap
 AppData *--> "1 " UniqueContactList
-UniqueContactList --> "~* all" Contact : ""
-ModelManager -down[norank]-> "~* filtered   " Contact
+UniqueContactList --> "<size:11>~* all" Contact : ""
+ModelManager -down-> "<size:11>~* filtered" Contact
 AppData *--[norank]> "1" UniqueEventList
-'Note: "all" role is switched to "filtered" because of uml formatting issues
-UniqueEventList --> "     ~* filtered" Event
-'Note: "filtered" role is switched to "all" because of uml formatting issues
-ModelManager -down[norank]-> "~* all   " Event
+UniqueEventList --> "<size:11>~* all" Event
+ModelManager -down-> "<size:11>~* filtered" Event
 
-'Contact and Event participant relationship
-Participant -down-> "1" Contact
-Participant "~*" <-down- Event
-Participant <-down[hidden]- Event
+Contact "*" - "*" Event
+(Contact, Event) .. Participant
+ParticipantMap -[norank]-> "~*" Participant
 
-'Contact and Event fields
-Contact *--> "1" Email
-Contact *--> "1" Phone
-Contact *--> "1" Address
-Contact *-[norank]-> "1" Name
-Contact *--> "~*" Tag
-Contact -right-> "~*" Event
-Event *--> "1" Address
-Event *--> "1" Date
-Event *--> "~*" Tag
-Event *-[norank]-> "1" Name
-
-'Hidden relationships to improve diagram layout
-ModelManager -down[hidden]- UniqueEventList
-UniqueContactList -down[hidden]- Participant
-UniqueEventList -down[hidden]- Participant
-ModelManager -down[hidden]-> Participant
-ModelManager -down[hidden]-> Participant
-ModelManager -down[hidden]-> Contact
-ModelManager -down[hidden]- Tag
-UserPrefs -[hidden]-- I
-Email -[hidden]right- Phone
-Phone -[hidden]right- Name
+UserPrefs -down[hidden]- UniqueEventList
+ParticipantMap -right[hidden]- UniqueContactList
 @enduml
