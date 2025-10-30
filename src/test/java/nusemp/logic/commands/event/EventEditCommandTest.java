@@ -3,7 +3,7 @@ package nusemp.logic.commands.event;
 import static nusemp.logic.commands.CommandTestUtil.DESC_EVENT_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.DESC_EVENT_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_NAME_CONFERENCE;
-import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_CLOSED;
+import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_DONE;
 import static nusemp.logic.commands.CommandTestUtil.VALID_EVENT_STATUS_ONGOING;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandFailure;
 import static nusemp.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -152,10 +152,10 @@ public class EventEditCommandTest {
     @Test
     public void execute_statusFieldSpecified_success() {
         Event eventToEdit = model.getFilteredEventList().get(INDEX_FIRST_EVENT.getZeroBased());
-        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withStatus(VALID_EVENT_STATUS_CLOSED).build();
+        EditEventDescriptor descriptor = new EditEventDescriptorBuilder().withStatus(VALID_EVENT_STATUS_DONE).build();
         EventEditCommand eventEditCommand = new EventEditCommand(INDEX_FIRST_EVENT, descriptor);
 
-        Event editedEvent = new EventBuilder(eventToEdit).withStatus(VALID_EVENT_STATUS_CLOSED).build();
+        Event editedEvent = new EventBuilder(eventToEdit).withStatus(VALID_EVENT_STATUS_DONE).build();
 
         String expectedMessage = String.format(EventEditCommand.MESSAGE_EDIT_EVENT_SUCCESS,
                 Messages.format(editedEvent));

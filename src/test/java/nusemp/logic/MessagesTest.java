@@ -60,7 +60,7 @@ class MessagesTest {
         Date date = new Date("15-11-2025 09:00");
         Address address = new Address("123 Main St");
         Set<Tag> tags = Set.of(new Tag("Work"), new Tag("Important"));
-        Event event = new Event(name, date, address, EventStatus.STARTING, tags);
+        Event event = new Event(name, date, address, EventStatus.PENDING, tags);
         String result = Messages.format(event);
         String expected = String.format("%s; Date: %s; Address: %s; Tags: %s",
                 event.getName(), event.getDate(), event.getAddress(),

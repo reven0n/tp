@@ -132,7 +132,6 @@ public class EventCard extends UiPart<Region> {
                 exportContentData += email + ",";
             } else {
                 label.setStyle("-fx-background-color: #a8a8a8;");
-
             }
             people.getChildren().add(label);
 
