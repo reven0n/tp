@@ -11,7 +11,7 @@ Welcome to NUS Event Mailer Pro!
 NUS Event Mailer Pro (NUS EMP) is a desktop app for event organizers at NUS to **manage hundreds of events and contacts quickly and easily**. It's designed for speed and simplicity, as most actions can be done by typing commands directly, allowing you to work quickly without relying on menus or complex navigation.
 
 We assume that you can type fast but still want a well-designed interface, in which case NUS EMP is perfect for you! No programming knowledge will be needed, but some
- basic computer skills like opening terminals, downloading files, will be required for you to run the app.
+ basic computer skills like using terminals, downloading files, will be required for you to run the app.
 
 <page-nav-print />
 
@@ -28,7 +28,7 @@ We assume that you can type fast but still want a well-designed interface, in wh
 
 3. **Save the file** in any folder you like - this will be your app's home
 
-4. **Start the app**: Open a terminal, go to that folder, and type:
+4. **Start the app**: Open a terminal, go to that folder using the `cd` command, and type:
 
    ```
    java -jar nus-emp-v1.5.jar
