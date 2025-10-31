@@ -39,7 +39,7 @@ NUS Event Mailer Pro (NUS EMP) is a desktop application designed for NUS event o
 
 ### 1.2 Quick Setup
 
-Refer to the guide [_Setting up and getting started_](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/docs/SettingUp.md) for detailed installation and setup instructions.
+Refer to the guide [_Setting up and getting started_](SettingUp.md) for detailed installation and setup instructions.
 
 ### 1.3 Development Workflow
 
@@ -56,7 +56,7 @@ Refer to the guide [_Setting up and getting started_](https://github.com/AY2526S
 
 ### 2.1 High-Level Architecture
 
-<puml src="diagrams/ArchitectureDiagram.puml" width="600" alt="Architecture Diagram"/>
+<puml src="diagrams/ArchitectureDiagram.puml" width="250" alt="Architecture Diagram"/>
 
 The application follows a clean architecture pattern with five main components:
 
@@ -97,6 +97,8 @@ All UI components inherit from `UiPart` abstract class and use FXML for layout d
 
 **API**: [`Logic.java`](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/src/main/java/nusemp/logic/Logic.java)
 
+<puml src="diagrams/LogicClassDiagram.puml" width="400" alt="Logic class diagram"/>
+
 The Logic component manages:
 
 - **Command parsing**: Translates user input into executable commands
@@ -111,6 +113,8 @@ Key classes:
 
 #### 2.2.4 Model Component
 
+<puml src="diagrams/ModelClassDiagram.puml" width="500" alt="Model Class Diagram"/>
+
 **API**: [`Model.java`](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/src/main/java/nusemp/model/Model.java)
 
 The Model component maintains application state:
@@ -118,11 +122,13 @@ The Model component maintains application state:
 - **Data storage**: `UniqueContactList`, `UniqueEventList`
 - **Filtered views**: Observable lists for UI binding
 - **User preferences**: Application settings and preferences
-- **Data relationships**: Contact-event associations
+- **Data relationships**: Contact-event associations with `ParticipantMap`
+
+For more details, refer to [Section 3](#3-core-domain-model).
 
 #### 2.2.5 Storage Component
 
-<puml src="diagrams/StorageClassDiagram.puml" alt="Storage class diagram"/>
+<puml src="diagrams/StorageClassDiagram.puml" width="500" alt="Storage class diagram"/>
 
 **API**: [`Storage.java`](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/src/main/java/nusemp/storage/Storage.java)
 
@@ -159,7 +165,7 @@ The components interact through well-defined interfaces:
 
 ### 3.1 Data Model Overview
 
-<puml src="diagrams/ModelClassDiagram.puml" width="600" alt="Model Class Diagram"/>
+<puml src="diagrams/ModelClassDiagram.puml" width="500" alt="Model Class Diagram"/>
 
 The `Model` component,
 - stores all data in NUS EMP
@@ -175,7 +181,7 @@ The `Model` component manages three core entity types:
 
 ### 3.2 Contact and Event
 
-<puml src="diagrams/ContactEventClassDiagram.puml" width="600" alt="Class Diagram for both Contact and Event"/>
+<puml src="diagrams/ContactEventClassDiagram.puml" width="500" alt="Class Diagram for both Contact and Event"/>
 
 Both `Contact` and `Event` classes share several design characteristics:
 - Immutable data structure that contains various fields, which are in turn represented by their own classes: `Name`, `Email`, `Phone`, `Address`, `Tag`, `Date`, `EventStatus`
@@ -194,7 +200,7 @@ Participant links between contacts and events are handled through a `Participant
 - Keys used are `ContactKey` and `EventKey`, which are simple classes that only store the primary key fields (i.e. case-insensitive email for `ContactKey` and name for `EventKey`).
 - Lookups for contacts and their linked events are done through these keys for efficiency.
 
-<puml src="diagrams/ParticipantMapActivityDiagram.puml" width="600" alt="ParticipantMap Activity Diagram" />
+<puml src="diagrams/ParticipantMapActivityDiagram.puml" alt="ParticipantMap Activity Diagram" />
 
 ## **4. Command System**
 
@@ -238,7 +244,7 @@ The command system follows a consistent pattern:
 
 ### 4.3 Parser Architecture
 
-<puml src="diagrams/ParserClasses.puml" alt="Parser Class Diagram"/>
+<puml src="diagrams/ParserClasses.puml" width="550" alt="Parser Class Diagram"/>
 
 The parser system uses a direct interface implementation approach:
 
@@ -256,7 +262,7 @@ The parser system uses a direct interface implementation approach:
 
 ### 4.4 Error Handling Flow
 
-<puml src="diagrams/ErrorHandlingFlowDiagram.puml" alt="Error Handling Flow Diagram"/>
+<puml src="diagrams/ErrorHandlingFlowDiagram.puml" width="600" alt="Error Handling Flow Diagram"/>
 
 Error handling follows these principles:
 
@@ -406,7 +412,7 @@ Refer to Edit/Update Sequence Diagram above.
 
 ### 5.9 Data Persistence Flow
 
-<puml src="diagrams/StorageSequenceDiagram.puml" alt="Storage sequence diagram"/>
+<puml src="diagrams/StorageSequenceDiagram.puml" width="600" alt="Storage sequence diagram"/>
 
 **Steps:**
 
@@ -611,11 +617,11 @@ void execute_contactAddCommand_success() {
 
 ## **8. Supporting Documentation**
 
-- [Documentation guide](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/docs/Documentation.md)
-- [Testing guide](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/docs/Testing.md)
-- [Logging guide](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/docs/Logging.md)
-- [Configuration guide](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/docs/Configuration.md)
-- [DevOps guide](https://github.com/AY2526S1-CS2103T-F15b-2/tp/blob/master/docs/DevOps.md)
+- [Documentation guide](Documentation.md)
+- [Testing guide](Testing.md)
+- [Logging guide](Logging.md)
+- [Configuration guide](Configuration.md)
+- [DevOps guide](DevOps.md)
 
 ---
 

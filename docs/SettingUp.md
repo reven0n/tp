@@ -52,10 +52,10 @@ If you plan to use Intellij IDEA (highly recommended):
 
 1. **Learn the design**
 
-   When you are ready to start coding, we recommend that you get some sense of the overall design by reading about [NUS EMP's architecture](DeveloperGuide.md#architecture).
+   When you are ready to start coding, we recommend that you get some sense of the overall design by reading about [NUS EMP's architecture](DeveloperGuide.md#2-system-architecture).
 
 1. **Do the tutorials**
-   These tutorials will help you get acquainted with the codebase.
+   These tutorials will help you get acquainted with the codebase. Even though these tutorials refer to AB3, the concepts still apply to NUS EMP.
 
    * [Tracing code](https://se-education.org/guides/tutorials/ab3TracingCode.html)
    * [Adding a new command](https://se-education.org/guides/tutorials/ab3AddRemark.html)
