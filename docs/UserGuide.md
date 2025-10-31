@@ -8,7 +8,7 @@
 
 Welcome to NUS Event Mailer Pro!
 
-NUS Event Mailer Pro (NUS EMP) is a desktop app that helps you manage hundreds of events and contacts quickly and easily. It's designed for speed and simplicity, as most actions can be done by typing commands directly, allowing you to work quickly without relying on menus or complex navigation. Event Mailer Pro keeps your workflow smooth, so you can focus on running great events, not managing data.
+NUS Event Mailer Pro (NUS EMP) is a desktop app that helps you manage hundreds of events and contacts quickly and easily. It's designed for speed and simplicity, as most actions can be done by typing commands directly, allowing you to work quickly without relying on menus or complex navigation. NUS Event Mailer Pro keeps your workflow smooth, so you can focus on running great events, not managing data.
 
 <page-nav-print />
 
@@ -105,7 +105,7 @@ If you're using a PDF version of this guide, be careful when copying and pasting
 
 The NUS Event Mailer Pro interface is designed to be intuitive and efficient for managing your events and contacts.
 
-![App Interface](images/Ui.png)
+![App Interface](images/UiLabelled.png)
 
 #### Main Interface Components
 
