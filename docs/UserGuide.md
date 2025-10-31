@@ -8,7 +8,10 @@
 
 Welcome to NUS Event Mailer Pro!
 
-NUS Event Mailer Pro (NUS EMP) is a desktop app that helps you manage hundreds of events and contacts quickly and easily. It's designed for speed and simplicity, as most actions can be done by typing commands directly, allowing you to work quickly without relying on menus or complex navigation. NUS Event Mailer Pro keeps your workflow smooth, so you can focus on running great events, not managing data.
+NUS Event Mailer Pro (NUS EMP) is a desktop app for event organizers at NUS to **manage hundreds of events and contacts quickly and easily**. It's designed for speed and simplicity, as most actions can be done by typing commands directly, allowing you to work quickly without relying on menus or complex navigation.
+
+We assume that you can type fast but still want a well-designed interface, in which case NUS EMP is perfect for you! No programming knowledge will be needed, but some
+ basic computer skills like opening terminals, downloading files, will be required for you to run the app.
 
 <page-nav-print />
 
@@ -28,7 +31,7 @@ NUS Event Mailer Pro (NUS EMP) is a desktop app that helps you manage hundreds o
 4. **Start the app**: Open a terminal, go to that folder, and type:
 
    ```
-   java -jar nus-emp.jar
+   java -jar nus-emp-v1.5.jar
    ```
 
    You'll see the app window appear with some sample contacts and events!
@@ -181,7 +184,8 @@ contact add --name NAME --email EMAIL [--phone PHONE] [--address ADDRESS] [--tag
 ```
 
 Screenshot Example:
-![Contact Add Example](images/ContactAddExample.png)
+
+<img src="images/ContactAddExample.png" width="600" alt="Contact Add Example" />
 
 ### 2.2 `contact list`
 
@@ -209,7 +213,8 @@ contact list
 ```
 
 Screenshot Example:
-![Contact List Example](images/ContactListExample.png)
+
+<img src="images/ContactListExample.png" width="600" alt="Contact List Example" />
 
 ### 2.3 `contact edit`
 
@@ -244,7 +249,8 @@ contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE] [--address ADDR
 ```
 
 Screenshot Example:
-![Contact Edit Example](images/ContactEditExample.png)
+
+<img src="images/ContactEditExample.png" width="600" alt="Contact Edit Example" />
 
 ### 2.4 `contact find`
 
@@ -323,7 +329,9 @@ contact find KEYWORD [MORE_KEYWORDS]... or contact find [--FIELD KEYWORD [MORE_K
 ```
 
 Screenshot Example:
-![Contact Find Example](images/ContactFindExample.png)
+
+<img src="images/ContactFindExample.png" width="600" alt="Contact Find Example" />
+
 _In the example screenshot, `contact find --name lim` was executed._
 
 ### 2.5 `contact delete`
@@ -359,6 +367,7 @@ Screenshot Example:
 ![Contact Delete Example](images/ContactDeleteExample.png)
 _In the example screenshot, `contact find --name john` was executed, and to delete the contact at index 2 (highlighted under A), `contact delete 2` was executed._
 
+<!-- @@author CZX123 -->
 ### 2.6 `contact show`
 
 **Check what events someone is invited to:**
@@ -399,7 +408,7 @@ Screenshot Example:
 _In the example screenshot, we want to show all events for the contact at index 2 (highlighted under A), so we execute `contact show 2`, bringing us to the events page._
 
 ---
-<!-- @@author reven0n-->>
+<!-- @@author reven0n -->
 ## 3. Managing Your Events
 
 ### 3.1 `event add`
@@ -436,7 +445,8 @@ event add --name NAME --date DATE [--address ADDRESS]
 ```
 
 Screenshot Example:
-![Event Add Example](images/EventAddExample.png)
+
+<img src="images/EventAddExample.png" width="600" alt="Event Add Example" />
 
 ### 3.2 `event list`
 
@@ -464,7 +474,8 @@ event list
 ```
 
 Screenshot Example:
-![Event List Example](images/EventListExample.png)
+
+<img src="images/EventListExample.png" width="600" alt="Event List Example" />
 
 ### 3.3 `event edit`
 
@@ -504,8 +515,10 @@ event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATU
 ```
 
 Screenshot Example:
-![Event Edit Example](images/EventEditExample.png)
-<!--@@author-->
+
+<img src="images/EventEditExample.png" width="600" alt="Event Edit Example" />
+
+<!-- @@author -->
 
 ### 3.4 `event find`
 
@@ -557,9 +570,10 @@ event find KEYWORD [MORE_KEYWORDS]... or event find [--FIELD KEYWORD [MORE_KEYWO
 ```
 
 Screenshot Example:
-![Event Find Example](images/EventFindExample.png)
 
-<!--@@author reven0n-->>
+<img src="images/EventFindExample.png" width="600" alt="Event Find Example" />
+
+<!-- @@author reven0n -->
 ### 3.5 `event delete`
 
 **Remove an event completely:**
@@ -591,7 +605,8 @@ event delete INDEX
 ```
 
 Screenshot Example:
-![Event Delete Example](images/EventDeleteExample.png)
+
+<img src="images/EventDeleteExample.png" width="600" alt="Event Delete Example" />
 
 ### 3.6 `event link`
 
@@ -692,6 +707,7 @@ Screenshot Example:
 ![Event Unlink Example](images/EventUnlinkExample.png)
 _In the example screenshot, we want to unlink the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event unlink --event 1 --contact 6`._
 
+<!-- @@author CZX123 -->
 ### 3.8 `event show`
 
 **Check your guest list** for any event:
@@ -730,7 +746,10 @@ event show INDEX
 ```
 
 Screenshot Example:
-![Event Show Example](images/EventShowExample.png
+
+<img src="images/EventShowExample.png" width="600" alt="Event Show Example" />
+
+<!-- @@author -->
 
 ### 3.9 `event export`
 
@@ -766,7 +785,8 @@ event export INDEX [--status STATUS]
 ```
 
 Screenshot Example:
-![Event Export Example](images/EventExportExample.png)
+
+<img src="images/EventExportExample.png" width="600" alt="Event Export Example" />
 
 ### 3.10 `event rsvp`
 
@@ -809,7 +829,8 @@ event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS
 ```
 
 Screenshot Example:
-![Event RSVP Example](images/EventRsvpExample.png)
+
+<img src="images/EventRsvpExample.png" width="600" alt="Event RSVP Example" />
 
 ---
 
