@@ -11,7 +11,7 @@ Welcome to NUS Event Mailer Pro!
 NUS Event Mailer Pro (NUS EMP) is a desktop app for event organizers at NUS to **manage hundreds of events and contacts quickly and easily**. It's designed for speed and simplicity, as most actions can be done by typing commands directly, allowing you to work quickly without relying on menus or complex navigation.
 
 We assume that you can type fast but still want a well-designed interface, in which case NUS EMP is perfect for you! No programming knowledge will be needed, but some
- basic computer skills like using terminals, downloading files, will be required for you to run the app.
+basic computer skills like using terminals, downloading files, will be required for you to run the app.
 
 <page-nav-print />
 
@@ -110,18 +110,18 @@ Each field in NUS EMP has specific requirements to ensure data quality. Here are
 
 #### Contact and Event Fields
 
-| Field | Constraints | Examples |
-|-------|-------------|----------|
-| **Name (Contact)** | Cannot be blank. Can contain any characters including spaces and special characters. | `John Doe`, `Mary-Jane O'Brien`, `李明` |
-| **Name (Event)** | Cannot be blank. Can contain any characters including spaces and special characters. **Must be unique** - no two events can have the same name. | `Team Meeting`, `Orientation 25/26`, `Annual Dinner 2025` |
-| **Email** | Must follow format: `local-part@domain`<br>- Local part: alphanumeric and `+ _ . -` only, cannot start/end with special characters<br>- Domain: must end with at least 2 characters, labels separated by periods<br>- **Case-insensitive for uniqueness** (e.g., `John@Email.com` = `john@email.com`) | `john@email.com`, `mary.jane@company.co.uk`, `user+tag@domain.org` |
-| **Phone** | Cannot be blank if provided. Can contain any characters including spaces and special characters. | `91234567`, `+65 9123 4567`, `123-456-7890` |
-| **Address** | Cannot be blank if provided. Can contain any characters including spaces and special characters. | `123 Main Street`, `Blk 123 #01-01`, `Apt. 5B` |
-| **Tag** | Cannot be blank. Can contain any characters including spaces and special characters. | `friend`, `high-priority`, `VIP++`, `follow up` |
-| **Date** | Format: `DD-MM-YYYY HH:MM` (24-hour time) | `25-12-2025 14:30`, `01-01-2026 09:00` |
-| **Event Status** | Must be one of: `PENDING`, `ONGOING`, `DONE` (case-insensitive) | `pending`, `ONGOING`, `Done` |
-| **RSVP Status** | Must be one of: `available`, `unavailable`, `unknown` (case-insensitive) | `available`, `UNAVAILABLE`, `Unknown` |
-| **Index** | Positive integer within the displayed list range | `1`, `2`, `50` |
+| Field              | Constraints                                                                                                                                                                                                                                                                                           | Examples                                                           |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| **Name (Contact)** | Cannot be blank. Can contain alphanumeric characters including spaces and special characters.                                                                                                                                                                                                         | `John Doe`, `Mary-Jane O'Brien`, `李明`                            |
+| **Name (Event)**   | Cannot be blank. Can contain alphanumeric characters including spaces and special characters. **Must be unique** - no two events can have the same name.                                                                                                                                              | `Team Meeting`, `Orientation 25/26`, `Annual Dinner 2025`          |
+| **Email**          | Must follow format: `local-part@domain`<br>- Local part: alphanumeric and `+ _ . -` only, cannot start/end with special characters<br>- Domain: must end with at least 2 characters, labels separated by periods<br>- **Case-insensitive for uniqueness** (e.g., `John@Email.com` = `john@email.com`) | `john@email.com`, `mary.jane@company.co.uk`, `user+tag@domain.org` |
+| **Phone**          | Cannot be blank if provided. Can contain alphanumeric characters including spaces and special characters.                                                                                                                                                                                             | `91234567`, `+65 9123 4567`, `123-456-7890`                        |
+| **Address**        | Cannot be blank if provided. Can contain alphanumeric characters including spaces and special characters.                                                                                                                                                                                             | `123 Main Street`, `Blk 123 #01-01`, `Apt. 5B`                     |
+| **Tag**            | Cannot be blank. Can contain alphanumeric characters including spaces and special characters.                                                                                                                                                                                                         | `friend`, `high-priority`, `VIP++`, `follow up`                    |
+| **Date**           | Format: `DD-MM-YYYY HH:MM` (24-hour time)                                                                                                                                                                                                                                                             | `25-12-2025 14:30`, `01-01-2026 09:00`                             |
+| **Event Status**   | Must be one of: `PENDING`, `ONGOING`, `DONE` (case-insensitive)                                                                                                                                                                                                                                       | `pending`, `ONGOING`, `Done`                                       |
+| **RSVP Status**    | Must be one of: `available`, `unavailable`, `unknown` (case-insensitive)                                                                                                                                                                                                                              | `available`, `UNAVAILABLE`, `Unknown`                              |
+| **Index**          | Positive integer within the displayed list range                                                                                                                                                                                                                                                      | `1`, `2`, `50`                                                     |
 
 <box type="warning" seamless>
 
@@ -396,6 +396,7 @@ Screenshot Example:
 _In the example screenshot, `contact find --name john` was executed, and to delete the contact at index 2 (highlighted under A), `contact delete 2` was executed._
 
 <!-- @@author CZX123 -->
+
 ### 2.6 `contact show`
 
 **Check what events someone is invited to:**
@@ -436,7 +437,9 @@ Screenshot Example:
 _In the example screenshot, we want to show all events for the contact at index 2 (highlighted under A), so we execute `contact show 2`, bringing us to the events page._
 
 ---
+
 <!-- @@author reven0n -->
+
 ## 3. Managing Your Events
 
 ### 3.1 `event add`
@@ -604,6 +607,7 @@ Screenshot Example:
 <img src="images/EventFindExample.png" width="600" alt="Event Find Example" />
 
 <!-- @@author reven0n -->
+
 ### 3.5 `event delete`
 
 **Remove an event completely:**
@@ -651,11 +655,12 @@ This adds contact #2 to event #1.
 **Add all contacts to an event**
 
 You can also quickly invite everyone in your contact list to an event:
+
 ```
 event link --event 1 --contact all
 ```
 
-This adds **all contacts** from your contact list to event #1 — 
+This adds **all contacts** from your contact list to event #1 —
 perfect for bulk invites or large gatherings.
 
 **Important:**
@@ -705,7 +710,7 @@ You can also quickly clear your guest list for an event:
 event unlink --event 1 --contact all
 ```
 
-This removes **all contacts** currently linked to event #1 — 
+This removes **all contacts** currently linked to event #1 —
 perfect for resetting or rebuilding your guest list.
 
 **Important:**
@@ -738,6 +743,7 @@ Screenshot Example:
 _In the example screenshot, we want to unlink the contact at index 6 (highlighted under A) to the event at index 1, so we execute `event unlink --event 1 --contact 6`._
 
 <!-- @@author CZX123 -->
+
 ### 3.8 `event show`
 
 **Check your guest list** for any event:
@@ -933,7 +939,7 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 ### 7.3 Event Commands
 
 | Action                             | Format, Examples                                                                                                                            |
-|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Add Event**                      | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date "25-12-2025 14:30" --address Room 4`       |
 | **Delete Event**                   | `event delete INDEX`<br>e.g. `event delete 2`                                                                                               |
 | **Edit Event**                     | `event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…`<br>e.g. `event edit 1 --name New Meeting` |
@@ -942,7 +948,7 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 | **Link Contact to Event**          | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
 | **Link All Contacts to Event**     | `event link --event EVENT_INDEX --contact all`<br>e.g. `event link --event 1 --contact all`                                                 |
 | **Unlink Contact from Event**      | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
-| **Unlink All Contacts from Event** | `event unlink --event EVENT_INDEX --contact all`<br>e.g. `event unlink --event 1 --contact all`                                              |
+| **Unlink All Contacts from Event** | `event unlink --event EVENT_INDEX --contact all`<br>e.g. `event unlink --event 1 --contact all`                                             |
 | **Show Event's Contacts**          | `event show INDEX`<br>e.g. `event show 1`                                                                                                   |
 | **Export Event Contacts**          | `event export INDEX [--status STATUS]`<br>e.g. `event export 1`<br> `event export 1 --status available`<br/>                                |
 | **RSVP to Event**                  | `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS`<br>e.g. `event rsvp --event 1 --contact 2 --status available`      |
