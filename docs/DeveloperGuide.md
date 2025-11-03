@@ -300,7 +300,7 @@ Error handling follows these principles:
 
 ### 5.2 Create Event Flow
 
-Refer to Add Contact Sequence Digram above.
+Refer to Add Contact Sequence Diagram above.
 
 **Steps:**
 
@@ -403,7 +403,7 @@ Refer to Edit/Update Sequence Diagram above.
 4. Parser validates event and contact indices exist and status is valid (UNAVAILABLE, AVAILABLE, UNKNOWN)
 5. EventRsvpCommand created with validated parameters
 6. Command executes against Model to locate event and contact in their respective lists
-7. Model uses ParticipantMap to find existing Participant or creates new one
+7. Model uses ParticipantMap to find existing Participant
 8. Participant status updated to new RSVP status
 9. ModelManager automatically triggers Storage save operation
 10. Storage persists updated participant relationship data to JSON files
