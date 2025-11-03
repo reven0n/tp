@@ -120,8 +120,11 @@ public class ContactCard extends UiPart<Region> {
             String name = p.getEvent().getName().value;
 
             Label label = createLabel(name);
-            if (p.getStatus() != ParticipantStatus.AVAILABLE) {
+            if (p.getStatus() == ParticipantStatus.UNKNOWN) {
                 label.setStyle("-fx-background-color: #a8a8a8;");
+            } else if (p.getStatus() == ParticipantStatus.UNAVAILABLE) {
+                label.setStyle("-fx-background-color: #FFA556;");
+
             }
             events.getChildren().add(label);
 
