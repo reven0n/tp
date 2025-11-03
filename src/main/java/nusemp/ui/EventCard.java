@@ -182,7 +182,7 @@ public class EventCard extends UiPart<Region> {
             if (p.getStatus() == ParticipantStatus.AVAILABLE) {
                 exportContentData += email + ",";
 
-            } else if (p.getStatus() == ParticipantStatus.UNAVAILABLE){
+            } else if (p.getStatus() == ParticipantStatus.UNAVAILABLE) {
                 label.setStyle("-fx-background-color: #FFA556;");
 
             } else {
