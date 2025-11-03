@@ -112,7 +112,8 @@ Each field in NUS EMP has specific requirements to ensure data quality. Here are
 
 | Field | Constraints | Examples |
 |-------|-------------|----------|
-| **Name** | Cannot be blank. Can contain any characters including spaces and special characters. | `John Doe`, `Mary-Jane O'Brien`, `李明` |
+| **Name (Contact)** | Cannot be blank. Can contain any characters including spaces and special characters. | `John Doe`, `Mary-Jane O'Brien`, `李明` |
+| **Name (Event)** | Cannot be blank. Can contain any characters including spaces and special characters. **Must be unique** - no two events can have the same name. | `Team Meeting`, `Orientation 25/26`, `Annual Dinner 2025` |
 | **Email** | Must follow format: `local-part@domain`<br>- Local part: alphanumeric and `+ _ . -` only, cannot start/end with special characters<br>- Domain: must end with at least 2 characters, labels separated by periods | `john@email.com`, `mary.jane@company.co.uk`, `user+tag@domain.org` |
 | **Phone** | Numbers only, minimum 3 digits. No spaces or special characters allowed. | `91234567`, `123`, `98765432100` |
 | **Address** | Cannot be blank if provided. Can contain any characters. | `123 Main Street`, `Blk 123 #01-01` |
@@ -462,6 +463,8 @@ event add --name Company Party --date 31-12-2025 19:00 --address Office Lounge
 - **Date format:** DD-MM-YYYY HH:MM (24-hour time)
 - **Address is optional** but helpful for location
 - Events **do not** sort by date!
+- **Event names must be unique** - no two events can have the same name
+- For repeating events, include a date in the name (e.g., "Orientation 25/26" instead of just "Orientation")
 
 </box>
 
@@ -523,7 +526,7 @@ This changes event #1's name and time.
 
 **What You Can Change:**
 
-- Event name
+- Event name (must remain unique across all events)
 - Date and time
 - Location/address
 - Event status
