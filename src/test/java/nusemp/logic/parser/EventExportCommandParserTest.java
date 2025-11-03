@@ -1,6 +1,7 @@
 package nusemp.logic.parser;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_STATUS;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -31,13 +32,13 @@ public class EventExportCommandParserTest {
     @Test
     public void parse_invalidArgs_throwsParseException() {
         // non-numeric argument
-        assertParseFailure(parser, "a", INVALID_COMMAND_MESSAGE);
+        assertParseFailure(parser, "a", MESSAGE_INVALID_INDEX_FORMAT);
 
         // negative index
-        assertParseFailure(parser, "-1", INVALID_COMMAND_MESSAGE);
+        assertParseFailure(parser, "-1", MESSAGE_INVALID_INDEX_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0", INVALID_COMMAND_MESSAGE);
+        assertParseFailure(parser, "0", MESSAGE_INVALID_INDEX_FORMAT);
 
         // empty string
         assertParseFailure(parser, "", INVALID_COMMAND_MESSAGE);
@@ -52,7 +53,7 @@ public class EventExportCommandParserTest {
     @Test
     public void parse_multipleArgs_throwsParseException() {
         // multiple indices
-        assertParseFailure(parser, "1 2 " + PREFIX_STATUS + AVAILABLE_STATUS, INVALID_COMMAND_MESSAGE);
+        assertParseFailure(parser, "1 2 " + PREFIX_STATUS + AVAILABLE_STATUS, MESSAGE_INVALID_INDEX_FORMAT);
     }
 
     @Test

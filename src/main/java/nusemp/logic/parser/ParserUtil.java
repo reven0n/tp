@@ -8,6 +8,7 @@ import java.util.Set;
 
 import nusemp.commons.core.index.Index;
 import nusemp.commons.util.StringUtil;
+import nusemp.logic.Messages;
 import nusemp.logic.parser.exceptions.ParseException;
 import nusemp.model.event.EventStatus;
 import nusemp.model.fields.Address;
@@ -23,8 +24,6 @@ import nusemp.model.participant.ParticipantStatus;
  */
 public class ParserUtil {
 
-    public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -33,7 +32,7 @@ public class ParserUtil {
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
         String trimmedIndex = oneBasedIndex.trim();
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
-            throw new ParseException(MESSAGE_INVALID_INDEX);
+            throw new ParseException(Messages.MESSAGE_INVALID_INDEX_FORMAT);
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }

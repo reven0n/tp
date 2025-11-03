@@ -37,13 +37,7 @@ public class EventUnlinkCommandParser implements Parser<EventUnlinkCommand> {
         // check for duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT, PREFIX_CONTACT);
 
-        Index eventIndex;
-        try {
-            eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventUnlinkCommand.MESSAGE_USAGE), pe);
-        }
+        Index eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
 
         String contactValue = argMultimap.getValue(PREFIX_CONTACT).get().trim();
 
@@ -51,13 +45,7 @@ public class EventUnlinkCommandParser implements Parser<EventUnlinkCommand> {
             return new EventUnlinkCommand(eventIndex);
         }
 
-        Index contactIndex;
-        try {
-            contactIndex = ParserUtil.parseIndex(contactValue);
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventUnlinkCommand.MESSAGE_USAGE), pe);
-        }
+        Index contactIndex = ParserUtil.parseIndex(contactValue);
 
         return new EventUnlinkCommand(eventIndex, contactIndex);
     }

@@ -19,13 +19,13 @@ public class ContactShowCommandParser implements Parser<ContactShowCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public ContactShowCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new ContactShowCommand(index);
-        } catch (ParseException pe) {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactShowCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactShowCommand.MESSAGE_USAGE));
         }
+        Index index = ParserUtil.parseIndex(trimmedArgs);
+        return new ContactShowCommand(index);
     }
 
 }

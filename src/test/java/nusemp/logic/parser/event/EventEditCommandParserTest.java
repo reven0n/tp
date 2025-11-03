@@ -1,6 +1,7 @@
 package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_ADDRESS_DESC_CONFERENCE;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_ADDRESS_DESC_MEETING;
 import static nusemp.logic.commands.CommandTestUtil.EVENT_DATE_DESC_CONFERENCE;
@@ -68,7 +69,7 @@ public class EventEditCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_EVENT_NAME_MEETING, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_EVENT_NAME_MEETING, MESSAGE_INVALID_INDEX_FORMAT);
 
         // no field specified
         assertParseFailure(parser, "1", EventEditCommand.MESSAGE_NOT_EDITED);
@@ -80,16 +81,16 @@ public class EventEditCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + EVENT_NAME_DESC_MEETING, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + EVENT_NAME_DESC_MEETING, MESSAGE_INVALID_INDEX_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0" + EVENT_NAME_DESC_MEETING, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + EVENT_NAME_DESC_MEETING, MESSAGE_INVALID_INDEX_FORMAT);
 
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_INDEX_FORMAT);
 
         // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_INDEX_FORMAT);
     }
 
     @Test

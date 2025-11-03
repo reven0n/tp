@@ -39,13 +39,7 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
         // check for duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT, PREFIX_CONTACT);
 
-        Index eventIndex;
-        try {
-            eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventLinkCommand.MESSAGE_USAGE), pe);
-        }
+        Index eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
 
         String contactValue = argMultimap.getValue(PREFIX_CONTACT).get().trim();
 
@@ -53,13 +47,7 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
             return new EventLinkCommand(eventIndex);
         }
 
-        Index contactIndex;
-        try {
-            contactIndex = ParserUtil.parseIndex(contactValue);
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventLinkCommand.MESSAGE_USAGE), pe);
-        }
+        Index contactIndex = ParserUtil.parseIndex(contactValue);
 
         return new EventLinkCommand(eventIndex, contactIndex);
     }

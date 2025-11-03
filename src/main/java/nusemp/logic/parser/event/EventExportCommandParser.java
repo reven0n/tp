@@ -28,18 +28,25 @@ public class EventExportCommandParser implements Parser<EventExportCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_STATUS);
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_STATUS);
-        try {
-            Index index = ParserUtil.parseIndex(argMultimap.getPreamble());
-            Optional<String> statusValue = argMultimap.getValue(PREFIX_STATUS);
-            if (statusValue.isPresent()) {
+
+        String preamble = argMultimap.getPreamble().trim();
+        if (preamble.isEmpty()) {
+            throw new ParseException(String.format(
+                    MESSAGE_INVALID_COMMAND_FORMAT, EventExportCommand.MESSAGE_USAGE));
+        }
+
+        Index index = ParserUtil.parseIndex(preamble);
+        Optional<String> statusValue = argMultimap.getValue(PREFIX_STATUS);
+        if (statusValue.isPresent()) {
+            try {
                 ParticipantStatus status = ParserUtil.parseStatus(statusValue.get());
                 return new EventExportCommand(index, status);
-            } else {
-                return new EventExportCommand(index);
+            } catch (ParseException pe) {
+                throw new ParseException(String.format(
+                        MESSAGE_INVALID_COMMAND_FORMAT, EventExportCommand.MESSAGE_USAGE), pe);
             }
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(
-                    MESSAGE_INVALID_COMMAND_FORMAT, EventExportCommand.MESSAGE_USAGE), pe);
+        } else {
+            return new EventExportCommand(index);
         }
     }
 }

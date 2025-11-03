@@ -38,14 +38,13 @@ public class ContactEditCommandParser implements Parser<ContactEditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
 
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
+        String preamble = argMultimap.getPreamble().trim();
+        if (preamble.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    ContactEditCommand.MESSAGE_USAGE), pe);
+                    ContactEditCommand.MESSAGE_USAGE));
         }
+
+        Index index = ParserUtil.parseIndex(preamble);
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 

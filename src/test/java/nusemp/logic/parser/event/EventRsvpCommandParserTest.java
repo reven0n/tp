@@ -1,6 +1,7 @@
 package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_STATUS;
@@ -64,32 +65,32 @@ class EventRsvpCommandParserTest {
     public void parse_invalidIndex_failure() {
         // non-numeric event index
         assertParseFailure(parser, " " + PREFIX_EVENT + " a "
-                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_FORMAT);
+                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_INDEX_FORMAT);
         // non-numeric contact index
         assertParseFailure(parser, " " + PREFIX_EVENT + " 1 "
-                + PREFIX_CONTACT + " b " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_FORMAT);
+                + PREFIX_CONTACT + " b " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_INDEX_FORMAT);
         // zero event index
         assertParseFailure(parser, " " + PREFIX_EVENT + " 0 "
-                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_FORMAT);
+                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_INDEX_FORMAT);
         // zero contact index
         assertParseFailure(parser, " " + PREFIX_EVENT + " 1 "
-                + PREFIX_CONTACT + " 0 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_FORMAT);
+                + PREFIX_CONTACT + " 0 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_INDEX_FORMAT);
         // negative event index
         assertParseFailure(parser, " " + PREFIX_EVENT + " -1 "
-                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_FORMAT);
+                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_INDEX_FORMAT);
         // negative contact index
         assertParseFailure(parser, " " + PREFIX_EVENT + " 1 "
-                + PREFIX_CONTACT + " -1 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_FORMAT);
+                + PREFIX_CONTACT + " -1 " + PREFIX_STATUS + AVAILABLE, MESSAGE_INVALID_INDEX_FORMAT);
     }
 
     @Test
     public void parse_invalidStatus_failure() {
         // invalid status value
         assertParseFailure(parser, " " + PREFIX_EVENT + " 1 "
-                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + " going", MESSAGE_INVALID_FORMAT);
+                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + " going", ParticipantStatus.MESSAGE_CONSTRAINTS);
         // empty status value
         assertParseFailure(parser, " " + PREFIX_EVENT + " 1 "
-                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + " ", MESSAGE_INVALID_FORMAT);
+                + PREFIX_CONTACT + " 1 " + PREFIX_STATUS + " ", ParticipantStatus.MESSAGE_CONSTRAINTS);
     }
 
     @Test
