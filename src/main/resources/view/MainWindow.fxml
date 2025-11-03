@@ -74,7 +74,7 @@
                   <Insets bottom="15"/>
                 </VBox.margin>
                 <tooltip>
-                  <Tooltip text="Open Command Terminal"/>
+                  <Tooltip text="Toggle Command Terminal"/>
                 </tooltip>
               </Button>
             </VBox>
@@ -86,8 +86,12 @@
         </VBox>
 
         <!-- Terminal Overlay -->
-        <Region fx:id="terminalBackdrop" StackPane.alignment="BOTTOM_CENTER" maxWidth="Infinity" maxHeight="400"
-                visible="false" managed="false" onMouseClicked="#handleTerminal"/>
+        <Region fx:id="terminalShadow" StackPane.alignment="BOTTOM_CENTER" maxWidth="800" maxHeight="250"
+                visible="false" managed="false" mouseTransparent="true">
+          <StackPane.margin>
+            <Insets left="20" right="20"/>
+          </StackPane.margin>
+        </Region>
         <VBox fx:id="terminalWindow" StackPane.alignment="BOTTOM_CENTER" maxWidth="800" maxHeight="250"
               visible="false" managed="false">
           <StackPane.margin>

@@ -40,8 +40,8 @@ public class ContactAddCommand extends Command {
             + PREFIX_TAG + "owesMoney";
 
     public static final String MESSAGE_SUCCESS = "Successfully added contact:\n%1$s";
-    public static final String MESSAGE_DUPLICATE_CONTACT =
-            "Error adding contact: contact email \"%1$s\" already exists";
+    public static final String MESSAGE_DUPLICATE_CONTACT = "Error adding contact: email \"%1$s\" "
+            + "conflicts with an existing contact.\nNote: emails are case-insensitive.";
 
     private final Contact toAdd;
 
