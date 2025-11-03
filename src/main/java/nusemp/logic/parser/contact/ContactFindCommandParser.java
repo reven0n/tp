@@ -44,6 +44,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_TAG);
+        StringBuilder conditionBuilder = new StringBuilder();
 
         // Check if any prefixes are present
         boolean hasNamePrefix = argMultimap.getValue(PREFIX_NAME).isPresent();
@@ -57,51 +58,19 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
         if (!hasPrefixes) {
             // Backward compatibility: treat input as name keywords
             String[] nameKeywords = trimmedArgs.split("\\s+");
-            return new ContactFindCommand(new ContactNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            conditionBuilder.append("name: ").append(formatKeywords(nameKeywords)).append("\n");
+            return new ContactFindCommand(new ContactNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)),
+                    conditionBuilder.toString().trim());
         }
 
         // Build list of predicates based on which flags are present
         List<Predicate<Contact>> predicates = new ArrayList<>();
 
-        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
-            String nameArgs = argMultimap.getValue(PREFIX_NAME).get();
-            if (!nameArgs.isEmpty()) {
-                String[] nameKeywords = nameArgs.split("\\s+");
-                predicates.add(new ContactNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
-            }
-        }
-
-        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
-            String emailArgs = argMultimap.getValue(PREFIX_EMAIL).get();
-            if (!emailArgs.isEmpty()) {
-                String[] emailKeywords = emailArgs.split("\\s+");
-                predicates.add(new ContactEmailContainsKeywordsPredicate(Arrays.asList(emailKeywords)));
-            }
-        }
-
-        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
-            String phoneArgs = argMultimap.getValue(PREFIX_PHONE).get();
-            if (!phoneArgs.isEmpty()) {
-                String[] phoneKeywords = phoneArgs.split("\\s+");
-                predicates.add(new ContactPhoneContainsKeywordsPredicate(Arrays.asList(phoneKeywords)));
-            }
-        }
-
-        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
-            String addressArgs = argMultimap.getValue(PREFIX_ADDRESS).get();
-            if (!addressArgs.isEmpty()) {
-                String[] addressKeywords = addressArgs.split("\\s+");
-                predicates.add(new ContactAddressContainsKeywordsPredicate(Arrays.asList(addressKeywords)));
-            }
-        }
-
-        if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
-            String tagArgs = argMultimap.getValue(PREFIX_TAG).get();
-            if (!tagArgs.isEmpty()) {
-                String[] tagKeywords = tagArgs.split("\\s+");
-                predicates.add(new ContactTagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
-            }
-        }
+        addNamePredicates(argMultimap, predicates, conditionBuilder);
+        addEmailPredicates(argMultimap, predicates, conditionBuilder);
+        addPhonePredicates(argMultimap, predicates, conditionBuilder);
+        addAddressPredicates(argMultimap, predicates, conditionBuilder);
+        addTagPredicates(argMultimap, predicates, conditionBuilder);
 
         if (predicates.isEmpty()) {
             throw new ParseException(ContactFindCommand.MESSAGE_EMPTY_KEYWORD);
@@ -109,10 +78,75 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
 
         // If only one predicate, return it directly; otherwise combine with OR logic
         if (predicates.size() == 1) {
-            return new ContactFindCommand(predicates.get(0));
+            return new ContactFindCommand(predicates.get(0), conditionBuilder.toString().trim());
         } else {
-            return new ContactFindCommand(new ContactMatchesAllPredicates(predicates));
+            return new ContactFindCommand(new ContactMatchesAllPredicates(predicates),
+                    conditionBuilder.toString().trim());
         }
+    }
+
+    private void addNamePredicates(ArgumentMultimap argMultimap, List<Predicate<Contact>> predicates,
+            StringBuilder conditionBuilder) {
+        if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
+            String nameArgs = argMultimap.getValue(PREFIX_NAME).get();
+            if (!nameArgs.isEmpty()) {
+                String[] nameKeywords = nameArgs.split("\\s+");
+                conditionBuilder.append("name: ").append(formatKeywords(nameKeywords)).append("\n");
+                predicates.add(new ContactNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            }
+        }
+    }
+
+    private void addEmailPredicates(ArgumentMultimap argMultimap, List<Predicate<Contact>> predicates,
+            StringBuilder conditionBuilder) {
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            String emailArgs = argMultimap.getValue(PREFIX_EMAIL).get();
+            if (!emailArgs.isEmpty()) {
+                String[] emailKeywords = emailArgs.split("\\s+");
+                conditionBuilder.append("email: ").append(formatKeywords(emailKeywords)).append("\n");
+                predicates.add(new ContactEmailContainsKeywordsPredicate(Arrays.asList(emailKeywords)));
+            }
+        }
+    }
+
+    private void addPhonePredicates(ArgumentMultimap argMultimap, List<Predicate<Contact>> predicates,
+            StringBuilder conditionBuilder) {
+        if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            String phoneArgs = argMultimap.getValue(PREFIX_PHONE).get();
+            if (!phoneArgs.isEmpty()) {
+                String[] phoneKeywords = phoneArgs.split("\\s+");
+                conditionBuilder.append("phone: ").append(formatKeywords(phoneKeywords)).append("\n");
+                predicates.add(new ContactPhoneContainsKeywordsPredicate(Arrays.asList(phoneKeywords)));
+            }
+        }
+    }
+
+    private void addAddressPredicates(ArgumentMultimap argMultimap, List<Predicate<Contact>> predicates,
+            StringBuilder conditionBuilder) {
+        if (argMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
+            String addressArgs = argMultimap.getValue(PREFIX_ADDRESS).get();
+            if (!addressArgs.isEmpty()) {
+                String[] addressKeywords = addressArgs.split("\\s+");
+                conditionBuilder.append("address: ").append(formatKeywords(addressKeywords)).append("\n");
+                predicates.add(new ContactAddressContainsKeywordsPredicate(Arrays.asList(addressKeywords)));
+            }
+        }
+    }
+
+    private void addTagPredicates(ArgumentMultimap argMultimap, List<Predicate<Contact>> predicates,
+            StringBuilder conditionBuilder) {
+        if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
+            String tagArgs = argMultimap.getValue(PREFIX_TAG).get();
+            if (!tagArgs.isEmpty()) {
+                String[] tagKeywords = tagArgs.split("\\s+");
+                conditionBuilder.append("tag: ").append(formatKeywords(tagKeywords)).append("\n");
+                predicates.add(new ContactTagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
+            }
+        }
+    }
+
+    private String formatKeywords(String[] keywords) {
+        return "\"" + String.join("\", \"", keywords) + "\"";
     }
 
 }
