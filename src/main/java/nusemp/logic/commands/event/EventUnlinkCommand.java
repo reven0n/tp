@@ -3,7 +3,6 @@ package nusemp.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
-import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +106,7 @@ public class EventUnlinkCommand extends Command {
         }
 
         model.removeParticipant(contactToUnlink, eventToUnlink);
-        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+
         return new CommandResult(String.format(MESSAGE_SUCCESS,
                 contactToUnlink.getName().toString(), eventToUnlink.getName().toString()));
     }
@@ -130,8 +129,6 @@ public class EventUnlinkCommand extends Command {
                 notLinkedContacts.add(contact.getName().toString());
             }
         }
-
-        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
 
         if (unlinkedContacts.isEmpty()) {
             throw new CommandException("No contacts were unlinked from the event");

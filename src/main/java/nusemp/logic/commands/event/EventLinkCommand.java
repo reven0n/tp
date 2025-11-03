@@ -3,7 +3,6 @@ package nusemp.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
-import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +113,7 @@ public class EventLinkCommand extends Command {
         }
 
         model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
-        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, contactToLink.getName(), eventToLink.getName()));
     }
 
@@ -136,8 +135,6 @@ public class EventLinkCommand extends Command {
                 skippedContacts.add(contact.getName().toString());
             }
         }
-
-        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
 
         if (linkedContacts.isEmpty()) {
             throw new CommandException("All contacts are already linked to the event");
