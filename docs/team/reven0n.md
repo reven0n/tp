@@ -1,17 +1,17 @@
 ---
   layout: default.md
-    title: "John Doe's Project Portfolio Page"
+  title: "Darien's Project Portfolio Page"
 ---
 
 ### Project: NUS Event Mailer Pro
 
-NUS Event Mailer Pro is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+NUS Event Mailer Pro (NUS EMP) is a desktop application used to manage events and contacts for NUS event organizers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 Given below are my contributions to the project.
 
 - **New Features**
-    - Added Commands `add`, `delete` and `list` for `Event` and it's relevant parsers [\#49](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/49), [\#68](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/68), [\#106](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/106)
-    - Implemented initial bidirectional link feature between `Contact` and `Event` and the commands `link` and `unlink` [\#60](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/60), [\#105](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/105), [\#114](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/114)
+    - Added Commands `event add`, `event delete` and `event list` for `Event` and it's relevant parsers [\#49](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/49), [\#68](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/68), [\#106](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/106)
+    - Implemented initial bidirectional link feature between `Contact` and `Event` and the commands `event link` and `event unlink` [\#60](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/60), [\#105](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/105), [\#114](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/114)
     - Added `Tags` for `Events` which work similarly to `Tags` in `Contact` [\#111](https://github.com/AY2526S1-CS2103T-F15b-2/tp/pull/111)
 
 - **Code contributed**: [RepoSense link](https://nus-cs2103-ay2526s1.github.io/tp-dashboard/?search=f15b-2&sort=totalCommits&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code~other&since=2025-09-19T00%3A00%3A00&filteredFileName=&tabOpen=true&tabType=authorship&tabAuthor=reven0n&tabRepo=AY2526S1-CS2103T-F15b-2%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
