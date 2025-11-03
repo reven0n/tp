@@ -56,9 +56,9 @@ public class AppParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandType>\\S+).*");
     private static final Pattern CONTACT_COMMAND_FORMAT =
-            Pattern.compile("contact (?<commandWord>\\S+)(?<arguments>.*)");
+            Pattern.compile("contact (?<commandWord>\\S+)(?<arguments>.*)", Pattern.CASE_INSENSITIVE);
     private static final Pattern EVENT_COMMAND_FORMAT =
-            Pattern.compile("event (?<commandWord>\\S+)(?<arguments>.*)");
+            Pattern.compile("event (?<commandWord>\\S+)(?<arguments>.*)", Pattern.CASE_INSENSITIVE);
     private static final Logger logger = LogsCenter.getLogger(AppParser.class);
 
     /**
@@ -119,7 +119,7 @@ public class AppParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
 
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);
@@ -164,7 +164,7 @@ public class AppParser {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
 
-        final String commandWord = matcher.group("commandWord");
+        final String commandWord = matcher.group("commandWord").toLowerCase();
         final String arguments = matcher.group("arguments");
 
         logger.fine("Command word: " + commandWord + "; Arguments: " + arguments);

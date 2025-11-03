@@ -10,9 +10,9 @@ import static nusemp.commons.util.AppUtil.checkArgument;
 public class Phone {
 
 
-    public static final String MESSAGE_CONSTRAINTS =
-            "Phone numbers should only contain numbers, and it should be at least 3 digits long";
-    public static final String VALIDATION_REGEX = "\\d{3,}";
+    public static final String MESSAGE_CONSTRAINTS = "Phone numbers should only have standard "
+            + "characters\ni.e. characters and symbols found on a standard US keyboard.";
+    public static final String VALIDATION_REGEX = "[\\x00-\\x7F]+";
     public final String value;
 
     /**
@@ -38,7 +38,7 @@ public class Phone {
      * Empty string is also considered valid, indicating no phone number.
      */
     public static boolean isValidPhone(String test) {
-        return test.isEmpty() || test.matches(VALIDATION_REGEX);
+        return test.isEmpty() || (!test.isBlank() && test.matches(VALIDATION_REGEX));
     }
 
     /**
