@@ -2,7 +2,7 @@ package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
-import static nusemp.logic.parser.CliSyntax.*;
+import static nusemp.logic.parser.CliSyntax.PREFIX_STATUS;
 
 import java.util.Comparator;
 import java.util.List;
