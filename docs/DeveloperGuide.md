@@ -785,7 +785,7 @@ For all use cases below, the **System** is NUS Event Mailer Pro (NUS EMP) and th
 
 1. **Create Event**
 
-   - Command: `event add --name "Team Meeting" --date "15-01-2024 14:00" --address "Meeting Room 1"`
+   - Command: `event add --name Team Meeting --date 15-01-2024 14:00 --address Meeting Room 1`
    - Expected: Event created, success message shown
 
 2. **Link Contact to Event**
@@ -841,7 +841,7 @@ For all use cases below, the **System** is NUS Event Mailer Pro (NUS EMP) and th
 
 3. **Invalid Formats**
 
-   - Command: `event add --name "Test" --date "invalid-date"`
+   - Command: `event add --name Test --date invalid-date`
    - Expected: Specific error about date format (DD-MM-YYYY HH:mm)
 
 4. **Missing Required Fields**

@@ -532,9 +532,9 @@ This changes event #1's name and time.
 - Date and time
 - Location/address
 - Event status
-  - **STARTING** - Event is planned/announced (default)
+  - **PENDING** - Event is planned/announced (default)
   - **ONGOING** - Event is currently in progress
-  - **CLOSED** - Event has ended
+  - **DONE** - Event has ended
 - Tags
 - **At least one thing must be updated**
 
@@ -585,7 +585,7 @@ Event find specifics:
 
 - Date searches look for exact matches (e.g. `25-12-2025 12:00` finds only that date and time)
 - Only one date can be specified
-- Status searches look for one of: `pending`, `ongoing`, `closed`
+- Status searches look for one of: `pending`, `ongoing`, `done`
   </box>
 
 <box type="tip" seamless>
@@ -947,7 +947,7 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 
 | Action                             | Format, Examples                                                                                                                            |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add Event**                      | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date "25-12-2025 14:30" --address Room 4`       |
+| **Add Event**                      | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Room 4`       |
 | **Delete Event**                   | `event delete INDEX`<br>e.g. `event delete 2`                                                                                               |
 | **Edit Event**                     | `event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…`<br>e.g. `event edit 1 --name New Meeting` |
 | **Find Event**                     | `event find KEYWORDS [MORE_KEYWORDS]...` or <br>e.g. `event find --name Conference` <br> `event find --status pending` <br/>                |
