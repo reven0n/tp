@@ -31,7 +31,7 @@ public class EventExportCommand extends Command {
             + "The status can be either \"available\", \"unavailable\", or \"unknown\"\n\n"
             + "Parameters:  "
             + "INDEX  [" + PREFIX_STATUS + "STATUS]\n"
-            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 " + PREFIX_STATUS + "unknown\n"
+            + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 " + PREFIX_STATUS + "unknown\n\n"
             + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
 
