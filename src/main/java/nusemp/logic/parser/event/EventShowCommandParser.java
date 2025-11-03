@@ -18,12 +18,12 @@ public class EventShowCommandParser implements Parser<EventShowCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public EventShowCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new EventShowCommand(index);
-        } catch (ParseException pe) {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventShowCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventShowCommand.MESSAGE_USAGE));
         }
+        Index index = ParserUtil.parseIndex(trimmedArgs);
+        return new EventShowCommand(index);
     }
 }
