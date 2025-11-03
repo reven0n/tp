@@ -31,7 +31,7 @@ We assume that you can type fast but still want a well-designed interface, in wh
 4. **Start the app**: Open a terminal, go to that folder using the `cd` command, and type:
 
    ```
-   java -jar nus-emp-v1.5.jar
+   java -jar nus-emp-v1.6.jar
    ```
 
    You'll see the app window appear with some sample contacts and events!
