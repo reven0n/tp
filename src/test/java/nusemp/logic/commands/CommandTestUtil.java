@@ -88,7 +88,7 @@ public class CommandTestUtil {
     public static final String INVALID_CONTACT_NAME_DESC = " " + PREFIX_NAME; // cannot be empty
     public static final String INVALID_CONTACT_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_CONTACT_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_CONTACT_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_CONTACT_TAG_DESC = " " + PREFIX_TAG + "😊😊"; // emoji not allowed in tags
 
     // invalid Event descriptions
     public static final String INVALID_EVENT_NAME_DESC = " " + PREFIX_NAME + "   "; // name must not be blank
@@ -97,7 +97,7 @@ public class CommandTestUtil {
     public static final String INVALID_EVENT_DATE_DESC3 = " " + PREFIX_DATE + "2024/12/01 14:00"; // wrong format
     public static final String INVALID_EVENT_DATE_DESC4 = " " + PREFIX_DATE + "2024-12-01"; // missing time
     public static final String INVALID_EVENT_STATUS_DESC = " " + PREFIX_STATUS + "invalid"; // not a valid status
-    public static final String INVALID_EVENT_TAG_DESC = " " + PREFIX_TAG + "Music&"; // '&' not allowed
+    public static final String INVALID_EVENT_TAG_DESC = " " + PREFIX_TAG + "😊😊"; // emoji not allowed
     public static final String INVALID_EVENT_ADDRESS_DESC = " " + PREFIX_ADDRESS + "   "; // cannot be blank
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";

@@ -27,7 +27,7 @@ class JsonAdaptedEventTest {
     private static final String INVALID_NAME = " ";
     private static final String INVALID_DATE = "invalid-date";
     private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_TAG = "Music&";
+    private static final String INVALID_TAG = "😊";
     private static final String INVALID_STATUS = "INVALID_STATUS";
     private static final JsonAdaptedParticipant INVALID_PARTICIPANT_EMAIL =
             new JsonAdaptedParticipant("invalid-email", "ATTENDING");
