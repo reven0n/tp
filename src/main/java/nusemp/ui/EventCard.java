@@ -140,6 +140,7 @@ public class EventCard extends UiPart<Region> {
         }
 
         addPeople();
+
     }
 
     private void initializeStatus() {
@@ -166,6 +167,8 @@ public class EventCard extends UiPart<Region> {
         if (participants.isEmpty()) {
             people.setManaged(false);
             people.setVisible(false);
+            copyButton.setVisible(false);
+
             return;
         }
         List<Participant> sortedParticipants = participants.stream()
@@ -178,6 +181,10 @@ public class EventCard extends UiPart<Region> {
             Label label = createLabel(name);
             if (p.getStatus() == ParticipantStatus.AVAILABLE) {
                 exportContentData += email + ",";
+
+            } else if (p.getStatus() == ParticipantStatus.UNAVAILABLE){
+                label.setStyle("-fx-background-color: #FFA556;");
+
             } else {
                 label.setStyle("-fx-background-color: #a8a8a8;");
             }
@@ -219,7 +226,7 @@ public class EventCard extends UiPart<Region> {
         String contentToCopy = exportContent.getText();
 
         if (contentToCopy == null || contentToCopy.trim().isEmpty()) {
-            showPopupMessage("No content to copy!");
+            showPopupMessage("No available contacts present: clipboard not updated.");
             return;
         }
 
@@ -230,7 +237,7 @@ public class EventCard extends UiPart<Region> {
         clipboard.setContent(content);
 
         // Show popup message
-        showPopupMessage("Email export copied!");
+        showPopupMessage("Available contacts copied into clipboard!");
     }
 
     /**
