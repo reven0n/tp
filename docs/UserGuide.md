@@ -676,7 +676,7 @@ perfect for bulk invites or large gatherings.
 - You can find the event index in the displayed event list
 - You can find the contact index in the displayed contact list
 - Both indexes should be a **positive** number, unless you use `listed` for `CONTACT_INDEX`
-- Using --contact listed will link **every contact** currently displayed to the specified event
+- Using `--contact listed` will link **every contact** currently displayed to the specified event
 
 <box type="tip" seamless>
 
@@ -718,7 +718,7 @@ You can also quickly clear your guest list for an event:
 event unlink --event 1 --contact listed
 ```
 
-This removes **all contacts** currently displayed from event #1 —
+This removes **all contacts** from your currently displayed contact list —
 perfect for resetting or rebuilding your guest list.
 
 **Important:**
@@ -726,7 +726,7 @@ perfect for resetting or rebuilding your guest list.
 - You can find the event index in the displayed event list
 - You can find the contact index in the displayed contact list
 - Both indexes should be a **positive** number, unless you use `listed` for `CONTACT_INDEX`
-- Using `--contact listed` will unlink **every contact** currently displayed from the specified event
+- Using `--contact listed` will unlink **every contact** currently displayed to the specified event
 
 <box type="tip" seamless>
 
