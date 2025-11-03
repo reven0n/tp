@@ -35,7 +35,7 @@ public class EventFindCommand extends Command {
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " --name meeting";
 
     private final Predicate<Event> predicate;
-    private final String conditions;
+    private final String conditionString;
 
     /**
      * Creates an EventFindCommand to find events matching the given predicate.
@@ -48,11 +48,11 @@ public class EventFindCommand extends Command {
      * Creates an EventFindCommand to find events matching the given predicate.
      *
      * @param predicate The predicate to filter events.
-     * @param conditions The string representation of the search conditions.
+     * @param conditionString The string representation of the search conditions.
      */
-    public EventFindCommand(Predicate<Event> predicate, String conditions) {
+    public EventFindCommand(Predicate<Event> predicate, String conditionString) {
         this.predicate = predicate;
-        this.conditions = conditions;
+        this.conditionString = conditionString;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class EventFindCommand extends Command {
         int size = model.getFilteredEventList().size();
         String feedbackToUser = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, size);
         String heading = String.format(size == 0 ? Messages.HEADING_EVENT_FIND_NONE : Messages.HEADING_EVENT_FIND,
-                prependLines(conditions, "    ")).trim();
+                prependLines(conditionString, "    ")).trim();
         return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 

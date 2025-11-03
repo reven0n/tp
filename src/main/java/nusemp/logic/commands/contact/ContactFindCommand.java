@@ -35,7 +35,7 @@ public class ContactFindCommand extends Command {
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " --name alice";
 
     private final Predicate<Contact> predicate;
-    private final String conditions;
+    private final String conditionString;
 
     /**
      * Creates a ContactFindCommand to find contacts matching the given predicate.
@@ -48,11 +48,11 @@ public class ContactFindCommand extends Command {
      * Creates a ContactFindCommand to find contacts matching the given predicate.
      *
      * @param predicate The predicate to filter contacts.
-     * @param conditions The string representation of the search conditions.
+     * @param conditionString The string representation of the search condition.
      */
-    public ContactFindCommand(Predicate<Contact> predicate, String conditions) {
+    public ContactFindCommand(Predicate<Contact> predicate, String conditionString) {
         this.predicate = predicate;
-        this.conditions = conditions;
+        this.conditionString = conditionString;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ContactFindCommand extends Command {
         int size = model.getFilteredContactList().size();
         String feedbackToUser = String.format(Messages.MESSAGE_CONTACTS_LISTED_OVERVIEW, size);
         String heading = String.format(size == 0 ? Messages.HEADING_CONTACT_FIND_NONE : Messages.HEADING_CONTACT_FIND,
-                prependLines(conditions, "    ")).trim();
+                prependLines(conditionString, "    ")).trim();
         return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_CONTACTS, heading);
     }
 

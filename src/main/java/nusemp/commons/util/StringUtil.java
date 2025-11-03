@@ -71,7 +71,7 @@ public class StringUtil {
      *
      * @param input The input string.
      * @param prepend The string to prepend to each line.
-     * @return The indented string.
+     * @return The prepended string.
      */
     public static String prependLines(String input, String prepend) {
         requireNonNull(input);

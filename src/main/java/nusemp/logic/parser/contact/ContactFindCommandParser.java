@@ -44,7 +44,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
 
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_EMAIL, PREFIX_PHONE, PREFIX_ADDRESS, PREFIX_TAG);
-        StringBuilder conditions = new StringBuilder();
+        StringBuilder conditionBuilder = new StringBuilder();
 
         // Check if any prefixes are present
         boolean hasNamePrefix = argMultimap.getValue(PREFIX_NAME).isPresent();
@@ -58,9 +58,9 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
         if (!hasPrefixes) {
             // Backward compatibility: treat input as name keywords
             String[] nameKeywords = trimmedArgs.split("\\s+");
-            conditions.append("name: ").append(formatKeywords(nameKeywords)).append("\n");
+            conditionBuilder.append("name: ").append(formatKeywords(nameKeywords)).append("\n");
             return new ContactFindCommand(new ContactNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)),
-                    conditions.toString().trim());
+                    conditionBuilder.toString().trim());
         }
 
         // Build list of predicates based on which flags are present
@@ -70,7 +70,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String nameArgs = argMultimap.getValue(PREFIX_NAME).get();
             if (!nameArgs.isEmpty()) {
                 String[] nameKeywords = nameArgs.split("\\s+");
-                conditions.append("name: ").append(formatKeywords(nameKeywords)).append("\n");
+                conditionBuilder.append("name: ").append(formatKeywords(nameKeywords)).append("\n");
                 predicates.add(new ContactNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
             }
         }
@@ -79,7 +79,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String emailArgs = argMultimap.getValue(PREFIX_EMAIL).get();
             if (!emailArgs.isEmpty()) {
                 String[] emailKeywords = emailArgs.split("\\s+");
-                conditions.append("email: ").append(formatKeywords(emailKeywords)).append("\n");
+                conditionBuilder.append("email: ").append(formatKeywords(emailKeywords)).append("\n");
                 predicates.add(new ContactEmailContainsKeywordsPredicate(Arrays.asList(emailKeywords)));
             }
         }
@@ -88,7 +88,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String phoneArgs = argMultimap.getValue(PREFIX_PHONE).get();
             if (!phoneArgs.isEmpty()) {
                 String[] phoneKeywords = phoneArgs.split("\\s+");
-                conditions.append("phone: ").append(formatKeywords(phoneKeywords)).append("\n");
+                conditionBuilder.append("phone: ").append(formatKeywords(phoneKeywords)).append("\n");
                 predicates.add(new ContactPhoneContainsKeywordsPredicate(Arrays.asList(phoneKeywords)));
             }
         }
@@ -97,7 +97,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String addressArgs = argMultimap.getValue(PREFIX_ADDRESS).get();
             if (!addressArgs.isEmpty()) {
                 String[] addressKeywords = addressArgs.split("\\s+");
-                conditions.append("address: ").append(formatKeywords(addressKeywords)).append("\n");
+                conditionBuilder.append("address: ").append(formatKeywords(addressKeywords)).append("\n");
                 predicates.add(new ContactAddressContainsKeywordsPredicate(Arrays.asList(addressKeywords)));
             }
         }
@@ -106,7 +106,7 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
             String tagArgs = argMultimap.getValue(PREFIX_TAG).get();
             if (!tagArgs.isEmpty()) {
                 String[] tagKeywords = tagArgs.split("\\s+");
-                conditions.append("tag: ").append(formatKeywords(tagKeywords)).append("\n");
+                conditionBuilder.append("tag: ").append(formatKeywords(tagKeywords)).append("\n");
                 predicates.add(new ContactTagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
             }
         }
@@ -117,9 +117,10 @@ public class ContactFindCommandParser implements Parser<ContactFindCommand> {
 
         // If only one predicate, return it directly; otherwise combine with OR logic
         if (predicates.size() == 1) {
-            return new ContactFindCommand(predicates.get(0), conditions.toString().trim());
+            return new ContactFindCommand(predicates.get(0), conditionBuilder.toString().trim());
         } else {
-            return new ContactFindCommand(new ContactMatchesAllPredicates(predicates), conditions.toString().trim());
+            return new ContactFindCommand(new ContactMatchesAllPredicates(predicates),
+                    conditionBuilder.toString().trim());
         }
     }
 
