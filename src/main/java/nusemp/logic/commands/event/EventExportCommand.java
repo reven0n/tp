@@ -30,7 +30,7 @@ public class EventExportCommand extends Command {
             + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n"
             + "The status can be either \"available\", \"unavailable\", or \"unknown\"\n\n"
             + "Parameters:  "
-            + "INDEX (must be a positive integer)  [" + PREFIX_STATUS + "STATUS]\n"
+            + "INDEX  [" + PREFIX_STATUS + "STATUS]\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 " + PREFIX_STATUS + "unknown\n"
             + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
