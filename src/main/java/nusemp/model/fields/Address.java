@@ -38,7 +38,7 @@ public class Address {
      * Empty string is also considered valid, indicating no address.
      */
     public static boolean isValidAddress(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test.matches(VALIDATION_REGEX) || test.isEmpty() || !test.isBlank();
     }
 
     /**
