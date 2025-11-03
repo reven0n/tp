@@ -73,8 +73,8 @@ public class EventUnlinkCommand extends Command {
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
 
-        List<Event> lastShownEventList = model.getFilteredEventList();
-        List<Contact> lastShownContactList = model.getFilteredContactList();
+        List<Event> lastShownEventList = List.copyOf(model.getFilteredEventList());
+        List<Contact> lastShownContactList = List.copyOf(model.getFilteredContactList());
 
         if (eventIndex.getZeroBased() >= lastShownEventList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_EVENT_DISPLAYED_INDEX);
@@ -83,16 +83,15 @@ public class EventUnlinkCommand extends Command {
         Event eventToEdit = lastShownEventList.get(eventIndex.getZeroBased());
 
         if (isUnlinkAll) {
-            return executeUnlinkAll(model, eventToEdit);
+            return executeUnlinkAll(model, eventToEdit, lastShownContactList);
         } else {
-            return executeUnlinkSingle(model, eventToEdit);
+            return executeUnlinkSingle(model, eventToEdit, lastShownContactList);
         }
 
 
     }
 
-    private CommandResult executeUnlinkSingle(Model model, Event eventToUnlink) throws CommandException {
-        List<Contact> lastShownContactList = model.getFilteredContactList();
+    private CommandResult executeUnlinkSingle(Model model, Event eventToUnlink, List<Contact> lastShownContactList) throws CommandException {
 
         if (contactIndex.getZeroBased() >= lastShownContactList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
@@ -111,17 +110,16 @@ public class EventUnlinkCommand extends Command {
                 contactToUnlink.getName().toString(), eventToUnlink.getName().toString()));
     }
 
-    private CommandResult executeUnlinkAll(Model model, Event eventToUnlink) throws CommandException {
-        List<Contact> filteredContactList = model.getFilteredContactList();
+    private CommandResult executeUnlinkAll(Model model, Event eventToUnlink, List<Contact> lastShownContactList) throws CommandException {
 
-        if (filteredContactList.isEmpty()) {
+        if (lastShownContactList.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_NO_CONTACTS_TO_UNLINK, eventToUnlink.getName()));
         }
 
         List <String> unlinkedContacts = new ArrayList<>();
         List<String> notLinkedContacts = new ArrayList<>();
 
-        for (Contact contact : filteredContactList) {
+        for (Contact contact : lastShownContactList) {
             if (model.hasParticipant(contact, eventToUnlink)) {
                 model.removeParticipant(contact, eventToUnlink);
                 unlinkedContacts.add(contact.getName().toString());
