@@ -834,11 +834,18 @@ event rsvp --event 1 --contact 2 --status available
 
 Marks contact #2 as available for event #1.
 
+<box type="info" seamless>
+
+**Note:** The contact must already be linked to the event (using `event link`) before you can update their RSVP status. If the contact is not linked, you'll get an error message.
+
+</box>
+
 **Important:**
 
 - You can find the event index in the displayed event list
 - You can find the contact index in the displayed contact list
 - Both indexes should be a **positive** number
+- **The contact must already be linked to the event** using `event link` before you can update their RSVP status
 
 **Possible responses:**
 
