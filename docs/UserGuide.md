@@ -104,7 +104,35 @@ contact add -n John Doe -e john@email.com -p 91234567 -t friend
 
 If you're using a PDF version of this guide, be careful when copying and pasting commands that span multiple lines - space characters around line-breaks might be lost when copied to the app.
 
-### 1.3 User Interface Overview
+### 1.3 Input Constraints
+
+Each field in NUS EMP has specific requirements to ensure data quality. Here are the constraints for each field:
+
+#### Contact and Event Fields
+
+| Field | Constraints | Examples |
+|-------|-------------|----------|
+| **Name** | Cannot be blank. Can contain any characters including spaces and special characters. | `John Doe`, `Mary-Jane O'Brien`, `李明` |
+| **Email** | Must follow format: `local-part@domain`<br>- Local part: alphanumeric and `+ _ . -` only, cannot start/end with special characters<br>- Domain: must end with at least 2 characters, labels separated by periods | `john@email.com`, `mary.jane@company.co.uk`, `user+tag@domain.org` |
+| **Phone** | Numbers only, minimum 3 digits. No spaces or special characters allowed. | `91234567`, `123`, `98765432100` |
+| **Address** | Cannot be blank if provided. Can contain any characters. | `123 Main Street`, `Blk 123 #01-01` |
+| **Tag** | Cannot be blank. Can contain any characters including spaces and special characters. | `friend`, `high-priority`, `VIP++`, `follow up` |
+| **Date** | Format: `DD-MM-YYYY HH:MM` (24-hour time) | `25-12-2025 14:30`, `01-01-2026 09:00` |
+| **Event Status** | Must be one of: `PENDING`, `ONGOING`, `DONE` (case-insensitive) | `pending`, `ONGOING`, `Done` |
+| **RSVP Status** | Must be one of: `available`, `unavailable`, `unknown` (case-insensitive) | `available`, `UNAVAILABLE`, `Unknown` |
+| **Index** | Positive integer within the displayed list range | `1`, `2`, `50` |
+
+<box type="warning" seamless>
+
+**Common Mistakes to Avoid:**
+
+- Including `+` country codes in phone numbers (use `91234567` instead of `+65 91234567`)
+- Using spaces in phone numbers
+- Using invalid date formats (must be `DD-MM-YYYY HH:MM`)
+
+</box>
+
+### 1.4 User Interface Overview
 
 The NUS Event Mailer Pro interface is designed to be intuitive and efficient for managing your events and contacts.
 
@@ -122,7 +150,7 @@ The NUS Event Mailer Pro interface is designed to be intuitive and efficient for
 | **6**  | Contact tags                                                   |
 | **7**  | Contact's linked events (Attending)                            |
 | **8**  | Contact's linked events (Not Attending)                        |
-| **9**  | Event's status (Pending/Ongoing/Closed)                        |
+| **9**  | Event's status (Pending/Ongoing/Done)                          |
 | **10** | Event's linked contacts (Attending)                            |
 | **11** | Event's linked contacts (Not Attending)                        |
 | **12** | Quick export button (Exports emails of all attending contacts) |
