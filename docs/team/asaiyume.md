@@ -5,7 +5,7 @@
 
 ### Project: NUS Event Mailer Pro
 
-NUS Event Mailer Pro is a desktop application used to manage Events and Contacts for NUS Event Organizers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+NUS Event Mailer Pro is a desktop application used to manage events and contacts for NUS event organizers. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 Given below are my contributions to the project.
 
@@ -20,7 +20,7 @@ Given below are my contributions to the project.
 
 - **Project management**:
 
-  - Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+  - Allocated tasks and assigned roles for each team member for iterations 1.1 to 1.3
 
 - **Enhancements to existing features**:
 
