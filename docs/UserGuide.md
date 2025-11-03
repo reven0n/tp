@@ -148,12 +148,12 @@ The NUS Event Mailer Pro interface is designed to be intuitive and efficient for
 | **4**  | Button to switch between light and dark mode.                  |
 | **5**  | Terminal window button (Alternatively, open with CTRL-T).      |
 | **6**  | Contact tags                                                   |
-| **7**  | Contact's linked events (Attending)                            |
-| **8**  | Contact's linked events (Not Attending)                        |
+| **7**  | Contact's linked events (Available)                            |
+| **8**  | Contact's linked events (Unavailable/Unknown)                  |
 | **9**  | Event's status (Pending/Ongoing/Done)                          |
-| **10** | Event's linked contacts (Attending)                            |
-| **11** | Event's linked contacts (Not Attending)                        |
-| **12** | Quick export button (Exports emails of all attending contacts) |
+| **10** | Event's linked contacts (Available)                            |
+| **11** | Event's linked contacts (Unavailable/Unknown)                  |
+| **12** | Quick export button (Exports emails of all available contacts) |
 
 #### Key Features
 
