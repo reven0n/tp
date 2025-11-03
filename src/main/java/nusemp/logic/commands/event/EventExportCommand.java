@@ -34,12 +34,7 @@ public class EventExportCommand extends Command {
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 " + PREFIX_STATUS + "unknown\n\n"
             + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
-
-
     public static final String MESSAGE_SUCCESS =
-            "Successfully exported all contacts linked to event \"%1$s\" to your clipboard.";
-
-    public static final String MESSAGE_SUCCESS_WITH_STATUS =
             "Successfully exported all contacts with status \"%2$s\" linked to event \"%1$s\" to your clipboard.";
 
     private String exportContentData = "";
@@ -95,9 +90,9 @@ public class EventExportCommand extends Command {
         content.putString(exportContentData);
         clipboard.setContent(content);
 
-        String successMessage = isStatusProvided
-                ? String.format(MESSAGE_SUCCESS_WITH_STATUS, eventToExport.getName(), status.toString().toLowerCase())
-                : String.format(MESSAGE_SUCCESS, eventToExport.getName());
+        String successMessage = String.format(MESSAGE_SUCCESS,
+                eventToExport.getName(),
+                status.toString().toLowerCase());
 
         return new CommandResult(successMessage);
     }
