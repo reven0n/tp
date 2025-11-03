@@ -254,6 +254,14 @@
     -fx-font-weight: 500;
 }
 
+#people .label-unavailable, #events .label-unavailable {
+    -fx-background-color: #BF3434;
+}
+
+#people .label-unknown, #events .label-unknown {
+    -fx-background-color: #a8a8a8;
+}
+
 #status {
     -fx-font-family: "Inter Medium";
 }

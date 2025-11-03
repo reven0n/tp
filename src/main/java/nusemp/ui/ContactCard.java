@@ -121,10 +121,9 @@ public class ContactCard extends UiPart<Region> {
 
             Label label = createLabel(name);
             if (p.getStatus() == ParticipantStatus.UNKNOWN) {
-                label.setStyle("-fx-background-color: #a8a8a8;");
+                label.getStyleClass().add("label-unknown");
             } else if (p.getStatus() == ParticipantStatus.UNAVAILABLE) {
-                label.setStyle("-fx-background-color: #FFA556;");
-
+                label.getStyleClass().add("label-unavailable");
             }
             events.getChildren().add(label);
 

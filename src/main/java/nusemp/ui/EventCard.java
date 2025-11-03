@@ -181,12 +181,10 @@ public class EventCard extends UiPart<Region> {
             Label label = createLabel(name);
             if (p.getStatus() == ParticipantStatus.AVAILABLE) {
                 exportContentData += email + ",";
-
             } else if (p.getStatus() == ParticipantStatus.UNAVAILABLE) {
-                label.setStyle("-fx-background-color: #FFA556;");
-
+                label.getStyleClass().add("label-unavailable");
             } else {
-                label.setStyle("-fx-background-color: #a8a8a8;");
+                label.getStyleClass().add("label-unknown");
             }
             people.getChildren().add(label);
 
