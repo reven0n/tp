@@ -18,6 +18,7 @@ import nusemp.model.participant.ParticipantMap;
 import nusemp.model.participant.ParticipantStatus;
 import nusemp.model.participant.ReadOnlyParticipantMap;
 
+// @@author
 /**
  * Wraps all data at the app level.
  * Duplicates are not allowed (by .isSameContact and .isSameEvent comparisons).
@@ -84,7 +85,9 @@ public class AppData implements ReadOnlyAppData {
 
         setContacts(newData.getContactList());
         setEvents(newData.getEventList());
+        // @@author CZX123
         setParticipantMap(newData.getParticipantMap());
+        // @@author
     }
 
     //// contact-level operations
@@ -114,10 +117,12 @@ public class AppData implements ReadOnlyAppData {
         requireNonNull(editedContact);
 
         contacts.setContact(target, editedContact);
+        // @@author CZX123
         participantMap.setContact(target, editedContact);
         for (Participant p : getParticipants(editedContact)) {
             refreshEvent(p.getEvent());
         }
+        // @@author
     }
 
     /**
@@ -128,12 +133,14 @@ public class AppData implements ReadOnlyAppData {
     public void removeContact(Contact contact) {
         List<Participant> participants = getParticipants(contact);
         contacts.remove(contact);
+        // @@author reven0n
         participantMap.removeContact(contact);
         for (Participant p : participants) {
             refreshEvent(p.getEvent());
         }
     }
 
+    // @@author CZX123
     /**
      * Refreshes the given contact in the contact list.
      * <p>
@@ -143,6 +150,7 @@ public class AppData implements ReadOnlyAppData {
         contacts.setContact(contact, contact.getInvalidatedContact());
     }
 
+    // @@author asaiyume
     //// event-level operations
 
     /**
@@ -170,10 +178,12 @@ public class AppData implements ReadOnlyAppData {
         requireNonNull(editedEvent);
 
         events.setEvent(target, editedEvent);
+        // @@author CZX123
         participantMap.setEvent(target, editedEvent);
         for (Participant p : getParticipants(editedEvent)) {
             refreshContact(p.getContact());
         }
+        // @@author asaiyume
     }
 
     /**
@@ -182,13 +192,16 @@ public class AppData implements ReadOnlyAppData {
      */
     public void removeEvent(Event event) {
         List<Participant> participants = getParticipants(event);
+        // @@author reven0n
         participantMap.removeEvent(event);
+        // @@author asaiyume
         events.remove(event);
         for (Participant p : participants) {
             refreshContact(p.getContact());
         }
     }
 
+    // @@author CZX123
     /**
      * Refreshes the given event in the event list.
      * <p>
@@ -198,6 +211,7 @@ public class AppData implements ReadOnlyAppData {
         events.setEvent(event, event.getInvalidatedEvent());
     }
 
+    // @@author reven0n
     //// participant map operations
 
     /**
@@ -284,6 +298,7 @@ public class AppData implements ReadOnlyAppData {
         requireNonNull(event);
         return participantMap.getParticipants(event);
     }
+    // @@author
 
 
     //// util methods
