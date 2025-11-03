@@ -6,6 +6,7 @@ import static nusemp.commons.util.AppUtil.checkArgument;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 /**
  * Represents a date and time.
@@ -16,7 +17,8 @@ public class Date {
     public static final String MESSAGE_CONSTRAINTS =
             "Date and time should follow this format: DD-MM-YYYY HH:mm (24-hour format)";
 
-    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-uuuu HH:mm")
+            .withResolverStyle(ResolverStyle.STRICT);
 
     public final LocalDateTime value;
 

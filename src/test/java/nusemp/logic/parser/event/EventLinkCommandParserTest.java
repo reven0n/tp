@@ -1,6 +1,7 @@
 package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -47,17 +48,17 @@ class EventLinkCommandParserTest {
     @Test
     public void parse_invalidIndex_failure() {
         // non-numeric event index
-        assertParseFailure(parser, " " + PREFIX_EVENT + " a " + PREFIX_CONTACT + " 1", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, " " + PREFIX_EVENT + " a " + PREFIX_CONTACT + " 1", MESSAGE_INVALID_INDEX_FORMAT);
         // non-numeric contact index
-        assertParseFailure(parser, " " + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " b", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, " " + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " b", MESSAGE_INVALID_INDEX_FORMAT);
         // zero event index
-        assertParseFailure(parser, " " + PREFIX_EVENT + " 0 " + PREFIX_CONTACT + " 1", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, " " + PREFIX_EVENT + " 0 " + PREFIX_CONTACT + " 1", MESSAGE_INVALID_INDEX_FORMAT);
         // zero contact index
-        assertParseFailure(parser, " " + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 0", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, " " + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " 0", MESSAGE_INVALID_INDEX_FORMAT);
         // negative event index
-        assertParseFailure(parser, " " + PREFIX_EVENT + " -1 " + PREFIX_CONTACT + " 1", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, " " + PREFIX_EVENT + " -1 " + PREFIX_CONTACT + " 1", MESSAGE_INVALID_INDEX_FORMAT);
         // negative contact index
-        assertParseFailure(parser, " " + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " -1", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, " " + PREFIX_EVENT + " 1 " + PREFIX_CONTACT + " -1", MESSAGE_INVALID_INDEX_FORMAT);
     }
 
     @Test

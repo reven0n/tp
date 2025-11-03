@@ -39,17 +39,9 @@ public class EventRsvpCommandParser implements Parser<EventRsvpCommand> {
         // check for duplicate prefixes
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_EVENT, PREFIX_CONTACT, PREFIX_STATUS);
 
-        Index eventIndex;
-        Index contactIndex;
-        ParticipantStatus participantStatus;
-
-        try {
-            eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
-            contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
-            participantStatus = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
-        } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventRsvpCommand.MESSAGE_USAGE), pe);
-        }
+        Index eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
+        Index contactIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_CONTACT).get());
+        ParticipantStatus participantStatus = ParserUtil.parseStatus(argMultimap.getValue(PREFIX_STATUS).get());
 
         return new EventRsvpCommand(eventIndex, contactIndex, participantStatus);
     }
