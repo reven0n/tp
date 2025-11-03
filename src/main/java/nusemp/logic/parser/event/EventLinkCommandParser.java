@@ -1,9 +1,11 @@
 package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.logic.parser.CliSyntax.LINK_ALL_KEYWORD;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
+import static nusemp.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.commands.event.EventLinkCommand;
@@ -43,8 +45,12 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
         try {
             eventIndex = ParserUtil.parseIndex(argMultimap.getValue(PREFIX_EVENT).get());
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventLinkCommand.MESSAGE_USAGE), pe);
+            if (pe.getMessage().equals(MESSAGE_INVALID_INDEX)) {
+                throw new ParseException(MESSAGE_INVALID_INDEX_FORMAT, pe);
+            } else {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        EventLinkCommand.MESSAGE_USAGE), pe);
+            }
         }
 
         String contactValue = argMultimap.getValue(PREFIX_CONTACT).get().trim();
@@ -57,8 +63,12 @@ public class EventLinkCommandParser implements Parser<EventLinkCommand> {
         try {
             contactIndex = ParserUtil.parseIndex(contactValue);
         } catch (ParseException pe) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventLinkCommand.MESSAGE_USAGE), pe);
+            if (pe.getMessage().equals(MESSAGE_INVALID_INDEX)) {
+                throw new ParseException(MESSAGE_INVALID_INDEX_FORMAT, pe);
+            } else {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        EventLinkCommand.MESSAGE_USAGE), pe);
+            }
         }
 
         return new EventLinkCommand(eventIndex, contactIndex);

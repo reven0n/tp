@@ -1,6 +1,8 @@
 package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
+import static nusemp.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.commands.event.EventShowCommand;
@@ -22,8 +24,12 @@ public class EventShowCommandParser implements Parser<EventShowCommand> {
             Index index = ParserUtil.parseIndex(args);
             return new EventShowCommand(index);
         } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventShowCommand.MESSAGE_USAGE), pe);
+            if (pe.getMessage().equals(MESSAGE_INVALID_INDEX)) {
+                throw new ParseException(MESSAGE_INVALID_INDEX_FORMAT, pe);
+            } else {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventShowCommand.MESSAGE_USAGE), pe);
+            }
         }
     }
 }
