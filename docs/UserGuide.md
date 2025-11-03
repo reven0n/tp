@@ -652,23 +652,23 @@ event link --event 1 --contact 2
 
 This adds contact #2 to event #1.
 
-**Add all contacts to an event**
+**Add all listed contacts to an event**
 
-You can also quickly invite everyone in your contact list to an event:
+You can also quickly invite everyone in your currently displayed contact list to an event:
 
 ```
-event link --event 1 --contact all
+event link --event 1 --contact listed
 ```
 
-This adds **all contacts** from your contact list to event #1 —
+This adds **all contacts** from your currently displayed contact list to event #1 —
 perfect for bulk invites or large gatherings.
 
 **Important:**
 
 - You can find the event index in the displayed event list
 - You can find the contact index in the displayed contact list
-- Both indexes should be a **positive** number, , unless you use `all` for `CONTACT_INDEX`
-- Using --contact all will link **every contact** currently listed to the specified event
+- Both indexes should be a **positive** number, unless you use `listed` for `CONTACT_INDEX`
+- Using --contact listed will link **every contact** currently displayed to the specified event
 
 <box type="tip" seamless>
 
@@ -702,23 +702,23 @@ event unlink --event 1 --contact 2
 
 Removes contact #2 from event #1.
 
-**Remove all contacts from an event**
+**Remove all listed contacts from an event**
 
 You can also quickly clear your guest list for an event:
 
 ```
-event unlink --event 1 --contact all
+event unlink --event 1 --contact listed
 ```
 
-This removes **all contacts** currently linked to event #1 —
+This removes **all contacts** currently displayed from event #1 —
 perfect for resetting or rebuilding your guest list.
 
 **Important:**
 
 - You can find the event index in the displayed event list
 - You can find the contact index in the displayed contact list
-- Both indexes should be a **positive** number, unless you use `all` for `CONTACT_INDEX`
-- Using `--contact all` will unlink **every contact** from the specified event
+- Both indexes should be a **positive** number, unless you use `listed` for `CONTACT_INDEX`
+- Using `--contact listed` will unlink **every contact** currently displayed from the specified event
 
 <box type="tip" seamless>
 
@@ -953,9 +953,9 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 | **Find Event**                     | `event find KEYWORDS [MORE_KEYWORDS]...` or <br>e.g. `event find --name Conference` <br> `event find --status pending` <br/>                |
 | **List Events**                    | `event list`                                                                                                                                |
 | **Link Contact to Event**          | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
-| **Link All Contacts to Event**     | `event link --event EVENT_INDEX --contact all`<br>e.g. `event link --event 1 --contact all`                                                 |
+| **Link All Listed Contacts to Event**     | `event link --event EVENT_INDEX --contact listed`<br>e.g. `event link --event 1 --contact listed`                                                 |
 | **Unlink Contact from Event**      | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
-| **Unlink All Contacts from Event** | `event unlink --event EVENT_INDEX --contact all`<br>e.g. `event unlink --event 1 --contact all`                                             |
+| **Unlink All Listed Contacts from Event** | `event unlink --event EVENT_INDEX --contact listed`<br>e.g. `event unlink --event 1 --contact listed`                                             |
 | **Show Event's Contacts**          | `event show INDEX`<br>e.g. `event show 1`                                                                                                   |
 | **Export Event Contacts**          | `event export INDEX [--status STATUS]`<br>e.g. `event export 1`<br> `event export 1 --status available`<br/>                                |
 | **RSVP to Event**                  | `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS`<br>e.g. `event rsvp --event 1 --contact 2 --status available`      |
