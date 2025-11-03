@@ -19,12 +19,12 @@ public class EventDeleteCommandParser implements Parser<EventDeleteCommand> {
      */
     @Override
     public EventDeleteCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new EventDeleteCommand(index);
-        } catch (ParseException pe) {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventDeleteCommand.MESSAGE_USAGE), pe);
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventDeleteCommand.MESSAGE_USAGE));
         }
+        Index index = ParserUtil.parseIndex(trimmedArgs);
+        return new EventDeleteCommand(index);
     }
 }
