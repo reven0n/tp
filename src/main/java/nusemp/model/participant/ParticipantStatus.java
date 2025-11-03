@@ -8,7 +8,7 @@ public enum ParticipantStatus {
     UNAVAILABLE, AVAILABLE, UNKNOWN;
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Status should be either 'available' or 'unavailable' (case insensitive)";
+            "Status should be either 'available', 'unavailable', or 'unknown' (case insensitive)";
 
     @Override
     public String toString() {
