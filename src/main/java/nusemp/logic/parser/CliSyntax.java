@@ -15,6 +15,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_CONTACT = new Prefix("--contact ", "-c ");
     public static final Prefix PREFIX_EVENT = new Prefix("--event ", "-e ");
     public static final Prefix PREFIX_STATUS = new Prefix("--status ", "-s ");
-    public static final String LINK_ALL_KEYWORD = "all";
+    public static final String LINK_ALL_KEYWORD = "listed";
 
 }
