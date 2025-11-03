@@ -91,7 +91,8 @@ public class EventUnlinkCommand extends Command {
 
     }
 
-    private CommandResult executeUnlinkSingle(Model model, Event eventToUnlink, List<Contact> lastShownContactList) throws CommandException {
+    private CommandResult executeUnlinkSingle(Model model, Event eventToUnlink,
+                                              List<Contact> lastShownContactList) throws CommandException {
 
         if (contactIndex.getZeroBased() >= lastShownContactList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
@@ -110,7 +111,8 @@ public class EventUnlinkCommand extends Command {
                 contactToUnlink.getName().toString(), eventToUnlink.getName().toString()));
     }
 
-    private CommandResult executeUnlinkAll(Model model, Event eventToUnlink, List<Contact> lastShownContactList) throws CommandException {
+    private CommandResult executeUnlinkAll(Model model, Event eventToUnlink,
+                                           List<Contact> lastShownContactList) throws CommandException {
 
         if (lastShownContactList.isEmpty()) {
             throw new CommandException(String.format(MESSAGE_NO_CONTACTS_TO_UNLINK, eventToUnlink.getName()));

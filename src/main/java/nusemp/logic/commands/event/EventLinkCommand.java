@@ -99,7 +99,8 @@ public class EventLinkCommand extends Command {
 
     }
 
-    private CommandResult executeLinkSingle(Model model, Event eventToLink, List<Contact> lastShownContactList) throws CommandException {
+    private CommandResult executeLinkSingle(Model model, Event eventToLink,
+                                            List<Contact> lastShownContactList) throws CommandException {
 
         if (contactIndex.getZeroBased() >= lastShownContactList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
@@ -117,7 +118,8 @@ public class EventLinkCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, contactToLink.getName(), eventToLink.getName()));
     }
 
-    private CommandResult executeLinkAll(Model model, Event eventToLink, List<Contact> lastShownContactList) throws CommandException {
+    private CommandResult executeLinkAll(Model model, Event eventToLink,
+                                         List<Contact> lastShownContactList) throws CommandException {
 
         if (lastShownContactList.isEmpty()) {
             throw new CommandException(MESSAGE_NO_CONTACTS_TO_LINK);
