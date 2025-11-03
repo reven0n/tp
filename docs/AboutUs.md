@@ -58,4 +58,4 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/asaiyume.md)]
 
 * Role: Developer
-* Responsibilities: Models & Abstraction
+* Responsibilities: Models & Abstraction, Documentation, Code Quality
