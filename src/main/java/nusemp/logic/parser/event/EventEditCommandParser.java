@@ -38,14 +38,13 @@ public class EventEditCommandParser implements Parser<EventEditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_ADDRESS, PREFIX_STATUS, PREFIX_TAG);
 
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (ParseException pe) {
+        String preamble = argMultimap.getPreamble().trim();
+        if (preamble.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                    EventEditCommand.MESSAGE_USAGE), pe);
+                    EventEditCommand.MESSAGE_USAGE));
         }
+
+        Index index = ParserUtil.parseIndex(preamble);
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_DATE, PREFIX_ADDRESS, PREFIX_STATUS);
 

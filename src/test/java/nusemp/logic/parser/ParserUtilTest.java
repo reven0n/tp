@@ -1,6 +1,6 @@
 package nusemp.logic.parser;
 
-import static nusemp.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.testutil.Assert.assertThrows;
 import static nusemp.testutil.TypicalIndexes.INDEX_FIRST_CONTACT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -42,7 +42,7 @@ public class ParserUtilTest {
 
     @Test
     public void parseIndex_outOfRangeInput_throwsParseException() {
-        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX, ()
+        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX_FORMAT, ()
             -> ParserUtil.parseIndex(Long.toString(Integer.MAX_VALUE + 1)));
     }
 

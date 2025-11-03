@@ -1,6 +1,7 @@
 package nusemp.logic.parser;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
@@ -170,8 +171,7 @@ public class AppParserTest {
                 parser.parseCommand(CommandType.EVENT + " " + EventDeleteCommand.COMMAND_WORD));
 
         // Invalid index
-        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                EventDeleteCommand.MESSAGE_USAGE), () ->
+        assertThrows(ParseException.class, MESSAGE_INVALID_INDEX_FORMAT, () ->
                 parser.parseCommand(CommandType.EVENT + " " + EventDeleteCommand.COMMAND_WORD + " abc"));
     }
 

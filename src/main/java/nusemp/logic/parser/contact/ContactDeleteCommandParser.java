@@ -1,8 +1,6 @@
 package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
-import static nusemp.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 
 import nusemp.commons.core.index.Index;
 import nusemp.logic.commands.contact.ContactDeleteCommand;
@@ -21,17 +19,13 @@ public class ContactDeleteCommandParser implements Parser<ContactDeleteCommand> 
      * @throws ParseException if the user input does not conform the expected format
      */
     public ContactDeleteCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new ContactDeleteCommand(index);
-        } catch (ParseException pe) {
-            if (pe.getMessage().equals(MESSAGE_INVALID_INDEX)) {
-                throw new ParseException(MESSAGE_INVALID_INDEX_FORMAT, pe);
-            } else {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactDeleteCommand.MESSAGE_USAGE), pe);
-            }
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ContactDeleteCommand.MESSAGE_USAGE));
         }
+        Index index = ParserUtil.parseIndex(trimmedArgs);
+        return new ContactDeleteCommand(index);
     }
 
 }

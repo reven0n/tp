@@ -2,6 +2,7 @@ package nusemp.logic.parser.event;
 
 import static nusemp.logic.Messages.MESSAGE_DUPLICATE_FIELDS;
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
 import static nusemp.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -37,13 +38,13 @@ public class EventUnlinkCommandParserTest {
     @Test
     public void parse_invalidEventIndex_throwsParseException() {
         assertParseFailure(parser, " " + PREFIX_EVENT + "a " + PREFIX_CONTACT + "1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventUnlinkCommand.MESSAGE_USAGE));
+                MESSAGE_INVALID_INDEX_FORMAT);
     }
 
     @Test
     public void parse_invalidContactIndex_throwsParseException() {
         assertParseFailure(parser, " " + PREFIX_EVENT + "1 " + PREFIX_CONTACT + "a",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, EventUnlinkCommand.MESSAGE_USAGE));
+                MESSAGE_INVALID_INDEX_FORMAT);
     }
 
     @Test
