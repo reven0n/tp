@@ -2,7 +2,7 @@ package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
 import static nusemp.commons.util.CollectionUtil.requireAllNonNull;
-import static nusemp.logic.parser.CliSyntax.PREFIX_STATUS;
+import static nusemp.logic.parser.CliSyntax.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -28,29 +28,44 @@ public class EventExportCommand extends Command {
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
             + ": Exports all contacts linked to an event identified by the index used in the displayed event list.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_STATUS + "STATUS]\n"
+            + "The status can be either \"available\", \"unavailable\", or \"unknown\"\n\n"
+            + "Parameters:  "
+            + "INDEX (must be a positive integer)  [" + PREFIX_STATUS + "STATUS]\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " 1 " + PREFIX_STATUS + "unknown\n"
             + "Note: INDEX must be a positive integer within the size of the displayed event list.";
 
+
+
     public static final String MESSAGE_SUCCESS =
-            "Successfully exported contacts linked to event \"%1$s\" to your clipboard.";
+            "Successfully exported all contacts linked to event \"%1$s\" to your clipboard.";
+
+    public static final String MESSAGE_SUCCESS_WITH_STATUS =
+            "Successfully exported all contacts with status \"%2$s\" linked to event \"%1$s\" to your clipboard.";
 
     private String exportContentData = "";
 
     private final Index eventIndex;
     private final ParticipantStatus status;
+    private final boolean isStatusProvided;
 
     public EventExportCommand(Index eventIndex) {
-        this(eventIndex, ParticipantStatus.AVAILABLE);
+        this(eventIndex, ParticipantStatus.AVAILABLE, false);
     }
     /**
      * Creates an EventExportCommand to export the specified {@code Event}
      */
     public EventExportCommand(Index eventIndex, ParticipantStatus status) {
+        this(eventIndex, status, true);
+    }
+
+    /**
+     * Creates an EventExportCommand with explicit status provision flag
+     */
+    private EventExportCommand(Index eventIndex, ParticipantStatus status, boolean isStatusProvided) {
         requireAllNonNull(eventIndex, status);
         this.eventIndex = eventIndex;
         this.status = status;
+        this.isStatusProvided = isStatusProvided;
     }
 
     @Override
@@ -79,7 +94,12 @@ public class EventExportCommand extends Command {
         ClipboardContent content = new ClipboardContent();
         content.putString(exportContentData);
         clipboard.setContent(content);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, eventToExport.getName()));
+
+        String successMessage = isStatusProvided
+                ? String.format(MESSAGE_SUCCESS_WITH_STATUS, eventToExport.getName(), status.toString().toLowerCase())
+                : String.format(MESSAGE_SUCCESS, eventToExport.getName());
+
+        return new CommandResult(successMessage);
     }
 
     @Override
