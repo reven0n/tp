@@ -1,3 +1,4 @@
+// @@author
 package nusemp.model.contact;
 
 import static java.util.Objects.requireNonNull;
@@ -50,6 +51,7 @@ public class UniqueContactList implements Iterable<Contact> {
         internalList.add(toAdd);
     }
 
+    // @@author rizrn
     private int findContactIndex(Contact toFind) {
         for (int i = 0; i < internalList.size(); i++) {
             if (internalList.get(i).isSameContact(toFind)) {
@@ -58,6 +60,7 @@ public class UniqueContactList implements Iterable<Contact> {
         }
         return -1;
     }
+    // @@author
 
     /**
      * Replaces the contact {@code target} in the list with {@code editedContact}.
@@ -67,7 +70,9 @@ public class UniqueContactList implements Iterable<Contact> {
     public void setContact(Contact target, Contact editedContact) {
         requireAllNonNull(target, editedContact);
 
+        // @@author rizrn
         int index = findContactIndex(target);
+        // @@author
         if (index == -1) {
             throw new ContactNotFoundException();
         }
@@ -83,6 +88,7 @@ public class UniqueContactList implements Iterable<Contact> {
      * Removes the equivalent contact from the list.
      * The contact must exist in the list.
      */
+    // @@author CZX123
     public void remove(Contact toRemove) {
         requireNonNull(toRemove);
         int index = findContactIndex(toRemove);
@@ -91,6 +97,7 @@ public class UniqueContactList implements Iterable<Contact> {
         }
         internalList.remove(index);
     }
+    // @@author
 
     public void setContacts(UniqueContactList replacement) {
         requireNonNull(replacement);
@@ -134,6 +141,7 @@ public class UniqueContactList implements Iterable<Contact> {
         }
 
         UniqueContactList otherUniqueContactList = (UniqueContactList) other;
+        // @@author CZX123
         if (internalList.size() != otherUniqueContactList.internalList.size()) {
             return false;
         }
@@ -143,6 +151,7 @@ public class UniqueContactList implements Iterable<Contact> {
             }
         }
         return true;
+        // @@author
     }
 
     @Override
