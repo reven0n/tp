@@ -18,12 +18,12 @@ public class Messages {
     public static final String HEADING_EVENTS_NONE = "No Events";
     public static final String HEADING_CONTACTS_FROM_EVENT = "Contacts in event \"%1$s\"";
     public static final String HEADING_CONTACTS_FROM_EVENT_NONE = "No contacts in event \"%1$s\"";
-    public static final String HEADING_CONTACT_FIND = "Matching Contacts";
-    public static final String HEADING_CONTACT_FIND_NONE = "No Matching Contacts";
+    public static final String HEADING_CONTACT_FIND = "Contacts that match conditions:\n%1$s";
+    public static final String HEADING_CONTACT_FIND_NONE = "No contacts that match conditions:\n%1$s";
     public static final String HEADING_EVENTS_FROM_CONTACT = "Events containing contact \"%1$s\"";
     public static final String HEADING_EVENTS_FROM_CONTACT_NONE = "No events containing contact \"%1$s\"";
-    public static final String HEADING_EVENT_FIND = "Matching Events";
-    public static final String HEADING_EVENT_FIND_NONE = "No Matching Events";
+    public static final String HEADING_EVENT_FIND = "Events that match conditions:\n%1$s";
+    public static final String HEADING_EVENT_FIND_NONE = "No events that match conditions:\n%1$s";
 
     public static final String MESSAGE_WELCOME = "Welcome to NUS Event Mailer Pro!\n"
             + "Type \"help\" to open the user guide.";

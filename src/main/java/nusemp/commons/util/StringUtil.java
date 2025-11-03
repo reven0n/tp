@@ -65,4 +65,26 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Prepends each line in the input string.
+     *
+     * @param input The input string.
+     * @param prepend The string to prepend to each line.
+     * @return The indented string.
+     */
+    public static String prependLines(String input, String prepend) {
+        requireNonNull(input);
+        requireNonNull(prepend);
+        String[] lines = input.split("\n");
+        StringBuilder indented = new StringBuilder();
+        for (String line : lines) {
+            indented.append(prepend).append(line).append("\n");
+        }
+        // Remove the last newline character
+        if (!indented.isEmpty()) {
+            indented.setLength(indented.length() - 1);
+        }
+        return indented.toString();
+    }
 }

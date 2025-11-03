@@ -1,6 +1,7 @@
 package nusemp.logic.commands.contact;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.commons.util.StringUtil.prependLines;
 
 import java.util.function.Predicate;
 
@@ -34,9 +35,24 @@ public class ContactFindCommand extends Command {
             + "Example: " + CommandType.CONTACT + " " + COMMAND_WORD + " --name alice";
 
     private final Predicate<Contact> predicate;
+    private final String conditions;
 
+    /**
+     * Creates a ContactFindCommand to find contacts matching the given predicate.
+     */
     public ContactFindCommand(Predicate<Contact> predicate) {
+        this(predicate, "");
+    }
+
+    /**
+     * Creates a ContactFindCommand to find contacts matching the given predicate.
+     *
+     * @param predicate The predicate to filter contacts.
+     * @param conditions The string representation of the search conditions.
+     */
+    public ContactFindCommand(Predicate<Contact> predicate, String conditions) {
         this.predicate = predicate;
+        this.conditions = conditions;
     }
 
     @Override
@@ -45,7 +61,8 @@ public class ContactFindCommand extends Command {
         model.updateFilteredContactList(predicate);
         int size = model.getFilteredContactList().size();
         String feedbackToUser = String.format(Messages.MESSAGE_CONTACTS_LISTED_OVERVIEW, size);
-        String heading = size == 0 ? Messages.HEADING_CONTACT_FIND_NONE : Messages.HEADING_CONTACT_FIND;
+        String heading = String.format(size == 0 ? Messages.HEADING_CONTACT_FIND_NONE : Messages.HEADING_CONTACT_FIND,
+                prependLines(conditions, "    ")).trim();
         return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_CONTACTS, heading);
     }
 

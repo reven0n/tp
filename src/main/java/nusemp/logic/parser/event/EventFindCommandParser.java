@@ -44,6 +44,7 @@ public class EventFindCommandParser implements Parser<EventFindCommand> {
 
         ArgumentMultimap argumentMultimap = ArgumentTokenizer
                 .tokenize(args, PREFIX_NAME, PREFIX_DATE, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_STATUS);
+        StringBuilder conditions = new StringBuilder();
 
         // Check if any prefixes are present
         boolean hasNamePrefix = argumentMultimap.getValue(PREFIX_NAME).isPresent();
@@ -57,32 +58,35 @@ public class EventFindCommandParser implements Parser<EventFindCommand> {
         if (!hasPrefixes) {
             // Backward compatibility: treat input as name keywords
             String[] nameKeywords = trimmedArgs.split("\\s+");
-            return new EventFindCommand(new EventNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+            conditions.append("name: ").append(formatKeywords(nameKeywords)).append("\n");
+            return new EventFindCommand(new EventNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)),
+                    conditions.toString().trim());
         }
 
         List<Predicate<Event>> predicates = new ArrayList<>();
 
-        addNamePredicates(argumentMultimap, predicates);
-        addDatePredicates(argumentMultimap, predicates);
-        addAddressPredicates(argumentMultimap, predicates);
-        addTagPredicates(argumentMultimap, predicates);
-        addStatusPredicates(argumentMultimap, predicates);
+        addStatusPredicates(argumentMultimap, predicates, conditions);
+        addNamePredicates(argumentMultimap, predicates, conditions);
+        addDatePredicates(argumentMultimap, predicates, conditions);
+        addAddressPredicates(argumentMultimap, predicates, conditions);
+        addTagPredicates(argumentMultimap, predicates, conditions);
 
         if (predicates.size() == 1) {
-            return new EventFindCommand(predicates.get(0));
+            return new EventFindCommand(predicates.get(0), conditions.toString().trim());
         } else {
-            return new EventFindCommand(new EventMatchesAllPredicates(predicates));
+            return new EventFindCommand(new EventMatchesAllPredicates(predicates), conditions.toString().trim());
         }
     }
 
     private static void addStatusPredicates(ArgumentMultimap argumentMultimap,
-                                            List<Predicate<Event>> predicates) throws ParseException {
+            List<Predicate<Event>> predicates, StringBuilder conditions) throws ParseException {
         if (argumentMultimap.getValue(PREFIX_STATUS).isPresent()) {
             String statusArgs = argumentMultimap.getValue(PREFIX_STATUS).get();
             if (!statusArgs.isEmpty()) {
                 String[] statusKeywords = argumentMultimap.getValue(PREFIX_STATUS).get().split("\\s+");
                 try {
                     predicates.add(new EventStatusPredicate(Arrays.asList(statusKeywords)));
+                    conditions.append("status: ").append(formatKeywords(statusKeywords)).append("\n");
                 } catch (IllegalArgumentException e) {
                     throw new ParseException(e.getMessage());
                 }
@@ -90,34 +94,39 @@ public class EventFindCommandParser implements Parser<EventFindCommand> {
         }
     }
 
-    private static void addTagPredicates(ArgumentMultimap argumentMultimap, List<Predicate<Event>> predicates) {
+    private static void addTagPredicates(ArgumentMultimap argumentMultimap, List<Predicate<Event>> predicates,
+            StringBuilder conditions) {
         if (argumentMultimap.getValue(PREFIX_TAG).isPresent()) {
             String tagArgs = argumentMultimap.getValue(PREFIX_TAG).get();
             if (!tagArgs.isEmpty()) {
                 String[] tagKeywords = argumentMultimap.getValue(PREFIX_TAG).get().split("\\s+");
                 predicates.add(new EventTagContainsKeywordsPredicate(Arrays.asList(tagKeywords)));
+                conditions.append("tag: ").append(formatKeywords(tagKeywords)).append("\n");
             }
         }
     }
 
-    private static void addAddressPredicates(ArgumentMultimap argumentMultimap, List<Predicate<Event>> predicates) {
+    private static void addAddressPredicates(ArgumentMultimap argumentMultimap, List<Predicate<Event>> predicates,
+            StringBuilder conditions) {
         if (argumentMultimap.getValue(PREFIX_ADDRESS).isPresent()) {
             String addressArgs = argumentMultimap.getValue(PREFIX_ADDRESS).get();
             if (!addressArgs.isEmpty()) {
                 String[] addressKeywords = argumentMultimap.getValue(PREFIX_ADDRESS).get().split("\\s+");
                 predicates.add(new EventAddressContainsKeywordsPredicate(Arrays.asList(addressKeywords)));
+                conditions.append("address: ").append(formatKeywords(addressKeywords)).append("\n");
             }
         }
     }
 
-    private static void addDatePredicates(ArgumentMultimap argumentMultimap, List<Predicate<Event>> predicates)
-            throws ParseException {
+    private static void addDatePredicates(ArgumentMultimap argumentMultimap, List<Predicate<Event>> predicates,
+            StringBuilder conditions) throws ParseException {
         if (argumentMultimap.getValue(PREFIX_DATE).isPresent()) {
             String dateArgs = argumentMultimap.getValue(PREFIX_DATE).get();
             if (!dateArgs.isEmpty()) {
                 try {
                     Date date = new Date(dateArgs);
                     predicates.add(new EventDateContainsKeywordsPredicate(date));
+                    conditions.append("date: ").append(dateArgs).append("\n");
                 } catch (IllegalArgumentException e) {
                     throw new ParseException(e.getMessage());
                 }
@@ -125,13 +134,19 @@ public class EventFindCommandParser implements Parser<EventFindCommand> {
         }
     }
 
-    private static void addNamePredicates(ArgumentMultimap argumentMultimap, List<Predicate<Event>> predicates) {
+    private static void addNamePredicates(ArgumentMultimap argumentMultimap, List<Predicate<Event>> predicates,
+            StringBuilder conditions) {
         if (argumentMultimap.getValue(PREFIX_NAME).isPresent()) {
             String nameArgs = argumentMultimap.getValue(PREFIX_NAME).get();
             if (!nameArgs.isEmpty()) {
                 String[] nameKeywords = argumentMultimap.getValue(PREFIX_NAME).get().split("\\s+");
                 predicates.add(new EventNameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
+                conditions.append("name: ").append(formatKeywords(nameKeywords)).append("\n");
             }
         }
+    }
+
+    private static String formatKeywords(String[] keywords) {
+        return "\"" + String.join("\", \"", keywords) + "\"";
     }
 }

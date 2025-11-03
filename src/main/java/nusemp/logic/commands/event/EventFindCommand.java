@@ -1,6 +1,7 @@
 package nusemp.logic.commands.event;
 
 import static java.util.Objects.requireNonNull;
+import static nusemp.commons.util.StringUtil.prependLines;
 import static nusemp.logic.Messages.MESSAGE_EVENTS_LISTED_OVERVIEW;
 
 import java.util.function.Predicate;
@@ -34,12 +35,24 @@ public class EventFindCommand extends Command {
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " --name meeting";
 
     private final Predicate<Event> predicate;
+    private final String conditions;
 
     /**
      * Creates an EventFindCommand to find events matching the given predicate.
      */
     public EventFindCommand(Predicate<Event> predicate) {
+        this(predicate, "");
+    }
+
+    /**
+     * Creates an EventFindCommand to find events matching the given predicate.
+     *
+     * @param predicate The predicate to filter events.
+     * @param conditions The string representation of the search conditions.
+     */
+    public EventFindCommand(Predicate<Event> predicate, String conditions) {
         this.predicate = predicate;
+        this.conditions = conditions;
     }
 
     @Override
@@ -48,7 +61,8 @@ public class EventFindCommand extends Command {
         model.updateFilteredEventList(predicate);
         int size = model.getFilteredEventList().size();
         String feedbackToUser = String.format(MESSAGE_EVENTS_LISTED_OVERVIEW, size);
-        String heading = size == 0 ? Messages.HEADING_EVENT_FIND_NONE : Messages.HEADING_EVENT_FIND;
+        String heading = String.format(size == 0 ? Messages.HEADING_EVENT_FIND_NONE : Messages.HEADING_EVENT_FIND,
+                prependLines(conditions, "    ")).trim();
         return new CommandResult(feedbackToUser, CommandResult.UiBehavior.SHOW_EVENTS, heading);
     }
 
