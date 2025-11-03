@@ -86,6 +86,14 @@ Save time with these short forms:
 | `--event`   | `-e`       |
 | `--status`  | `-s`       |
 
+<box type="info" seamless>
+
+**Note**
+
+The parameters `--events` and `--email` are not used in the same command, so it is okay for both to use `-e` as the short form. 
+
+</box>
+
 #### Complete Example
 
 **Long form:**
@@ -535,7 +543,7 @@ This changes event #1's name and time.
   - **PENDING** - Event is planned/announced (default)
   - **ONGOING** - Event is currently in progress
   - **DONE** - Event has ended
-- Tags
+- Tags (this will override the original tags!)
 - **At least one thing must be updated**
 
 </box>
