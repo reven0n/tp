@@ -50,6 +50,10 @@ public class ContactListPanel extends UiPart<Region> {
         });
     }
 
+    public ListView<Contact> getContactListView() {
+        return contactListView;
+    }
+
     public void updateHeading(String newHeading) {
         prefixedList.setPrefix(newHeading);
     }
