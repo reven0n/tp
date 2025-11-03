@@ -3,7 +3,6 @@ package nusemp.logic.commands.event;
 import static java.util.Objects.requireNonNull;
 import static nusemp.logic.parser.CliSyntax.PREFIX_CONTACT;
 import static nusemp.logic.parser.CliSyntax.PREFIX_EVENT;
-import static nusemp.model.Model.PREDICATE_SHOW_ALL_CONTACTS;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +81,8 @@ public class EventLinkCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        List<Event> lastShownEventList = model.getFilteredEventList();
+        List<Event> lastShownEventList = List.copyOf(model.getFilteredEventList());
+        List<Contact> lastShownContactList = List.copyOf(model.getFilteredContactList());
 
         // check if the event index and contact index are within bounds
         if (eventIndex.getZeroBased() >= lastShownEventList.size()) {
@@ -92,15 +92,15 @@ public class EventLinkCommand extends Command {
         Event eventToLink = lastShownEventList.get(eventIndex.getZeroBased());
 
         if (isLinkAll) {
-            return executeLinkAll(model, eventToLink);
+            return executeLinkAll(model, eventToLink, lastShownContactList);
         } else {
-            return executeLinkSingle(model, eventToLink);
+            return executeLinkSingle(model, eventToLink, lastShownContactList);
         }
 
     }
 
-    private CommandResult executeLinkSingle(Model model, Event eventToLink) throws CommandException {
-        List<Contact> lastShownContactList = model.getFilteredContactList();
+    private CommandResult executeLinkSingle(Model model, Event eventToLink,
+                                            List<Contact> lastShownContactList) throws CommandException {
 
         if (contactIndex.getZeroBased() >= lastShownContactList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_CONTACT_DISPLAYED_INDEX);
@@ -114,21 +114,21 @@ public class EventLinkCommand extends Command {
         }
 
         model.addParticipant(contactToLink, eventToLink, ParticipantStatus.UNKNOWN);
-        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, contactToLink.getName(), eventToLink.getName()));
     }
 
-    private CommandResult executeLinkAll(Model model, Event eventToLink) throws CommandException {
-        List<Contact> filteredContactList = model.getFilteredContactList();
+    private CommandResult executeLinkAll(Model model, Event eventToLink,
+                                         List<Contact> lastShownContactList) throws CommandException {
 
-        if (filteredContactList.isEmpty()) {
+        if (lastShownContactList.isEmpty()) {
             throw new CommandException(MESSAGE_NO_CONTACTS_TO_LINK);
         }
 
         List<String> linkedContacts = new ArrayList<>();
         List<String> skippedContacts = new ArrayList<>();
 
-        for (Contact contact : filteredContactList) {
+        for (Contact contact : lastShownContactList) {
             if (!model.hasParticipant(contact, eventToLink)) {
                 model.addParticipant(contact, eventToLink, ParticipantStatus.UNKNOWN);
                 linkedContacts.add(contact.getName().toString());
@@ -136,8 +136,6 @@ public class EventLinkCommand extends Command {
                 skippedContacts.add(contact.getName().toString());
             }
         }
-
-        model.updateFilteredContactList(PREDICATE_SHOW_ALL_CONTACTS);
 
         if (linkedContacts.isEmpty()) {
             throw new CommandException("All contacts are already linked to the event");
