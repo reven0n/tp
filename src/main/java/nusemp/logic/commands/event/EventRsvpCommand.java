@@ -28,7 +28,7 @@ public class EventRsvpCommand extends Command {
 
     public static final String MESSAGE_USAGE = CommandType.EVENT + " " + COMMAND_WORD
             + ": RSVP a contact to an event by their indexes.\n"
-            + "The status can be either \"available\" or \"unavailable\"\n\n"
+            + "The status can be either \"available\", \"unavailable\", or \"unknown\"\n\n"
             + "Parameters:  "
             + PREFIX_EVENT + "EVENT_INDEX " + PREFIX_CONTACT + "CONTACT_INDEX " + PREFIX_STATUS + "STATUS\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
