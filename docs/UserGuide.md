@@ -726,7 +726,7 @@ perfect for resetting or rebuilding your guest list.
 - You can find the event index in the displayed event list
 - You can find the contact index in the displayed contact list
 - Both indexes should be a **positive** number, unless you use `listed` for `CONTACT_INDEX`
-- Using `--contact listed` will unlink **every contact** currently displayed to the specified event
+- Using `--contact listed` will unlink **every contact** displayed in the contact list from the specified event
 
 <box type="tip" seamless>
 
