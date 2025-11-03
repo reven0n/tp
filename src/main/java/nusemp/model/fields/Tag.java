@@ -9,8 +9,8 @@ import static nusemp.commons.util.AppUtil.checkArgument;
  */
 public class Tag {
 
-    public static final String MESSAGE_CONSTRAINTS = "Tags names should be alphanumeric";
-    public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_CONSTRAINTS = "Tags names should be only standard ASCII characters";
+    public static final String VALIDATION_REGEX = "[\\x00-\\x7F]+";
 
     public final String tagName;
 
