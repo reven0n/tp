@@ -38,7 +38,7 @@ basic computer skills like using terminals, downloading files, will be required 
 
 <box type="tip" seamless>
 
-**Pro Tip:** Start by typing `help` and pressing Enter to see this guide anytime you need help!
+**Pro Tip:** Start by typing `help` or pressing the help button to see this guide anytime you need help!
 
 </box>
 
@@ -934,31 +934,31 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 
 ### 7.2 Contact Commands
 
-| Action                    | Format, Examples                                                                                                                                                                                                          |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add Contact**           | `contact add --name NAME --email EMAIL [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name James --email james@e.com --phone 91234567 --address "123 Main Street" --tag friend --tag colleague` |
-| **Delete Contact**        | `contact delete INDEX`<br>e.g. `contact delete 3`                                                                                                                                                                         |
-| **Edit Contact**          | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact edit 2 --name James --email jameslee@e.com`                                                          |
-| **Find Contacts**         | `contact find KEYWORD [MORE_KEYWORDS]...` or `contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`<br>e.g. `contact find --email gmail`<br>e.g. `contact find --phone 9123`                                              |
-| **List Contacts**         | `contact list`                                                                                                                                                                                                            |
-| **Show Contact's Events** | `contact show INDEX`<br>e.g. `contact show 1`                                                                                                                                                                             |
+| Action                    | Format, Examples                                                                                                                                                                                                        |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Add Contact**           | `contact add --name NAME --email EMAIL [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name James --email james@e.com --phone 91234567 --address 123 Main Street --tag friend --tag colleague` |
+| **Delete Contact**        | `contact delete INDEX`<br>e.g. `contact delete 3`                                                                                                                                                                       |
+| **Edit Contact**          | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact edit 2 --name James --email jameslee@e.com`                                                        |
+| **Find Contacts**         | `contact find KEYWORD [MORE_KEYWORDS]...` or `contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`<br>e.g. `contact find --email gmail`<br>e.g. `contact find --phone 9123`                                            |
+| **List Contacts**         | `contact list`                                                                                                                                                                                                          |
+| **Show Contact's Events** | `contact show INDEX`<br>e.g. `contact show 1`                                                                                                                                                                           |
 
 ### 7.3 Event Commands
 
-| Action                             | Format, Examples                                                                                                                            |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add Event**                      | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Room 4`       |
-| **Delete Event**                   | `event delete INDEX`<br>e.g. `event delete 2`                                                                                               |
-| **Edit Event**                     | `event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…`<br>e.g. `event edit 1 --name New Meeting` |
-| **Find Event**                     | `event find KEYWORDS [MORE_KEYWORDS]...` or <br>e.g. `event find --name Conference` <br> `event find --status pending` <br/>                |
-| **List Events**                    | `event list`                                                                                                                                |
-| **Link Contact to Event**          | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
-| **Link All Listed Contacts to Event**     | `event link --event EVENT_INDEX --contact listed`<br>e.g. `event link --event 1 --contact listed`                                                 |
-| **Unlink Contact from Event**      | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
-| **Unlink All Listed Contacts from Event** | `event unlink --event EVENT_INDEX --contact listed`<br>e.g. `event unlink --event 1 --contact listed`                                             |
-| **Show Event's Contacts**          | `event show INDEX`<br>e.g. `event show 1`                                                                                                   |
-| **Export Event Contacts**          | `event export INDEX [--status STATUS]`<br>e.g. `event export 1`<br> `event export 1 --status available`<br/>                                |
-| **RSVP to Event**                  | `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS`<br>e.g. `event rsvp --event 1 --contact 2 --status available`      |
+| Action                                    | Format, Examples                                                                                                                            |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Add Event**                             | `event add --name NAME --date DATE [--address ADDRESS]`<br>e.g. `event add --name Meeting --date 25-12-2025 14:30 --address Room 4`         |
+| **Delete Event**                          | `event delete INDEX`<br>e.g. `event delete 2`                                                                                               |
+| **Edit Event**                            | `event edit INDEX [--name NAME] [--date DATE] [--address ADDRESS] [--status STATUS] [--tag TAG]…`<br>e.g. `event edit 1 --name New Meeting` |
+| **Find Event**                            | `event find KEYWORDS [MORE_KEYWORDS]...` or <br>e.g. `event find --name Conference` <br> `event find --status pending` <br/>                |
+| **List Events**                           | `event list`                                                                                                                                |
+| **Link Contact to Event**                 | `event link --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event link --event 1 --contact 2`                                         |
+| **Link All Listed Contacts to Event**     | `event link --event EVENT_INDEX --contact listed`<br>e.g. `event link --event 1 --contact listed`                                           |
+| **Unlink Contact from Event**             | `event unlink --event EVENT_INDEX --contact CONTACT_INDEX`<br>e.g. `event unlink --event 1 --contact 2`                                     |
+| **Unlink All Listed Contacts from Event** | `event unlink --event EVENT_INDEX --contact listed`<br>e.g. `event unlink --event 1 --contact listed`                                       |
+| **Show Event's Contacts**                 | `event show INDEX`<br>e.g. `event show 1`                                                                                                   |
+| **Export Event Contacts**                 | `event export INDEX [--status STATUS]`<br>e.g. `event export 1`<br> `event export 1 --status available`<br/>                                |
+| **RSVP to Event**                         | `event rsvp --event EVENT_INDEX --contact CONTACT_INDEX --status STATUS`<br>e.g. `event rsvp --event 1 --contact 2 --status available`      |
 
 ---
 
