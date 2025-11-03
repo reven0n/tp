@@ -86,6 +86,14 @@ Save time with these short forms:
 | `--event`   | `-e`       |
 | `--status`  | `-s`       |
 
+<box type="info" seamless>
+
+**Note**
+
+The parameters `--events` and `--email` are not used in the same command, so it is okay for both to use `-e` as the short form. 
+
+</box>
+
 #### Complete Example
 
 **Long form:**
@@ -535,7 +543,7 @@ This changes event #1's name and time.
   - **PENDING** - Event is planned/announced (default)
   - **ONGOING** - Event is currently in progress
   - **DONE** - Event has ended
-- Tags
+- Tags (this will override the original tags!)
 - **At least one thing must be updated**
 
 </box>
@@ -934,14 +942,14 @@ A: Yes, but be very careful! Always make a backup first. See the warning above.
 
 ### 7.2 Contact Commands
 
-| Action                    | Format, Examples                                                                                                                                                                                                          |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Add Contact**           | `contact add --name NAME --email EMAIL [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name James --email james@e.com --phone 91234567 --address "123 Main Street" --tag friend --tag colleague` |
-| **Delete Contact**        | `contact delete INDEX`<br>e.g. `contact delete 3`                                                                                                                                                                         |
-| **Edit Contact**          | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact edit 2 --name James --email jameslee@e.com`                                                          |
-| **Find Contacts**         | `contact find KEYWORD [MORE_KEYWORDS]...` or `contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`<br>e.g. `contact find --email gmail`<br>e.g. `contact find --phone 9123`                                              |
-| **List Contacts**         | `contact list`                                                                                                                                                                                                            |
-| **Show Contact's Events** | `contact show INDEX`<br>e.g. `contact show 1`                                                                                                                                                                             |
+| Action                    | Format, Examples                                                                                                                                                                                                        |
+| ------------------------- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add Contact**           | `contact add --name NAME --email EMAIL [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact add --name James --email james@e.com --phone 91234567 --address 123 Main Street --tag friend --tag colleague` |
+| **Delete Contact**        | `contact delete INDEX`<br>e.g. `contact delete 3`                                                                                                                                                                       |
+| **Edit Contact**          | `contact edit INDEX [--name NAME] [--email EMAIL] [--phone PHONE] [--address ADDRESS] [--tag TAG]…`<br>e.g. `contact edit 2 --name James --email jameslee@e.com`                                                        |
+| **Find Contacts**         | `contact find KEYWORD [MORE_KEYWORDS]...` or `contact find [--FIELD KEYWORD [MORE_KEYWORDS]...]...`<br>e.g. `contact find --email gmail`<br>e.g. `contact find --phone 9123`                                            |
+| **List Contacts**         | `contact list`                                                                                                                                                                                                          |
+| **Show Contact's Events** | `contact show INDEX`<br>e.g. `contact show 1`                                                                                                                                                                           |
 
 ### 7.3 Event Commands
 
