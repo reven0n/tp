@@ -1,6 +1,7 @@
 package nusemp.logic.parser.contact;
 
 import static nusemp.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static nusemp.logic.Messages.MESSAGE_INVALID_INDEX_FORMAT;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_ADDRESS_DESC_AMY;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_ADDRESS_DESC_BOB;
 import static nusemp.logic.commands.CommandTestUtil.CONTACT_EMAIL_DESC_AMY;
@@ -55,7 +56,7 @@ public class ContactEditCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_CONTACT_NAME_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_CONTACT_NAME_AMY, MESSAGE_INVALID_INDEX_FORMAT);
 
         // no field specified
         assertParseFailure(parser, "1", ContactEditCommand.MESSAGE_NOT_EDITED);
@@ -67,16 +68,16 @@ public class ContactEditCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + CONTACT_NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + CONTACT_NAME_DESC_AMY, MESSAGE_INVALID_INDEX_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0" + CONTACT_NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + CONTACT_NAME_DESC_AMY, MESSAGE_INVALID_INDEX_FORMAT);
 
         // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_INDEX_FORMAT);
 
         // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_INDEX_FORMAT);
     }
 
     @Test
