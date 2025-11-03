@@ -56,8 +56,8 @@ public class ContactEditCommand extends Command {
     public static final String MESSAGE_EDIT_CONTACT_SUCCESS = "Successfully edited contact:\n%1$s";
     public static final String MESSAGE_NOT_EDITED =
             "Error editing contact: at least one field to edit must be provided";
-    public static final String MESSAGE_DUPLICATE_CONTACT =
-            "Error editing contact: contact email \"%1$s\" already exists";
+    public static final String MESSAGE_DUPLICATE_CONTACT = "Error editing contact: email \"%1$s\" "
+            + "conflicts with an existing contact.\nNote: emails are case-insensitive.";
 
     private final Index index;
     private final EditContactDescriptor editContactDescriptor;
