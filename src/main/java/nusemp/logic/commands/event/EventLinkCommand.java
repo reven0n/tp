@@ -30,13 +30,13 @@ public class EventLinkCommand extends Command {
             + ": Links a contact or all filtered contacts to an event. \n\n"
             + "Parameters: "
             + PREFIX_EVENT + "EVENT_INDEX "
-            + PREFIX_CONTACT + "CONTACT_INDEX or \"all\"\n"
+            + PREFIX_CONTACT + "CONTACT_INDEX or \"listed\"\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + "1 "
             + PREFIX_CONTACT + "2\n"
             + "Example: " + CommandType.EVENT + " " + COMMAND_WORD + " "
             + PREFIX_EVENT + "1 "
-            + PREFIX_CONTACT + "all\n\n"
+            + PREFIX_CONTACT + "listed\n\n"
             + "Note: EVENT_INDEX and CONTACT_INDEX must be a positive integers within the size of the displayed "
             + "event list and contact list respectively.";
 
