@@ -9,7 +9,7 @@ import static nusemp.commons.util.AppUtil.checkArgument;
  */
 public class Address {
 
-    public static final String MESSAGE_CONSTRAINTS = "Addresses can only have standard characters"
+    public static final String MESSAGE_CONSTRAINTS = "Addresses should only have standard characters"
             + "\ni.e. characters and symbols found on a standard US keyboard.";
     public static final String VALIDATION_REGEX = "[\\x00-\\x7F]+";
 

@@ -10,8 +10,8 @@ import static nusemp.commons.util.AppUtil.checkArgument;
 public class Phone {
 
 
-    public static final String MESSAGE_CONSTRAINTS = "Phone numbers should be blank and only have standard "
-            + "characters" + "\ni.e. characters and symbols found on a standard US keyboard.";
+    public static final String MESSAGE_CONSTRAINTS = "Phone numbers should only have standard "
+            + "characters\ni.e. characters and symbols found on a standard US keyboard.";
     public static final String VALIDATION_REGEX = "[\\x00-\\x7F]+";
     public final String value;
 
