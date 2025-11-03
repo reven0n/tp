@@ -21,8 +21,8 @@ import nusemp.testutil.ContactBuilder;
 
 public class JsonAdaptedContactTest {
     private static final String INVALID_NAME = " ";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
+    private static final String INVALID_PHONE = "😊";
+    private static final String INVALID_ADDRESS = "😊";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "😊";
 
