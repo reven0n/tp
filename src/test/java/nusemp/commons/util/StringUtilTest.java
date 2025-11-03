@@ -1,6 +1,7 @@
 package nusemp.commons.util;
 
 import static nusemp.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -140,4 +141,31 @@ public class StringUtilTest {
         assertThrows(NullPointerException.class, () -> StringUtil.getDetails(null));
     }
 
+    //---------------- Tests for prependLines --------------------------------------
+
+    /*
+     * Equivalence Partitions: null, "", valid string
+     */
+
+    @Test
+    public void prependLines_nullInput_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> StringUtil.prependLines(null, ""));
+        assertThrows(NullPointerException.class, () -> StringUtil.prependLines("", null));
+    }
+
+    @Test
+    public void prependLines_emptyInput_success() {
+        String original = "";
+        String expected = "> ";
+        String actual = StringUtil.prependLines(original, "> ");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void prependLines_validInput_success() {
+        String original = "Line1\nLine2\nLine3";
+        String expected = "> Line1\n> Line2\n> Line3";
+        String actual = StringUtil.prependLines(original, "> ");
+        assertEquals(expected, actual);
+    }
 }
